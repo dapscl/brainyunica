@@ -1,4 +1,3 @@
-
 /**
  * Servicio para verificar direcciones de correo electrónico
  */
@@ -17,6 +16,7 @@ export type VerificationResult = {
   isRoleAccount?: boolean;
   statusCode?: number;
   errorMessage?: string;
+  email?: string; // Añadimos la propiedad email para rastrear qué correo se verificó
 };
 
 export type VerificationService = 'hunter' | 'clearout' | 'neverbounce' | 'manual' | 'truemail';
@@ -80,7 +80,8 @@ export const verifyEmail = async (
     return {
       isValid: false,
       reason: 'invalid_syntax',
-      errorMessage: 'El formato del email no es válido'
+      errorMessage: 'El formato del email no es válido',
+      email // Incluimos el email en el resultado
     };
   }
 
@@ -103,10 +104,12 @@ export const verifyEmail = async (
   const isCommonBusinessDomain = /\.com$|\.co$|\.io$|\.es$|\.mx$/.test(email);
   
   // Simulamos diferentes resultados según el servicio seleccionado
+  let result: VerificationResult;
+  
   switch (service) {
     case 'hunter':
       // Hunter.io simula verificación básica con puntuación de confianza
-      return {
+      result = {
         isValid: !isDisposable && Math.random() > 0.2, // 80% probabilidad de ser válido si no es desechable
         score: isDisposable ? 10 : isRole ? 40 : isFreeProvider ? 70 : Math.floor(Math.random() * 60) + 40,
         domain: {
@@ -118,10 +121,11 @@ export const verifyEmail = async (
         isFreeProvider,
         isRoleAccount: isRole
       };
+      break;
       
     case 'clearout':
       // Clearout simula más detalles sobre validez de dominio
-      return {
+      result = {
         isValid: !isDisposable && (isGmail || isOutlook || isCommonBusinessDomain),
         reason: isDisposable ? 'disposable_email' : isRole ? 'role_based_email' : isGmail ? 'valid_email' : 'syntax_error',
         domain: {
@@ -133,20 +137,22 @@ export const verifyEmail = async (
         isFreeProvider,
         statusCode: isDisposable ? 215 : isRole ? 220 : 200
       };
+      break;
       
     case 'neverbounce':
       // NeverBounce simula enfoque en puntuación de calidad
-      return {
+      result = {
         isValid: !isDisposable && !isYahoo && !isRole,
         score: isDisposable ? 15 : isRole ? 30 : isGmail ? 95 : isOutlook ? 85 : Math.floor(Math.random() * 100),
         reason: isDisposable ? 'disposable_email' : isRole ? 'role_account' : isHotmail ? 'low_deliverability' : undefined,
         isDisposable,
         isFreeProvider
       };
+      break;
       
     case 'truemail':
       // Truemail simula verificación técnica más profunda
-      return {
+      result = {
         isValid: !isDisposable && Math.random() > 0.3,
         domain: {
           hasValidMx: isCommonBusinessDomain || isGmail || !isDisposable,
@@ -158,17 +164,23 @@ export const verifyEmail = async (
         isFreeProvider,
         statusCode: isDisposable ? 400 : 200
       };
+      break;
       
     case 'manual':
     default:
       // Para verificación manual, siempre devolvemos incierto para que sea verificado manualmente
-      return {
+      result = {
         isValid: true,
         reason: 'pending_manual_verification',
         isFreeProvider,
         isRoleAccount: isRole
       };
+      break;
   }
+
+  // Añadimos el email al resultado
+  result.email = email;
+  return result;
 };
 
 /**
