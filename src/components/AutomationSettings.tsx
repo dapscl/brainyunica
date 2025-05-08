@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
@@ -8,12 +8,31 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Calendar, Clock, MessageSquare } from 'lucide-react';
+import { Calendar, Clock, MessageSquare, Mail, Check } from 'lucide-react';
+import { Separator } from '@/components/ui/separator';
+import EmailVerifier from './EmailVerifier';
+import { useToast } from '@/hooks/use-toast';
+import { VerificationResult, VerificationService } from '@/services/emailVerificationService';
 
 const AutomationSettings = () => {
-  const [emailVerificationEnabled, setEmailVerificationEnabled] = React.useState(false);
-  const [autoMessageEnabled, setAutoMessageEnabled] = React.useState(false);
-  const [autoScheduleEnabled, setAutoScheduleEnabled] = React.useState(false);
+  const [emailVerificationEnabled, setEmailVerificationEnabled] = useState(false);
+  const [autoMessageEnabled, setAutoMessageEnabled] = useState(false);
+  const [autoScheduleEnabled, setAutoScheduleEnabled] = useState(false);
+  const [verificationService, setVerificationService] = useState<VerificationService>('hunter');
+  const [apiKey, setApiKey] = useState('');
+  const [bulkVerificationMode, setBulkVerificationMode] = useState(false);
+  const { toast } = useToast();
+
+  const handleSaveSettings = () => {
+    toast({
+      title: "Configuración guardada",
+      description: "La configuración de automatización ha sido actualizada",
+    });
+  };
+
+  const handleVerificationResult = (result: VerificationResult) => {
+    console.log("Resultado de verificación:", result);
+  };
 
   return (
     <Card className="shadow-sm">
@@ -35,7 +54,7 @@ const AutomationSettings = () => {
               Agendamiento
             </TabsTrigger>
             <TabsTrigger value="verification">
-              <Clock className="h-4 w-4 mr-2" />
+              <Mail className="h-4 w-4 mr-2" />
               Verificación
             </TabsTrigger>
           </TabsList>
@@ -158,30 +177,95 @@ const AutomationSettings = () => {
             </div>
             
             {emailVerificationEnabled && (
-              <div className="space-y-4 mt-4">
+              <div className="space-y-6 mt-4">
+                <div className="grid md:grid-cols-2 gap-4">
+                  <div>
+                    <Label htmlFor="verification-service">Servicio de verificación</Label>
+                    <Select 
+                      value={verificationService} 
+                      onValueChange={(value) => setVerificationService(value as VerificationService)}
+                    >
+                      <SelectTrigger id="verification-service">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="hunter">Hunter.io</SelectItem>
+                        <SelectItem value="clearout">Clearout</SelectItem>
+                        <SelectItem value="neverbounce">NeverBounce</SelectItem>
+                        <SelectItem value="truemail">TrueMail</SelectItem>
+                        <SelectItem value="manual">Verificación manual</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  
+                  <div>
+                    <Label htmlFor="api-key">API Key</Label>
+                    <Input 
+                      id="api-key"
+                      type="password"
+                      placeholder="Ingrese su API key"
+                      className="mt-1"
+                      value={apiKey}
+                      onChange={(e) => setApiKey(e.target.value)}
+                    />
+                  </div>
+                </div>
+
                 <div>
-                  <Label htmlFor="verification-service">Servicio de verificación</Label>
-                  <Select defaultValue="hunter">
-                    <SelectTrigger id="verification-service">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="hunter">Hunter.io</SelectItem>
-                      <SelectItem value="clearout">Clearout</SelectItem>
-                      <SelectItem value="neverbounce">NeverBounce</SelectItem>
-                      <SelectItem value="manual">Verificación manual</SelectItem>
-                    </SelectContent>
-                  </Select>
+                  <div className="flex items-center justify-between mb-2">
+                    <div>
+                      <h4 className="font-medium">Verificación en tiempo real</h4>
+                      <p className="text-sm text-muted-foreground">Obtener resultados en tiempo real</p>
+                    </div>
+                    <Switch
+                      checked={bulkVerificationMode}
+                      onCheckedChange={setBulkVerificationMode}
+                    />
+                  </div>
+                  {bulkVerificationMode ? (
+                    <div className="space-y-3 p-4 bg-muted/30 rounded-md">
+                      <h4 className="text-sm font-medium">Verificación por lotes</h4>
+                      <div className="flex items-center space-x-2">
+                        <Input
+                          type="file"
+                          accept=".csv"
+                          className="max-w-xs"
+                        />
+                        <Button size="sm">
+                          <Check className="h-4 w-4 mr-1" /> Subir CSV
+                        </Button>
+                      </div>
+                      <p className="text-xs text-muted-foreground">
+                        Sube un archivo CSV con una columna de emails para verificar en lote
+                      </p>
+                    </div>
+                  ) : (
+                    <EmailVerifier 
+                      onVerified={handleVerificationResult} 
+                    />
+                  )}
                 </div>
                 
-                <div>
-                  <Label htmlFor="api-key">API Key</Label>
-                  <Input 
-                    id="api-key"
-                    type="password"
-                    placeholder="Ingrese su API key"
-                    className="mt-1"
-                  />
+                <div className="p-4 bg-muted/30 rounded-md">
+                  <h4 className="text-sm font-medium mb-1">Configuración avanzada</h4>
+                  
+                  <div className="flex items-center justify-between py-2">
+                    <div>
+                      <p className="text-sm">Verificar al crear lead</p>
+                      <p className="text-xs text-muted-foreground">Verificar automáticamente al crear un nuevo lead</p>
+                    </div>
+                    <Switch />
+                  </div>
+                  
+                  <Separator className="my-2" />
+                  
+                  <div className="flex items-center justify-between py-2">
+                    <div>
+                      <p className="text-sm">Notificaciones de resultados</p>
+                      <p className="text-xs text-muted-foreground">Recibir notificaciones por email de los resultados</p>
+                    </div>
+                    <Switch />
+                  </div>
                 </div>
               </div>
             )}
@@ -190,7 +274,7 @@ const AutomationSettings = () => {
       </CardContent>
       <CardFooter className="border-t pt-4">
         <Button variant="outline" className="mr-2">Cancelar</Button>
-        <Button>Guardar configuración</Button>
+        <Button onClick={handleSaveSettings}>Guardar configuración</Button>
       </CardFooter>
     </Card>
   );

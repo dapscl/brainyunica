@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import LeadPage from "./pages/LeadPage";
 import ProspectingPage from "./pages/ProspectingPage";
+import EmailVerificationPage from "./pages/EmailVerificationPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -21,6 +22,7 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/lead/:id" element={<LeadPage />} />
           <Route path="/prospecting" element={<ProspectingPage />} />
+          <Route path="/email-verification" element={<EmailVerificationPage />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
