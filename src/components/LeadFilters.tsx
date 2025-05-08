@@ -42,13 +42,16 @@ const LeadFilters: React.FC<LeadFiltersProps> = ({ onFilterChange }) => {
   });
 
   const handleFilterChange = (key: keyof LeadFilters, value: string) => {
-    const newFilters = { ...filters, [key]: value };
+    const newFilters = { 
+      ...filters, 
+      [key]: value as any // Cast para corregir el error de tipo
+    };
     setFilters(newFilters);
     onFilterChange(newFilters);
   };
 
   const resetFilters = () => {
-    const defaultFilters = {
+    const defaultFilters: LeadFilters = {
       search: '',
       intent: 'all',
       country: 'all',

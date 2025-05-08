@@ -65,7 +65,7 @@ const AutomationSettings = () => {
                     rows={4}
                   />
                   <p className="text-xs text-muted-foreground mt-1">
-                    Use {{nombre}}, {{empresa}}, {{puesto}} para personalizar el mensaje
+                    Use {"{{nombre}}"}, {"{{empresa}}"}, {"{{puesto}}"} para personalizar el mensaje
                   </p>
                 </div>
                 
