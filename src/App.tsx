@@ -10,6 +10,8 @@ import LeadPage from "./pages/LeadPage";
 import ProspectingPage from "./pages/ProspectingPage";
 import EmailVerificationPage from "./pages/EmailVerificationPage";
 import NotFound from "./pages/NotFound";
+import AuthPage from "./pages/AuthPage";
+import ProtectedRoute from "./components/auth/ProtectedRoute";
 
 // Creamos una nueva instancia de QueryClient dentro de la función de componente
 const App = () => {
@@ -23,10 +25,32 @@ const App = () => {
         <Sonner />
         <BrowserRouter>
           <Routes>
+            <Route path="/auth" element={<AuthPage />} />
             <Route path="/" element={<Index />} />
-            <Route path="/lead/:id" element={<LeadPage />} />
-            <Route path="/prospecting" element={<ProspectingPage />} />
-            <Route path="/email-verification" element={<EmailVerificationPage />} />
+            <Route
+              path="/lead/:id"
+              element={
+                <ProtectedRoute>
+                  <LeadPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/prospecting"
+              element={
+                <ProtectedRoute>
+                  <ProspectingPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/email-verification"
+              element={
+                <ProtectedRoute>
+                  <EmailVerificationPage />
+                </ProtectedRoute>
+              }
+            />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

@@ -1,11 +1,25 @@
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { Search, Database, MessageSquare } from 'lucide-react';
+import { Search, Database, MessageSquare, LogIn, LogOut } from 'lucide-react';
 import { Input } from '@/components/ui/input';
+import { supabase } from '@/integrations/supabase/client';
+import { robustSignOut } from '@/utils/auth';
 
 const Navbar = () => {
+  const [isAuthed, setIsAuthed] = useState(false);
+
+  useEffect(() => {
+    const sub = supabase.auth.onAuthStateChange((_event, session) => {
+      setIsAuthed(!!session?.user);
+    });
+    supabase.auth.getSession().then(({ data }) => {
+      setIsAuthed(!!data.session?.user);
+    });
+    return () => sub.data.subscription.unsubscribe();
+  }, []);
+
   return (
     <div className="flex items-center justify-between border-b px-6 py-3 bg-white">
       <div className="flex items-center gap-2">
@@ -35,6 +49,19 @@ const Navbar = () => {
             Prospecting
           </Button>
         </Link>
+        {isAuthed ? (
+          <Button size="sm" onClick={() => robustSignOut('/auth')}>
+            <LogOut className="h-4 w-4 mr-2" />
+            Salir
+          </Button>
+        ) : (
+          <Link to="/auth">
+            <Button variant="outline" size="sm">
+              <LogIn className="h-4 w-4 mr-2" />
+              Iniciar sesión
+            </Button>
+          </Link>
+        )}
         <Button size="sm" className="bg-accent hover:bg-accent/90">
           New Scan
         </Button>

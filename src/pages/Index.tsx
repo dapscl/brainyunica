@@ -1,12 +1,27 @@
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Navbar from '@/components/Navbar';
 import Dashboard from '@/components/Dashboard';
 import LeadFilters from '@/components/LeadFilters';
 import AutomationSettings from '@/components/AutomationSettings';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { supabase } from '@/integrations/supabase/client';
 
 const Index = () => {
+  const [isAuthed, setIsAuthed] = useState(false);
+
+  useEffect(() => {
+    const sub = supabase.auth.onAuthStateChange((_event, session) => {
+      setIsAuthed(!!session?.user);
+    });
+    supabase.auth.getSession().then(({ data }) => {
+      setIsAuthed(!!data.session?.user);
+    });
+    return () => sub.data.subscription.unsubscribe();
+  }, []);
+
   const handleFilterChange = (filters: any) => {
     console.log('Filters changed:', filters);
     // Aquí implementaríamos la lógica para filtrar los leads
@@ -17,6 +32,13 @@ const Index = () => {
       <Navbar />
       <div className="container py-8 animate-fade-in">
         <h1 className="text-3xl font-bold mb-6">LinkedIn Lead Dashboard</h1>
+        {!isAuthed && (
+          <div className="mb-6">
+            <Link to="/auth">
+              <Button size="sm">Iniciar sesión</Button>
+            </Link>
+          </div>
+        )}
         
         <Tabs defaultValue="dashboard" className="mb-6">
           <TabsList>
