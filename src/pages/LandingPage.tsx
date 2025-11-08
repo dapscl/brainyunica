@@ -54,57 +54,55 @@ const LandingPage = () => {
 
   const plans = [
     {
-      name: "Essential",
-      price: "$490",
+      name: "Startup",
+      price: "$250",
       period: "/mes",
-      description: "Startups y equipos de marketing que necesitan centralizar todo",
+      description: "Emprendedores o equipos internos pequeños",
       features: [
-        "3 marcas completas",
-        "5 usuarios incluidos",
-        "500 generaciones IA mensuales",
-        "100 publicaciones automáticas",
-        "100 GB de almacenamiento",
-        "Métricas estándar",
-        "Meta / Google / Adobe",
-        "Soporte por email"
+        "1 marca activa",
+        "100% de funcionalidades",
+        "Calendarización y gestión",
+        "Creación con IA integrada",
+        "Integraciones con medios pagados",
+        "Aprobaciones automáticas",
+        "Brand Kit completo",
+        "Dashboard y analítica"
       ],
       cta: "Comenzar ahora",
       popular: false
     },
     {
-      name: "Professional",
-      price: "$990",
+      name: "Small Agency",
+      price: "$1,250",
       period: "/mes",
-      description: "Agencias y marcas medianas con alto volumen de trabajo",
+      description: "Agencias boutique o estudios creativos",
       features: [
-        "10 marcas completas",
-        "20 usuarios incluidos",
-        "3,000 generaciones IA mensuales",
-        "1,000 publicaciones automáticas",
-        "500 GB de almacenamiento",
-        "Métricas en tiempo real",
-        "+TikTok / LinkedIn integrados",
-        "IA visual + copywriting avanzado",
-        "Chat prioritario"
+        "5 marcas operando en paralelo",
+        "100% de funcionalidades por marca",
+        "Roles y permisos por equipo",
+        "Automatización multicanal",
+        "Publicación en Meta, TikTok, Google, LinkedIn",
+        "Brand Kit por marca",
+        "Dashboard consolidado",
+        "Soporte prioritario"
       ],
-      cta: "Escala con control",
+      cta: "Escalar operación",
       popular: true
     },
     {
-      name: "Enterprise",
-      price: "Desde $2,500",
-      period: "/mes",
-      description: "Corporaciones y agencias multinivel con múltiples marcas",
+      name: "Scaled Agency",
+      price: "Personalizado",
+      period: "",
+      description: "Agencias de volumen o corporaciones multinivel",
       features: [
-        "Marcas ilimitadas",
-        "Usuarios ilimitados",
-        "Generaciones IA personalizadas",
-        "Publicaciones ilimitadas",
-        "Almacenamiento escalable",
-        "Analítica avanzada + Mix™",
-        "API abierta y conectores personalizados",
-        "IA avanzada (texto, imagen, voz, video)",
-        "Dedicated Manager"
+        "10+ marcas simultáneas",
+        "100% de funcionalidades por marca",
+        "Gestión multi-equipo avanzada",
+        "API abierta y conectores",
+        "Analítica avanzada consolidada",
+        "Automatización total",
+        "Dedicated Account Manager",
+        "SLA y soporte dedicado"
       ],
       cta: "Contactar ventas",
       popular: false
@@ -224,10 +222,10 @@ const LandingPage = () => {
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              Planes para cada escala
+              Pricing por marca activa
             </h2>
             <p className="text-muted-foreground max-w-3xl mx-auto text-lg">
-              Todos los planes permiten que una marca haga todo: desde calendarizar hasta integrar medios y lanzar ads.
+              <strong className="text-foreground">USD $250/mes por marca.</strong> Cada marca tiene acceso completo a todas las funciones: calendarización, IA, integraciones con medios, aprobaciones y analítica.
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
