@@ -4,8 +4,9 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Briefcase, Plus, Calendar, CheckCircle2, Clock, AlertCircle } from "lucide-react";
+import { Briefcase, Plus, Calendar, CheckCircle2, Clock, AlertCircle, Edit } from "lucide-react";
 import { toast } from "sonner";
+import { usePermissions } from "@/hooks/usePermissions";
 
 interface Project {
   id: string;
@@ -20,8 +21,10 @@ interface Project {
 const ProjectsPage = () => {
   const navigate = useNavigate();
   const { orgId } = useParams();
+  const { canEditBrand } = usePermissions();
   const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
+  const [editableProjects, setEditableProjects] = useState<Set<string>>(new Set());
 
   useEffect(() => {
     loadProjects();
@@ -100,18 +103,33 @@ const ProjectsPage = () => {
             {projects.map((project) => (
               <Card
                 key={project.id}
-                className="hover:shadow-glow transition-smooth cursor-pointer"
-                onClick={() => navigate(`/projects/${project.id}`)}
+                className="hover:shadow-glow transition-smooth"
               >
                 <CardHeader>
                   <div className="flex items-start justify-between mb-2">
-                    <CardTitle className="text-xl">{project.name}</CardTitle>
-                    <Badge className={getStatusColor(project.status)}>
-                      <span className="flex items-center gap-1">
-                        {getStatusIcon(project.status)}
-                        {project.status}
-                      </span>
-                    </Badge>
+                    <div className="flex-1">
+                      <CardTitle className="text-xl">{project.name}</CardTitle>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Badge className={getStatusColor(project.status)}>
+                        <span className="flex items-center gap-1">
+                          {getStatusIcon(project.status)}
+                          {project.status}
+                        </span>
+                      </Badge>
+                      {editableProjects.has(project.id) && (
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            navigate(`/projects/${project.id}/edit`);
+                          }}
+                        >
+                          <Edit className="h-4 w-4" />
+                        </Button>
+                      )}
+                    </div>
                   </div>
                   <CardDescription className="line-clamp-2">
                     {project.description || "Sin descripción"}

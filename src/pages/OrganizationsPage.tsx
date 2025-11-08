@@ -4,7 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Building2, Plus, Users, Package, Settings } from "lucide-react";
+import { Building2, Plus, Users, Package, Settings, Edit } from "lucide-react";
 import { toast } from "sonner";
 import { usePermissions } from "@/hooks/usePermissions";
 
@@ -18,13 +18,25 @@ interface Organization {
 
 const OrganizationsPage = () => {
   const navigate = useNavigate();
-  const { canCreateOrganization } = usePermissions();
+  const { canCreateOrganization, canEditOrganization } = usePermissions();
   const [organizations, setOrganizations] = useState<Organization[]>([]);
   const [loading, setLoading] = useState(true);
+  const [editableOrgs, setEditableOrgs] = useState<Set<string>>(new Set());
 
   useEffect(() => {
     loadOrganizations();
   }, []);
+
+  const checkEditPermissions = async (orgIds: string[]) => {
+    const editable = new Set<string>();
+    await Promise.all(
+      orgIds.map(async (id) => {
+        const canEdit = await canEditOrganization(id);
+        if (canEdit) editable.add(id);
+      })
+    );
+    setEditableOrgs(editable);
+  };
 
   const loadOrganizations = async () => {
     try {
@@ -55,6 +67,11 @@ const OrganizationsPage = () => {
         .filter(Boolean) as Organization[];
       
       setOrganizations(orgs || []);
+      
+      // Check edit permissions for all orgs
+      if (orgs && orgs.length > 0) {
+        await checkEditPermissions(orgs.map(o => o.id));
+      }
     } catch (error) {
       console.error("Error loading organizations:", error);
       toast.error("Error al cargar organizaciones");
@@ -114,8 +131,7 @@ const OrganizationsPage = () => {
             {organizations.map((org) => (
               <Card
                 key={org.id}
-                className="hover:shadow-glow transition-smooth cursor-pointer"
-                onClick={() => navigate(`/organizations/${org.id}`)}
+                className="hover:shadow-glow transition-smooth"
               >
                 <CardHeader>
                   <div className="flex items-start justify-between">
@@ -128,6 +144,18 @@ const OrganizationsPage = () => {
                         <CardDescription>@{org.slug}</CardDescription>
                       </div>
                     </div>
+                    {editableOrgs.has(org.id) && (
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          navigate(`/organizations/${org.id}/edit`);
+                        }}
+                      >
+                        <Edit className="h-4 w-4" />
+                      </Button>
+                    )}
                   </div>
                 </CardHeader>
                 <CardContent>

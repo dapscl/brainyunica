@@ -3,8 +3,9 @@ import { useNavigate, useParams } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Palette, Plus, ExternalLink } from "lucide-react";
+import { Palette, Plus, ExternalLink, Edit } from "lucide-react";
 import { toast } from "sonner";
+import { usePermissions } from "@/hooks/usePermissions";
 
 interface Brand {
   id: string;
@@ -20,12 +21,25 @@ interface Brand {
 const BrandsPage = () => {
   const navigate = useNavigate();
   const { orgId } = useParams();
+  const { canEditBrand } = usePermissions();
   const [brands, setBrands] = useState<Brand[]>([]);
   const [loading, setLoading] = useState(true);
+  const [editableBrands, setEditableBrands] = useState<Set<string>>(new Set());
 
   useEffect(() => {
     loadBrands();
   }, [orgId]);
+
+  const checkEditPermissions = async (brandIds: string[]) => {
+    const editable = new Set<string>();
+    await Promise.all(
+      brandIds.map(async (id) => {
+        const canEdit = await canEditBrand(id);
+        if (canEdit) editable.add(id);
+      })
+    );
+    setEditableBrands(editable);
+  };
 
   const loadBrands = async () => {
     try {
@@ -42,6 +56,11 @@ const BrandsPage = () => {
 
       if (error) throw error;
       setBrands(data || []);
+      
+      // Check edit permissions for all brands
+      if (data && data.length > 0) {
+        await checkEditPermissions(data.map(b => b.id));
+      }
     } catch (error) {
       console.error("Error loading brands:", error);
       toast.error("Error al cargar marcas");
@@ -91,17 +110,30 @@ const BrandsPage = () => {
             {brands.map((brand) => (
               <Card
                 key={brand.id}
-                className="hover:shadow-glow transition-smooth cursor-pointer"
-                onClick={() => navigate(`/brands/${brand.id}`)}
+                className="hover:shadow-glow transition-smooth"
               >
                 <CardHeader>
-                  <div className="flex items-center gap-3 mb-2">
-                    <div className="h-12 w-12 rounded-lg bg-gradient-primary flex items-center justify-center">
-                      <Palette className="h-6 w-6 text-white" />
+                  <div className="flex items-start justify-between mb-2">
+                    <div className="flex items-center gap-3">
+                      <div className="h-12 w-12 rounded-lg bg-gradient-primary flex items-center justify-center">
+                        <Palette className="h-6 w-6 text-white" />
+                      </div>
+                      <div className="flex-1">
+                        <CardTitle className="text-xl">{brand.name}</CardTitle>
+                      </div>
                     </div>
-                    <div className="flex-1">
-                      <CardTitle className="text-xl">{brand.name}</CardTitle>
-                    </div>
+                    {editableBrands.has(brand.id) && (
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          navigate(`/brands/${brand.id}/edit`);
+                        }}
+                      >
+                        <Edit className="h-4 w-4" />
+                      </Button>
+                    )}
                   </div>
                   <CardDescription className="line-clamp-2">
                     {brand.industry || "Sin categoría"}
