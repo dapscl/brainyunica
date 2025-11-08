@@ -136,7 +136,7 @@ const AuthPage: React.FC = () => {
                   fill="#EA4335"
                 />
               </svg>
-              {loading ? "Conectando..." : "Continuar con Google Workspace"}
+              {loading ? "Conectando..." : "Continuar con Google"}
             </Button>
             
             <div className="relative">

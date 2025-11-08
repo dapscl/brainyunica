@@ -6,9 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import React from "react"; // Importamos React explícitamente
 import Index from "./pages/Index";
-import LeadPage from "./pages/LeadPage";
-import ProspectingPage from "./pages/ProspectingPage";
-import EmailVerificationPage from "./pages/EmailVerificationPage";
+import DashboardPage from "./pages/DashboardPage";
 import NotFound from "./pages/NotFound";
 import AuthPage from "./pages/AuthPage";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
@@ -27,31 +25,7 @@ const App = () => {
           <Routes>
             <Route path="/auth" element={<AuthPage />} />
             <Route path="/" element={<Index />} />
-            <Route
-              path="/lead/:id"
-              element={
-                <ProtectedRoute>
-                  <LeadPage />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/prospecting"
-              element={
-                <ProtectedRoute>
-                  <ProspectingPage />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/email-verification"
-              element={
-                <ProtectedRoute>
-                  <EmailVerificationPage />
-                </ProtectedRoute>
-              }
-            />
-            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+            <Route path="/dashboard" element={<ProtectedRoute><DashboardPage /></ProtectedRoute>} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
