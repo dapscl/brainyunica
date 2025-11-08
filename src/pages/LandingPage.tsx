@@ -21,34 +21,34 @@ const LandingPage = () => {
 
   const features = [
     {
-      icon: Palette,
-      title: "Diseño y Creatividad",
-      description: "Integración directa con Adobe Creative Cloud. Edita plantillas, genera contenido y mantén la consistencia de marca."
+      icon: Calendar,
+      title: "Gestión & Calendarización",
+      description: "Todo tu equipo, un solo tablero. Organiza campañas, contenidos y aprobaciones."
     },
     {
-      icon: Calendar,
-      title: "Calendario Automatizado",
-      description: "Programa publicaciones, sincroniza con Google Calendar y automatiza flujos de trabajo completos."
+      icon: Palette,
+      title: "Creatividad & Contenidos",
+      description: "Editor interno + plantillas + IA para generar piezas que convierten."
     },
     {
       icon: Zap,
-      title: "Paid Media",
-      description: "Gestiona campañas en Meta Ads, Google Ads, TikTok, LinkedIn y Pinterest desde un solo lugar."
-    },
-    {
-      icon: Package,
-      title: "Brand Kits",
-      description: "Administra identidades visuales completas: colores, tipografías, logos y guías de estilo por marca."
+      title: "Automatización",
+      description: "Aprobación → publicación → métrica, sin esperas. Flujos que ahorran horas."
     },
     {
       icon: DollarSign,
-      title: "Facturación Integrada",
-      description: "Planes, suscripciones e invoices automáticos con integración Stripe y pasarelas locales."
+      title: "Publicidad & Medios",
+      description: "Conexión directa con Meta, TikTok, Google, LinkedIn. Todo desde un solo lugar."
     },
     {
-      icon: Users,
-      title: "Gestión de Equipos",
-      description: "Roles, permisos, aprobaciones y flujos de trabajo colaborativos para agencias y clientes."
+      icon: Sparkles,
+      title: "Analítica & IA",
+      description: "Insights que hablan tu idioma y accionan en tu nombre. Datos que generan decisiones."
+    },
+    {
+      icon: Package,
+      title: "Brand Kit & Librerías",
+      description: "Identidad intacta, marca protegida. Colores, fuentes, logos y estilos bloqueados."
     }
   ];
 
@@ -136,26 +136,69 @@ const LandingPage = () => {
         <div className="container mx-auto px-4 py-20 md:py-32">
           <div className="max-w-4xl mx-auto text-center">
             <h1 className="text-5xl md:text-7xl font-bold mb-6 text-white">
-              Hacemos contenidos que venden. Punto.
+              Única Command Center
             </h1>
-            <p className="text-xl md:text-2xl text-white/90 mb-12 max-w-3xl mx-auto">
-              Agencia boutique de Performance Content Design para marcas que quieren resultados reales.
+            <p className="text-xl md:text-2xl text-white/90 mb-4 max-w-3xl mx-auto">
+              Cuatro plataformas, una sola interfaz. Gestiona tu marca desde el brief hasta el ROI.
+            </p>
+            <p className="text-lg md:text-xl text-white/80 mb-12 max-w-3xl mx-auto">
+              🚀 Empieza ahora y transforma creatividad, automatización y resultados en un solo lugar.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button size="lg" onClick={() => navigate("/auth")} className="text-lg px-8">
-                Haz tu diagnóstico
+                Empieza hoy
               </Button>
               <Button size="lg" variant="secondary" className="text-lg px-8 bg-white/90 hover:bg-white text-foreground">
-                Ver nuestro portafolio
+                Agenda tu demo
               </Button>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Features Section */}
+      {/* Tu marca lo hace todo Section */}
+      <section className="py-20 bg-background">
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl mx-auto text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold mb-6">
+              Tu marca lo hace todo
+            </h2>
+            <p className="text-lg text-muted-foreground mb-8">
+              Imagina una sola herramienta donde:
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-left">
+              <div className="flex items-start gap-3">
+                <CheckCircle2 className="h-6 w-6 text-primary shrink-0 mt-1" />
+                <p className="text-foreground">Calendarizas campañas, contenidos y aprobaciones.</p>
+              </div>
+              <div className="flex items-start gap-3">
+                <CheckCircle2 className="h-6 w-6 text-primary shrink-0 mt-1" />
+                <p className="text-foreground">Generas creativos con IA y plantillas inteligentes.</p>
+              </div>
+              <div className="flex items-start gap-3">
+                <CheckCircle2 className="h-6 w-6 text-primary shrink-0 mt-1" />
+                <p className="text-foreground">Publicas en Meta, TikTok, Google, LinkedIn sin cambiar de app.</p>
+              </div>
+              <div className="flex items-start gap-3">
+                <CheckCircle2 className="h-6 w-6 text-primary shrink-0 mt-1" />
+                <p className="text-foreground">Mides impacto con datos reales en tiempo real.</p>
+              </div>
+            </div>
+            <p className="text-xl font-semibold mt-8 text-primary">
+              Con Única Command Center, tu marca opera sin silos.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Verticales Section */}
       <section className="py-20 bg-muted/30">
         <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              Verticales de valor
+            </h2>
+          </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-7xl mx-auto">
             {features.map((feature, index) => (
               <Card key={index} className="border-border hover:shadow-glow transition-smooth bg-card/50 backdrop-blur">
@@ -181,10 +224,10 @@ const LandingPage = () => {
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              Planes que escalan con tu agencia
+              Planes para cada escala
             </h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto">
-              Empieza gratis por 14 días. Sin permanencia, cancela cuando quieras.
+            <p className="text-muted-foreground max-w-3xl mx-auto text-lg">
+              Todos los planes permiten que una marca haga todo: desde calendarizar hasta integrar medios y lanzar ads.
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
@@ -229,14 +272,69 @@ const LandingPage = () => {
         </div>
       </section>
 
+      {/* Qué incluye Section */}
+      <section className="py-20 bg-muted/30">
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl mx-auto">
+            <h2 className="text-3xl md:text-4xl font-bold mb-8 text-center">
+              Qué incluye
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <Card className="bg-card/50 backdrop-blur">
+                <CardContent className="pt-6">
+                  <p className="text-foreground">Marcas activas, usuarios y recursos dimensionados para cada plan.</p>
+                </CardContent>
+              </Card>
+              <Card className="bg-card/50 backdrop-blur">
+                <CardContent className="pt-6">
+                  <p className="text-foreground">Generaciones IA, publicaciones automatizadas y espacio de almacenamiento escalables.</p>
+                </CardContent>
+              </Card>
+              <Card className="bg-card/50 backdrop-blur">
+                <CardContent className="pt-6">
+                  <p className="text-foreground">Integraciones completas: Adobe CC, Meta Ads, Google Ads, TikTok, LinkedIn.</p>
+                </CardContent>
+              </Card>
+              <Card className="bg-card/50 backdrop-blur">
+                <CardContent className="pt-6">
+                  <p className="text-foreground">Soporte adaptado al nivel: email, chat o manager dedicado.</p>
+                </CardContent>
+              </Card>
+              <Card className="bg-card/50 backdrop-blur md:col-span-2">
+                <CardContent className="pt-6">
+                  <p className="text-foreground text-center">Consumo adicional gestionado mediante créditos y addons.</p>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Por qué es diferente Section */}
+      <section className="py-20 bg-background">
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl mx-auto text-center">
+            <h2 className="text-3xl md:text-4xl font-bold mb-8">
+              Por qué es diferente
+            </h2>
+            <div className="space-y-6 text-lg text-muted-foreground">
+              <p>Porque reúne en una sola plataforma lo que antes requería cuatro herramientas distintas.</p>
+              <p>Porque convierte la creatividad en resultados medibles.</p>
+              <p>Porque elimina fricción: un login, una interfaz, una operación fluida.</p>
+              <p className="text-xl font-semibold text-primary">Porque tu marca no solo publica, gana.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* CTA Section */}
       <section className="bg-gradient-primary text-white py-20">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-4xl md:text-5xl font-bold mb-6">
-            Hablemos de tu proyecto
+            Empieza hoy
           </h2>
           <p className="text-xl mb-8 text-white/90 max-w-2xl mx-auto">
-            Completa este formulario y nos pondremos en contacto contigo
+            Agenda tu demo privada y descubre cómo Única Command Center puede transformar tu operación de marketing.
           </p>
           <Button 
             size="lg" 
@@ -244,7 +342,7 @@ const LandingPage = () => {
             className="text-lg px-8 bg-white hover:bg-white/90 text-foreground"
             onClick={() => navigate("/auth")}
           >
-            Enviar mensaje
+            Agenda tu demo
           </Button>
         </div>
       </section>
