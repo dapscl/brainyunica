@@ -17,10 +17,10 @@ const AuthPage: React.FC = () => {
   const [isSignup, setIsSignup] = useState(false);
 
   useEffect(() => {
-    document.title = isSignup ? "Crear cuenta | LeadWhisper" : "Iniciar sesión | LeadWhisper";
+    document.title = isSignup ? "Crear cuenta - ÚNICA" : "Iniciar sesión - ÚNICA";
     const desc = isSignup
-      ? "Crear cuenta en LeadWhisper para gestionar tus leads."
-      : "Inicia sesión en LeadWhisper para acceder a tu dashboard de leads.";
+      ? "Crea tu cuenta en ÚNICA Command Center y centraliza tu agencia creativa"
+      : "Accede a ÚNICA Command Center - La plataforma integral para agencias";
     let meta = document.querySelector('meta[name="description"]');
     if (!meta) {
       meta = document.createElement("meta");
@@ -34,13 +34,13 @@ const AuthPage: React.FC = () => {
     // Redirect if already logged in
     const sub = supabase.auth.onAuthStateChange((event, session) => {
       if (session?.user) {
-        navigate("/", { replace: true });
+        navigate("/dashboard", { replace: true });
       }
     });
 
     supabase.auth.getSession().then(({ data }) => {
       if (data.session?.user) {
-        navigate("/", { replace: true });
+        navigate("/dashboard", { replace: true });
       }
     });
 
@@ -58,7 +58,7 @@ const AuthPage: React.FC = () => {
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: `${window.location.origin}/`,
+          redirectTo: `${window.location.origin}/dashboard`,
         },
       });
       if (error) throw error;
@@ -80,19 +80,18 @@ const AuthPage: React.FC = () => {
       } catch {}
 
       if (isSignup) {
-        const redirectUrl = `${window.location.origin}/`;
+        const redirectUrl = `${window.location.origin}/dashboard`;
         const { error } = await supabase.auth.signUp({
           email,
           password,
           options: { emailRedirectTo: redirectUrl },
         });
         if (error) throw error;
-        toast.success("Revisa tu email para confirmar el registro.");
+        toast.success("Revisa tu email para confirmar el registro");
       } else {
         const { error } = await supabase.auth.signInWithPassword({ email, password });
         if (error) throw error;
-        // Full reload after auth per best practices
-        window.location.href = "/";
+        window.location.href = "/dashboard";
       }
     } catch (err: any) {
       toast.error(err?.message || "Error de autenticación");
@@ -102,12 +101,14 @@ const AuthPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4 py-10">
+    <div className="min-h-screen bg-background flex items-center justify-center px-4 py-10">
       <Card className="w-full max-w-md">
         <CardHeader>
-          <CardTitle>{isSignup ? "Crear cuenta" : "Iniciar sesión"}</CardTitle>
+          <CardTitle className="text-2xl">
+            {isSignup ? "Crear cuenta en ÚNICA" : "Bienvenido a ÚNICA"}
+          </CardTitle>
           <CardDescription>
-            {isSignup ? "Regístrate con tu email y una contraseña segura." : "Accede con tu email y contraseña."}
+            {isSignup ? "Regístrate y empieza tu prueba gratuita de 14 días" : "Accede a tu Command Center"}
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -149,7 +150,7 @@ const AuthPage: React.FC = () => {
 
           <form onSubmit={handleSubmit} className="space-y-4 mt-6">
             <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
+              <Label htmlFor="email">Correo electrónico</Label>
               <Input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
             </div>
             <div className="space-y-2">
@@ -165,18 +166,22 @@ const AuthPage: React.FC = () => {
             {isSignup ? (
               <span>
                 ¿Ya tienes cuenta?{" "}
-                <button className="underline" onClick={() => setIsSignup(false)}>Inicia sesión</button>
+                <button className="text-primary hover:underline" onClick={() => setIsSignup(false)}>
+                  Inicia sesión
+                </button>
               </span>
             ) : (
               <span>
                 ¿No tienes cuenta?{" "}
-                <button className="underline" onClick={() => setIsSignup(true)}>Crea una</button>
+                <button className="text-primary hover:underline" onClick={() => setIsSignup(true)}>
+                  Crear cuenta gratis
+                </button>
               </span>
             )}
           </div>
 
-          <div className="text-xs text-muted-foreground text-center mt-6">
-            <Link to="/">Volver al inicio</Link>
+          <div className="text-sm text-muted-foreground text-center mt-6">
+            <Link to="/" className="hover:text-primary">← Volver al inicio</Link>
           </div>
         </CardContent>
       </Card>
