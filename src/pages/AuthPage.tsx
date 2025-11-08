@@ -101,8 +101,8 @@ const AuthPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background flex items-center justify-center px-4 py-10">
-      <Card className="w-full max-w-md">
+    <div className="min-h-screen bg-gradient-hero flex items-center justify-center px-4 py-10">
+      <Card className="w-full max-w-md shadow-glow">
         <CardHeader>
           <CardTitle className="text-2xl">
             {isSignup ? "Crear cuenta en ÚNICA" : "Bienvenido a ÚNICA"}

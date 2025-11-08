@@ -128,51 +128,38 @@ const LandingPage = () => {
       </header>
 
       {/* Hero Section */}
-      <section className="container mx-auto px-4 py-20 md:py-32">
-        <div className="max-w-4xl mx-auto text-center">
-          <Badge variant="outline" className="mb-4">
-            <Sparkles className="h-3 w-3 mr-1" />
-            La plataforma todo-en-uno para agencias
-          </Badge>
-          <h1 className="text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">
-            Command Center para Agencias Creativas
-          </h1>
-          <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-            Unifica creatividad, automatización, datos y pagos en una sola plataforma. 
-            Desde diseño hasta publicación, sin salir de ÚNICA.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" onClick={() => navigate("/auth")} className="text-lg px-8">
-              Empieza tu prueba de 14 días
-            </Button>
-            <Button size="lg" variant="outline" className="text-lg px-8">
-              Ver demo
-            </Button>
+      <section className="relative overflow-hidden bg-gradient-hero min-h-[600px] flex items-center">
+        <div className="container mx-auto px-4 py-20 md:py-32">
+          <div className="max-w-4xl mx-auto text-center">
+            <h1 className="text-5xl md:text-7xl font-bold mb-6 text-white">
+              Hacemos contenidos que venden. Punto.
+            </h1>
+            <p className="text-xl md:text-2xl text-white/90 mb-12 max-w-3xl mx-auto">
+              Agencia boutique de Performance Content Design para marcas que quieren resultados reales.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Button size="lg" onClick={() => navigate("/auth")} className="text-lg px-8">
+                Haz tu diagnóstico
+              </Button>
+              <Button size="lg" variant="secondary" className="text-lg px-8 bg-white/90 hover:bg-white text-foreground">
+                Ver nuestro portafolio
+              </Button>
+            </div>
           </div>
-          <p className="text-sm text-muted-foreground mt-4">
-            Sin tarjeta de crédito • Cancela cuando quieras
-          </p>
         </div>
       </section>
 
       {/* Features Section */}
-      <section className="bg-muted/50 py-20">
+      <section className="py-20 bg-muted/30">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              Todo lo que necesitas en un solo lugar
-            </h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto">
-              Deja de usar 10 herramientas diferentes. ÚNICA centraliza creatividad, 
-              automatización y gestión de campañas.
-            </p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-7xl mx-auto">
             {features.map((feature, index) => (
-              <Card key={index} className="border-border hover:border-primary/50 transition-colors">
+              <Card key={index} className="border-border hover:shadow-glow transition-smooth bg-card/50 backdrop-blur">
                 <CardHeader>
-                  <feature.icon className="h-10 w-10 text-primary mb-2" />
-                  <CardTitle>{feature.title}</CardTitle>
+                  <div className="h-16 w-16 rounded-full bg-gradient-primary flex items-center justify-center mb-4">
+                    <feature.icon className="h-8 w-8 text-white" />
+                  </div>
+                  <CardTitle className="text-xl">{feature.title}</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <CardDescription className="text-base">
@@ -239,21 +226,21 @@ const LandingPage = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="bg-primary text-primary-foreground py-20">
+      <section className="bg-gradient-primary text-white py-20">
         <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            ¿Listo para transformar tu agencia?
+          <h2 className="text-4xl md:text-5xl font-bold mb-6">
+            Hablemos de tu proyecto
           </h2>
-          <p className="text-xl mb-8 opacity-90 max-w-2xl mx-auto">
-            Únete a las agencias que ya confían en ÚNICA para gestionar su creatividad y campañas.
+          <p className="text-xl mb-8 text-white/90 max-w-2xl mx-auto">
+            Completa este formulario y nos pondremos en contacto contigo
           </p>
           <Button 
             size="lg" 
             variant="secondary" 
-            className="text-lg px-8"
+            className="text-lg px-8 bg-white hover:bg-white/90 text-foreground"
             onClick={() => navigate("/auth")}
           >
-            Empieza tu prueba gratuita
+            Enviar mensaje
           </Button>
         </div>
       </section>
