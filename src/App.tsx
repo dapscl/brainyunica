@@ -14,6 +14,7 @@ import OrganizationsPage from "./pages/OrganizationsPage";
 import ProjectsPage from "./pages/ProjectsPage";
 import BrandsPage from "./pages/BrandsPage";
 import ContentPage from "./pages/ContentPage";
+import OrganizationMembersPage from "./pages/OrganizationMembersPage";
 
 // Creamos una nueva instancia de QueryClient dentro de la función de componente
 const App = () => {
@@ -32,6 +33,7 @@ const App = () => {
             <Route path="/dashboard" element={<ProtectedRoute><DashboardPage /></ProtectedRoute>} />
             <Route path="/organizations" element={<ProtectedRoute><OrganizationsPage /></ProtectedRoute>} />
             <Route path="/organizations/:orgId" element={<ProtectedRoute><OrganizationsPage /></ProtectedRoute>} />
+            <Route path="/organizations/:orgId/members" element={<ProtectedRoute><OrganizationMembersPage /></ProtectedRoute>} />
             <Route path="/organizations/:orgId/projects" element={<ProtectedRoute><ProjectsPage /></ProtectedRoute>} />
             <Route path="/organizations/:orgId/brands" element={<ProtectedRoute><BrandsPage /></ProtectedRoute>} />
             <Route path="/projects/:projectId" element={<ProtectedRoute><ProjectsPage /></ProtectedRoute>} />

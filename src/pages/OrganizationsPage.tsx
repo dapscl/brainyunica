@@ -4,8 +4,9 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Building2, Plus, Users, Package } from "lucide-react";
+import { Building2, Plus, Users, Package, Settings } from "lucide-react";
 import { toast } from "sonner";
+import { usePermissions } from "@/hooks/usePermissions";
 
 interface Organization {
   id: string;
@@ -17,6 +18,7 @@ interface Organization {
 
 const OrganizationsPage = () => {
   const navigate = useNavigate();
+  const { canCreateOrganization } = usePermissions();
   const [organizations, setOrganizations] = useState<Organization[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -129,20 +131,36 @@ const OrganizationsPage = () => {
                   </div>
                 </CardHeader>
                 <CardContent>
-                  <div className="flex items-center justify-between">
+                  <div className="flex items-center justify-between mb-4">
                     <Badge className={getTierBadgeColor(org.subscription_tier)}>
                       {org.subscription_tier.replace("_", " ")}
                     </Badge>
-                    <div className="flex items-center gap-4 text-sm text-muted-foreground">
-                      <div className="flex items-center gap-1">
-                        <Package className="h-4 w-4" />
-                        <span>Marcas</span>
-                      </div>
-                      <div className="flex items-center gap-1">
-                        <Users className="h-4 w-4" />
-                        <span>Equipo</span>
-                      </div>
-                    </div>
+                  </div>
+                  <div className="flex gap-2">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="flex-1"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        navigate(`/organizations/${org.id}/members`);
+                      }}
+                    >
+                      <Users className="h-4 w-4 mr-2" />
+                      Equipo
+                    </Button>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="flex-1"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        navigate(`/organizations/${org.id}/brands`);
+                      }}
+                    >
+                      <Package className="h-4 w-4 mr-2" />
+                      Marcas
+                    </Button>
                   </div>
                 </CardContent>
               </Card>
