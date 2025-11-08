@@ -10,6 +10,10 @@ import DashboardPage from "./pages/DashboardPage";
 import NotFound from "./pages/NotFound";
 import AuthPage from "./pages/AuthPage";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
+import OrganizationsPage from "./pages/OrganizationsPage";
+import ProjectsPage from "./pages/ProjectsPage";
+import BrandsPage from "./pages/BrandsPage";
+import ContentPage from "./pages/ContentPage";
 
 // Creamos una nueva instancia de QueryClient dentro de la función de componente
 const App = () => {
@@ -26,6 +30,14 @@ const App = () => {
             <Route path="/" element={<LandingPage />} />
             <Route path="/auth" element={<AuthPage />} />
             <Route path="/dashboard" element={<ProtectedRoute><DashboardPage /></ProtectedRoute>} />
+            <Route path="/organizations" element={<ProtectedRoute><OrganizationsPage /></ProtectedRoute>} />
+            <Route path="/organizations/:orgId" element={<ProtectedRoute><OrganizationsPage /></ProtectedRoute>} />
+            <Route path="/organizations/:orgId/projects" element={<ProtectedRoute><ProjectsPage /></ProtectedRoute>} />
+            <Route path="/organizations/:orgId/brands" element={<ProtectedRoute><BrandsPage /></ProtectedRoute>} />
+            <Route path="/projects/:projectId" element={<ProtectedRoute><ProjectsPage /></ProtectedRoute>} />
+            <Route path="/projects/:projectId/content" element={<ProtectedRoute><ContentPage /></ProtectedRoute>} />
+            <Route path="/brands/:brandId" element={<ProtectedRoute><BrandsPage /></ProtectedRoute>} />
+            <Route path="/content/:contentId" element={<ProtectedRoute><ContentPage /></ProtectedRoute>} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>

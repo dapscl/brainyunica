@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Building2, Package, LogOut, Users } from "lucide-react";
+import { Building2, Package, LogOut, Briefcase, BarChart3 } from "lucide-react";
 import { robustSignOut } from "@/utils/auth";
 
 interface Profile {
@@ -11,6 +12,7 @@ interface Profile {
 }
 
 const DashboardPage = () => {
+  const navigate = useNavigate();
   const [profile, setProfile] = useState<Profile | null>(null);
 
   useEffect(() => {
@@ -52,19 +54,19 @@ const DashboardPage = () => {
 
       <main className="container mx-auto px-4 py-8">
         <div className="mb-8">
-          <h2 className="text-3xl font-bold mb-2">Bienvenido a ÚNICA</h2>
+          <h2 className="text-3xl font-bold mb-2">Brainy Command Center</h2>
           <p className="text-muted-foreground">
-            Centro de integración para agencias de creatividad y automatización
+            Tu centro de gestión integral para marketing, creatividad y análisis
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <Card>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <Card className="hover:shadow-glow transition-smooth cursor-pointer" onClick={() => navigate("/organizations")}>
             <CardHeader>
               <Building2 className="h-8 w-8 text-primary mb-2" />
               <CardTitle>Organizaciones</CardTitle>
               <CardDescription>
-                Gestiona tus agencias y equipos
+                Gestiona tus organizaciones
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -74,12 +76,12 @@ const DashboardPage = () => {
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className="hover:shadow-glow transition-smooth cursor-pointer" onClick={() => navigate("/organizations")}>
             <CardHeader>
               <Package className="h-8 w-8 text-primary mb-2" />
               <CardTitle>Marcas</CardTitle>
               <CardDescription>
-                Administra las marcas de tus clientes
+                Administra tus marcas
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -89,17 +91,32 @@ const DashboardPage = () => {
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className="hover:shadow-glow transition-smooth cursor-pointer" onClick={() => navigate("/organizations")}>
             <CardHeader>
-              <Users className="h-8 w-8 text-primary mb-2" />
-              <CardTitle>Equipo</CardTitle>
+              <Briefcase className="h-8 w-8 text-primary mb-2" />
+              <CardTitle>Proyectos</CardTitle>
               <CardDescription>
-                Gestiona colaboradores y roles
+                Gestiona tus proyectos
               </CardDescription>
             </CardHeader>
             <CardContent>
               <Button variant="outline" className="w-full">
-                Ver equipo
+                Ver proyectos
+              </Button>
+            </CardContent>
+          </Card>
+
+          <Card className="hover:shadow-glow transition-smooth cursor-pointer">
+            <CardHeader>
+              <BarChart3 className="h-8 w-8 text-primary mb-2" />
+              <CardTitle>Analítica</CardTitle>
+              <CardDescription>
+                Métricas y reportes
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Button variant="outline" className="w-full">
+                Ver analítica
               </Button>
             </CardContent>
           </Card>
@@ -108,7 +125,7 @@ const DashboardPage = () => {
         <Card className="mt-8">
           <CardHeader>
             <CardTitle>Estado del Sistema</CardTitle>
-            <CardDescription>FASE 1: Fundación completada</CardDescription>
+            <CardDescription>Base de datos configurada y lista para usar</CardDescription>
           </CardHeader>
           <CardContent>
             <ul className="space-y-2 text-sm">
@@ -125,8 +142,8 @@ const DashboardPage = () => {
                 Autenticación activa
               </li>
               <li className="flex items-center gap-2">
-                <span className="h-2 w-2 rounded-full bg-yellow-500"></span>
-                Módulos de creatividad: En desarrollo
+                <span className="h-2 w-2 rounded-full bg-green-500"></span>
+                Páginas de gestión creadas
               </li>
             </ul>
           </CardContent>
