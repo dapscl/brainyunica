@@ -54,53 +54,57 @@ const LandingPage = () => {
 
   const plans = [
     {
-      name: "Starter",
-      price: "$49",
+      name: "Essential",
+      price: "$490",
       period: "/mes",
-      description: "Perfecto para freelancers y pequeños equipos",
+      description: "Startups y equipos de marketing que necesitan centralizar todo",
       features: [
-        "1 organización",
-        "Hasta 3 marcas",
-        "5 usuarios",
-        "Brand Kit básico",
-        "Calendario y automatizaciones",
+        "3 marcas completas",
+        "5 usuarios incluidos",
+        "500 generaciones IA mensuales",
+        "100 publicaciones automáticas",
+        "100 GB de almacenamiento",
+        "Métricas estándar",
+        "Meta / Google / Adobe",
         "Soporte por email"
       ],
-      cta: "Prueba 14 días gratis",
+      cta: "Comenzar ahora",
       popular: false
     },
     {
       name: "Professional",
-      price: "$149",
+      price: "$990",
       period: "/mes",
-      description: "Para agencias en crecimiento",
+      description: "Agencias y marcas medianas con alto volumen de trabajo",
       features: [
-        "Organizaciones ilimitadas",
-        "Hasta 15 marcas",
-        "20 usuarios",
-        "Brand Kits avanzados",
-        "Integraciones Adobe CC",
-        "Paid Media Management",
-        "Reportes y analytics",
-        "Soporte prioritario"
+        "10 marcas completas",
+        "20 usuarios incluidos",
+        "3,000 generaciones IA mensuales",
+        "1,000 publicaciones automáticas",
+        "500 GB de almacenamiento",
+        "Métricas en tiempo real",
+        "+TikTok / LinkedIn integrados",
+        "IA visual + copywriting avanzado",
+        "Chat prioritario"
       ],
-      cta: "Prueba 14 días gratis",
+      cta: "Escala con control",
       popular: true
     },
     {
       name: "Enterprise",
-      price: "Custom",
-      period: "",
-      description: "Para grandes agencias y corporativos",
+      price: "Desde $2,500",
+      period: "/mes",
+      description: "Corporaciones y agencias multinivel con múltiples marcas",
       features: [
-        "Todo en Professional",
         "Marcas ilimitadas",
         "Usuarios ilimitados",
-        "Integraciones personalizadas",
-        "API dedicada",
-        "SLA garantizado",
-        "Account manager dedicado",
-        "Onboarding personalizado"
+        "Generaciones IA personalizadas",
+        "Publicaciones ilimitadas",
+        "Almacenamiento escalable",
+        "Analítica avanzada + Mix™",
+        "API abierta y conectores personalizados",
+        "IA avanzada (texto, imagen, voz, video)",
+        "Dedicated Manager"
       ],
       cta: "Contactar ventas",
       popular: false
