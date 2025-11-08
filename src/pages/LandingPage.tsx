@@ -116,7 +116,10 @@ const LandingPage = () => {
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Package className="h-8 w-8 text-primary" />
-            <span className="text-xl font-bold">ÚNICA</span>
+            <div className="flex flex-col">
+              <span className="text-xl font-bold leading-none">Brainy</span>
+              <span className="text-xs text-muted-foreground leading-none">by única.la</span>
+            </div>
           </div>
           <div className="flex items-center gap-4">
             <Button variant="ghost" onClick={() => navigate("/auth")}>
@@ -134,10 +137,13 @@ const LandingPage = () => {
         <div className="container mx-auto px-4 py-20 md:py-32">
           <div className="max-w-4xl mx-auto text-center">
             <h1 className="text-5xl md:text-7xl font-bold mb-6 text-white">
-              Única Command Center
+              Brainy Command Center
             </h1>
+            <p className="text-sm md:text-base text-white/70 mb-2 uppercase tracking-wider">
+              by única.la
+            </p>
             <p className="text-xl md:text-2xl text-white/90 mb-4 max-w-3xl mx-auto">
-              Cuatro plataformas, una sola interfaz. Gestiona tu marca desde el brief hasta el ROI.
+              Toda la operación creativa, publicitaria y automatizada de una marca en un solo entorno.
             </p>
             <p className="text-lg md:text-xl text-white/80 mb-12 max-w-3xl mx-auto">
               🚀 Empieza ahora y transforma creatividad, automatización y resultados en un solo lugar.
@@ -183,7 +189,7 @@ const LandingPage = () => {
               </div>
             </div>
             <p className="text-xl font-semibold mt-8 text-primary">
-              Con Única Command Center, tu marca opera sin silos.
+              Con Brainy Command Center, tu marca opera sin silos.
             </p>
           </div>
         </div>
@@ -332,7 +338,7 @@ const LandingPage = () => {
             Empieza hoy
           </h2>
           <p className="text-xl mb-8 text-white/90 max-w-2xl mx-auto">
-            Agenda tu demo privada y descubre cómo Única Command Center puede transformar tu operación de marketing.
+            Agenda tu demo privada y descubre cómo Brainy Command Center puede transformar tu operación de marketing.
           </p>
           <Button 
             size="lg" 
@@ -351,10 +357,13 @@ const LandingPage = () => {
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <div className="flex items-center gap-2">
               <Package className="h-6 w-6 text-primary" />
-              <span className="font-bold">ÚNICA Command Center</span>
+              <div className="flex flex-col">
+                <span className="font-bold leading-none">Brainy Command Center</span>
+                <span className="text-xs text-muted-foreground leading-none">by única.la</span>
+              </div>
             </div>
             <p className="text-sm text-muted-foreground">
-              © 2025 ÚNICA. Todos los derechos reservados.
+              © 2025 Única.LA. Todos los derechos reservados.
             </p>
           </div>
         </div>
