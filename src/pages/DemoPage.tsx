@@ -69,34 +69,55 @@ const DemoPage = () => {
 
       // 2. Crear Marcas
       setProgress(prev => [...prev, 'Creando marcas de ejemplo...']);
-      const brands = await Promise.all([
-        supabase.from('brands').insert({
+      
+      // Insertar marcas sin RETURNING para evitar conflictos con RLS
+      const brandSlugs = {
+        techstart: 'techstart-' + Date.now(),
+        ecogreen: 'ecogreen-' + Date.now() + 1,
+        fitlife: 'fitlife-' + Date.now() + 2
+      };
+
+      const brandsData = [
+        {
           organization_id: org.id,
           name: 'TechStart Solutions',
-          slug: 'techstart-' + Date.now(),
+          slug: brandSlugs.techstart,
           industry: 'Tecnología',
           logo_url: demoTechstartImage,
           website: 'https://techstart.demo'
-        }).select().single(),
-        supabase.from('brands').insert({
+        },
+        {
           organization_id: org.id,
           name: 'EcoGreen Products',
-          slug: 'ecogreen-' + Date.now(),
+          slug: brandSlugs.ecogreen,
           industry: 'Sostenibilidad',
           logo_url: demoEcogreenImage,
           website: 'https://ecogreen.demo'
-        }).select().single(),
-        supabase.from('brands').insert({
+        },
+        {
           organization_id: org.id,
           name: 'FitLife Gym',
-          slug: 'fitlife-' + Date.now(),
+          slug: brandSlugs.fitlife,
           industry: 'Fitness',
           logo_url: demoFitlifeImage,
           website: 'https://fitlife.demo'
-        }).select().single()
+        }
+      ];
+
+      const brandInserts = await Promise.all(
+        brandsData.map(brand => supabase.from('brands').insert(brand))
+      );
+
+      if (brandInserts.some(b => b.error)) throw new Error('Error insertando marcas');
+
+      // Recuperar marcas recién creadas
+      const brands = await Promise.all([
+        supabase.from('brands').select('id').eq('slug', brandSlugs.techstart).single(),
+        supabase.from('brands').select('id').eq('slug', brandSlugs.ecogreen).single(),
+        supabase.from('brands').select('id').eq('slug', brandSlugs.fitlife).single()
       ]);
 
-      if (brands.some(b => b.error)) throw new Error('Error creando marcas');
+      if (brands.some(b => b.error)) throw new Error('Error recuperando marcas');
       setProgress(prev => [...prev, '✓ 3 Marcas creadas']);
 
       // 3. Crear Brand Kits
