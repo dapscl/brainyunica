@@ -27,6 +27,7 @@ import ContentCalendarPage from "./pages/ContentCalendarPage";
 import PublicationQueuePage from "./pages/PublicationQueuePage";
 import UsersAdminPage from "./pages/UsersAdminPage";
 import MediaLibraryPage from "./pages/MediaLibraryPage";
+import TemplatesPage from "./pages/TemplatesPage";
 
 const App = () => {
   return (
@@ -52,6 +53,7 @@ const App = () => {
         <Route path="/organizations/:orgId/brands" element={<ProtectedRoute><BrandsPage /></ProtectedRoute>} />
         <Route path="/organizations/:orgId/brands/new" element={<ProtectedRoute><CreateBrandPage /></ProtectedRoute>} />
         <Route path="/organizations/:orgId/media" element={<ProtectedRoute><MediaLibraryPage /></ProtectedRoute>} />
+        <Route path="/organizations/:orgId/templates" element={<ProtectedRoute><TemplatesPage /></ProtectedRoute>} />
         <Route path="/brands/:brandId" element={<ProtectedRoute><BrandsPage /></ProtectedRoute>} />
         <Route path="/brands/:brandId/edit" element={<ProtectedRoute><EditBrandPage /></ProtectedRoute>} />
         <Route path="/brands/:brandId/kit" element={<ProtectedRoute><BrandKitEditorPage /></ProtectedRoute>} />

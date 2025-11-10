@@ -3,9 +3,12 @@ import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { AppHeader } from "@/components/layout/AppHeader";
 import { DynamicBreadcrumb } from "@/components/navigation/DynamicBreadcrumb";
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, Legend } from "recharts";
-import { Building2, Package, Briefcase, Users, TrendingUp, Activity } from "lucide-react";
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, Legend, LineChart, Line, AreaChart, Area } from "recharts";
+import { Building2, Package, Briefcase, Users, TrendingUp, Activity, Download, Calendar } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Button } from "@/components/ui/button";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { useTranslation } from "react-i18next";
 
 interface Stats {
   totalOrganizations: number;
@@ -22,9 +25,11 @@ interface ProjectsByStatus {
 const COLORS = ['#6366f1', '#8b5cf6', '#ec4899', '#f59e0b', '#10b981'];
 
 export default function AnalyticsPage() {
+  const { t } = useTranslation();
   const [stats, setStats] = useState<Stats | null>(null);
   const [projectsByStatus, setProjectsByStatus] = useState<ProjectsByStatus[]>([]);
   const [loading, setLoading] = useState(true);
+  const [timePeriod, setTimePeriod] = useState("monthly");
 
   useEffect(() => {
     loadAnalytics();
@@ -105,10 +110,32 @@ export default function AnalyticsPage() {
         <DynamicBreadcrumb />
         
         <div className="mb-8">
-          <h1 className="text-3xl font-bold mb-2">Analytics</h1>
-          <p className="text-muted-foreground">
-            Visualiza el rendimiento y actividad de tu organización
-          </p>
+          <div className="flex justify-between items-start">
+            <div>
+              <h1 className="text-3xl font-bold mb-2">{t("analytics.title")}</h1>
+              <p className="text-muted-foreground">
+                Visualiza el rendimiento y actividad de tu organización
+              </p>
+            </div>
+            <div className="flex gap-2">
+              <Select value={timePeriod} onValueChange={setTimePeriod}>
+                <SelectTrigger className="w-40">
+                  <Calendar className="mr-2 h-4 w-4" />
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="daily">{t("analytics.daily")}</SelectItem>
+                  <SelectItem value="weekly">{t("analytics.weekly")}</SelectItem>
+                  <SelectItem value="monthly">{t("analytics.monthly")}</SelectItem>
+                  <SelectItem value="yearly">{t("analytics.yearly")}</SelectItem>
+                </SelectContent>
+              </Select>
+              <Button variant="outline">
+                <Download className="mr-2 h-4 w-4" />
+                {t("analytics.export")}
+              </Button>
+            </div>
+          </div>
         </div>
 
         {loading ? (
@@ -173,7 +200,7 @@ export default function AnalyticsPage() {
             </div>
 
             {/* Charts */}
-            <div className="grid gap-6 md:grid-cols-2">
+            <div className="grid gap-6 md:grid-cols-2 mb-6">
               <Card>
                 <CardHeader>
                   <CardTitle>Proyectos por Estado</CardTitle>
@@ -228,6 +255,73 @@ export default function AnalyticsPage() {
                       <Tooltip />
                       <Bar dataKey="value" fill="#6366f1" />
                     </BarChart>
+                  </ResponsiveContainer>
+                </CardContent>
+              </Card>
+            </div>
+
+            {/* Additional Analytics */}
+            <div className="grid gap-6 md:grid-cols-2">
+              <Card>
+                <CardHeader>
+                  <CardTitle>Tendencia de Crecimiento</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <ResponsiveContainer width="100%" height={300}>
+                    <AreaChart
+                      data={[
+                        { mes: "Ene", proyectos: 4, marcas: 2 },
+                        { mes: "Feb", proyectos: 6, marcas: 3 },
+                        { mes: "Mar", proyectos: 8, marcas: 4 },
+                        { mes: "Abr", proyectos: 10, marcas: 5 },
+                        { mes: "May", proyectos: 12, marcas: 6 },
+                        { mes: "Jun", proyectos: stats?.totalProjects || 15, marcas: stats?.totalBrands || 7 },
+                      ]}
+                    >
+                      <defs>
+                        <linearGradient id="colorProjects" x1="0" y1="0" x2="0" y2="1">
+                          <stop offset="5%" stopColor="#6366f1" stopOpacity={0.8}/>
+                          <stop offset="95%" stopColor="#6366f1" stopOpacity={0}/>
+                        </linearGradient>
+                        <linearGradient id="colorBrands" x1="0" y1="0" x2="0" y2="1">
+                          <stop offset="5%" stopColor="#8b5cf6" stopOpacity={0.8}/>
+                          <stop offset="95%" stopColor="#8b5cf6" stopOpacity={0}/>
+                        </linearGradient>
+                      </defs>
+                      <CartesianGrid strokeDasharray="3 3" />
+                      <XAxis dataKey="mes" />
+                      <YAxis />
+                      <Tooltip />
+                      <Area type="monotone" dataKey="proyectos" stroke="#6366f1" fillOpacity={1} fill="url(#colorProjects)" />
+                      <Area type="monotone" dataKey="marcas" stroke="#8b5cf6" fillOpacity={1} fill="url(#colorBrands)" />
+                      <Legend />
+                    </AreaChart>
+                  </ResponsiveContainer>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardHeader>
+                  <CardTitle>Actividad de Equipo</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <ResponsiveContainer width="100%" height={300}>
+                    <LineChart
+                      data={[
+                        { semana: "Sem 1", actividad: 12 },
+                        { semana: "Sem 2", actividad: 19 },
+                        { semana: "Sem 3", actividad: 15 },
+                        { semana: "Sem 4", actividad: 25 },
+                        { semana: "Sem 5", actividad: 22 },
+                        { semana: "Sem 6", actividad: 30 },
+                      ]}
+                    >
+                      <CartesianGrid strokeDasharray="3 3" />
+                      <XAxis dataKey="semana" />
+                      <YAxis />
+                      <Tooltip />
+                      <Line type="monotone" dataKey="actividad" stroke="#ec4899" strokeWidth={2} />
+                    </LineChart>
                   </ResponsiveContainer>
                 </CardContent>
               </Card>

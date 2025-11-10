@@ -14,6 +14,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
 import { NotificationCenter } from "@/components/notifications/NotificationCenter";
+import { LanguageSelector } from "@/components/layout/LanguageSelector";
 
 interface Profile {
   full_name: string | null;
@@ -85,6 +86,7 @@ export const AppHeader = () => {
         </div>
         <div className="flex items-center gap-2">
           <NotificationCenter />
+          <LanguageSelector />
           <Button
             variant="ghost"
             size="icon"

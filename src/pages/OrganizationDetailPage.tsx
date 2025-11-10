@@ -6,7 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
-import { Building2, Users, Package, FileText, Settings, ArrowLeft, Image } from "lucide-react";
+import { Building2, Users, Package, FileText, Settings, ArrowLeft, Image, FileType } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 
 interface Organization {
@@ -192,7 +192,7 @@ export default function OrganizationDetailPage() {
               </Card>
             </div>
 
-            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
               <Card 
                 className="hover:shadow-glow transition-smooth cursor-pointer"
                 onClick={() => navigate(`/organizations/${id}/media`)}
@@ -206,6 +206,22 @@ export default function OrganizationDetailPage() {
                 <CardContent>
                   <p className="text-sm text-muted-foreground">
                     Gestiona archivos multimedia
+                  </p>
+                </CardContent>
+              </Card>
+              <Card 
+                className="hover:shadow-glow transition-smooth cursor-pointer"
+                onClick={() => navigate(`/organizations/${id}/templates`)}
+              >
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <FileType className="h-5 w-5" />
+                    Plantillas
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-sm text-muted-foreground">
+                    Gestiona plantillas de contenido
                   </p>
                 </CardContent>
               </Card>
