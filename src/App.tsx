@@ -2,67 +2,82 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Routes, Route } from "react-router-dom";
+import { lazy, Suspense } from "react";
+import { Skeleton } from "@/components/ui/skeleton";
+
+// Eager load critical pages
 import LandingPage from "./pages/LandingPage";
-import DashboardPage from "./pages/DashboardPage";
-import NotFound from "./pages/NotFound";
 import AuthPage from "./pages/AuthPage";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
-import OrganizationsPage from "./pages/OrganizationsPage";
-import ProjectsPage from "./pages/ProjectsPage";
-import BrandsPage from "./pages/BrandsPage";
-import ContentPage from "./pages/ContentPage";
-import OrganizationMembersPage from "./pages/OrganizationMembersPage";
-import CreateOrganizationPage from "./pages/CreateOrganizationPage";
-import CreateBrandPage from "./pages/CreateBrandPage";
-import CreateProjectPage from "./pages/CreateProjectPage";
-import EditOrganizationPage from "./pages/EditOrganizationPage";
-import EditBrandPage from "./pages/EditBrandPage";
-import EditProjectPage from "./pages/EditProjectPage";
-import AuditLogPage from "./pages/AuditLogPage";
-import OrganizationDetailPage from "./pages/OrganizationDetailPage";
-import AnalyticsPage from "./pages/AnalyticsPage";
-import BrandKitEditorPage from "./pages/BrandKitEditorPage";
-import ContentEditorPage from "./pages/ContentEditorPage";
-import ContentCalendarPage from "./pages/ContentCalendarPage";
-import PublicationQueuePage from "./pages/PublicationQueuePage";
-import UsersAdminPage from "./pages/UsersAdminPage";
-import MediaLibraryPage from "./pages/MediaLibraryPage";
-import TemplatesPage from "./pages/TemplatesPage";
+
+// Lazy load other pages
+const DashboardPage = lazy(() => import("./pages/DashboardPage"));
+const NotFound = lazy(() => import("./pages/NotFound"));
+const OrganizationsPage = lazy(() => import("./pages/OrganizationsPage"));
+const ProjectsPage = lazy(() => import("./pages/ProjectsPage"));
+const BrandsPage = lazy(() => import("./pages/BrandsPage"));
+const ContentPage = lazy(() => import("./pages/ContentPage"));
+const OrganizationMembersPage = lazy(() => import("./pages/OrganizationMembersPage"));
+const CreateOrganizationPage = lazy(() => import("./pages/CreateOrganizationPage"));
+const CreateBrandPage = lazy(() => import("./pages/CreateBrandPage"));
+const CreateProjectPage = lazy(() => import("./pages/CreateProjectPage"));
+const EditOrganizationPage = lazy(() => import("./pages/EditOrganizationPage"));
+const EditBrandPage = lazy(() => import("./pages/EditBrandPage"));
+const EditProjectPage = lazy(() => import("./pages/EditProjectPage"));
+const AuditLogPage = lazy(() => import("./pages/AuditLogPage"));
+const OrganizationDetailPage = lazy(() => import("./pages/OrganizationDetailPage"));
+const AnalyticsPage = lazy(() => import("./pages/AnalyticsPage"));
+const BrandKitEditorPage = lazy(() => import("./pages/BrandKitEditorPage"));
+const ContentEditorPage = lazy(() => import("./pages/ContentEditorPage"));
+const ContentCalendarPage = lazy(() => import("./pages/ContentCalendarPage"));
+const PublicationQueuePage = lazy(() => import("./pages/PublicationQueuePage"));
+const UsersAdminPage = lazy(() => import("./pages/UsersAdminPage"));
+const MediaLibraryPage = lazy(() => import("./pages/MediaLibraryPage"));
+const TemplatesPage = lazy(() => import("./pages/TemplatesPage"));
+
+const LoadingFallback = () => (
+  <div className="min-h-screen bg-background p-8">
+    <Skeleton className="h-12 w-64 mb-8" />
+    <Skeleton className="h-[400px] w-full" />
+  </div>
+);
 
 const App = () => {
   return (
     <TooltipProvider>
       <Toaster />
       <Sonner />
-      <Routes>
-        <Route path="/" element={<LandingPage />} />
-        <Route path="/auth" element={<AuthPage />} />
-        <Route path="/dashboard" element={<ProtectedRoute><DashboardPage /></ProtectedRoute>} />
-        <Route path="/organizations" element={<ProtectedRoute><OrganizationsPage /></ProtectedRoute>} />
-        <Route path="/organizations/new" element={<ProtectedRoute><CreateOrganizationPage /></ProtectedRoute>} />
-        <Route path="/organizations/:orgId/edit" element={<ProtectedRoute><EditOrganizationPage /></ProtectedRoute>} />
-        <Route path="/organizations/:id" element={<ProtectedRoute><OrganizationDetailPage /></ProtectedRoute>} />
-        <Route path="/audit-logs" element={<ProtectedRoute><AuditLogPage /></ProtectedRoute>} />
-        <Route path="/analytics" element={<ProtectedRoute><AnalyticsPage /></ProtectedRoute>} />
-        <Route path="/admin/users" element={<ProtectedRoute><UsersAdminPage /></ProtectedRoute>} />
-        <Route path="/organizations/:orgId/members" element={<ProtectedRoute><OrganizationMembersPage /></ProtectedRoute>} />
-        <Route path="/organizations/:orgId/projects" element={<ProtectedRoute><ProjectsPage /></ProtectedRoute>} />
-        <Route path="/organizations/:orgId/projects/new" element={<ProtectedRoute><CreateProjectPage /></ProtectedRoute>} />
-        <Route path="/projects/:projectId/edit" element={<ProtectedRoute><EditProjectPage /></ProtectedRoute>} />
-        <Route path="/projects/:projectId/content" element={<ProtectedRoute><ContentPage /></ProtectedRoute>} />
-        <Route path="/organizations/:orgId/brands" element={<ProtectedRoute><BrandsPage /></ProtectedRoute>} />
-        <Route path="/organizations/:orgId/brands/new" element={<ProtectedRoute><CreateBrandPage /></ProtectedRoute>} />
-        <Route path="/organizations/:orgId/media" element={<ProtectedRoute><MediaLibraryPage /></ProtectedRoute>} />
-        <Route path="/organizations/:orgId/templates" element={<ProtectedRoute><TemplatesPage /></ProtectedRoute>} />
-        <Route path="/brands/:brandId" element={<ProtectedRoute><BrandsPage /></ProtectedRoute>} />
-        <Route path="/brands/:brandId/edit" element={<ProtectedRoute><EditBrandPage /></ProtectedRoute>} />
-        <Route path="/brands/:brandId/kit" element={<ProtectedRoute><BrandKitEditorPage /></ProtectedRoute>} />
-            <Route path="/projects/:projectId/content/new" element={<ProtectedRoute><ContentEditorPage /></ProtectedRoute>} />
-            <Route path="/projects/:projectId/content/:contentId" element={<ProtectedRoute><ContentEditorPage /></ProtectedRoute>} />
-            <Route path="/projects/:projectId/calendar" element={<ProtectedRoute><ContentCalendarPage /></ProtectedRoute>} />
-            <Route path="/projects/:projectId/queue" element={<ProtectedRoute><PublicationQueuePage /></ProtectedRoute>} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
+      <Suspense fallback={<LoadingFallback />}>
+        <Routes>
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/auth" element={<AuthPage />} />
+          <Route path="/dashboard" element={<ProtectedRoute><DashboardPage /></ProtectedRoute>} />
+          <Route path="/organizations" element={<ProtectedRoute><OrganizationsPage /></ProtectedRoute>} />
+          <Route path="/organizations/new" element={<ProtectedRoute><CreateOrganizationPage /></ProtectedRoute>} />
+          <Route path="/organizations/:orgId/edit" element={<ProtectedRoute><EditOrganizationPage /></ProtectedRoute>} />
+          <Route path="/organizations/:id" element={<ProtectedRoute><OrganizationDetailPage /></ProtectedRoute>} />
+          <Route path="/audit-logs" element={<ProtectedRoute><AuditLogPage /></ProtectedRoute>} />
+          <Route path="/analytics" element={<ProtectedRoute><AnalyticsPage /></ProtectedRoute>} />
+          <Route path="/admin/users" element={<ProtectedRoute><UsersAdminPage /></ProtectedRoute>} />
+          <Route path="/organizations/:orgId/members" element={<ProtectedRoute><OrganizationMembersPage /></ProtectedRoute>} />
+          <Route path="/organizations/:orgId/projects" element={<ProtectedRoute><ProjectsPage /></ProtectedRoute>} />
+          <Route path="/organizations/:orgId/projects/new" element={<ProtectedRoute><CreateProjectPage /></ProtectedRoute>} />
+          <Route path="/projects/:projectId/edit" element={<ProtectedRoute><EditProjectPage /></ProtectedRoute>} />
+          <Route path="/projects/:projectId/content" element={<ProtectedRoute><ContentPage /></ProtectedRoute>} />
+          <Route path="/organizations/:orgId/brands" element={<ProtectedRoute><BrandsPage /></ProtectedRoute>} />
+          <Route path="/organizations/:orgId/brands/new" element={<ProtectedRoute><CreateBrandPage /></ProtectedRoute>} />
+          <Route path="/organizations/:orgId/media" element={<ProtectedRoute><MediaLibraryPage /></ProtectedRoute>} />
+          <Route path="/organizations/:orgId/templates" element={<ProtectedRoute><TemplatesPage /></ProtectedRoute>} />
+          <Route path="/brands/:brandId" element={<ProtectedRoute><BrandsPage /></ProtectedRoute>} />
+          <Route path="/brands/:brandId/edit" element={<ProtectedRoute><EditBrandPage /></ProtectedRoute>} />
+          <Route path="/brands/:brandId/kit" element={<ProtectedRoute><BrandKitEditorPage /></ProtectedRoute>} />
+          <Route path="/projects/:projectId/content/new" element={<ProtectedRoute><ContentEditorPage /></ProtectedRoute>} />
+          <Route path="/projects/:projectId/content/:contentId" element={<ProtectedRoute><ContentEditorPage /></ProtectedRoute>} />
+          <Route path="/projects/:projectId/calendar" element={<ProtectedRoute><ContentCalendarPage /></ProtectedRoute>} />
+          <Route path="/projects/:projectId/queue" element={<ProtectedRoute><PublicationQueuePage /></ProtectedRoute>} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </Suspense>
     </TooltipProvider>
   );
 };
