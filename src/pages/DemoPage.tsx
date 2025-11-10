@@ -23,6 +23,36 @@ const DemoPage = () => {
         return;
       }
 
+      // Verificar si el usuario tiene rol admin
+      setProgress(prev => [...prev, 'Verificando permisos...']);
+      const { data: userRole } = await supabase
+        .from('user_roles')
+        .select('role')
+        .eq('user_id', user.id)
+        .eq('role', 'admin')
+        .maybeSingle();
+
+      if (!userRole) {
+        // Si no es admin, crear el rol admin para este usuario
+        setProgress(prev => [...prev, 'Configurando permisos de administrador...']);
+        const { error: roleError } = await supabase
+          .from('user_roles')
+          .insert({
+            user_id: user.id,
+            role: 'admin'
+          });
+
+        if (roleError) {
+          toast.error('No tienes permisos para crear datos de prueba. Contacta al administrador del sistema.');
+          setProgress(prev => [...prev, '❌ Error: Se requieren permisos de administrador']);
+          setLoading(false);
+          return;
+        }
+        setProgress(prev => [...prev, '✓ Permisos configurados']);
+      } else {
+        setProgress(prev => [...prev, '✓ Permisos verificados']);
+      }
+
       // 1. Crear Organización
       setProgress(prev => [...prev, 'Creando organización de prueba...']);
       const { data: org, error: orgError } = await supabase
