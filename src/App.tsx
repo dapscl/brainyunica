@@ -44,6 +44,8 @@ const App = () => {
         <Route path="/organizations/:orgId/members" element={<ProtectedRoute><OrganizationMembersPage /></ProtectedRoute>} />
         <Route path="/organizations/:orgId/projects" element={<ProtectedRoute><ProjectsPage /></ProtectedRoute>} />
         <Route path="/organizations/:orgId/projects/new" element={<ProtectedRoute><CreateProjectPage /></ProtectedRoute>} />
+        <Route path="/projects/:projectId/edit" element={<ProtectedRoute><EditProjectPage /></ProtectedRoute>} />
+        <Route path="/projects/:projectId/content" element={<ProtectedRoute><ContentPage /></ProtectedRoute>} />
         <Route path="/organizations/:orgId/brands" element={<ProtectedRoute><BrandsPage /></ProtectedRoute>} />
         <Route path="/organizations/:orgId/brands/new" element={<ProtectedRoute><CreateBrandPage /></ProtectedRoute>} />
         <Route path="/brands/:brandId" element={<ProtectedRoute><BrandsPage /></ProtectedRoute>} />
@@ -53,7 +55,6 @@ const App = () => {
             <Route path="/projects/:projectId/content/:contentId" element={<ProtectedRoute><ContentEditorPage /></ProtectedRoute>} />
             <Route path="/projects/:projectId/calendar" element={<ProtectedRoute><ContentCalendarPage /></ProtectedRoute>} />
             <Route path="/projects/:projectId/queue" element={<ProtectedRoute><PublicationQueuePage /></ProtectedRoute>} />
-        <Route path="/content/:contentId" element={<ProtectedRoute><ContentPage /></ProtectedRoute>} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </TooltipProvider>
