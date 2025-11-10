@@ -34,18 +34,26 @@ const DemoPage = () => {
 
       // 1. Crear Organización
       setProgress(prev => [...prev, 'Creando organización de prueba...']);
-      const { data: org, error: orgError } = await supabase
-        .from('organizations')
-        .insert({
-          name: 'Demo Marketing Agency',
-          slug: 'demo-agency-' + Date.now(),
-          owner_id: user.id,
-          logo_url: 'https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d'
-        })
-        .select()
-        .single();
+        const orgSlug = 'demo-agency-' + Date.now();
+        const { error: orgInsertError } = await supabase
+          .from('organizations')
+          .insert({
+            name: 'Demo Marketing Agency',
+            slug: orgSlug,
+            owner_id: user.id,
+            logo_url: 'https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d'
+          });
 
-      if (orgError) throw orgError;
+        if (orgInsertError) throw orgInsertError;
+
+        // Recuperar organización recién creada evitando RETURNING bajo RLS
+        const { data: org, error: orgSelectError } = await supabase
+          .from('organizations')
+          .select('id')
+          .eq('slug', orgSlug)
+          .single();
+
+        if (orgSelectError) throw orgSelectError;
       
       // Agregar al usuario como miembro de la organización
       const { error: memberError } = await supabase
