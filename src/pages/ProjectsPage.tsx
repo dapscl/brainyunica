@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { AppHeader } from "@/components/layout/AppHeader";
+import { SearchBar } from "@/components/search/SearchBar";
 import { Briefcase, Plus, Calendar, CheckCircle2, Clock, AlertCircle, Edit, XCircle, Pause } from "lucide-react";
 import { toast } from "sonner";
 import { usePermissions } from "@/hooks/usePermissions";
@@ -27,6 +28,7 @@ const ProjectsPage = () => {
   const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
   const [editableProjects, setEditableProjects] = useState<Set<string>>(new Set());
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     loadProjects();
@@ -117,6 +119,12 @@ const ProjectsPage = () => {
     return labels[status] || status;
   };
 
+  const filteredProjects = projects.filter((project) =>
+    project.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    project.description?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    project.status.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
@@ -130,15 +138,24 @@ const ProjectsPage = () => {
       <AppHeader />
       <div className="min-h-screen bg-background">
       <div className="container mx-auto px-4 py-8">
-        <div className="flex items-center justify-between mb-8">
-          <div>
-            <h1 className="text-4xl font-bold mb-2">Proyectos</h1>
-            <p className="text-muted-foreground">Gestiona tus campañas y proyectos</p>
+        <div className="flex flex-col gap-6 mb-8">
+          <div className="flex items-center justify-between">
+            <div>
+              <h1 className="text-4xl font-bold mb-2">Proyectos</h1>
+              <p className="text-muted-foreground">Gestiona tus campañas y proyectos</p>
+            </div>
+            <Button onClick={() => navigate(`/organizations/${orgId}/projects/new`)}>
+              <Plus className="h-4 w-4 mr-2" />
+              Nuevo Proyecto
+            </Button>
           </div>
-          <Button onClick={() => navigate(`/organizations/${orgId}/projects/new`)}>
-            <Plus className="h-4 w-4 mr-2" />
-            Nuevo Proyecto
-          </Button>
+          {projects.length > 0 && (
+            <SearchBar 
+              value={searchQuery} 
+              onChange={setSearchQuery} 
+              placeholder="Buscar proyectos..." 
+            />
+          )}
         </div>
 
         {projects.length === 0 ? (
@@ -156,8 +173,20 @@ const ProjectsPage = () => {
             </CardContent>
           </Card>
         ) : (
+          <>
+            {filteredProjects.length === 0 ? (
+              <Card className="text-center py-12">
+                <CardContent>
+                  <Briefcase className="h-16 w-16 mx-auto mb-4 text-muted-foreground" />
+                  <h3 className="text-xl font-semibold mb-2">No se encontraron proyectos</h3>
+                  <p className="text-muted-foreground">
+                    Intenta con otros términos de búsqueda
+                  </p>
+                </CardContent>
+              </Card>
+            ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {projects.map((project) => (
+            {filteredProjects.map((project) => (
               <Card
                 key={project.id}
                 className="hover:shadow-glow transition-smooth"
@@ -204,6 +233,8 @@ const ProjectsPage = () => {
               </Card>
             ))}
           </div>
+            )}
+          </>
         )}
       </div>
     </div>

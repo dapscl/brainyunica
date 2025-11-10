@@ -4,6 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { AppHeader } from "@/components/layout/AppHeader";
+import { SearchBar } from "@/components/search/SearchBar";
 import { Palette, Plus, ExternalLink, Edit } from "lucide-react";
 import { toast } from "sonner";
 import { usePermissions } from "@/hooks/usePermissions";
@@ -26,6 +27,7 @@ const BrandsPage = () => {
   const [brands, setBrands] = useState<Brand[]>([]);
   const [loading, setLoading] = useState(true);
   const [editableBrands, setEditableBrands] = useState<Set<string>>(new Set());
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     loadBrands();
@@ -70,6 +72,12 @@ const BrandsPage = () => {
     }
   };
 
+  const filteredBrands = brands.filter((brand) =>
+    brand.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    brand.industry?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    brand.slug.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
@@ -83,15 +91,24 @@ const BrandsPage = () => {
       <AppHeader />
       <div className="min-h-screen bg-background">
       <div className="container mx-auto px-4 py-8">
-        <div className="flex items-center justify-between mb-8">
-          <div>
-            <h1 className="text-4xl font-bold mb-2">Marcas</h1>
-            <p className="text-muted-foreground">Gestiona las marcas de tu organización</p>
+        <div className="flex flex-col gap-6 mb-8">
+          <div className="flex items-center justify-between">
+            <div>
+              <h1 className="text-4xl font-bold mb-2">Marcas</h1>
+              <p className="text-muted-foreground">Gestiona las marcas de tu organización</p>
+            </div>
+            <Button onClick={() => navigate(`/organizations/${orgId}/brands/new`)}>
+              <Plus className="h-4 w-4 mr-2" />
+              Nueva Marca
+            </Button>
           </div>
-          <Button onClick={() => navigate(`/organizations/${orgId}/brands/new`)}>
-            <Plus className="h-4 w-4 mr-2" />
-            Nueva Marca
-          </Button>
+          {brands.length > 0 && (
+            <SearchBar 
+              value={searchQuery} 
+              onChange={setSearchQuery} 
+              placeholder="Buscar marcas..." 
+            />
+          )}
         </div>
 
         {brands.length === 0 ? (
@@ -109,8 +126,20 @@ const BrandsPage = () => {
             </CardContent>
           </Card>
         ) : (
+          <>
+            {filteredBrands.length === 0 ? (
+              <Card className="text-center py-12">
+                <CardContent>
+                  <Palette className="h-16 w-16 mx-auto mb-4 text-muted-foreground" />
+                  <h3 className="text-xl font-semibold mb-2">No se encontraron marcas</h3>
+                  <p className="text-muted-foreground">
+                    Intenta con otros términos de búsqueda
+                  </p>
+                </CardContent>
+              </Card>
+            ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {brands.map((brand) => (
+            {filteredBrands.map((brand) => (
               <Card
                 key={brand.id}
                 className="hover:shadow-glow transition-smooth"
@@ -159,6 +188,8 @@ const BrandsPage = () => {
               </Card>
             ))}
           </div>
+            )}
+          </>
         )}
       </div>
     </div>

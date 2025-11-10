@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { AppHeader } from "@/components/layout/AppHeader";
+import { SearchBar } from "@/components/search/SearchBar";
 import { Building2, Plus, Users, Package, Settings, Edit } from "lucide-react";
 import { toast } from "sonner";
 import { usePermissions } from "@/hooks/usePermissions";
@@ -23,6 +24,7 @@ const OrganizationsPage = () => {
   const [organizations, setOrganizations] = useState<Organization[]>([]);
   const [loading, setLoading] = useState(true);
   const [editableOrgs, setEditableOrgs] = useState<Set<string>>(new Set());
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     loadOrganizations();
@@ -91,6 +93,11 @@ const OrganizationsPage = () => {
     return colors[tier] || "bg-gray-500";
   };
 
+  const filteredOrganizations = organizations.filter((org) =>
+    org.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    org.slug.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
@@ -104,15 +111,24 @@ const OrganizationsPage = () => {
       <AppHeader />
       <div className="min-h-screen bg-background">
       <div className="container mx-auto px-4 py-8">
-        <div className="flex items-center justify-between mb-8">
-          <div>
-            <h1 className="text-4xl font-bold mb-2">Organizaciones</h1>
-            <p className="text-muted-foreground">Gestiona tus organizaciones y equipos</p>
+        <div className="flex flex-col gap-6 mb-8">
+          <div className="flex items-center justify-between">
+            <div>
+              <h1 className="text-4xl font-bold mb-2">Organizaciones</h1>
+              <p className="text-muted-foreground">Gestiona tus organizaciones y equipos</p>
+            </div>
+            <Button onClick={() => navigate("/organizations/new")}>
+              <Plus className="h-4 w-4 mr-2" />
+              Nueva Organización
+            </Button>
           </div>
-          <Button onClick={() => navigate("/organizations/new")}>
-            <Plus className="h-4 w-4 mr-2" />
-            Nueva Organización
-          </Button>
+          {organizations.length > 0 && (
+            <SearchBar 
+              value={searchQuery} 
+              onChange={setSearchQuery} 
+              placeholder="Buscar organizaciones..." 
+            />
+          )}
         </div>
 
         {organizations.length === 0 ? (
@@ -130,8 +146,20 @@ const OrganizationsPage = () => {
             </CardContent>
           </Card>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {organizations.map((org) => (
+          <>
+            {filteredOrganizations.length === 0 ? (
+              <Card className="text-center py-12">
+                <CardContent>
+                  <Building2 className="h-16 w-16 mx-auto mb-4 text-muted-foreground" />
+                  <h3 className="text-xl font-semibold mb-2">No se encontraron organizaciones</h3>
+                  <p className="text-muted-foreground">
+                    Intenta con otros términos de búsqueda
+                  </p>
+                </CardContent>
+              </Card>
+            ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {filteredOrganizations.map((org) => (
               <Card
                 key={org.id}
                 className="hover:shadow-glow transition-smooth"
@@ -197,6 +225,8 @@ const OrganizationsPage = () => {
               </Card>
             ))}
           </div>
+            )}
+          </>
         )}
       </div>
     </div>
