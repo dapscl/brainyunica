@@ -4,7 +4,8 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Briefcase, Plus, Calendar, CheckCircle2, Clock, AlertCircle, Edit } from "lucide-react";
+import { AppHeader } from "@/components/layout/AppHeader";
+import { Briefcase, Plus, Calendar, CheckCircle2, Clock, AlertCircle, Edit, XCircle, Pause } from "lucide-react";
 import { toast } from "sonner";
 import { usePermissions } from "@/hooks/usePermissions";
 
@@ -16,12 +17,13 @@ interface Project {
   start_date: string;
   end_date: string;
   created_at: string;
+  brand_id: string;
 }
 
 const ProjectsPage = () => {
   const navigate = useNavigate();
   const { orgId } = useParams();
-  const { canEditBrand } = usePermissions();
+  const { canEditProject } = usePermissions();
   const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
   const [editableProjects, setEditableProjects] = useState<Set<string>>(new Set());
@@ -30,10 +32,50 @@ const ProjectsPage = () => {
     loadProjects();
   }, [orgId]);
 
+  const checkEditPermissions = async (projectIds: string[]) => {
+    const editable = new Set<string>();
+    await Promise.all(
+      projectIds.map(async (id) => {
+        const canEdit = await canEditProject(id);
+        if (canEdit) editable.add(id);
+      })
+    );
+    setEditableProjects(editable);
+  };
+
   const loadProjects = async () => {
     try {
-      // For now, just return empty array since projects table exists
-      setProjects([]);
+      if (!orgId) return;
+
+      // Load all brands from this organization
+      const { data: brands } = await supabase
+        .from("brands")
+        .select("id")
+        .eq("organization_id", orgId);
+
+      if (!brands || brands.length === 0) {
+        setProjects([]);
+        setLoading(false);
+        return;
+      }
+
+      const brandIds = brands.map(b => b.id);
+
+      // Load projects for these brands
+      const { data, error } = await supabase
+        .from("projects")
+        .select("*")
+        .in("brand_id", brandIds)
+        .order("created_at", { ascending: false });
+
+      if (error) throw error;
+
+      setProjects(data || []);
+
+      // Check edit permissions for all projects
+      if (data && data.length > 0) {
+        await checkEditPermissions(data.map(p => p.id));
+      }
     } catch (error) {
       console.error("Error loading projects:", error);
       toast.error("Error al cargar proyectos");
@@ -44,9 +86,11 @@ const ProjectsPage = () => {
 
   const getStatusIcon = (status: string) => {
     const icons: Record<string, any> = {
-      active: <Clock className="h-4 w-4" />,
+      planning: <Clock className="h-4 w-4" />,
+      active: <CheckCircle2 className="h-4 w-4" />,
+      on_hold: <Pause className="h-4 w-4" />,
       completed: <CheckCircle2 className="h-4 w-4" />,
-      on_hold: <AlertCircle className="h-4 w-4" />,
+      cancelled: <XCircle className="h-4 w-4" />,
     };
     return icons[status] || <Clock className="h-4 w-4" />;
   };
@@ -62,6 +106,17 @@ const ProjectsPage = () => {
     return colors[status] || "bg-gray-500";
   };
 
+  const getStatusLabel = (status: string) => {
+    const labels: Record<string, string> = {
+      planning: "Planificación",
+      active: "Activo",
+      on_hold: "En espera",
+      completed: "Completado",
+      cancelled: "Cancelado",
+    };
+    return labels[status] || status;
+  };
+
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
@@ -71,7 +126,9 @@ const ProjectsPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <>
+      <AppHeader />
+      <div className="min-h-screen bg-background">
       <div className="container mx-auto px-4 py-8">
         <div className="flex items-center justify-between mb-8">
           <div>
@@ -112,9 +169,9 @@ const ProjectsPage = () => {
                     </div>
                     <div className="flex items-center gap-2">
                       <Badge className={getStatusColor(project.status)}>
-                        <span className="flex items-center gap-1">
+                        <span className="flex items-center gap-1 text-white">
                           {getStatusIcon(project.status)}
-                          {project.status}
+                          {getStatusLabel(project.status)}
                         </span>
                       </Badge>
                       {editableProjects.has(project.id) && (
@@ -150,6 +207,7 @@ const ProjectsPage = () => {
         )}
       </div>
     </div>
+    </>
   );
 };
 

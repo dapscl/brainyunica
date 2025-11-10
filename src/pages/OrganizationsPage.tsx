@@ -4,6 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { AppHeader } from "@/components/layout/AppHeader";
 import { Building2, Plus, Users, Package, Settings, Edit } from "lucide-react";
 import { toast } from "sonner";
 import { usePermissions } from "@/hooks/usePermissions";
@@ -99,7 +100,9 @@ const OrganizationsPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <>
+      <AppHeader />
+      <div className="min-h-screen bg-background">
       <div className="container mx-auto px-4 py-8">
         <div className="flex items-center justify-between mb-8">
           <div>
@@ -197,6 +200,7 @@ const OrganizationsPage = () => {
         )}
       </div>
     </div>
+    </>
   );
 };
 

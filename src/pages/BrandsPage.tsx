@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { AppHeader } from "@/components/layout/AppHeader";
 import { Palette, Plus, ExternalLink, Edit } from "lucide-react";
 import { toast } from "sonner";
 import { usePermissions } from "@/hooks/usePermissions";
@@ -78,7 +79,9 @@ const BrandsPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <>
+      <AppHeader />
+      <div className="min-h-screen bg-background">
       <div className="container mx-auto px-4 py-8">
         <div className="flex items-center justify-between mb-8">
           <div>
@@ -159,6 +162,7 @@ const BrandsPage = () => {
         )}
       </div>
     </div>
+    </>
   );
 };
 
