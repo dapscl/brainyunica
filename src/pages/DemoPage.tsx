@@ -132,7 +132,7 @@ const DemoPage = () => {
         }
 
         // Recuperar marcas recién creadas
-        const brands = await Promise.all([
+        brands = await Promise.all([
           supabase.from('brands').select('id').eq('slug', brandSlugs.techstart).single(),
           supabase.from('brands').select('id').eq('slug', brandSlugs.ecogreen).single(),
           supabase.from('brands').select('id').eq('slug', brandSlugs.fitlife).single()
