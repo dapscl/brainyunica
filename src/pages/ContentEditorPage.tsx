@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { AppHeader } from '@/components/layout/AppHeader';
+import { ApprovalWorkflow } from '@/components/content/ApprovalWorkflow';
 import { DynamicBreadcrumb } from '@/components/navigation/DynamicBreadcrumb';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -21,6 +22,7 @@ export default function ContentEditorPage() {
   const { contentId, projectId } = useParams();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const [organizationId, setOrganizationId] = useState("");
   const [content, setContent] = useState<any>({
     title: '',
     content: '',
@@ -378,6 +380,20 @@ export default function ContentEditorPage() {
                 </div>
               </CardContent>
             </Card>
+
+            {contentId && contentId !== 'new' && organizationId && (
+              <Card>
+                <CardHeader>
+                  <CardTitle>Aprobaciones</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <ApprovalWorkflow 
+                    contentId={contentId} 
+                    organizationId={organizationId}
+                  />
+                </CardContent>
+              </Card>
+            )}
           </div>
         </div>
       </div>

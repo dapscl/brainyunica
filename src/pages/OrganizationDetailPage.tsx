@@ -6,7 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
-import { Building2, Users, Package, FileText, Settings, ArrowLeft } from "lucide-react";
+import { Building2, Users, Package, FileText, Settings, ArrowLeft, Image } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 
 interface Organization {
@@ -188,6 +188,57 @@ export default function OrganizationDetailPage() {
                 </CardHeader>
                 <CardContent>
                   <div className="text-2xl font-bold">{members.length}</div>
+                </CardContent>
+              </Card>
+            </div>
+
+            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+              <Card 
+                className="hover:shadow-glow transition-smooth cursor-pointer"
+                onClick={() => navigate(`/organizations/${id}/media`)}
+              >
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Image className="h-5 w-5" />
+                    Biblioteca de Medios
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-sm text-muted-foreground">
+                    Gestiona archivos multimedia
+                  </p>
+                </CardContent>
+              </Card>
+              <Card 
+                className="hover:shadow-glow transition-smooth cursor-pointer"
+                onClick={() => navigate(`/organizations/${id}/members`)}
+              >
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Users className="h-5 w-5" />
+                    Gestionar Equipo
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-sm text-muted-foreground">
+                    Administrar miembros y roles
+                  </p>
+                </CardContent>
+              </Card>
+              <Card 
+                className="hover:shadow-glow transition-smooth cursor-pointer"
+                onClick={() => navigate(`/organizations/${id}/brands/new`)}
+              >
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Package className="h-5 w-5" />
+                    Nueva Marca
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-sm text-muted-foreground">
+                    Crear marca nueva
+                  </p>
                 </CardContent>
               </Card>
             </div>

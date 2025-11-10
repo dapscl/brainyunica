@@ -184,6 +184,18 @@ const DashboardPage = () => {
                 <span className="h-2 w-2 rounded-full bg-green-500"></span>
                 Notificaciones implementadas
               </li>
+              <li className="flex items-center gap-2">
+                <span className="h-2 w-2 rounded-full bg-green-500"></span>
+                Sistema de aprobaciones completo
+              </li>
+              <li className="flex items-center gap-2">
+                <span className="h-2 w-2 rounded-full bg-green-500"></span>
+                Biblioteca de medios activa
+              </li>
+              <li className="flex items-center gap-2">
+                <span className="h-2 w-2 rounded-full bg-green-500"></span>
+                Panel de administración de usuarios
+              </li>
             </ul>
           </CardContent>
         </Card>
