@@ -48,15 +48,34 @@ const DemoPage = () => {
         if (existingOrgs && existingOrgs.length > 0) {
           setProgress(prev => [...prev, `Encontradas ${existingOrgs.length} organizaciones demo anteriores, eliminando...`]);
           
-          // Eliminar una por una para mejor control de errores
-          for (const org of existingOrgs) {
+          // Eliminar datos demo relacionados antes de borrar la org
+          for (const o of existingOrgs) {
+            // 1) Borrar marcas de la organización demo
+            const { error: delBrandsErr } = await supabase
+              .from('brands')
+              .delete()
+              .eq('organization_id', o.id);
+            if (delBrandsErr) {
+              console.error(`Error eliminando marcas de ${o.name}:`, delBrandsErr);
+            }
+
+            // 2) Borrar membresía del usuario para esa organización (mantener permiso owner para borrar la org)
+            const { error: delMemberErr } = await supabase
+              .from('organization_members')
+              .delete()
+              .eq('organization_id', o.id)
+              .eq('user_id', user.id);
+            if (delMemberErr) {
+              console.warn(`Aviso eliminando membership en ${o.name}:`, delMemberErr);
+            }
+
+            // 3) Borrar la organización (el policy usa owner_id)
             const { error: deleteError } = await supabase
               .from('organizations')
               .delete()
-              .eq('id', org.id);
-            
+              .eq('id', o.id);
             if (deleteError) {
-              console.error(`Error eliminando organización ${org.name}:`, deleteError);
+              console.error(`Error eliminando organización ${o.name}:`, deleteError);
             }
           }
           
@@ -120,61 +139,78 @@ const DemoPage = () => {
       // 2. Crear Marcas
       setProgress(prev => [...prev, 'Creando marcas de ejemplo...']);
       try {
-        // Insertar marcas sin RETURNING para evitar conflictos con RLS
-        const brandSlugs = {
-          techstart: 'techstart-' + Date.now(),
-          ecogreen: 'ecogreen-' + Date.now() + 1,
-          fitlife: 'fitlife-' + Date.now() + 2
-        };
-
-        const brandsData = [
+        // Definir marcas deseadas con slugs fijos por organización
+        const desiredBrands = [
           {
-            organization_id: org.id,
             name: 'TechStart Solutions',
-            slug: brandSlugs.techstart,
+            slug: 'techstart',
             industry: 'Tecnología',
             logo_url: demoTechstartImage,
             website: 'https://techstart.demo'
           },
           {
-            organization_id: org.id,
             name: 'EcoGreen Products',
-            slug: brandSlugs.ecogreen,
+            slug: 'ecogreen',
             industry: 'Sostenibilidad',
             logo_url: demoEcogreenImage,
             website: 'https://ecogreen.demo'
           },
           {
-            organization_id: org.id,
             name: 'FitLife Gym',
-            slug: brandSlugs.fitlife,
+            slug: 'fitlife',
             industry: 'Fitness',
             logo_url: demoFitlifeImage,
             website: 'https://fitlife.demo'
           }
         ];
 
-        const brandInserts = await Promise.all(
-          brandsData.map(brand => supabase.from('brands').insert(brand))
-        );
+        // Crear o reutilizar marcas evitando duplicados por (organization_id, slug)
+        const createdOrExisting: Array<{ data: { id: string } | null; error: any }> = [];
+        for (const b of desiredBrands) {
+          // 1) Buscar existente
+          const { data: existing, error: findErr } = await supabase
+            .from('brands')
+            .select('id')
+            .eq('organization_id', org.id)
+            .eq('slug', b.slug)
+            .maybeSingle();
+          if (findErr) {
+            console.warn('Aviso buscando marca existente', b.slug, findErr);
+          }
 
-        const failedBrand = brandInserts.find(b => b.error);
-        if (failedBrand?.error) {
-          throw new Error(`Error insertando marca: ${failedBrand.error.message} (${failedBrand.error.code})`);
+          if (existing?.id) {
+            createdOrExisting.push({ data: { id: existing.id }, error: null });
+            continue;
+          }
+
+          // 2) Insertar si no existe
+          const { error: insertErr } = await supabase.from('brands').insert({
+            organization_id: org.id,
+            name: b.name,
+            slug: b.slug,
+            industry: b.industry,
+            logo_url: b.logo_url,
+            website: b.website,
+          });
+          if (insertErr) {
+            throw new Error(`Error insertando marca ${b.slug}: ${insertErr.message} (${insertErr.code})`);
+          }
+
+          // 3) Recuperar id con SELECT separado (patrón RLS)
+          const { data: inserted, error: selectErr } = await supabase
+            .from('brands')
+            .select('id')
+            .eq('organization_id', org.id)
+            .eq('slug', b.slug)
+            .single();
+          if (selectErr) {
+            throw new Error(`Error recuperando marca ${b.slug}: ${selectErr.message} (${selectErr.code})`);
+          }
+          createdOrExisting.push({ data: { id: inserted.id }, error: null });
         }
 
-        // Recuperar marcas recién creadas
-        brands = await Promise.all([
-          supabase.from('brands').select('id').eq('slug', brandSlugs.techstart).single(),
-          supabase.from('brands').select('id').eq('slug', brandSlugs.ecogreen).single(),
-          supabase.from('brands').select('id').eq('slug', brandSlugs.fitlife).single()
-        ]);
-
-        const failedBrandSelect = brands.find(b => b.error);
-        if (failedBrandSelect?.error) {
-          throw new Error(`Error recuperando marca: ${failedBrandSelect.error.message} (${failedBrandSelect.error.code})`);
-        }
-        setProgress(prev => [...prev, '✓ 3 Marcas creadas']);
+        brands = createdOrExisting;
+        setProgress(prev => [...prev, '✓ 3 Marcas listas (sin duplicados)']);
 
         // 3. Crear Brand Kits
         setProgress(prev => [...prev, 'Configurando brand kits...']);
