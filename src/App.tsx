@@ -23,6 +23,8 @@ import OrganizationDetailPage from "./pages/OrganizationDetailPage";
 import AnalyticsPage from "./pages/AnalyticsPage";
 import BrandKitEditorPage from "./pages/BrandKitEditorPage";
 import ContentEditorPage from "./pages/ContentEditorPage";
+import ContentCalendarPage from "./pages/ContentCalendarPage";
+import PublicationQueuePage from "./pages/PublicationQueuePage";
 
 const App = () => {
   return (
@@ -47,8 +49,10 @@ const App = () => {
         <Route path="/brands/:brandId" element={<ProtectedRoute><BrandsPage /></ProtectedRoute>} />
         <Route path="/brands/:brandId/edit" element={<ProtectedRoute><EditBrandPage /></ProtectedRoute>} />
         <Route path="/brands/:brandId/kit" element={<ProtectedRoute><BrandKitEditorPage /></ProtectedRoute>} />
-        <Route path="/projects/:projectId/content/new" element={<ProtectedRoute><ContentEditorPage /></ProtectedRoute>} />
-        <Route path="/projects/:projectId/content/:contentId" element={<ProtectedRoute><ContentEditorPage /></ProtectedRoute>} />
+            <Route path="/projects/:projectId/content/new" element={<ProtectedRoute><ContentEditorPage /></ProtectedRoute>} />
+            <Route path="/projects/:projectId/content/:contentId" element={<ProtectedRoute><ContentEditorPage /></ProtectedRoute>} />
+            <Route path="/projects/:projectId/calendar" element={<ProtectedRoute><ContentCalendarPage /></ProtectedRoute>} />
+            <Route path="/projects/:projectId/queue" element={<ProtectedRoute><PublicationQueuePage /></ProtectedRoute>} />
         <Route path="/content/:contentId" element={<ProtectedRoute><ContentPage /></ProtectedRoute>} />
         <Route path="*" element={<NotFound />} />
       </Routes>

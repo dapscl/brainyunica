@@ -208,11 +208,16 @@ export type Database = {
           created_at: string
           created_by: string | null
           id: string
+          media_urls: Json | null
           metadata: Json | null
           parent_version_id: string | null
+          post_text: string | null
           project_id: string
+          publish_status: string | null
+          published_at: string | null
           published_date: string | null
           scheduled_date: string | null
+          social_platforms: Json | null
           status: string
           tags: string[] | null
           title: string
@@ -226,11 +231,16 @@ export type Database = {
           created_at?: string
           created_by?: string | null
           id?: string
+          media_urls?: Json | null
           metadata?: Json | null
           parent_version_id?: string | null
+          post_text?: string | null
           project_id: string
+          publish_status?: string | null
+          published_at?: string | null
           published_date?: string | null
           scheduled_date?: string | null
+          social_platforms?: Json | null
           status?: string
           tags?: string[] | null
           title: string
@@ -244,11 +254,16 @@ export type Database = {
           created_at?: string
           created_by?: string | null
           id?: string
+          media_urls?: Json | null
           metadata?: Json | null
           parent_version_id?: string | null
+          post_text?: string | null
           project_id?: string
+          publish_status?: string | null
+          published_at?: string | null
           published_date?: string | null
           scheduled_date?: string | null
+          social_platforms?: Json | null
           status?: string
           tags?: string[] | null
           title?: string

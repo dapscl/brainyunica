@@ -1,33 +1,42 @@
-import { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
-import { supabase } from "@/integrations/supabase/client";
-import { AppHeader } from "@/components/layout/AppHeader";
-import { DynamicBreadcrumb } from "@/components/navigation/DynamicBreadcrumb";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { RichTextEditor } from "@/components/content/RichTextEditor";
-import { Badge } from "@/components/ui/badge";
-import { toast } from "sonner";
-import { Save, ArrowLeft, Calendar, Tag } from "lucide-react";
+import { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import { AppHeader } from '@/components/layout/AppHeader';
+import { DynamicBreadcrumb } from '@/components/navigation/DynamicBreadcrumb';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Button } from '@/components/ui/button';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Badge } from '@/components/ui/badge';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Textarea } from '@/components/ui/textarea';
+import { RichTextEditor } from '@/components/content/RichTextEditor';
+import { SocialMediaSelector } from '@/components/content/SocialMediaSelector';
+import { ContentPreview } from '@/components/content/ContentPreview';
+import { supabase } from '@/integrations/supabase/client';
+import { toast } from 'sonner';
+import { ArrowLeft, Save, X, Eye, Tag } from 'lucide-react';
 
 export default function ContentEditorPage() {
   const { contentId, projectId } = useParams();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [content, setContent] = useState<any>({
-    title: "",
-    content_type: "post",
-    status: "draft",
-    content: "",
+    title: '',
+    content: '',
+    content_type: 'post',
+    status: 'draft',
     tags: [],
+    post_text: '',
+    social_platforms: [],
+    media_urls: [],
+    publish_status: 'draft',
   });
-  const [newTag, setNewTag] = useState("");
+  const [newTag, setNewTag] = useState('');
+  const [showPreview, setShowPreview] = useState(false);
 
   useEffect(() => {
-    if (contentId && contentId !== "new") {
+    if (contentId && contentId !== 'new') {
       loadContent();
     }
   }, [contentId]);
@@ -35,50 +44,74 @@ export default function ContentEditorPage() {
   const loadContent = async () => {
     try {
       const { data, error } = await supabase
-        .from("content_items")
-        .select("*")
-        .eq("id", contentId)
+        .from('content_items')
+        .select('*')
+        .eq('id', contentId)
         .single();
 
       if (error) throw error;
-      setContent(data);
+
+      if (data) {
+        setContent({
+          title: data.title || '',
+          content: data.content || '',
+          content_type: data.content_type || 'post',
+          status: data.status || 'draft',
+          scheduled_date: data.scheduled_date || '',
+          tags: data.tags || [],
+          post_text: data.post_text || '',
+          social_platforms: Array.isArray(data.social_platforms) ? data.social_platforms : [],
+          media_urls: Array.isArray(data.media_urls) ? data.media_urls : [],
+          publish_status: data.publish_status || 'draft',
+        });
+      }
     } catch (error) {
-      console.error("Error loading content:", error);
-      toast.error("Error al cargar el contenido");
+      console.error('Error loading content:', error);
+      toast.error('Error al cargar el contenido');
     }
   };
 
   const handleSave = async () => {
     try {
       setLoading(true);
-      
+
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) return;
 
       const contentData = {
-        ...content,
+        title: content.title,
+        content: content.content,
+        content_type: content.content_type,
+        status: content.status,
+        scheduled_date: content.scheduled_date || null,
+        tags: content.tags,
+        post_text: content.post_text,
+        social_platforms: content.social_platforms,
+        media_urls: content.media_urls,
+        publish_status: content.social_platforms.length > 0 && content.scheduled_date ? 'scheduled' : 'draft',
         project_id: projectId,
+        brand_id: projectId,
         created_by: user.id,
       };
 
-      if (contentId === "new") {
+      if (contentId === 'new') {
         const { error } = await supabase
-          .from("content_items")
+          .from('content_items')
           .insert(contentData);
         if (error) throw error;
-        toast.success("Contenido creado");
+        toast.success('Contenido creado');
         navigate(-1);
       } else {
         const { error } = await supabase
-          .from("content_items")
+          .from('content_items')
           .update(contentData)
-          .eq("id", contentId);
+          .eq('id', contentId);
         if (error) throw error;
-        toast.success("Contenido actualizado");
+        toast.success('Contenido actualizado');
       }
     } catch (error) {
-      console.error("Error saving content:", error);
-      toast.error("Error al guardar");
+      console.error('Error saving content:', error);
+      toast.error('Error al guardar');
     } finally {
       setLoading(false);
     }
@@ -90,7 +123,7 @@ export default function ContentEditorPage() {
         ...content,
         tags: [...(content.tags || []), newTag],
       });
-      setNewTag("");
+      setNewTag('');
     }
   };
 
@@ -114,45 +147,143 @@ export default function ContentEditorPage() {
               Volver
             </Button>
             <h1 className="text-3xl font-bold">
-              {contentId === "new" ? "Nuevo Contenido" : "Editar Contenido"}
+              {contentId === 'new' ? 'Nuevo Contenido' : 'Editar Contenido'}
             </h1>
           </div>
           <Button onClick={handleSave} disabled={loading}>
             <Save className="h-4 w-4 mr-2" />
-            {loading ? "Guardando..." : "Guardar"}
+            {loading ? 'Guardando...' : 'Guardar'}
           </Button>
         </div>
 
-        <div className="grid gap-6 lg:grid-cols-3">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          {/* Main Content */}
           <div className="lg:col-span-2 space-y-6">
-            <Card>
-              <CardHeader>
-                <CardTitle>Contenido</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div>
-                  <Label>Título</Label>
-                  <Input
-                    value={content.title}
-                    onChange={(e) =>
-                      setContent({ ...content, title: e.target.value })
-                    }
-                    placeholder="Título del contenido"
-                  />
-                </div>
-                <div>
-                  <Label>Contenido</Label>
-                  <RichTextEditor
-                    content={content.content}
-                    onChange={(newContent) =>
-                      setContent({ ...content, content: newContent })
-                    }
-                  />
-                </div>
-              </CardContent>
-            </Card>
+            <Tabs defaultValue="content" className="w-full">
+              <TabsList className="grid w-full grid-cols-2">
+                <TabsTrigger value="content">Contenido</TabsTrigger>
+                <TabsTrigger value="social">Redes Sociales</TabsTrigger>
+              </TabsList>
+
+              <TabsContent value="content" className="space-y-6">
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Contenido</CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <div>
+                      <Label htmlFor="title">Título</Label>
+                      <Input
+                        id="title"
+                        value={content.title}
+                        onChange={(e) => setContent({ ...content, title: e.target.value })}
+                        placeholder="Título del contenido"
+                      />
+                    </div>
+
+                    <div>
+                      <Label>Contenido</Label>
+                      <RichTextEditor
+                        content={content.content}
+                        onChange={(newContent) => setContent({ ...content, content: newContent })}
+                        placeholder="Escribe tu contenido aquí..."
+                      />
+                    </div>
+                  </CardContent>
+                </Card>
+              </TabsContent>
+
+              <TabsContent value="social" className="space-y-6">
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Publicación en Redes Sociales</CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <SocialMediaSelector
+                      selectedPlatforms={content.social_platforms}
+                      onChange={(platforms) => setContent({ ...content, social_platforms: platforms })}
+                    />
+
+                    <div>
+                      <Label htmlFor="post_text">Texto de Publicación</Label>
+                      <Textarea
+                        id="post_text"
+                        value={content.post_text}
+                        onChange={(e) => setContent({ ...content, post_text: e.target.value })}
+                        placeholder="Escribe el texto que se publicará en redes sociales..."
+                        rows={6}
+                      />
+                      <p className="text-xs text-muted-foreground mt-1">
+                        {content.post_text.length} caracteres
+                      </p>
+                    </div>
+
+                    <div>
+                      <Label htmlFor="media_url">URL de Media (opcional)</Label>
+                      <Input
+                        id="media_url"
+                        placeholder="https://ejemplo.com/imagen.jpg"
+                        onKeyPress={(e) => {
+                          if (e.key === 'Enter') {
+                            const input = e.target as HTMLInputElement;
+                            if (input.value) {
+                              setContent({
+                                ...content,
+                                media_urls: [...content.media_urls, input.value]
+                              });
+                              input.value = '';
+                            }
+                          }
+                        }}
+                      />
+                      {content.media_urls.length > 0 && (
+                        <div className="flex flex-wrap gap-2 mt-2">
+                          {content.media_urls.map((url: string, idx: number) => (
+                            <Badge key={idx} variant="secondary" className="gap-1">
+                              Media {idx + 1}
+                              <X
+                                className="h-3 w-3 cursor-pointer"
+                                onClick={() => {
+                                  setContent({
+                                    ...content,
+                                    media_urls: content.media_urls.filter((_: any, i: number) => i !== idx)
+                                  });
+                                }}
+                              />
+                            </Badge>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+
+                    <Button
+                      variant="outline"
+                      onClick={() => setShowPreview(!showPreview)}
+                      className="w-full"
+                    >
+                      <Eye className="h-4 w-4 mr-2" />
+                      {showPreview ? 'Ocultar' : 'Ver'} Vista Previa
+                    </Button>
+
+                    {showPreview && content.social_platforms.length > 0 && (
+                      <div className="grid gap-4 mt-4">
+                        {content.social_platforms.map((platform: string) => (
+                          <ContentPreview
+                            key={platform}
+                            platform={platform}
+                            text={content.post_text}
+                            mediaUrls={content.media_urls}
+                          />
+                        ))}
+                      </div>
+                    )}
+                  </CardContent>
+                </Card>
+              </TabsContent>
+            </Tabs>
           </div>
 
+          {/* Sidebar */}
           <div className="space-y-6">
             <Card>
               <CardHeader>
@@ -205,7 +336,7 @@ export default function ContentEditorPage() {
                   <Label>Fecha Programada</Label>
                   <Input
                     type="datetime-local"
-                    value={content.scheduled_date || ""}
+                    value={content.scheduled_date || ''}
                     onChange={(e) =>
                       setContent({ ...content, scheduled_date: e.target.value })
                     }
@@ -227,7 +358,7 @@ export default function ContentEditorPage() {
                     value={newTag}
                     onChange={(e) => setNewTag(e.target.value)}
                     placeholder="Nueva etiqueta"
-                    onKeyPress={(e) => e.key === "Enter" && addTag()}
+                    onKeyPress={(e) => e.key === 'Enter' && addTag()}
                   />
                   <Button onClick={addTag} variant="outline">
                     Añadir
