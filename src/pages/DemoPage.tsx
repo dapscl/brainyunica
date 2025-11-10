@@ -37,6 +37,28 @@ const DemoPage = () => {
       let brands: Array<{ data: { id: string } | null; error: any }>;
       let projects: Array<{ data: { id: string } | null; error: any }>;
 
+      // 0. Limpiar datos demo anteriores
+      setProgress(prev => [...prev, 'Limpiando demos anteriores...']);
+      try {
+        const { data: existingOrgs } = await supabase
+          .from('organizations')
+          .select('id')
+          .ilike('name', '%Demo Marketing Agency%');
+        
+        if (existingOrgs && existingOrgs.length > 0) {
+          // Eliminar organizaciones anteriores (cascadeará a marcas, proyectos, etc.)
+          await Promise.all(
+            existingOrgs.map(org => 
+              supabase.from('organizations').delete().eq('id', org.id)
+            )
+          );
+          setProgress(prev => [...prev, `✓ ${existingOrgs.length} demos anteriores eliminados`]);
+        }
+      } catch (error: any) {
+        // Si falla la limpieza, continuar de todos modos
+        console.error('Error limpiando demos:', error);
+      }
+
       // 1. Crear Organización
       setProgress(prev => [...prev, 'Creando organización de prueba...']);
       try {
