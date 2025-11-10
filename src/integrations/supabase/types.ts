@@ -50,44 +50,62 @@ export type Database = {
       brand_kits: {
         Row: {
           accent_color: string | null
+          brand_guidelines: string | null
           brand_id: string
+          color_palette: Json | null
           created_at: string | null
+          dos_and_donts: Json | null
           font_source: string | null
           id: string
           logo_url: string | null
+          logo_variations: Json | null
           primary_color: string | null
           primary_font_name: string | null
           secondary_color: string | null
           secondary_font_name: string | null
+          spacing_scale: Json | null
           style_restrictions: Json | null
+          typography: Json | null
           updated_at: string | null
         }
         Insert: {
           accent_color?: string | null
+          brand_guidelines?: string | null
           brand_id: string
+          color_palette?: Json | null
           created_at?: string | null
+          dos_and_donts?: Json | null
           font_source?: string | null
           id?: string
           logo_url?: string | null
+          logo_variations?: Json | null
           primary_color?: string | null
           primary_font_name?: string | null
           secondary_color?: string | null
           secondary_font_name?: string | null
+          spacing_scale?: Json | null
           style_restrictions?: Json | null
+          typography?: Json | null
           updated_at?: string | null
         }
         Update: {
           accent_color?: string | null
+          brand_guidelines?: string | null
           brand_id?: string
+          color_palette?: Json | null
           created_at?: string | null
+          dos_and_donts?: Json | null
           font_source?: string | null
           id?: string
           logo_url?: string | null
+          logo_variations?: Json | null
           primary_color?: string | null
           primary_font_name?: string | null
           secondary_color?: string | null
           secondary_font_name?: string | null
+          spacing_scale?: Json | null
           style_restrictions?: Json | null
+          typography?: Json | null
           updated_at?: string | null
         }
         Relationships: [
@@ -140,6 +158,123 @@ export type Database = {
             columns: ["organization_id"]
             isOneToOne: false
             referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      content_approvals: {
+        Row: {
+          comments: string | null
+          content_id: string
+          created_at: string
+          id: string
+          reviewer_id: string
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          comments?: string | null
+          content_id: string
+          created_at?: string
+          id?: string
+          reviewer_id: string
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          comments?: string | null
+          content_id?: string
+          created_at?: string
+          id?: string
+          reviewer_id?: string
+          status?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "content_approvals_content_id_fkey"
+            columns: ["content_id"]
+            isOneToOne: false
+            referencedRelation: "content_items"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      content_items: {
+        Row: {
+          brand_id: string
+          content: Json | null
+          content_type: string
+          created_at: string
+          created_by: string | null
+          id: string
+          metadata: Json | null
+          parent_version_id: string | null
+          project_id: string
+          published_date: string | null
+          scheduled_date: string | null
+          status: string
+          tags: string[] | null
+          title: string
+          updated_at: string
+          version: number
+        }
+        Insert: {
+          brand_id: string
+          content?: Json | null
+          content_type?: string
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          metadata?: Json | null
+          parent_version_id?: string | null
+          project_id: string
+          published_date?: string | null
+          scheduled_date?: string | null
+          status?: string
+          tags?: string[] | null
+          title: string
+          updated_at?: string
+          version?: number
+        }
+        Update: {
+          brand_id?: string
+          content?: Json | null
+          content_type?: string
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          metadata?: Json | null
+          parent_version_id?: string | null
+          project_id?: string
+          published_date?: string | null
+          scheduled_date?: string | null
+          status?: string
+          tags?: string[] | null
+          title?: string
+          updated_at?: string
+          version?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "content_items_brand_id_fkey"
+            columns: ["brand_id"]
+            isOneToOne: false
+            referencedRelation: "brands"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "content_items_parent_version_id_fkey"
+            columns: ["parent_version_id"]
+            isOneToOne: false
+            referencedRelation: "content_items"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "content_items_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
             referencedColumns: ["id"]
           },
         ]
