@@ -46,6 +46,17 @@ const DemoPage = () => {
         .single();
 
       if (orgError) throw orgError;
+      
+      // Agregar al usuario como miembro de la organización
+      const { error: memberError } = await supabase
+        .from('organization_members')
+        .insert({
+          organization_id: org.id,
+          user_id: user.id,
+          role: 'owner'
+        });
+      
+      if (memberError) throw memberError;
       setProgress(prev => [...prev, '✓ Organización creada']);
 
       // 2. Crear Marcas
