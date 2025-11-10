@@ -36,6 +36,9 @@ const MediaLibraryPage = lazy(() => import("./pages/MediaLibraryPage"));
 const TemplatesPage = lazy(() => import("./pages/TemplatesPage"));
 const DemoPage = lazy(() => import("./pages/DemoPage"));
 const GalleryPage = lazy(() => import("./pages/GalleryPage"));
+const ShowcasePage = lazy(() => import("./pages/ShowcasePage"));
+const ShowcaseBrandsPage = lazy(() => import("./pages/ShowcaseBrandsPage"));
+const ShowcaseBrandDetailPage = lazy(() => import("./pages/ShowcaseBrandDetailPage"));
 
 const LoadingFallback = () => (
   <div className="min-h-screen bg-background p-8">
@@ -53,6 +56,9 @@ const App = () => {
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/auth" element={<AuthPage />} />
+          <Route path="/showcase" element={<ShowcasePage />} />
+          <Route path="/showcase/brands" element={<ShowcaseBrandsPage />} />
+          <Route path="/showcase/brands/:slug" element={<ShowcaseBrandDetailPage />} />
           <Route path="/demo" element={<ProtectedRoute><DemoPage /></ProtectedRoute>} />
           <Route path="/dashboard" element={<ProtectedRoute><DashboardPage /></ProtectedRoute>} />
           <Route path="/organizations" element={<ProtectedRoute><OrganizationsPage /></ProtectedRoute>} />
