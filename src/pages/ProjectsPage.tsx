@@ -233,12 +233,32 @@ const ProjectsPage = () => {
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                    <Calendar className="h-4 w-4" />
-                    <span>
-                      {new Date(project.start_date).toLocaleDateString()} -{" "}
-                      {project.end_date ? new Date(project.end_date).toLocaleDateString() : "En curso"}
-                    </span>
+                  <div className="space-y-3">
+                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                      <Calendar className="h-4 w-4" />
+                      <span>
+                        {new Date(project.start_date).toLocaleDateString()} -{" "}
+                        {project.end_date ? new Date(project.end_date).toLocaleDateString() : "En curso"}
+                      </span>
+                    </div>
+                    <div className="flex gap-2">
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        className="flex-1"
+                        onClick={() => navigate(`/projects/${project.id}/content`)}
+                      >
+                        Contenido
+                      </Button>
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        className="flex-1"
+                        onClick={() => navigate(`/projects/${project.id}/calendar`)}
+                      >
+                        Calendario
+                      </Button>
+                    </div>
                   </div>
                 </CardContent>
               </Card>

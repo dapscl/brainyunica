@@ -145,6 +145,10 @@ const DashboardPage = () => {
                 <span className="h-2 w-2 rounded-full bg-green-500"></span>
                 Páginas de gestión creadas
               </li>
+              <li className="flex items-center gap-2">
+                <span className="h-2 w-2 rounded-full bg-green-500"></span>
+                Sistema de redes sociales activo
+              </li>
             </ul>
           </CardContent>
         </Card>
