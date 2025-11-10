@@ -7,7 +7,17 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { ArrowLeft, Briefcase } from "lucide-react";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+import { ArrowLeft, Briefcase, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 import { usePermissions } from "@/hooks/usePermissions";
 import { createProjectSchema, type CreateProjectInput } from "@/lib/validations";
@@ -21,10 +31,13 @@ interface Brand {
 const EditProjectPage = () => {
   const navigate = useNavigate();
   const { projectId } = useParams();
-  const { canEditBrand, loading: permissionsLoading } = usePermissions();
+  const { canEditProject, canDeleteProject, loading: permissionsLoading } = usePermissions();
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [deleting, setDeleting] = useState(false);
+  const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [canEdit, setCanEdit] = useState(false);
+  const [canDelete, setCanDelete] = useState(false);
   const [brands, setBrands] = useState<Brand[]>([]);
   const [organizationId, setOrganizationId] = useState("");
   const [formData, setFormData] = useState<CreateProjectInput>({
@@ -69,8 +82,10 @@ const EditProjectPage = () => {
       setOrganizationId(orgId);
 
       // Check permissions
-      const hasPermission = await canEditBrand(project.brand_id);
-      setCanEdit(hasPermission);
+      const hasEditPermission = await canEditProject(projectId);
+      const hasDeletePermission = await canDeleteProject(projectId);
+      setCanEdit(hasEditPermission);
+      setCanDelete(hasDeletePermission);
 
       // Load brands from the same organization
       const { data: brandsData, error: brandsError } = await supabase
@@ -146,6 +161,30 @@ const EditProjectPage = () => {
       toast.error("Error al actualizar el proyecto");
     } finally {
       setSaving(false);
+    }
+  };
+
+  const handleDelete = async () => {
+    if (!projectId) return;
+
+    setDeleting(true);
+
+    try {
+      const { error } = await supabase
+        .from("projects")
+        .delete()
+        .eq("id", projectId);
+
+      if (error) throw error;
+
+      toast.success("Proyecto eliminado exitosamente");
+      navigate(`/organizations/${organizationId}/projects`);
+    } catch (error: any) {
+      console.error("Error deleting project:", error);
+      toast.error("Error al eliminar el proyecto");
+    } finally {
+      setDeleting(false);
+      setShowDeleteDialog(false);
     }
   };
 
@@ -312,8 +351,50 @@ const EditProjectPage = () => {
                 </Button>
               </div>
             </form>
+
+            {canDelete && (
+              <div className="mt-8 pt-6 border-t">
+                <div className="space-y-2">
+                  <h3 className="text-lg font-semibold text-destructive">Zona de peligro</h3>
+                  <p className="text-sm text-muted-foreground">
+                    Eliminar este proyecto es una acción permanente que no se puede deshacer.
+                  </p>
+                  <Button
+                    type="button"
+                    variant="destructive"
+                    onClick={() => setShowDeleteDialog(true)}
+                    className="mt-4"
+                  >
+                    <Trash2 className="h-4 w-4 mr-2" />
+                    Eliminar Proyecto
+                  </Button>
+                </div>
+              </div>
+            )}
           </CardContent>
         </Card>
+
+        <AlertDialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>¿Estás seguro?</AlertDialogTitle>
+              <AlertDialogDescription>
+                Esta acción no se puede deshacer. Se eliminará permanentemente el proyecto
+                "{formData.name}" y todos sus datos asociados.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel disabled={deleting}>Cancelar</AlertDialogCancel>
+              <AlertDialogAction
+                onClick={handleDelete}
+                disabled={deleting}
+                className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+              >
+                {deleting ? "Eliminando..." : "Eliminar"}
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
       </div>
     </div>
   );

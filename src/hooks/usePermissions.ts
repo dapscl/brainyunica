@@ -11,6 +11,9 @@ interface PermissionCheck {
   canCreateBrand: (orgId: string) => Promise<boolean>;
   canEditBrand: (brandId: string) => Promise<boolean>;
   canDeleteBrand: (brandId: string) => Promise<boolean>;
+  canCreateProject: (brandId: string) => Promise<boolean>;
+  canEditProject: (projectId: string) => Promise<boolean>;
+  canDeleteProject: (projectId: string) => Promise<boolean>;
   canManageMembers: (orgId: string) => Promise<boolean>;
   isGlobalAdmin: boolean;
 }
@@ -147,6 +150,72 @@ export const usePermissions = (): PermissionCheck & { loading: boolean } => {
     return role === 'owner' || role === 'admin';
   };
 
+  const canCreateProject = async (brandId: string): Promise<boolean> => {
+    try {
+      if (isGlobalAdmin) return true;
+
+      const { data: brand } = await supabase
+        .from("brands")
+        .select("organization_id")
+        .eq("id", brandId)
+        .single();
+
+      if (!brand) return false;
+
+      const role = await getOrgRole(brand.organization_id);
+      return role === 'owner' || role === 'admin' || role === 'editor';
+    } catch (error) {
+      console.error("Error checking project create permission:", error);
+      return false;
+    }
+  };
+
+  const canEditProject = async (projectId: string): Promise<boolean> => {
+    try {
+      if (isGlobalAdmin) return true;
+
+      const { data: project } = await supabase
+        .from("projects")
+        .select("brands(organization_id)")
+        .eq("id", projectId)
+        .single();
+
+      if (!project) return false;
+
+      const orgId = (project.brands as any)?.organization_id;
+      if (!orgId) return false;
+
+      const role = await getOrgRole(orgId);
+      return role === 'owner' || role === 'admin' || role === 'editor';
+    } catch (error) {
+      console.error("Error checking project edit permission:", error);
+      return false;
+    }
+  };
+
+  const canDeleteProject = async (projectId: string): Promise<boolean> => {
+    try {
+      if (isGlobalAdmin) return true;
+
+      const { data: project } = await supabase
+        .from("projects")
+        .select("brands(organization_id)")
+        .eq("id", projectId)
+        .single();
+
+      if (!project) return false;
+
+      const orgId = (project.brands as any)?.organization_id;
+      if (!orgId) return false;
+
+      const role = await getOrgRole(orgId);
+      return role === 'owner' || role === 'admin';
+    } catch (error) {
+      console.error("Error checking project delete permission:", error);
+      return false;
+    }
+  };
+
   return {
     canCreateOrganization,
     canDeleteOrganization,
@@ -154,6 +223,9 @@ export const usePermissions = (): PermissionCheck & { loading: boolean } => {
     canCreateBrand,
     canEditBrand,
     canDeleteBrand,
+    canCreateProject,
+    canEditProject,
+    canDeleteProject,
     canManageMembers,
     isGlobalAdmin,
     loading,

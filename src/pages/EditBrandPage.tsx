@@ -5,7 +5,17 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { ArrowLeft, Palette } from "lucide-react";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+import { ArrowLeft, Palette, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 import { usePermissions } from "@/hooks/usePermissions";
 import { createBrandSchema, type CreateBrandInput } from "@/lib/validations";
@@ -13,10 +23,13 @@ import { createBrandSchema, type CreateBrandInput } from "@/lib/validations";
 const EditBrandPage = () => {
   const navigate = useNavigate();
   const { brandId } = useParams();
-  const { canEditBrand, loading: permissionsLoading } = usePermissions();
+  const { canEditBrand, canDeleteBrand, loading: permissionsLoading } = usePermissions();
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [deleting, setDeleting] = useState(false);
+  const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [canEdit, setCanEdit] = useState(false);
+  const [canDelete, setCanDelete] = useState(false);
   const [originalSlug, setOriginalSlug] = useState("");
   const [organizationId, setOrganizationId] = useState("");
   const [formData, setFormData] = useState<CreateBrandInput>({
@@ -37,8 +50,10 @@ const EditBrandPage = () => {
 
   const checkPermissions = async () => {
     if (!brandId) return;
-    const hasPermission = await canEditBrand(brandId);
-    setCanEdit(hasPermission);
+    const hasEditPermission = await canEditBrand(brandId);
+    const hasDeletePermission = await canDeleteBrand(brandId);
+    setCanEdit(hasEditPermission);
+    setCanDelete(hasDeletePermission);
   };
 
   const loadBrand = async () => {
@@ -139,6 +154,30 @@ const EditBrandPage = () => {
       }
     } finally {
       setSaving(false);
+    }
+  };
+
+  const handleDelete = async () => {
+    if (!brandId) return;
+
+    setDeleting(true);
+
+    try {
+      const { error } = await supabase
+        .from("brands")
+        .delete()
+        .eq("id", brandId);
+
+      if (error) throw error;
+
+      toast.success("Marca eliminada exitosamente");
+      navigate(`/organizations/${organizationId}/brands`);
+    } catch (error: any) {
+      console.error("Error deleting brand:", error);
+      toast.error("Error al eliminar la marca");
+    } finally {
+      setDeleting(false);
+      setShowDeleteDialog(false);
     }
   };
 
@@ -283,8 +322,51 @@ const EditBrandPage = () => {
                 </Button>
               </div>
             </form>
+
+            {canDelete && (
+              <div className="mt-8 pt-6 border-t">
+                <div className="space-y-2">
+                  <h3 className="text-lg font-semibold text-destructive">Zona de peligro</h3>
+                  <p className="text-sm text-muted-foreground">
+                    Eliminar esta marca es una acción permanente que no se puede deshacer.
+                    Todos los proyectos asociados también serán eliminados.
+                  </p>
+                  <Button
+                    type="button"
+                    variant="destructive"
+                    onClick={() => setShowDeleteDialog(true)}
+                    className="mt-4"
+                  >
+                    <Trash2 className="h-4 w-4 mr-2" />
+                    Eliminar Marca
+                  </Button>
+                </div>
+              </div>
+            )}
           </CardContent>
         </Card>
+
+        <AlertDialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>¿Estás seguro?</AlertDialogTitle>
+              <AlertDialogDescription>
+                Esta acción no se puede deshacer. Se eliminará permanentemente la marca
+                "{formData.name}" y todos sus datos asociados (proyectos, etc.).
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel disabled={deleting}>Cancelar</AlertDialogCancel>
+              <AlertDialogAction
+                onClick={handleDelete}
+                disabled={deleting}
+                className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+              >
+                {deleting ? "Eliminando..." : "Eliminar"}
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
       </div>
     </div>
   );

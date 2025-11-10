@@ -5,7 +5,17 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { ArrowLeft, Building2 } from "lucide-react";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+import { ArrowLeft, Building2, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 import { usePermissions } from "@/hooks/usePermissions";
 import { createOrganizationSchema, generateSlug, type CreateOrganizationInput } from "@/lib/validations";
@@ -13,10 +23,13 @@ import { createOrganizationSchema, generateSlug, type CreateOrganizationInput } 
 const EditOrganizationPage = () => {
   const navigate = useNavigate();
   const { orgId } = useParams();
-  const { canEditOrganization, loading: permissionsLoading } = usePermissions();
+  const { canEditOrganization, canDeleteOrganization, loading: permissionsLoading } = usePermissions();
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [deleting, setDeleting] = useState(false);
+  const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [canEdit, setCanEdit] = useState(false);
+  const [canDelete, setCanDelete] = useState(false);
   const [originalSlug, setOriginalSlug] = useState("");
   const [formData, setFormData] = useState<CreateOrganizationInput>({
     name: "",
@@ -34,8 +47,10 @@ const EditOrganizationPage = () => {
 
   const checkPermissions = async () => {
     if (!orgId) return;
-    const hasPermission = await canEditOrganization(orgId);
-    setCanEdit(hasPermission);
+    const hasEditPermission = await canEditOrganization(orgId);
+    const hasDeletePermission = await canDeleteOrganization(orgId);
+    setCanEdit(hasEditPermission);
+    setCanDelete(hasDeletePermission);
   };
 
   const loadOrganization = async () => {
@@ -135,6 +150,30 @@ const EditOrganizationPage = () => {
       }
     } finally {
       setSaving(false);
+    }
+  };
+
+  const handleDelete = async () => {
+    if (!orgId) return;
+
+    setDeleting(true);
+
+    try {
+      const { error } = await supabase
+        .from("organizations")
+        .delete()
+        .eq("id", orgId);
+
+      if (error) throw error;
+
+      toast.success("Organización eliminada exitosamente");
+      navigate("/organizations");
+    } catch (error: any) {
+      console.error("Error deleting organization:", error);
+      toast.error("Error al eliminar la organización");
+    } finally {
+      setDeleting(false);
+      setShowDeleteDialog(false);
     }
   };
 
@@ -248,8 +287,51 @@ const EditOrganizationPage = () => {
                 </Button>
               </div>
             </form>
+
+            {canDelete && (
+              <div className="mt-8 pt-6 border-t">
+                <div className="space-y-2">
+                  <h3 className="text-lg font-semibold text-destructive">Zona de peligro</h3>
+                  <p className="text-sm text-muted-foreground">
+                    Eliminar esta organización es una acción permanente que no se puede deshacer.
+                    Todas las marcas y proyectos asociados también serán eliminados.
+                  </p>
+                  <Button
+                    type="button"
+                    variant="destructive"
+                    onClick={() => setShowDeleteDialog(true)}
+                    className="mt-4"
+                  >
+                    <Trash2 className="h-4 w-4 mr-2" />
+                    Eliminar Organización
+                  </Button>
+                </div>
+              </div>
+            )}
           </CardContent>
         </Card>
+
+        <AlertDialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>¿Estás seguro?</AlertDialogTitle>
+              <AlertDialogDescription>
+                Esta acción no se puede deshacer. Se eliminará permanentemente la organización
+                "{formData.name}" y todos sus datos asociados (marcas, proyectos, etc.).
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel disabled={deleting}>Cancelar</AlertDialogCancel>
+              <AlertDialogAction
+                onClick={handleDelete}
+                disabled={deleting}
+                className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+              >
+                {deleting ? "Eliminando..." : "Eliminar"}
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
       </div>
     </div>
   );
