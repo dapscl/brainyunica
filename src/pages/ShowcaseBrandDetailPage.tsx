@@ -2,7 +2,8 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { ArrowLeft, Calendar, Facebook, Instagram, Linkedin, Twitter } from 'lucide-react';
+import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+import { ArrowLeft, Calendar, Facebook, Instagram, Linkedin, Twitter, CheckCircle2, Clock, XCircle, AlertCircle } from 'lucide-react';
 import demoTechstartImage from '@/assets/demo-techstart.jpg';
 import demoEcogreenImage from '@/assets/demo-ecogreen.jpg';
 import demoFitlifeImage from '@/assets/demo-fitlife.jpg';
@@ -27,7 +28,12 @@ const brandData: Record<string, any> = {
         image: demoTechProduct1,
         platforms: ['linkedin', 'facebook', 'twitter'],
         date: '2025-01-15',
-        status: 'Publicado'
+        time: '10:00',
+        status: 'Publicado',
+        approvals: [
+          { reviewer: 'Ana García', role: 'Content Manager', status: 'approved', comment: 'Excelente trabajo, listo para publicar' },
+          { reviewer: 'Carlos Ruiz', role: 'Brand Manager', status: 'approved', comment: 'Aprobado ✓' }
+        ]
       },
       {
         id: 2,
@@ -36,7 +42,12 @@ const brandData: Record<string, any> = {
         image: demoTechProduct2,
         platforms: ['linkedin', 'twitter'],
         date: '2025-01-20',
-        status: 'Programado'
+        time: '14:30',
+        status: 'Programado',
+        approvals: [
+          { reviewer: 'Ana García', role: 'Content Manager', status: 'approved', comment: 'Programado para publicación' },
+          { reviewer: 'Carlos Ruiz', role: 'Brand Manager', status: 'pending', comment: null }
+        ]
       },
       {
         id: 3,
@@ -45,7 +56,12 @@ const brandData: Record<string, any> = {
         image: demoTechProduct1,
         platforms: ['linkedin'],
         date: '2025-01-25',
-        status: 'Borrador'
+        time: '09:00',
+        status: 'Borrador',
+        approvals: [
+          { reviewer: 'Ana García', role: 'Content Manager', status: 'changes_requested', comment: 'Por favor agregar más métricas específicas' },
+          { reviewer: 'Carlos Ruiz', role: 'Brand Manager', status: 'pending', comment: null }
+        ]
       }
     ]
   },
@@ -62,7 +78,12 @@ const brandData: Record<string, any> = {
         image: demoEcoProduct1,
         platforms: ['instagram', 'facebook'],
         date: '2025-02-01',
-        status: 'Publicado'
+        time: '11:00',
+        status: 'Publicado',
+        approvals: [
+          { reviewer: 'Laura Martín', role: 'Sustainability Lead', status: 'approved', comment: 'Mensaje alineado con nuestros valores' },
+          { reviewer: 'Pedro López', role: 'Social Media Manager', status: 'approved', comment: 'Perfecto para Instagram' }
+        ]
       },
       {
         id: 2,
@@ -71,7 +92,12 @@ const brandData: Record<string, any> = {
         image: demoEcoProduct2,
         platforms: ['instagram', 'facebook', 'twitter'],
         date: '2025-02-05',
-        status: 'Programado'
+        time: '16:00',
+        status: 'Programado',
+        approvals: [
+          { reviewer: 'Laura Martín', role: 'Sustainability Lead', status: 'approved', comment: 'Excelente enfoque' },
+          { reviewer: 'Pedro López', role: 'Social Media Manager', status: 'approved', comment: 'Listo para programar' }
+        ]
       },
       {
         id: 3,
@@ -80,7 +106,12 @@ const brandData: Record<string, any> = {
         image: demoEcoProduct1,
         platforms: ['instagram', 'facebook'],
         date: '2025-02-10',
-        status: 'Borrador'
+        time: '12:00',
+        status: 'Borrador',
+        approvals: [
+          { reviewer: 'Laura Martín', role: 'Sustainability Lead', status: 'pending', comment: null },
+          { reviewer: 'Pedro López', role: 'Social Media Manager', status: 'pending', comment: null }
+        ]
       }
     ]
   },
@@ -97,7 +128,12 @@ const brandData: Record<string, any> = {
         image: demoFitness1,
         platforms: ['instagram', 'facebook'],
         date: '2025-03-01',
-        status: 'Publicado'
+        time: '07:00',
+        status: 'Publicado',
+        approvals: [
+          { reviewer: 'María Torres', role: 'Fitness Director', status: 'approved', comment: 'Motivador y claro' },
+          { reviewer: 'Juan Pérez', role: 'Marketing Manager', status: 'approved', comment: 'Perfecto timing para el reto' }
+        ]
       },
       {
         id: 2,
@@ -106,7 +142,12 @@ const brandData: Record<string, any> = {
         image: demoFitness2,
         platforms: ['instagram', 'facebook'],
         date: '2025-03-05',
-        status: 'Programado'
+        time: '13:00',
+        status: 'Programado',
+        approvals: [
+          { reviewer: 'María Torres', role: 'Fitness Director', status: 'approved', comment: 'Información nutricional validada' },
+          { reviewer: 'Juan Pérez', role: 'Marketing Manager', status: 'approved', comment: 'Aprobado para publicación' }
+        ]
       },
       {
         id: 3,
@@ -115,7 +156,12 @@ const brandData: Record<string, any> = {
         image: demoFitness1,
         platforms: ['instagram', 'facebook'],
         date: '2025-03-10',
-        status: 'Borrador'
+        time: '18:00',
+        status: 'Borrador',
+        approvals: [
+          { reviewer: 'María Torres', role: 'Fitness Director', status: 'approved', comment: 'Testimonio verificado' },
+          { reviewer: 'Juan Pérez', role: 'Marketing Manager', status: 'changes_requested', comment: 'Necesitamos el consentimiento escrito de la cliente' }
+        ]
       }
     ]
   }
@@ -157,6 +203,32 @@ const ShowcaseBrandDetailPage = () => {
     'Publicado': 'bg-green-500/10 text-green-500 border-green-500/20',
     'Programado': 'bg-blue-500/10 text-blue-500 border-blue-500/20',
     'Borrador': 'bg-gray-500/10 text-gray-500 border-gray-500/20'
+  };
+
+  const getApprovalIcon = (status: string) => {
+    switch (status) {
+      case 'approved':
+        return <CheckCircle2 className="w-4 h-4 text-green-500" />;
+      case 'changes_requested':
+        return <AlertCircle className="w-4 h-4 text-orange-500" />;
+      case 'rejected':
+        return <XCircle className="w-4 h-4 text-red-500" />;
+      default:
+        return <Clock className="w-4 h-4 text-muted-foreground" />;
+    }
+  };
+
+  const getApprovalText = (status: string) => {
+    switch (status) {
+      case 'approved':
+        return 'Aprobado';
+      case 'changes_requested':
+        return 'Cambios solicitados';
+      case 'rejected':
+        return 'Rechazado';
+      default:
+        return 'Pendiente';
+    }
   };
 
   return (
@@ -229,6 +301,9 @@ const ShowcaseBrandDetailPage = () => {
                     month: 'long',
                     year: 'numeric'
                   })}
+                  <span className="text-muted-foreground">•</span>
+                  <Clock className="w-4 h-4" />
+                  {example.time}
                 </div>
               </CardHeader>
               
@@ -250,6 +325,38 @@ const ShowcaseBrandDetailPage = () => {
                       </div>
                     );
                   })}
+                </div>
+
+                {/* Approval Workflow */}
+                <div className="space-y-2 pt-2 border-t">
+                  <h4 className="text-xs font-semibold text-muted-foreground">Workflow de Aprobación</h4>
+                  {example.approvals.map((approval: any, idx: number) => (
+                    <div key={idx} className="flex items-start gap-2 text-xs">
+                      <Avatar className="w-6 h-6 mt-0.5">
+                        <AvatarFallback className="text-[10px]">
+                          {approval.reviewer.split(' ').map((n: string) => n[0]).join('')}
+                        </AvatarFallback>
+                      </Avatar>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2">
+                          <span className="font-medium truncate">{approval.reviewer}</span>
+                          {getApprovalIcon(approval.status)}
+                        </div>
+                        <p className="text-muted-foreground text-[10px]">{approval.role}</p>
+                        {approval.comment && (
+                          <p className="text-muted-foreground mt-1 text-[11px] italic">
+                            "{approval.comment}"
+                          </p>
+                        )}
+                      </div>
+                      <Badge 
+                        variant="outline" 
+                        className="text-[10px] shrink-0"
+                      >
+                        {getApprovalText(approval.status)}
+                      </Badge>
+                    </div>
+                  ))}
                 </div>
               </CardContent>
             </Card>
