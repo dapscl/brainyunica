@@ -37,26 +37,36 @@ const DemoPage = () => {
       let brands: Array<{ data: { id: string } | null; error: any }>;
       let projects: Array<{ data: { id: string } | null; error: any }>;
 
-      // 0. Limpiar datos demo anteriores
+      // 0. Limpiar TODAS las organizaciones demo anteriores
       setProgress(prev => [...prev, 'Limpiando demos anteriores...']);
       try {
         const { data: existingOrgs } = await supabase
           .from('organizations')
-          .select('id')
-          .ilike('name', '%Demo Marketing Agency%');
+          .select('id, name')
+          .or('name.ilike.%Demo Marketing Agency%,name.ilike.%demo-agency%,slug.ilike.%demo-agency%');
         
         if (existingOrgs && existingOrgs.length > 0) {
-          // Eliminar organizaciones anteriores (cascadeará a marcas, proyectos, etc.)
-          await Promise.all(
-            existingOrgs.map(org => 
-              supabase.from('organizations').delete().eq('id', org.id)
-            )
-          );
-          setProgress(prev => [...prev, `✓ ${existingOrgs.length} demos anteriores eliminados`]);
+          setProgress(prev => [...prev, `Encontradas ${existingOrgs.length} organizaciones demo anteriores, eliminando...`]);
+          
+          // Eliminar una por una para mejor control de errores
+          for (const org of existingOrgs) {
+            const { error: deleteError } = await supabase
+              .from('organizations')
+              .delete()
+              .eq('id', org.id);
+            
+            if (deleteError) {
+              console.error(`Error eliminando organización ${org.name}:`, deleteError);
+            }
+          }
+          
+          setProgress(prev => [...prev, `✓ Organizaciones demo anteriores eliminadas`]);
+        } else {
+          setProgress(prev => [...prev, '✓ No hay demos anteriores']);
         }
       } catch (error: any) {
-        // Si falla la limpieza, continuar de todos modos
         console.error('Error limpiando demos:', error);
+        setProgress(prev => [...prev, `⚠️ Aviso: ${error.message}`]);
       }
 
       // 1. Crear Organización
