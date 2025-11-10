@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { ImageUpload } from "@/components/ui/image-upload";
 import { ArrowLeft, Palette } from "lucide-react";
 import { toast } from "sonner";
 import { usePermissions } from "@/hooks/usePermissions";
@@ -224,21 +225,13 @@ const CreateBrandPage = () => {
                 )}
               </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="logo_url">URL del logo (opcional)</Label>
-                <Input
-                  id="logo_url"
-                  type="url"
-                  placeholder="https://ejemplo.com/logo.png"
-                  value={formData.logo_url}
-                  onChange={(e) => setFormData({ ...formData, logo_url: e.target.value })}
-                  className={errors.logo_url ? "border-destructive" : ""}
-                  maxLength={500}
-                />
-                {errors.logo_url && (
-                  <p className="text-sm text-destructive">{errors.logo_url}</p>
-                )}
-              </div>
+              <ImageUpload
+                bucket="brand-logos"
+                currentImageUrl={formData.logo_url}
+                onImageUrlChange={(url) => setFormData({ ...formData, logo_url: url })}
+                label="Logo de la marca (opcional)"
+                error={errors.logo_url}
+              />
 
               <div className="flex gap-4 pt-4">
                 <Button
