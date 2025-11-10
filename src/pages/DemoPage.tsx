@@ -116,8 +116,10 @@ const DemoPage = () => {
 
       // 4. Crear Proyectos
       setProgress(prev => [...prev, 'Creando proyectos...']);
-      const projects = await Promise.all([
-        supabase.from('projects').insert({
+      
+      // Insertar proyectos sin RETURNING para evitar conflictos con RLS
+      const projectsData = [
+        {
           brand_id: brands[0].data!.id,
           name: 'Campaña Q1 2025',
           description: 'Campaña de lanzamiento de nuevo producto',
@@ -125,8 +127,8 @@ const DemoPage = () => {
           created_by: user.id,
           start_date: '2025-01-01',
           end_date: '2025-03-31'
-        }).select().single(),
-        supabase.from('projects').insert({
+        },
+        {
           brand_id: brands[1].data!.id,
           name: 'Mes de la Sostenibilidad',
           description: 'Contenido educativo sobre reciclaje',
@@ -134,8 +136,8 @@ const DemoPage = () => {
           created_by: user.id,
           start_date: '2025-02-01',
           end_date: '2025-02-28'
-        }).select().single(),
-        supabase.from('projects').insert({
+        },
+        {
           brand_id: brands[2].data!.id,
           name: 'Reto 30 Días',
           description: 'Challenge fitness en redes sociales',
@@ -143,10 +145,23 @@ const DemoPage = () => {
           created_by: user.id,
           start_date: '2025-03-01',
           end_date: '2025-03-30'
-        }).select().single()
+        }
+      ];
+
+      const projectInserts = await Promise.all(
+        projectsData.map(project => supabase.from('projects').insert(project))
+      );
+
+      if (projectInserts.some(p => p.error)) throw new Error('Error insertando proyectos');
+
+      // Recuperar proyectos recién creados
+      const projects = await Promise.all([
+        supabase.from('projects').select('id').eq('brand_id', brands[0].data!.id).eq('name', 'Campaña Q1 2025').single(),
+        supabase.from('projects').select('id').eq('brand_id', brands[1].data!.id).eq('name', 'Mes de la Sostenibilidad').single(),
+        supabase.from('projects').select('id').eq('brand_id', brands[2].data!.id).eq('name', 'Reto 30 Días').single()
       ]);
 
-      if (projects.some(p => p.error)) throw new Error('Error creando proyectos');
+      if (projects.some(p => p.error)) throw new Error('Error recuperando proyectos');
       setProgress(prev => [...prev, '✓ 3 Proyectos creados']);
 
       // 5. Crear Contenido
