@@ -177,7 +177,7 @@ const DemoPage = () => {
             brand_id: brands[0].data!.id,
             name: 'Campaña Q1 2025',
             description: 'Campaña de lanzamiento de nuevo producto',
-            status: 'active',
+            status: 'in_progress',
             created_by: user.id,
             start_date: '2025-01-01',
             end_date: '2025-03-31'
@@ -186,7 +186,7 @@ const DemoPage = () => {
             brand_id: brands[1].data!.id,
             name: 'Mes de la Sostenibilidad',
             description: 'Contenido educativo sobre reciclaje',
-            status: 'active',
+            status: 'in_progress',
             created_by: user.id,
             start_date: '2025-02-01',
             end_date: '2025-02-28'
