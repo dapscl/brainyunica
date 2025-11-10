@@ -3,8 +3,9 @@ import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Building2, Package, LogOut, Briefcase, BarChart3 } from "lucide-react";
+import { Building2, Package, LogOut, Briefcase, BarChart3, Shield } from "lucide-react";
 import { robustSignOut } from "@/utils/auth";
+import { usePermissions } from "@/hooks/usePermissions";
 
 interface Profile {
   full_name: string | null;
@@ -14,6 +15,7 @@ interface Profile {
 const DashboardPage = () => {
   const navigate = useNavigate();
   const [profile, setProfile] = useState<Profile | null>(null);
+  const { isGlobalAdmin } = usePermissions();
 
   useEffect(() => {
     const loadProfile = async () => {
@@ -106,7 +108,7 @@ const DashboardPage = () => {
             </CardContent>
           </Card>
 
-          <Card className="hover:shadow-glow transition-smooth cursor-pointer">
+          <Card className="hover:shadow-glow transition-smooth cursor-pointer" onClick={() => navigate("/analytics")}>
             <CardHeader>
               <BarChart3 className="h-8 w-8 text-primary mb-2" />
               <CardTitle>Analítica</CardTitle>
@@ -120,6 +122,23 @@ const DashboardPage = () => {
               </Button>
             </CardContent>
           </Card>
+
+          {isGlobalAdmin && (
+            <Card className="hover:shadow-glow transition-smooth cursor-pointer" onClick={() => navigate("/admin/users")}>
+              <CardHeader>
+                <Shield className="h-8 w-8 text-primary mb-2" />
+                <CardTitle>Administración</CardTitle>
+                <CardDescription>
+                  Gestión de usuarios
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <Button variant="outline" className="w-full">
+                  Panel de admin
+                </Button>
+              </CardContent>
+            </Card>
+          )}
         </div>
 
         <Card className="mt-8">
@@ -148,6 +167,22 @@ const DashboardPage = () => {
               <li className="flex items-center gap-2">
                 <span className="h-2 w-2 rounded-full bg-green-500"></span>
                 Sistema de redes sociales activo
+              </li>
+              <li className="flex items-center gap-2">
+                <span className="h-2 w-2 rounded-full bg-green-500"></span>
+                Editor de contenido rico
+              </li>
+              <li className="flex items-center gap-2">
+                <span className="h-2 w-2 rounded-full bg-green-500"></span>
+                Brand Kit configurado
+              </li>
+              <li className="flex items-center gap-2">
+                <span className="h-2 w-2 rounded-full bg-green-500"></span>
+                Sistema de auditoría activo
+              </li>
+              <li className="flex items-center gap-2">
+                <span className="h-2 w-2 rounded-full bg-green-500"></span>
+                Notificaciones implementadas
               </li>
             </ul>
           </CardContent>
