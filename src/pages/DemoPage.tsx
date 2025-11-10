@@ -5,6 +5,9 @@ import { Loader2, Check, AlertCircle } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
+import demoTechstartImage from '@/assets/demo-techstart.jpg';
+import demoEcogreenImage from '@/assets/demo-ecogreen.jpg';
+import demoFitlifeImage from '@/assets/demo-fitlife.jpg';
 
 const DemoPage = () => {
   const [loading, setLoading] = useState(false);
@@ -47,7 +50,7 @@ const DemoPage = () => {
           name: 'TechStart Solutions',
           slug: 'techstart-' + Date.now(),
           industry: 'Tecnología',
-          logo_url: 'https://images.unsplash.com/photo-1488590528505-98d2b5aba04b',
+          logo_url: demoTechstartImage,
           website: 'https://techstart.demo'
         }).select().single(),
         supabase.from('brands').insert({
@@ -55,7 +58,7 @@ const DemoPage = () => {
           name: 'EcoGreen Products',
           slug: 'ecogreen-' + Date.now(),
           industry: 'Sostenibilidad',
-          logo_url: 'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09',
+          logo_url: demoEcogreenImage,
           website: 'https://ecogreen.demo'
         }).select().single(),
         supabase.from('brands').insert({
@@ -63,7 +66,7 @@ const DemoPage = () => {
           name: 'FitLife Gym',
           slug: 'fitlife-' + Date.now(),
           industry: 'Fitness',
-          logo_url: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48',
+          logo_url: demoFitlifeImage,
           website: 'https://fitlife.demo'
         }).select().single()
       ]);
