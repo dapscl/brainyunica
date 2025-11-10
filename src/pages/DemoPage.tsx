@@ -8,6 +8,12 @@ import { toast } from 'sonner';
 import demoTechstartImage from '@/assets/demo-techstart.jpg';
 import demoEcogreenImage from '@/assets/demo-ecogreen.jpg';
 import demoFitlifeImage from '@/assets/demo-fitlife.jpg';
+import demoTechProduct1 from '@/assets/demo-tech-product-1.jpg';
+import demoTechProduct2 from '@/assets/demo-tech-product-2.jpg';
+import demoEcoProduct1 from '@/assets/demo-eco-product-1.jpg';
+import demoEcoProduct2 from '@/assets/demo-eco-product-2.jpg';
+import demoFitness1 from '@/assets/demo-fitness-1.jpg';
+import demoFitness2 from '@/assets/demo-fitness-2.jpg';
 
 const DemoPage = () => {
   const [loading, setLoading] = useState(false);
@@ -135,9 +141,21 @@ const DemoPage = () => {
           content_type: 'post',
           status: 'published',
           social_platforms: ['facebook', 'instagram', 'linkedin'],
-          media_urls: ['https://images.unsplash.com/photo-1519389950473-47ba0277781c'],
+          media_urls: [demoTechProduct1],
           created_by: user.id,
           scheduled_date: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString()
+        },
+        {
+          project_id: projects[0].data!.id,
+          brand_id: brands[0].data!.id,
+          title: '💻 Nuevo Workspace Digital',
+          post_text: 'Transforma tu espacio de trabajo con nuestras herramientas de última generación. Productividad al máximo nivel 🚀 #WorkSmart #TechTools',
+          content_type: 'post',
+          status: 'draft',
+          social_platforms: ['linkedin', 'twitter'],
+          media_urls: [demoTechProduct2],
+          created_by: user.id,
+          scheduled_date: new Date(Date.now() + 36 * 60 * 60 * 1000).toISOString()
         },
         {
           project_id: projects[1].data!.id,
@@ -147,9 +165,21 @@ const DemoPage = () => {
           content_type: 'post',
           status: 'draft',
           social_platforms: ['instagram', 'twitter'],
-          media_urls: ['https://images.unsplash.com/photo-1532996122724-e3c354a0b15b'],
+          media_urls: [demoEcoProduct1],
           created_by: user.id,
           scheduled_date: new Date(Date.now() + 48 * 60 * 60 * 1000).toISOString()
+        },
+        {
+          project_id: projects[1].data!.id,
+          brand_id: brands[1].data!.id,
+          title: '♻️ Zero Waste Lifestyle',
+          post_text: 'Pequeños cambios, gran impacto. Descubre cómo nuestros productos reutilizables pueden ayudarte a reducir tu huella ambiental 🌿 #ZeroWaste #Sustainable',
+          content_type: 'post',
+          status: 'scheduled',
+          social_platforms: ['facebook', 'instagram'],
+          media_urls: [demoEcoProduct2],
+          created_by: user.id,
+          scheduled_date: new Date(Date.now() + 60 * 60 * 60 * 1000).toISOString()
         },
         {
           project_id: projects[2].data!.id,
@@ -159,9 +189,21 @@ const DemoPage = () => {
           content_type: 'post',
           status: 'scheduled',
           social_platforms: ['facebook', 'instagram'],
-          media_urls: ['https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b'],
+          media_urls: [demoFitness1],
           created_by: user.id,
           scheduled_date: new Date(Date.now() + 72 * 60 * 60 * 1000).toISOString()
+        },
+        {
+          project_id: projects[2].data!.id,
+          brand_id: brands[2].data!.id,
+          title: '🥗 Nutrición para el Éxito',
+          post_text: 'La transformación empieza en la cocina. Descubre cómo preparar tus comidas para alcanzar tus objetivos fitness 💪 #HealthyEating #MealPrep',
+          content_type: 'post',
+          status: 'published',
+          social_platforms: ['instagram', 'facebook'],
+          media_urls: [demoFitness2],
+          created_by: user.id,
+          scheduled_date: new Date(Date.now() + 84 * 60 * 60 * 1000).toISOString()
         }
       ];
 
@@ -219,44 +261,128 @@ const DemoPage = () => {
         {
           organization_id: org.id,
           uploaded_by: user.id,
-          file_name: 'hero-image.jpg',
-          file_url: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f',
+          file_name: 'tech-product-smartphone.jpg',
+          file_url: demoTechProduct1,
           file_type: 'image',
           mime_type: 'image/jpeg',
           file_size: 2458000,
           width: 1920,
           height: 1080,
-          category: 'marketing',
-          tags: ['hero', 'tecnología', 'oficina'],
-          description: 'Imagen principal para campañas de tecnología'
-        },
-        {
-          organization_id: org.id,
-          uploaded_by: user.id,
-          file_name: 'product-shot.jpg',
-          file_url: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e',
-          file_type: 'image',
-          mime_type: 'image/jpeg',
-          file_size: 1856000,
-          width: 1200,
-          height: 800,
           category: 'products',
-          tags: ['producto', 'audífonos', 'tecnología'],
-          description: 'Fotografía de producto profesional'
+          tags: ['tecnología', 'smartphone', 'gadgets'],
+          description: 'Smartphone moderno con gadgets tecnológicos'
         },
         {
           organization_id: org.id,
           uploaded_by: user.id,
-          file_name: 'team-photo.jpg',
-          file_url: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c',
+          file_name: 'tech-workspace.jpg',
+          file_url: demoTechProduct2,
           file_type: 'image',
           mime_type: 'image/jpeg',
           file_size: 3124000,
-          width: 1600,
-          height: 1200,
+          width: 1920,
+          height: 1080,
+          category: 'marketing',
+          tags: ['workspace', 'código', 'desarrollo'],
+          description: 'Espacio de trabajo tecnológico con múltiples pantallas'
+        },
+        {
+          organization_id: org.id,
+          uploaded_by: user.id,
+          file_name: 'eco-recycling.jpg',
+          file_url: demoEcoProduct1,
+          file_type: 'image',
+          mime_type: 'image/jpeg',
+          file_size: 1856000,
+          width: 1024,
+          height: 1024,
+          category: 'products',
+          tags: ['reciclaje', 'sostenibilidad', 'plantas'],
+          description: 'Contenedores de reciclaje con plantas verdes'
+        },
+        {
+          organization_id: org.id,
+          uploaded_by: user.id,
+          file_name: 'eco-bamboo-products.jpg',
+          file_url: demoEcoProduct2,
+          file_type: 'image',
+          mime_type: 'image/jpeg',
+          file_size: 1456000,
+          width: 1024,
+          height: 1024,
+          category: 'products',
+          tags: ['bambú', 'zero-waste', 'reutilizable'],
+          description: 'Productos reutilizables de bambú y vidrio'
+        },
+        {
+          organization_id: org.id,
+          uploaded_by: user.id,
+          file_name: 'fitness-yoga.jpg',
+          file_url: demoFitness1,
+          file_type: 'image',
+          mime_type: 'image/jpeg',
+          file_size: 2124000,
+          width: 1080,
+          height: 1920,
+          category: 'marketing',
+          tags: ['yoga', 'fitness', 'gimnasio'],
+          description: 'Persona practicando yoga en gimnasio moderno'
+        },
+        {
+          organization_id: org.id,
+          uploaded_by: user.id,
+          file_name: 'fitness-meal-prep.jpg',
+          file_url: demoFitness2,
+          file_type: 'image',
+          mime_type: 'image/jpeg',
+          file_size: 1924000,
+          width: 1024,
+          height: 1024,
+          category: 'products',
+          tags: ['nutrición', 'meal-prep', 'saludable'],
+          description: 'Preparación de comida saludable con vegetales frescos'
+        },
+        {
+          organization_id: org.id,
+          uploaded_by: user.id,
+          file_name: 'brand-techstart.jpg',
+          file_url: demoTechstartImage,
+          file_type: 'image',
+          mime_type: 'image/jpeg',
+          file_size: 2856000,
+          width: 1920,
+          height: 1080,
           category: 'team',
-          tags: ['equipo', 'colaboración', 'oficina'],
-          description: 'Foto de equipo trabajando'
+          tags: ['marca', 'tecnología', 'startup'],
+          description: 'Logo y marca TechStart Solutions'
+        },
+        {
+          organization_id: org.id,
+          uploaded_by: user.id,
+          file_name: 'brand-ecogreen.jpg',
+          file_url: demoEcogreenImage,
+          file_type: 'image',
+          mime_type: 'image/jpeg',
+          file_size: 2456000,
+          width: 1920,
+          height: 1080,
+          category: 'team',
+          tags: ['marca', 'eco', 'sostenibilidad'],
+          description: 'Logo y marca EcoGreen Products'
+        },
+        {
+          organization_id: org.id,
+          uploaded_by: user.id,
+          file_name: 'brand-fitlife.jpg',
+          file_url: demoFitlifeImage,
+          file_type: 'image',
+          mime_type: 'image/jpeg',
+          file_size: 2656000,
+          width: 1920,
+          height: 1080,
+          category: 'team',
+          tags: ['marca', 'fitness', 'gym'],
+          description: 'Logo y marca FitLife Gym'
         }
       ];
 
@@ -296,9 +422,9 @@ const DemoPage = () => {
               <li>✓ 3 Marcas (TechStart, EcoGreen, FitLife)</li>
               <li>✓ 3 Brand Kits configurados</li>
               <li>✓ 3 Proyectos activos</li>
-              <li>✓ 3 Publicaciones de ejemplo</li>
+              <li>✓ 6 Publicaciones de ejemplo</li>
               <li>✓ 3 Plantillas de contenido</li>
-              <li>✓ 3 Archivos en biblioteca de medios</li>
+              <li>✓ 9 Archivos en biblioteca de medios</li>
             </ul>
           </div>
 

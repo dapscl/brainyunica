@@ -35,6 +35,7 @@ const UsersAdminPage = lazy(() => import("./pages/UsersAdminPage"));
 const MediaLibraryPage = lazy(() => import("./pages/MediaLibraryPage"));
 const TemplatesPage = lazy(() => import("./pages/TemplatesPage"));
 const DemoPage = lazy(() => import("./pages/DemoPage"));
+const GalleryPage = lazy(() => import("./pages/GalleryPage"));
 
 const LoadingFallback = () => (
   <div className="min-h-screen bg-background p-8">
@@ -69,6 +70,7 @@ const App = () => {
           <Route path="/organizations/:orgId/brands" element={<ProtectedRoute><BrandsPage /></ProtectedRoute>} />
           <Route path="/organizations/:orgId/brands/new" element={<ProtectedRoute><CreateBrandPage /></ProtectedRoute>} />
           <Route path="/organizations/:orgId/media" element={<ProtectedRoute><MediaLibraryPage /></ProtectedRoute>} />
+          <Route path="/organizations/:orgId/gallery" element={<ProtectedRoute><GalleryPage /></ProtectedRoute>} />
           <Route path="/organizations/:orgId/templates" element={<ProtectedRoute><TemplatesPage /></ProtectedRoute>} />
           <Route path="/brands/:brandId" element={<ProtectedRoute><BrandsPage /></ProtectedRoute>} />
           <Route path="/brands/:brandId/edit" element={<ProtectedRoute><EditBrandPage /></ProtectedRoute>} />
