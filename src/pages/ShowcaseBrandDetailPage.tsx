@@ -243,7 +243,7 @@ const ShowcaseBrandDetailPage = () => {
             className="mb-4"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
-            Volver al Portfolio
+            Volver al Demo
           </Button>
           
           <div className="flex items-start gap-6">
@@ -268,9 +268,9 @@ const ShowcaseBrandDetailPage = () => {
       {/* Content Examples */}
       <div className="container mx-auto px-4 py-12">
         <div className="mb-8">
-          <h2 className="text-2xl font-bold mb-2">Ejemplos de Contenido</h2>
+          <h2 className="text-2xl font-bold mb-2">Gestión de Contenido</h2>
           <p className="text-muted-foreground">
-            Contenido creado y gestionado para esta marca
+            Visualiza cómo la plataforma gestiona la calendarización, multicanal y aprobaciones para cada contenido
           </p>
         </div>
 

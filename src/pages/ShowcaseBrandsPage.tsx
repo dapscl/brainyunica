@@ -71,9 +71,9 @@ const ShowcaseBrandsPage = () => {
                 <ArrowLeft className="w-4 h-4 mr-2" />
                 Volver a Inicio
               </Button>
-              <h1 className="text-3xl font-bold">Nuestro Portfolio</h1>
+              <h1 className="text-3xl font-bold">Demo de la Plataforma</h1>
               <p className="text-muted-foreground mt-1">
-                Explora las marcas con las que trabajamos
+                Explora cómo gestionar múltiples marcas con funcionalidades avanzadas
               </p>
             </div>
           </div>
@@ -82,6 +82,15 @@ const ShowcaseBrandsPage = () => {
 
       {/* Brands Grid */}
       <div className="container mx-auto px-4 py-12">
+        <div className="mb-8 p-6 bg-primary/5 rounded-lg border border-primary/20">
+          <h2 className="text-lg font-semibold mb-2">💡 Demo Interactivo</h2>
+          <p className="text-sm text-muted-foreground">
+            Este showcase demuestra las capacidades de la plataforma usando 3 marcas ejemplo. 
+            Haz clic en cualquier marca para ver cómo funciona la <strong>calendarización</strong>, 
+            <strong> publicación multicanal</strong> y <strong>workflow de aprobaciones</strong>.
+          </p>
+        </div>
+
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {brands.map((brand) => (
             <Card key={brand.slug} className="overflow-hidden hover:shadow-lg transition-shadow">
@@ -127,7 +136,7 @@ const ShowcaseBrandsPage = () => {
                     className="flex-1 gap-2" 
                     onClick={() => navigate(`/showcase/brands/${brand.slug}`)}
                   >
-                    Ver Ejemplos
+                    Ver Funcionalidades
                     <ArrowRight className="w-4 h-4" />
                   </Button>
                   <Button 
