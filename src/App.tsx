@@ -34,6 +34,7 @@ const PublicationQueuePage = lazy(() => import("./pages/PublicationQueuePage"));
 const UsersAdminPage = lazy(() => import("./pages/UsersAdminPage"));
 const MediaLibraryPage = lazy(() => import("./pages/MediaLibraryPage"));
 const TemplatesPage = lazy(() => import("./pages/TemplatesPage"));
+const DemoPage = lazy(() => import("./pages/DemoPage"));
 
 const LoadingFallback = () => (
   <div className="min-h-screen bg-background p-8">
@@ -51,6 +52,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/auth" element={<AuthPage />} />
+          <Route path="/demo" element={<ProtectedRoute><DemoPage /></ProtectedRoute>} />
           <Route path="/dashboard" element={<ProtectedRoute><DashboardPage /></ProtectedRoute>} />
           <Route path="/organizations" element={<ProtectedRoute><OrganizationsPage /></ProtectedRoute>} />
           <Route path="/organizations/new" element={<ProtectedRoute><CreateOrganizationPage /></ProtectedRoute>} />
