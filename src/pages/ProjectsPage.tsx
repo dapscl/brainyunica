@@ -6,6 +6,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { AppHeader } from "@/components/layout/AppHeader";
 import { SearchBar } from "@/components/search/SearchBar";
+import { DynamicBreadcrumb } from "@/components/navigation/DynamicBreadcrumb";
+import { ProjectCardSkeleton } from "@/components/skeletons/CardSkeletons";
 import { Briefcase, Plus, Calendar, CheckCircle2, Clock, AlertCircle, Edit, XCircle, Pause } from "lucide-react";
 import { toast } from "sonner";
 import { usePermissions } from "@/hooks/usePermissions";
@@ -127,9 +129,17 @@ const ProjectsPage = () => {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
-      </div>
+      <>
+        <AppHeader />
+        <div className="container mx-auto px-4 py-8">
+          <DynamicBreadcrumb />
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {[...Array(3)].map((_, i) => (
+              <ProjectCardSkeleton key={i} />
+            ))}
+          </div>
+        </div>
+      </>
     );
   }
 
@@ -138,6 +148,7 @@ const ProjectsPage = () => {
       <AppHeader />
       <div className="min-h-screen bg-background">
       <div className="container mx-auto px-4 py-8">
+        <DynamicBreadcrumb />
         <div className="flex flex-col gap-6 mb-8">
           <div className="flex items-center justify-between">
             <div>

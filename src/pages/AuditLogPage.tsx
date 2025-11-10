@@ -1,4 +1,5 @@
 import { AppHeader } from "@/components/layout/AppHeader";
+import { DynamicBreadcrumb } from "@/components/navigation/DynamicBreadcrumb";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useAuditLog } from "@/hooks/useAuditLog";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -53,6 +54,7 @@ export default function AuditLogPage() {
     <>
       <AppHeader />
       <div className="container mx-auto px-4 py-8">
+        <DynamicBreadcrumb />
         <div className="mb-8">
           <h1 className="text-3xl font-bold">Registro de Auditoría</h1>
           <p className="text-muted-foreground mt-2">

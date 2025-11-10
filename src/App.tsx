@@ -20,6 +20,7 @@ import EditBrandPage from "./pages/EditBrandPage";
 import EditProjectPage from "./pages/EditProjectPage";
 import AuditLogPage from "./pages/AuditLogPage";
 import OrganizationDetailPage from "./pages/OrganizationDetailPage";
+import AnalyticsPage from "./pages/AnalyticsPage";
 
 const App = () => {
   return (
@@ -35,6 +36,7 @@ const App = () => {
         <Route path="/organizations/:orgId/edit" element={<ProtectedRoute><EditOrganizationPage /></ProtectedRoute>} />
         <Route path="/organizations/:id" element={<ProtectedRoute><OrganizationDetailPage /></ProtectedRoute>} />
         <Route path="/audit-logs" element={<ProtectedRoute><AuditLogPage /></ProtectedRoute>} />
+        <Route path="/analytics" element={<ProtectedRoute><AnalyticsPage /></ProtectedRoute>} />
         <Route path="/organizations/:orgId/members" element={<ProtectedRoute><OrganizationMembersPage /></ProtectedRoute>} />
         <Route path="/organizations/:orgId/projects" element={<ProtectedRoute><ProjectsPage /></ProtectedRoute>} />
         <Route path="/organizations/:orgId/projects/new" element={<ProtectedRoute><CreateProjectPage /></ProtectedRoute>} />

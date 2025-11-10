@@ -8,7 +8,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Package, LogOut, Building2, User, Home, Moon, Sun } from "lucide-react";
+import { Package, LogOut, Building2, User, Home, Moon, Sun, BarChart3 } from "lucide-react";
 import { robustSignOut } from "@/utils/auth";
 import { supabase } from "@/integrations/supabase/client";
 import { useEffect, useState } from "react";
@@ -73,6 +73,14 @@ export const AppHeader = () => {
               <Building2 className="h-4 w-4 mr-2" />
               Organizaciones
             </Button>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => navigate("/analytics")}
+            >
+              <BarChart3 className="h-4 w-4 mr-2" />
+              Analytics
+            </Button>
           </nav>
         </div>
         <div className="flex items-center gap-2">
@@ -102,6 +110,10 @@ export const AppHeader = () => {
               <DropdownMenuItem onClick={() => navigate("/organizations")}>
                 <Building2 className="h-4 w-4 mr-2" />
                 Organizaciones
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => navigate("/analytics")}>
+                <BarChart3 className="h-4 w-4 mr-2" />
+                Analytics
               </DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem onClick={() => robustSignOut()}>
