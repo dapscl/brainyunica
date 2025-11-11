@@ -30,8 +30,8 @@ const ShowcasePage = () => {
               Ver Demo Interactivo
               <ArrowRight className="w-4 h-4" />
             </Button>
-            <Button size="lg" variant="outline" onClick={() => window.open('https://linkedin.com', '_blank')}>
-              Más Información
+            <Button size="lg" variant="outline" onClick={() => navigate('/showcase/pricing')}>
+              Ver Pricing
             </Button>
           </div>
         </div>
