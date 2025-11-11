@@ -6,29 +6,26 @@ interface BrainCardProps {
   icon: LucideIcon;
   title: string;
   description: string;
-  color: 'cyan' | 'coral' | 'purple' | 'blue' | 'green';
+  color: 'cyan' | 'purple' | 'blue' | 'green';
   delay?: number;
 }
 
 const colorClasses = {
   cyan: 'from-electric-cyan/20 to-electric-cyan/5 border-electric-cyan/30',
-  coral: 'from-coral/20 to-coral/5 border-coral/30',
-  purple: 'from-purple-500/20 to-purple-500/5 border-purple-500/30',
+  purple: 'from-purple-accent/20 to-purple-accent/5 border-purple-accent/30',
   blue: 'from-blue-500/20 to-blue-500/5 border-blue-500/30',
   green: 'from-green-500/20 to-green-500/5 border-green-500/30',
 };
 
 const iconColorClasses = {
   cyan: 'text-electric-cyan',
-  coral: 'text-coral',
-  purple: 'text-purple-500',
+  purple: 'text-purple-accent',
   blue: 'text-blue-500',
   green: 'text-green-500',
 };
 
 const glowClasses = {
   cyan: 'group-hover:shadow-glow-cyan',
-  coral: 'group-hover:shadow-[0_0_40px_hsl(10_85%_65%_/_0.4)]',
   purple: 'group-hover:shadow-[0_0_40px_hsl(280_70%_60%_/_0.4)]',
   blue: 'group-hover:shadow-[0_0_40px_hsl(220_80%_60%_/_0.4)]',
   green: 'group-hover:shadow-[0_0_40px_hsl(140_70%_50%_/_0.4)]',

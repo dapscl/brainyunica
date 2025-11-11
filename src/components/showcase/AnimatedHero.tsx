@@ -27,12 +27,12 @@ export const AnimatedHero = () => {
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1, delay: 1.5, repeat: Infinity, repeatDelay: 4 }}
-          className="absolute top-8 right-8 bg-card/80 backdrop-blur-sm rounded-lg p-4 border border-coral/30"
+          className="absolute top-8 right-8 bg-card/80 backdrop-blur-sm rounded-lg p-4 border border-purple-500/30"
         >
           <div className="flex items-center gap-2">
-            <Calendar className="w-5 h-5 text-coral" />
+            <Calendar className="w-5 h-5 text-purple-500" />
             <div>
-              <p className="text-xs font-semibold text-coral">CalendarBrain™</p>
+              <p className="text-xs font-semibold text-purple-500">CalendarBrain™</p>
               <p className="text-xs text-muted-foreground mt-1">12 posts programados</p>
             </div>
           </div>

@@ -82,7 +82,7 @@ export default {
         },
         'deep-blue': 'hsl(var(--deep-blue))',
         'electric-cyan': 'hsl(var(--electric-cyan))',
-        'coral': 'hsl(var(--coral))'
+        'purple-accent': 'hsl(var(--purple-accent))'
 			},
 			backgroundImage: {
 				'gradient-hero': 'var(--gradient-hero)',

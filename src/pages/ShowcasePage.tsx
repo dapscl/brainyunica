@@ -48,7 +48,7 @@ const ShowcasePage = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            <span className="bg-gradient-to-r from-foreground via-electric-cyan to-coral bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-foreground via-electric-cyan to-purple-accent bg-clip-text text-transparent">
               Mira cómo funciona
             </span>
             <br />
@@ -137,7 +137,7 @@ const ShowcasePage = () => {
               icon={Palette}
               title="CreatorBrain™"
               description="Crea contenido y versiones automáticamente. Genera variantes, optimiza copy y adapta creatividades a cada plataforma sin intervención manual."
-              color="coral"
+              color="purple"
               delay={0}
             />
             
@@ -199,7 +199,7 @@ const ShowcasePage = () => {
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
             >
-              Resultados <span className="text-coral">en acción</span>
+              Resultados <span className="text-purple-accent">en acción</span>
             </motion.h2>
             <motion.p 
               className="text-xl text-muted-foreground max-w-3xl mx-auto font-light"
@@ -311,10 +311,10 @@ const ShowcasePage = () => {
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="relative p-16 rounded-3xl bg-gradient-to-br from-electric-cyan/10 via-background to-coral/10 border border-electric-cyan/30 shadow-glow-blue"
+            className="relative p-16 rounded-3xl bg-gradient-to-br from-electric-cyan/10 via-background to-purple-accent/10 border border-electric-cyan/30 shadow-glow-blue"
           >
             <div className="absolute -top-6 left-1/2 -translate-x-1/2">
-              <div className="bg-gradient-to-r from-electric-cyan to-coral p-5 rounded-2xl shadow-glow-cyan">
+              <div className="bg-gradient-to-r from-electric-cyan to-purple-accent p-5 rounded-2xl shadow-glow-cyan">
                 <Bot className="w-10 h-10 text-background" />
               </div>
             </div>
@@ -329,14 +329,14 @@ const ShowcasePage = () => {
               Usa una sola que lo hace todo.
             </p>
 
-            <p className="text-5xl font-bold mb-12 bg-gradient-to-r from-electric-cyan to-coral bg-clip-text text-transparent">
+            <p className="text-5xl font-bold mb-12 bg-gradient-to-r from-electric-cyan to-purple-accent bg-clip-text text-transparent">
               Brainy.
             </p>
 
             <Button 
               size="lg"
               onClick={() => navigate('/showcase/onboarding')}
-              className="text-xl px-12 py-8 bg-gradient-to-r from-electric-cyan to-coral hover:opacity-90 text-background font-bold uppercase tracking-wide shadow-glow-cyan"
+              className="text-xl px-12 py-8 bg-gradient-to-r from-electric-cyan to-purple-accent hover:opacity-90 text-background font-bold uppercase tracking-wide shadow-glow-cyan"
             >
               Solicita acceso anticipado →
             </Button>
