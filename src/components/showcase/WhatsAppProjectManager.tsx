@@ -2,26 +2,29 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { MessageSquare, CheckCircle, Clock, Sparkles, Zap } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 
 const WhatsAppProjectManager = () => {
+  const { t } = useTranslation();
+
   const conversations = [
     {
       time: "09:15",
-      from: "Brainy",
-      message: "Hola Carolina 👋 Hoy tenemos este contenido pre-aprobado para publicar a las 12:00:",
+      from: t('showcase.pricing.whatsappManager.conversations.brainy'),
+      message: t('showcase.pricing.whatsappManager.conversations.message1'),
       type: "incoming",
       status: "pending"
     },
     {
       time: "09:17",
-      from: "Tú",
-      message: "Sí, quiero hacer un cambio",
+      from: t('showcase.pricing.whatsappManager.conversations.from'),
+      message: t('showcase.pricing.whatsappManager.conversations.message2'),
       type: "outgoing"
     },
     {
       time: "09:18",
-      from: "Brainy",
-      message: "Mientras otros planifican su lunes, tu contenido ya está al aire. Así de fácil con BrainybyUnica. 🚀",
+      from: t('showcase.pricing.whatsappManager.conversations.brainy'),
+      message: t('showcase.pricing.whatsappManager.conversations.message3'),
       type: "incoming",
       status: "approved"
     }
@@ -44,10 +47,10 @@ const WhatsAppProjectManager = () => {
             </div>
             <div>
               <CardTitle className="text-2xl font-bold tracking-tight text-foreground uppercase">
-                WhatsApp Project Manager
+                {t('showcase.pricing.whatsappManager.title')}
               </CardTitle>
               <p className="text-base text-muted-foreground font-light">
-                Tu asistente personal de marca coordinando todo desde WhatsApp
+                {t('showcase.pricing.whatsappManager.subtitle')}
               </p>
             </div>
           </div>
@@ -69,10 +72,10 @@ const WhatsAppProjectManager = () => {
                   <MessageSquare className="w-6 h-6 text-background" />
                 </div>
                 <div>
-                  <h3 className="font-bold text-foreground">BrainybyUnica Assistant</h3>
+                  <h3 className="font-bold text-foreground">Mr. Brainy</h3>
                   <p className="text-xs text-green-500 flex items-center gap-1">
                     <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-                    En línea
+                    {t('showcase.pricing.whatsappManager.online')}
                   </p>
                 </div>
               </div>
@@ -124,25 +127,25 @@ const WhatsAppProjectManager = () => {
               <div className="flex items-center gap-3 mb-4">
                 <Sparkles className="w-6 h-6 text-purple-accent" />
                 <h3 className="text-lg font-bold text-foreground uppercase tracking-tight">
-                  Aprobación Conversacional
+                  {t('showcase.pricing.whatsappManager.conversationalApproval.title')}
                 </h3>
               </div>
               <ul className="space-y-3 text-sm text-muted-foreground">
                 <li className="flex items-start gap-2">
                   <CheckCircle className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
-                  <span>Brainy envía contenido pre-aprobado por WhatsApp</span>
+                  <span>{t('showcase.pricing.whatsappManager.conversationalApproval.feature1')}</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <CheckCircle className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
-                  <span>Apruebas con ✅ o solicitas cambios en lenguaje natural</span>
+                  <span>{t('showcase.pricing.whatsappManager.conversationalApproval.feature2')}</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <CheckCircle className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
-                  <span>GPT-5 genera versiones alternativas en segundos</span>
+                  <span>{t('showcase.pricing.whatsappManager.conversationalApproval.feature3')}</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <CheckCircle className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
-                  <span>Publicación automática cuando apruebas</span>
+                  <span>{t('showcase.pricing.whatsappManager.conversationalApproval.feature4')}</span>
                 </li>
               </ul>
             </CardContent>
@@ -153,25 +156,25 @@ const WhatsAppProjectManager = () => {
               <div className="flex items-center gap-3 mb-4">
                 <Zap className="w-6 h-6 text-electric-cyan" />
                 <h3 className="text-lg font-bold text-foreground uppercase tracking-tight">
-                  Sugerencias Automáticas
+                  {t('showcase.pricing.whatsappManager.autoSuggestions.title')}
                 </h3>
               </div>
               <ul className="space-y-3 text-sm text-muted-foreground">
                 <li className="flex items-start gap-2">
                   <CheckCircle className="w-4 h-4 text-electric-cyan mt-0.5 flex-shrink-0" />
-                  <span>Análisis semanal de Google Trends + RSS feeds</span>
+                  <span>{t('showcase.pricing.whatsappManager.autoSuggestions.feature1')}</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <CheckCircle className="w-4 h-4 text-electric-cyan mt-0.5 flex-shrink-0" />
-                  <span>3 tendencias más relevantes para tu sector</span>
+                  <span>{t('showcase.pricing.whatsappManager.autoSuggestions.feature2')}</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <CheckCircle className="w-4 h-4 text-electric-cyan mt-0.5 flex-shrink-0" />
-                  <span>Propuestas de contenido listas para aprobar</span>
+                  <span>{t('showcase.pricing.whatsappManager.autoSuggestions.feature3')}</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <CheckCircle className="w-4 h-4 text-electric-cyan mt-0.5 flex-shrink-0" />
-                  <span>Copy + arte + calendario generados automáticamente</span>
+                  <span>{t('showcase.pricing.whatsappManager.autoSuggestions.feature4')}</span>
                 </li>
               </ul>
             </CardContent>
@@ -180,28 +183,28 @@ const WhatsAppProjectManager = () => {
           <Card className="border-border/50 bg-gradient-to-br from-accent/20 to-accent/5 backdrop-blur-sm">
             <CardContent className="p-6">
               <h4 className="font-bold text-foreground mb-3 uppercase tracking-tight">
-                Capacidades del Project Manager
+                {t('showcase.pricing.whatsappManager.capabilities.title')}
               </h4>
               <ul className="space-y-2 text-sm text-foreground">
                 <li className="flex items-center gap-2">
                   <span className="text-green-500">✅</span>
-                  Aprobación de contenido por WhatsApp
+                  {t('showcase.pricing.whatsappManager.capabilities.approval')}
                 </li>
                 <li className="flex items-center gap-2">
                   <span className="text-electric-cyan">📝</span>
-                  Edición y reescritura con GPT-5 en tiempo real
+                  {t('showcase.pricing.whatsappManager.capabilities.editing')}
                 </li>
                 <li className="flex items-center gap-2">
                   <span className="text-purple-accent">📈</span>
-                  Sugerencias semanales basadas en tendencias
+                  {t('showcase.pricing.whatsappManager.capabilities.suggestions')}
                 </li>
                 <li className="flex items-center gap-2">
                   <span className="text-green-500">⚡</span>
-                  Publicación automática vía API Meta
+                  {t('showcase.pricing.whatsappManager.capabilities.publishing')}
                 </li>
                 <li className="flex items-center gap-2">
                   <span className="text-electric-cyan">📊</span>
-                  Notificaciones push con métricas en tiempo real
+                  {t('showcase.pricing.whatsappManager.capabilities.notifications')}
                 </li>
               </ul>
             </CardContent>
@@ -221,15 +224,15 @@ const WhatsAppProjectManager = () => {
             <div className="grid md:grid-cols-3 gap-6 text-center">
               <div>
                 <p className="text-4xl font-bold text-green-500 mb-2">5x</p>
-                <p className="text-sm text-muted-foreground font-light">Más rápido en aprobaciones</p>
+                <p className="text-sm text-muted-foreground font-light">{t('showcase.pricing.whatsappManager.stats.faster')}</p>
               </div>
               <div>
                 <p className="text-4xl font-bold text-electric-cyan mb-2">24/7</p>
-                <p className="text-sm text-muted-foreground font-light">Asistente siempre activo</p>
+                <p className="text-sm text-muted-foreground font-light">{t('showcase.pricing.whatsappManager.stats.alwaysActive')}</p>
               </div>
               <div>
                 <p className="text-4xl font-bold text-purple-accent mb-2">100%</p>
-                <p className="text-sm text-muted-foreground font-light">Automatización conversacional</p>
+                <p className="text-sm text-muted-foreground font-light">{t('showcase.pricing.whatsappManager.stats.automation')}</p>
               </div>
             </div>
           </CardContent>

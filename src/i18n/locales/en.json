@@ -256,7 +256,7 @@
     "interactiveDemo": {
       "title": "Interactive Demo: Complete Flow",
       "subtitle": "Watch how BrainybyUnica manages the entire process from WhatsApp approval to automatic publishing on social networks",
-      "assistantName": "BrainybyUnica Assistant",
+      "assistantName": "Mr. Brainy",
       "online": "Online",
       "startDemo": "Start Interactive Demo",
       "restartDemo": "Restart Demo",
@@ -397,6 +397,46 @@
         "button": "Talk to Sales"
       },
       "note": "Note: The media percentage is applied to your total monthly ad spend. The higher the tier, the lower the percentage you pay (20% → 15% → 10%), optimizing your cost as you scale.",
+      "whatsappManager": {
+        "title": "WhatsApp Project Manager",
+        "subtitle": "Your personal brand assistant coordinating everything from WhatsApp",
+        "assistantName": "Mr. Brainy",
+        "online": "Online",
+        "conversations": {
+          "message1": "Hi Carolina 👋 Today we have this pre-approved content to publish at 12:00:",
+          "message2": "Yes, I want to make a change",
+          "message3": "While others plan their Monday, your content is already live. That easy with BrainybyUnica. 🚀",
+          "from": "You",
+          "brainy": "Brainy"
+        },
+        "conversationalApproval": {
+          "title": "Conversational Approval",
+          "feature1": "Brainy sends pre-approved content via WhatsApp",
+          "feature2": "Approve with ✅ or request changes in natural language",
+          "feature3": "GPT-5 generates alternative versions in seconds",
+          "feature4": "Automatic publishing when you approve"
+        },
+        "autoSuggestions": {
+          "title": "Automatic Suggestions",
+          "feature1": "Weekly analysis of Google Trends + RSS feeds",
+          "feature2": "3 most relevant trends for your sector",
+          "feature3": "Content proposals ready to approve",
+          "feature4": "Copy + art + calendar generated automatically"
+        },
+        "capabilities": {
+          "title": "Project Manager Capabilities",
+          "approval": "WhatsApp content approval",
+          "editing": "GPT-5 real-time editing and rewriting",
+          "suggestions": "Weekly suggestions based on trends",
+          "publishing": "Automatic publishing via Meta API",
+          "notifications": "Push notifications with real-time metrics"
+        },
+        "stats": {
+          "faster": "Faster in approvals",
+          "alwaysActive": "Assistant always active",
+          "automation": "Conversational automation"
+        }
+      },
       "adSpendExamples": {
         "title": "Pricing Examples by Ad Spend",
         "subtitle": "Calculate your approximate monthly cost based on your advertising investment",
