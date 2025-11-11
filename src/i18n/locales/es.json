@@ -317,10 +317,9 @@
           "basePrice": "$1,250 USD",
           "integrationFee": "$625 USD",
           "percentage": "15%",
+          "prefix": "Todo lo de Starter más:",
           "features": {
-            "users": "10 usuarios con acceso completo a toda la plataforma",
-            "whatsapp": "WhatsApp Project Manager incluido para cada usuario",
-            "brainies": "5 Brainies: Creator, Calendar, Ad, Chat y Trend",
+            "users": "10 usuarios con acceso completo",
             "brands": "Hasta 5 marcas activas completas",
             "ai": "IA avanzada: copys, imágenes y variaciones",
             "workflows": "Flujos de aprobación internos + cliente",
@@ -337,15 +336,13 @@
           "basePrice": "$3,750 USD",
           "integrationFee": "$1,875 USD",
           "percentage": "10%",
+          "prefix": "Todo lo de Small Agencies más:",
           "features": {
-            "users": "25 usuarios con acceso completo a toda la plataforma",
-            "whatsapp": "WhatsApp Project Manager incluido para cada usuario",
-            "brainies": "5 Brainies: Creator, Calendar, Ad, Chat y Trend",
+            "users": "25 usuarios con acceso completo",
             "brands": "Hasta 15 marcas operando en paralelo",
             "automation": "Automatización total (n8n / Zapier)",
             "ai": "IA ilimitada (texto + imagen)",
             "posts": "Hasta 2,000 publicaciones/mes",
-            "integrations": "Meta, Google, TikTok y LinkedIn completo",
             "analytics": "Analítica avanzada y dashboards cruzados",
             "storage": "1 TB de almacenamiento",
             "support": "Soporte prioritario con manager"
@@ -358,17 +355,10 @@
           "basePrice": "Desde $5,000 USD",
           "integrationFee": "Variable",
           "percentage": "10%",
-          "features": {
-            "users": "Usuarios ilimitados con acceso completo a toda la plataforma",
-            "whatsapp": "WhatsApp Project Manager incluido para cada usuario",
-            "brainies": "5 Brainies: Creator, Calendar, Ad, Chat y Trend",
-            "brands": "Marcas ilimitadas",
-            "integrations": "API abierta + CRM, ERP, Data Lakes",
-            "dashboards": "Dashboards personalizados (Mix™)",
-            "ai": "IA multimodal (texto, imagen, voz, video)",
-            "support": "Soporte dedicado 24/7",
-            "compliance": "Data compliance + seguridad avanzada",
-            "onboarding": "Implementación y onboarding personalizado"
+          "cta": {
+            "title": "Solución personalizada para tu organización",
+            "subtitle": "Usuarios ilimitados, marcas ilimitadas, integraciones personalizadas y soporte 24/7 dedicado.",
+            "button": "Agendar Reunión"
           }
         },
         "mostPopular": "Más Popular",

@@ -24,6 +24,7 @@ const ShowcasePricingPage = () => {
       percentage: t('showcase.pricing.tiers.starter.percentage'),
       maxMonthly: 'Variable',
       description: t('showcase.pricing.tiers.starter.description'),
+      prefix: null,
       features: [
         t('showcase.pricing.tiers.starter.features.users'),
         t('showcase.pricing.tiers.starter.features.whatsapp'),
@@ -36,7 +37,8 @@ const ShowcasePricingPage = () => {
         t('showcase.pricing.tiers.starter.features.dashboard'),
         t('showcase.pricing.tiers.starter.features.storage')
       ],
-      recommended: false
+      recommended: false,
+      isEnterprise: false
     },
     {
       name: t('showcase.pricing.tiers.smallAgencies.name'),
@@ -48,10 +50,9 @@ const ShowcasePricingPage = () => {
       percentage: t('showcase.pricing.tiers.smallAgencies.percentage'),
       maxMonthly: 'Variable',
       description: t('showcase.pricing.tiers.smallAgencies.description'),
+      prefix: t('showcase.pricing.tiers.smallAgencies.prefix'),
       features: [
         t('showcase.pricing.tiers.smallAgencies.features.users'),
-        t('showcase.pricing.tiers.smallAgencies.features.whatsapp'),
-        t('showcase.pricing.tiers.smallAgencies.features.brainies'),
         t('showcase.pricing.tiers.smallAgencies.features.brands'),
         t('showcase.pricing.tiers.smallAgencies.features.ai'),
         t('showcase.pricing.tiers.smallAgencies.features.workflows'),
@@ -60,7 +61,8 @@ const ShowcasePricingPage = () => {
         t('showcase.pricing.tiers.smallAgencies.features.dashboard'),
         t('showcase.pricing.tiers.smallAgencies.features.storage')
       ],
-      recommended: true
+      recommended: true,
+      isEnterprise: false
     },
     {
       name: t('showcase.pricing.tiers.scaledAgencies.name'),
@@ -72,20 +74,19 @@ const ShowcasePricingPage = () => {
       percentage: t('showcase.pricing.tiers.scaledAgencies.percentage'),
       maxMonthly: 'Variable',
       description: t('showcase.pricing.tiers.scaledAgencies.description'),
+      prefix: t('showcase.pricing.tiers.scaledAgencies.prefix'),
       features: [
         t('showcase.pricing.tiers.scaledAgencies.features.users'),
-        t('showcase.pricing.tiers.scaledAgencies.features.whatsapp'),
-        t('showcase.pricing.tiers.scaledAgencies.features.brainies'),
         t('showcase.pricing.tiers.scaledAgencies.features.brands'),
         t('showcase.pricing.tiers.scaledAgencies.features.automation'),
         t('showcase.pricing.tiers.scaledAgencies.features.ai'),
         t('showcase.pricing.tiers.scaledAgencies.features.posts'),
-        t('showcase.pricing.tiers.scaledAgencies.features.integrations'),
         t('showcase.pricing.tiers.scaledAgencies.features.analytics'),
         t('showcase.pricing.tiers.scaledAgencies.features.storage'),
         t('showcase.pricing.tiers.scaledAgencies.features.support')
       ],
-      recommended: false
+      recommended: false,
+      isEnterprise: false
     },
     {
       name: t('showcase.pricing.tiers.enterprise.name'),
@@ -97,19 +98,13 @@ const ShowcasePricingPage = () => {
       percentage: t('showcase.pricing.tiers.enterprise.percentage'),
       maxMonthly: 'Variable',
       description: t('showcase.pricing.tiers.enterprise.description'),
-      features: [
-        t('showcase.pricing.tiers.enterprise.features.users'),
-        t('showcase.pricing.tiers.enterprise.features.whatsapp'),
-        t('showcase.pricing.tiers.enterprise.features.brainies'),
-        t('showcase.pricing.tiers.enterprise.features.brands'),
-        t('showcase.pricing.tiers.enterprise.features.integrations'),
-        t('showcase.pricing.tiers.enterprise.features.dashboards'),
-        t('showcase.pricing.tiers.enterprise.features.ai'),
-        t('showcase.pricing.tiers.enterprise.features.support'),
-        t('showcase.pricing.tiers.enterprise.features.compliance'),
-        t('showcase.pricing.tiers.enterprise.features.onboarding')
-      ],
-      recommended: false
+      prefix: null,
+      ctaTitle: t('showcase.pricing.tiers.enterprise.cta.title'),
+      ctaSubtitle: t('showcase.pricing.tiers.enterprise.cta.subtitle'),
+      ctaButton: t('showcase.pricing.tiers.enterprise.cta.button'),
+      features: [],
+      recommended: false,
+      isEnterprise: true
     }
   ];
 
@@ -277,18 +272,29 @@ const ShowcasePricingPage = () => {
                     className={`w-full font-bold ${tier.recommended ? 'bg-gradient-to-r from-electric-cyan to-electric-cyan/90 hover:opacity-90 text-background' : 'border-electric-cyan/30 hover:bg-electric-cyan/10 hover:border-electric-cyan/50'}`}
                     variant={tier.recommended ? 'default' : 'outline'}
                     size="sm"
+                    onClick={() => tier.isEnterprise ? navigate('/lead-capture') : navigate('/lead-capture')}
                   >
-                    {tier.name === t('showcase.pricing.tiers.enterprise.name') ? t('showcase.pricing.tiers.contactSales') : t('showcase.pricing.tiers.getStarted')}
+                    {tier.isEnterprise ? tier.ctaButton : t('showcase.pricing.tiers.getStarted')}
                   </Button>
 
-                  <div className="space-y-2 flex-1">
-                    {tier.features.map((feature, i) => (
-                      <div key={i} className="flex items-start gap-2">
-                        <Check className="w-4 h-4 text-electric-cyan mt-0.5 flex-shrink-0" />
-                        <span className="text-sm leading-tight font-light">{feature}</span>
-                      </div>
-                    ))}
-                  </div>
+                  {tier.isEnterprise ? (
+                    <div className="space-y-4 flex-1 flex flex-col justify-center items-center text-center py-8">
+                      <h3 className="text-xl font-bold text-electric-cyan">{tier.ctaTitle}</h3>
+                      <p className="text-sm text-muted-foreground leading-relaxed">{tier.ctaSubtitle}</p>
+                    </div>
+                  ) : (
+                    <div className="space-y-2 flex-1">
+                      {tier.prefix && (
+                        <p className="text-sm font-semibold text-electric-cyan mb-3">{tier.prefix}</p>
+                      )}
+                      {tier.features.map((feature, i) => (
+                        <div key={i} className="flex items-start gap-2">
+                          <Check className="w-4 h-4 text-electric-cyan mt-0.5 flex-shrink-0" />
+                          <span className="text-sm leading-tight font-light">{feature}</span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </CardContent>
               </Card>
               </motion.div>

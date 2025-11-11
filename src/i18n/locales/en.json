@@ -316,10 +316,9 @@
           "basePrice": "$1,250 USD",
           "integrationFee": "$625 USD",
           "percentage": "15%",
+          "prefix": "Everything in Starter plus:",
           "features": {
             "users": "10 users with full access to the entire platform",
-            "whatsapp": "WhatsApp Project Manager included for each user",
-            "brainies": "5 Brainies: Creator, Calendar, Ad, Chat and Trend",
             "brands": "Up to 5 complete active brands",
             "ai": "Advanced AI: copy, images and variations",
             "workflows": "Internal + client approval workflows",
@@ -336,15 +335,13 @@
           "basePrice": "$3,750 USD",
           "integrationFee": "$1,875 USD",
           "percentage": "10%",
+          "prefix": "Everything in Small Agencies plus:",
           "features": {
             "users": "25 users with full access to the entire platform",
-            "whatsapp": "WhatsApp Project Manager included for each user",
-            "brainies": "5 Brainies: Creator, Calendar, Ad, Chat and Trend",
             "brands": "Up to 15 brands operating in parallel",
             "automation": "Total automation (n8n / Zapier)",
             "ai": "Unlimited AI (text + image)",
             "posts": "Up to 2,000 posts/month",
-            "integrations": "Meta, Google, TikTok and LinkedIn complete",
             "analytics": "Advanced analytics and cross dashboards",
             "storage": "1 TB storage",
             "support": "Priority support with manager"
@@ -357,17 +354,10 @@
           "basePrice": "From $5,000 USD",
           "integrationFee": "Variable",
           "percentage": "10%",
-          "features": {
-            "users": "Unlimited users with full access to the entire platform",
-            "whatsapp": "WhatsApp Project Manager included for each user",
-            "brainies": "5 Brainies: Creator, Calendar, Ad, Chat and Trend",
-            "brands": "Unlimited brands",
-            "integrations": "Open API + CRM, ERP, Data Lakes",
-            "dashboards": "Custom dashboards (Mix™)",
-            "ai": "Multimodal AI (text, image, voice, video)",
-            "support": "24/7 dedicated support",
-            "compliance": "Data compliance + advanced security",
-            "onboarding": "Custom implementation and onboarding"
+          "cta": {
+            "title": "Custom solution for your organization",
+            "subtitle": "Unlimited users, unlimited brands, custom integrations and dedicated 24/7 support.",
+            "button": "Schedule Meeting"
           }
         },
         "mostPopular": "Most Popular",
