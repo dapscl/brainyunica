@@ -66,6 +66,7 @@ const App = () => {
           <Route path="/" element={<LandingPage />} />
           <Route path="/auth" element={<AuthPage />} />
           <Route path="/showcase" element={<ShowcasePage />} />
+          <Route path="/showcase/lead-capture" element={<ShowcaseLeadCapturePage />} />
           <Route path="/showcase/onboarding" element={<ShowcaseOnboardingPage />} />
           <Route path="/showcase/pricing" element={<ShowcasePricingPage />} />
           <Route path="/showcase/brands" element={<ShowcaseBrandsPage />} />

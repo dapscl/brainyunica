@@ -80,7 +80,7 @@ const ShowcasePage = () => {
           >
             <Button 
               size="lg" 
-              onClick={() => navigate('/showcase/onboarding')} 
+              onClick={() => navigate('/showcase/lead-capture')} 
               className="gap-2 text-lg px-10 py-7 bg-electric-cyan hover:bg-electric-cyan/90 text-background font-bold uppercase tracking-wide shadow-glow-cyan"
             >
               🚀 Ver Brainy en acción
@@ -113,13 +113,13 @@ const ShowcasePage = () => {
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
             <motion.h2 
-              className="text-5xl md:text-6xl font-bold tracking-tight mb-6 uppercase"
+              className="text-5xl md:text-6xl font-bold tracking-tight mb-6 uppercase text-foreground"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
             >
-              Cómo trabaja <span className="text-electric-cyan">Brainy</span>
+              <span className="text-foreground">Cómo trabaja</span> <span className="text-electric-cyan">Brainy</span>
             </motion.h2>
             <motion.p 
               className="text-xl text-muted-foreground max-w-3xl mx-auto font-light"
@@ -193,13 +193,13 @@ const ShowcasePage = () => {
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-20">
             <motion.h2 
-              className="text-5xl md:text-6xl font-bold tracking-tight mb-6 uppercase"
+              className="text-5xl md:text-6xl font-bold tracking-tight mb-6 uppercase text-foreground"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
             >
-              Resultados <span className="text-purple-accent">en acción</span>
+              <span className="text-foreground">Resultados</span> <span className="text-purple-accent">en acción</span>
             </motion.h2>
             <motion.p 
               className="text-xl text-muted-foreground max-w-3xl mx-auto font-light"
@@ -279,8 +279,8 @@ const ShowcasePage = () => {
               </div>
             </div>
 
-            <h2 className="text-5xl md:text-6xl font-bold mb-6 uppercase tracking-tight">
-              Todo conectado.
+            <h2 className="text-5xl md:text-6xl font-bold mb-6 uppercase tracking-tight text-foreground">
+              <span className="text-foreground">Todo conectado.</span>
               <br />
               <span className="text-electric-cyan">Todo sincronizado.</span>
             </h2>
@@ -319,8 +319,8 @@ const ShowcasePage = () => {
               </div>
             </div>
 
-            <h2 className="text-4xl md:text-6xl font-bold mb-6 uppercase tracking-tight">
-              El futuro de las agencias
+            <h2 className="text-4xl md:text-6xl font-bold mb-6 uppercase tracking-tight text-foreground">
+              <span className="text-foreground">El futuro de las agencias</span>
               <br />
               <span className="text-electric-cyan">no usa más herramientas.</span>
             </h2>
@@ -335,14 +335,14 @@ const ShowcasePage = () => {
 
             <Button 
               size="lg"
-              onClick={() => navigate('/showcase/onboarding')}
+              onClick={() => navigate('/showcase/lead-capture')}
               className="text-xl px-12 py-8 bg-gradient-to-r from-electric-cyan to-purple-accent hover:opacity-90 text-background font-bold uppercase tracking-wide shadow-glow-cyan"
             >
               Solicita acceso anticipado →
             </Button>
 
-            <p className="text-sm text-muted-foreground mt-6 font-light">
-              Únete a las agencias que ya automatizaron su futuro
+            <p className="text-sm text-foreground/70 mt-6 font-light">
+              Únete a las agencias y empresas que ya automatizaron su futuro
             </p>
           </motion.div>
         </div>

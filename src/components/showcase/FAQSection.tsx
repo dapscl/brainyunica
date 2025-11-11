@@ -131,7 +131,7 @@ export const FAQSection = () => {
           <HelpCircle className="w-4 h-4 mr-2" />
           Preguntas Frecuentes
         </Badge>
-        <h2 className="text-4xl md:text-5xl font-bold mb-4">
+        <h2 className="text-4xl md:text-5xl font-bold mb-4 text-foreground">
           Todo lo que Necesitas Saber
         </h2>
         <p className="text-xl text-muted-foreground">

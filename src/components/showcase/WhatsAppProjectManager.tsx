@@ -130,8 +130,8 @@ const WhatsAppProjectManager = () => {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-3xl font-bold flex items-center gap-2">
-            <MessageSquare className="h-8 w-8 text-primary" />
+          <h2 className="text-3xl font-bold flex items-center gap-2 text-electric-cyan">
+            <MessageSquare className="h-8 w-8 text-electric-cyan" />
             WhatsApp Project Manager
           </h2>
           <p className="text-muted-foreground mt-2">

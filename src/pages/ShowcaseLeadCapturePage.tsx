@@ -1,321 +1,424 @@
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
-import { ArrowLeft, Plus, Users, Filter, Download, Mail, Phone, MapPin, Briefcase, Tag } from 'lucide-react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Badge } from '@/components/ui/badge';
+import { ArrowLeft, CheckCircle2, Sparkles, TrendingUp, Users, DollarSign } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { useToast } from '@/hooks/use-toast';
+import { z } from 'zod';
+
+const leadSchema = z.object({
+  fullName: z.string().trim().min(2, { message: "El nombre debe tener al menos 2 caracteres" }).max(100),
+  email: z.string().trim().email({ message: "Email inválido" }).max(255),
+  company: z.string().trim().min(2, { message: "El nombre de la empresa debe tener al menos 2 caracteres" }).max(100),
+  phone: z.string().trim().min(8, { message: "Teléfono inválido" }).max(20),
+  monthlyRevenue: z.string(),
+  clientsCount: z.string(),
+  currentTools: z.string().trim().max(500),
+  challenges: z.string().trim().max(1000),
+});
+
+type LeadFormData = z.infer<typeof leadSchema>;
 
 const ShowcaseLeadCapturePage = () => {
   const navigate = useNavigate();
-  const { slug } = useParams();
+  const { toast } = useToast();
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [suggestedPlan, setSuggestedPlan] = useState<'starter' | 'professional' | 'enterprise' | null>(null);
+  
+  const [formData, setFormData] = useState<LeadFormData>({
+    fullName: '',
+    email: '',
+    company: '',
+    phone: '',
+    monthlyRevenue: '',
+    clientsCount: '',
+    currentTools: '',
+    challenges: '',
+  });
 
-  // Mock leads data
-  const leads = [
-    {
-      id: 1,
-      name: 'Ana García',
-      email: 'ana.garcia@email.com',
-      phone: '+34 600 123 456',
-      source: 'Facebook',
-      status: 'hot',
-      tags: ['Producto Premium', 'Contactado'],
-      location: 'Madrid, España',
-      company: 'Tech Solutions SL',
-      capturedAt: '2025-11-10'
-    },
-    {
-      id: 2,
-      name: 'Carlos Mendez',
-      email: 'carlos.m@empresa.com',
-      phone: '+34 600 789 012',
-      source: 'Instagram',
-      status: 'warm',
-      tags: ['Interesado', 'Newsletter'],
-      location: 'Barcelona, España',
-      company: 'Marketing Pro',
-      capturedAt: '2025-11-09'
-    },
-    {
-      id: 3,
-      name: 'Laura Fernández',
-      email: 'laura.f@startup.io',
-      phone: '+34 600 345 678',
-      source: 'LinkedIn',
-      status: 'cold',
-      tags: ['Demo Solicitada'],
-      location: 'Valencia, España',
-      company: 'StartupHub',
-      capturedAt: '2025-11-08'
+  const [errors, setErrors] = useState<Partial<Record<keyof LeadFormData, string>>>({});
+
+  const calculateSuggestedPlan = (revenue: string, clients: string): 'starter' | 'professional' | 'enterprise' => {
+    const revenueNum = parseInt(revenue.replace(/\D/g, ''));
+    const clientsNum = parseInt(clients);
+
+    if (revenueNum >= 25000 || clientsNum >= 50) {
+      return 'enterprise';
+    } else if (revenueNum >= 5000 || clientsNum >= 15) {
+      return 'professional';
     }
-  ];
+    return 'starter';
+  };
 
-  const stats = [
-    { label: 'Total Leads', value: '1,243', change: '+12%', icon: Users },
-    { label: 'Leads Calientes', value: '87', change: '+8%', icon: Users },
-    { label: 'Tasa de Conversión', value: '34%', change: '+3%', icon: Users },
-    { label: 'Fuentes Activas', value: '6', change: '0%', icon: Users }
-  ];
-
-  const segments = [
-    { name: 'Producto Premium', count: 145, color: 'bg-purple-500' },
-    { name: 'Newsletter', count: 432, color: 'bg-blue-500' },
-    { name: 'Demo Solicitada', count: 78, color: 'bg-green-500' },
-    { name: 'Interesado', count: 234, color: 'bg-yellow-500' },
-    { name: 'Contactado', count: 354, color: 'bg-red-500' }
-  ];
-
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case 'hot': return 'bg-red-500';
-      case 'warm': return 'bg-yellow-500';
-      case 'cold': return 'bg-blue-500';
-      default: return 'bg-gray-500';
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    try {
+      leadSchema.parse(formData);
+      setErrors({});
+      
+      const plan = calculateSuggestedPlan(formData.monthlyRevenue, formData.clientsCount);
+      setSuggestedPlan(plan);
+      setIsSubmitted(true);
+      
+      toast({
+        title: "¡Solicitud enviada!",
+        description: "Nos pondremos en contacto contigo pronto.",
+      });
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        const newErrors: Partial<Record<keyof LeadFormData, string>> = {};
+        error.errors.forEach((err) => {
+          if (err.path[0]) {
+            newErrors[err.path[0] as keyof LeadFormData] = err.message;
+          }
+        });
+        setErrors(newErrors);
+        
+        toast({
+          title: "Error en el formulario",
+          description: "Por favor corrige los errores antes de continuar",
+          variant: "destructive",
+        });
+      }
     }
   };
 
-  const getStatusLabel = (status: string) => {
-    switch (status) {
-      case 'hot': return 'Caliente';
-      case 'warm': return 'Templado';
-      case 'cold': return 'Frío';
-      default: return status;
+  const handleInputChange = (field: keyof LeadFormData, value: string) => {
+    setFormData(prev => ({ ...prev, [field]: value }));
+    if (errors[field]) {
+      setErrors(prev => ({ ...prev, [field]: undefined }));
     }
   };
 
-  return (
-    <div className="min-h-screen bg-background">
-      {/* Header */}
-      <div className="border-b bg-card">
-        <div className="container mx-auto px-4 py-6">
-          <Button 
-            variant="ghost" 
-            size="sm" 
-            onClick={() => navigate(`/showcase/brands/${slug}`)}
-            className="mb-4"
+  if (isSubmitted && suggestedPlan) {
+    const planDetails = {
+      starter: {
+        name: 'Starter',
+        price: '$500 USD base',
+        adSpend: '+ 20% de inversión en medios',
+        features: [
+          'CalendarBrain™ - Publicación automatizada',
+          'CreatorBrain™ - Generación básica de contenido',
+          'ChatBrain™ - Respuestas automáticas',
+          'Panel de métricas básico',
+          'Soporte por email'
+        ],
+        color: 'from-green-500/20 to-green-500/5 border-green-500/30',
+        icon: Users,
+      },
+      professional: {
+        name: 'Professional',
+        price: '€5K-€25K/mes base',
+        adSpend: '+ 15% de inversión en medios',
+        features: [
+          'Todo de Starter +',
+          'AdBrain™ - Optimización de campañas',
+          'TrendBrain™ - Análisis de tendencias',
+          'A/B Testing automático',
+          'Reportes avanzados en tiempo real',
+          'WhatsApp Project Manager',
+          'Soporte prioritario'
+        ],
+        color: 'from-electric-cyan/20 to-electric-cyan/5 border-electric-cyan/30',
+        icon: TrendingUp,
+      },
+      enterprise: {
+        name: 'Enterprise',
+        price: '€25K+/mes base',
+        adSpend: '+ 10% de inversión en medios',
+        features: [
+          'Todo de Professional +',
+          'API personalizada',
+          'Integraciones custom',
+          'Account Manager dedicado',
+          'Onboarding personalizado',
+          'SLA garantizado',
+          'Infraestructura dedicada'
+        ],
+        color: 'from-purple-accent/20 to-purple-accent/5 border-purple-accent/30',
+        icon: Sparkles,
+      },
+    };
+
+    const plan = planDetails[suggestedPlan];
+    const PlanIcon = plan.icon;
+
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-deep-blue via-background to-background dark">
+        <div className="container mx-auto px-4 py-20">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5 }}
+            className="max-w-3xl mx-auto"
           >
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            Volver al Dashboard
-          </Button>
-          
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-3xl font-bold">Captura de Leads</h1>
-              <p className="text-muted-foreground mt-1">
-                Sistema de captura, segmentación y gestión de leads
-              </p>
-            </div>
-            <div className="flex gap-2">
-              <Button variant="outline" className="gap-2">
-                <Download className="w-4 h-4" />
-                Exportar
-              </Button>
-              <Button className="gap-2">
-                <Plus className="w-4 h-4" />
-                Nuevo Lead
-              </Button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div className="container mx-auto px-4 py-8">
-        {/* Stats Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-          {stats.map((stat, index) => {
-            const Icon = stat.icon;
-            return (
-              <Card key={index}>
-                <CardHeader className="pb-3">
-                  <div className="flex items-center justify-between">
-                    <CardDescription>{stat.label}</CardDescription>
-                    <Icon className="w-4 h-4 text-muted-foreground" />
+            <Card className={`bg-gradient-to-br ${plan.color} backdrop-blur-sm border`}>
+              <CardHeader className="text-center pb-8">
+                <div className="flex justify-center mb-6">
+                  <div className="bg-green-500 p-4 rounded-full">
+                    <CheckCircle2 className="w-12 h-12 text-background" />
                   </div>
-                </CardHeader>
-                <CardContent>
-                  <div className="flex items-baseline gap-2">
-                    <div className="text-3xl font-bold">{stat.value}</div>
-                    <Badge variant="secondary" className="text-xs">
-                      {stat.change}
+                </div>
+                <CardTitle className="text-4xl font-bold mb-4 text-foreground">
+                  ¡Gracias, {formData.fullName.split(' ')[0]}!
+                </CardTitle>
+                <CardDescription className="text-lg text-muted-foreground">
+                  Basado en tu perfil, te recomendamos el plan:
+                </CardDescription>
+              </CardHeader>
+
+              <CardContent className="space-y-8">
+                <div className="text-center space-y-4">
+                  <div className="flex justify-center mb-4">
+                    <PlanIcon className="w-16 h-16 text-electric-cyan" />
+                  </div>
+                  <h3 className="text-5xl font-bold text-foreground">{plan.name}</h3>
+                  <div className="space-y-2">
+                    <p className="text-3xl font-bold text-electric-cyan">{plan.price}</p>
+                    <p className="text-xl text-purple-accent font-semibold">{plan.adSpend}</p>
+                    <Badge variant="outline" className="text-sm">
+                      + Integración única del 50%
                     </Badge>
                   </div>
-                </CardContent>
-              </Card>
-            );
-          })}
-        </div>
+                </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Leads List */}
-          <div className="lg:col-span-2 space-y-4">
-            {/* Filters */}
-            <Card>
-              <CardContent className="pt-6">
-                <div className="flex gap-3">
-                  <Input placeholder="Buscar leads..." className="flex-1" />
-                  <Button variant="outline" className="gap-2">
-                    <Filter className="w-4 h-4" />
-                    Filtros
+                <div className="space-y-3 pt-6">
+                  <h4 className="text-xl font-bold text-foreground mb-4">Incluye:</h4>
+                  {plan.features.map((feature, index) => (
+                    <motion.div
+                      key={index}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ duration: 0.3, delay: index * 0.1 }}
+                      className="flex items-start gap-3"
+                    >
+                      <CheckCircle2 className="w-5 h-5 text-electric-cyan mt-1 flex-shrink-0" />
+                      <span className="text-foreground">{feature}</span>
+                    </motion.div>
+                  ))}
+                </div>
+
+                <div className="pt-8 space-y-4">
+                  <Button
+                    size="lg"
+                    className="w-full text-lg py-6 bg-gradient-to-r from-electric-cyan to-purple-accent hover:opacity-90 text-background font-bold"
+                    onClick={() => navigate('/showcase')}
+                  >
+                    Volver al Showcase
                   </Button>
+                  <p className="text-center text-sm text-muted-foreground">
+                    Nuestro equipo se pondrá en contacto contigo en las próximas 24 horas
+                  </p>
                 </div>
               </CardContent>
             </Card>
-
-            {/* Leads Cards */}
-            <Card>
-              <CardHeader>
-                <CardTitle>Leads Recientes</CardTitle>
-                <CardDescription>{leads.length} leads encontrados</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                {leads.map((lead) => (
-                  <div key={lead.id} className="border rounded-lg p-4 hover:shadow-md transition-shadow">
-                    <div className="flex items-start justify-between mb-3">
-                      <div className="flex-1">
-                        <div className="flex items-center gap-2 mb-2">
-                          <h3 className="font-semibold">{lead.name}</h3>
-                          <div className={`w-2 h-2 rounded-full ${getStatusColor(lead.status)}`} />
-                          <Badge variant="outline" className="text-xs">
-                            {getStatusLabel(lead.status)}
-                          </Badge>
-                        </div>
-                        
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm text-muted-foreground">
-                          <div className="flex items-center gap-2">
-                            <Mail className="w-3 h-3" />
-                            <span className="truncate">{lead.email}</span>
-                          </div>
-                          <div className="flex items-center gap-2">
-                            <Phone className="w-3 h-3" />
-                            <span>{lead.phone}</span>
-                          </div>
-                          <div className="flex items-center gap-2">
-                            <Briefcase className="w-3 h-3" />
-                            <span>{lead.company}</span>
-                          </div>
-                          <div className="flex items-center gap-2">
-                            <MapPin className="w-3 h-3" />
-                            <span>{lead.location}</span>
-                          </div>
-                        </div>
-                      </div>
-                      
-                      <Badge variant="secondary">
-                        {lead.source}
-                      </Badge>
-                    </div>
-                    
-                    <div className="flex items-center gap-2 mt-3 pt-3 border-t">
-                      <Tag className="w-3 h-3 text-muted-foreground" />
-                      <div className="flex flex-wrap gap-1">
-                        {lead.tags.map((tag, idx) => (
-                          <Badge key={idx} variant="outline" className="text-xs">
-                            {tag}
-                          </Badge>
-                        ))}
-                      </div>
-                    </div>
-                    
-                    <div className="text-xs text-muted-foreground mt-2">
-                      Capturado: {lead.capturedAt}
-                    </div>
-                  </div>
-                ))}
-              </CardContent>
-            </Card>
-          </div>
-
-          {/* Sidebar */}
-          <div className="space-y-6">
-            {/* Segmentation */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-lg">Segmentos</CardTitle>
-                <CardDescription>Organiza tus leads por categorías</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-3">
-                {segments.map((segment, idx) => (
-                  <div key={idx} className="flex items-center justify-between p-3 border rounded-lg hover:bg-accent cursor-pointer transition-colors">
-                    <div className="flex items-center gap-3">
-                      <div className={`w-3 h-3 rounded-full ${segment.color}`} />
-                      <span className="text-sm font-medium">{segment.name}</span>
-                    </div>
-                    <Badge variant="secondary">{segment.count}</Badge>
-                  </div>
-                ))}
-                <Button variant="outline" className="w-full gap-2">
-                  <Plus className="w-4 h-4" />
-                  Nuevo Segmento
-                </Button>
-              </CardContent>
-            </Card>
-
-            {/* Lead Sources */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-lg">Fuentes de Leads</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-3">
-                <div className="flex items-center justify-between">
-                  <span className="text-sm">Facebook</span>
-                  <div className="flex items-center gap-2">
-                    <div className="w-20 h-2 bg-muted rounded-full overflow-hidden">
-                      <div className="h-full bg-primary" style={{ width: '65%' }} />
-                    </div>
-                    <span className="text-xs text-muted-foreground">65%</span>
-                  </div>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-sm">Instagram</span>
-                  <div className="flex items-center gap-2">
-                    <div className="w-20 h-2 bg-muted rounded-full overflow-hidden">
-                      <div className="h-full bg-primary" style={{ width: '45%' }} />
-                    </div>
-                    <span className="text-xs text-muted-foreground">45%</span>
-                  </div>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-sm">LinkedIn</span>
-                  <div className="flex items-center gap-2">
-                    <div className="w-20 h-2 bg-muted rounded-full overflow-hidden">
-                      <div className="h-full bg-primary" style={{ width: '30%' }} />
-                    </div>
-                    <span className="text-xs text-muted-foreground">30%</span>
-                  </div>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-sm">Website</span>
-                  <div className="flex items-center gap-2">
-                    <div className="w-20 h-2 bg-muted rounded-full overflow-hidden">
-                      <div className="h-full bg-primary" style={{ width: '20%' }} />
-                    </div>
-                    <span className="text-xs text-muted-foreground">20%</span>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Quick Actions */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-lg">Acciones Rápidas</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-2">
-                <Button variant="outline" className="w-full justify-start gap-2">
-                  <Mail className="w-4 h-4" />
-                  Enviar Email Masivo
-                </Button>
-                <Button variant="outline" className="w-full justify-start gap-2">
-                  <Tag className="w-4 h-4" />
-                  Aplicar Tags
-                </Button>
-                <Button variant="outline" className="w-full justify-start gap-2">
-                  <Download className="w-4 h-4" />
-                  Exportar Seleccionados
-                </Button>
-              </CardContent>
-            </Card>
-          </div>
+          </motion.div>
         </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-gradient-to-b from-deep-blue via-background to-background dark">
+      <div className="container mx-auto px-4 py-12">
+        <Button
+          variant="ghost"
+          onClick={() => navigate('/showcase')}
+          className="mb-8 text-foreground hover:text-electric-cyan"
+        >
+          <ArrowLeft className="w-4 h-4 mr-2" />
+          Volver al Showcase
+        </Button>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="max-w-3xl mx-auto"
+        >
+          <div className="text-center mb-12">
+            <Badge variant="outline" className="mb-6 px-6 py-3 text-electric-cyan border-electric-cyan/30 bg-electric-cyan/5">
+              <Sparkles className="w-4 h-4 mr-2" />
+              Acceso Anticipado
+            </Badge>
+            <h1 className="text-5xl md:text-6xl font-bold mb-6 text-foreground">
+              Únete al futuro del <span className="text-electric-cyan">marketing automatizado</span>
+            </h1>
+            <p className="text-xl text-muted-foreground">
+              Cuéntanos sobre tu negocio y te recomendaremos el plan perfecto
+            </p>
+          </div>
+
+          <Card className="bg-card/50 backdrop-blur-sm border-electric-cyan/20">
+            <CardContent className="pt-8">
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div className="space-y-2">
+                    <Label htmlFor="fullName" className="text-foreground">Nombre completo *</Label>
+                    <Input
+                      id="fullName"
+                      value={formData.fullName}
+                      onChange={(e) => handleInputChange('fullName', e.target.value)}
+                      placeholder="Juan Pérez"
+                      className={errors.fullName ? 'border-destructive' : ''}
+                    />
+                    {errors.fullName && (
+                      <p className="text-sm text-destructive">{errors.fullName}</p>
+                    )}
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="email" className="text-foreground">Email corporativo *</Label>
+                    <Input
+                      id="email"
+                      type="email"
+                      value={formData.email}
+                      onChange={(e) => handleInputChange('email', e.target.value)}
+                      placeholder="juan@empresa.com"
+                      className={errors.email ? 'border-destructive' : ''}
+                    />
+                    {errors.email && (
+                      <p className="text-sm text-destructive">{errors.email}</p>
+                    )}
+                  </div>
+                </div>
+
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div className="space-y-2">
+                    <Label htmlFor="company" className="text-foreground">Empresa *</Label>
+                    <Input
+                      id="company"
+                      value={formData.company}
+                      onChange={(e) => handleInputChange('company', e.target.value)}
+                      placeholder="Mi Agencia S.A."
+                      className={errors.company ? 'border-destructive' : ''}
+                    />
+                    {errors.company && (
+                      <p className="text-sm text-destructive">{errors.company}</p>
+                    )}
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="phone" className="text-foreground">Teléfono *</Label>
+                    <Input
+                      id="phone"
+                      type="tel"
+                      value={formData.phone}
+                      onChange={(e) => handleInputChange('phone', e.target.value)}
+                      placeholder="+34 600 000 000"
+                      className={errors.phone ? 'border-destructive' : ''}
+                    />
+                    {errors.phone && (
+                      <p className="text-sm text-destructive">{errors.phone}</p>
+                    )}
+                  </div>
+                </div>
+
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div className="space-y-2">
+                    <Label htmlFor="monthlyRevenue" className="text-foreground">
+                      <DollarSign className="w-4 h-4 inline mr-1" />
+                      Facturación mensual aproximada *
+                    </Label>
+                    <Select
+                      value={formData.monthlyRevenue}
+                      onValueChange={(value) => handleInputChange('monthlyRevenue', value)}
+                    >
+                      <SelectTrigger className={errors.monthlyRevenue ? 'border-destructive' : ''}>
+                        <SelectValue placeholder="Selecciona un rango" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="0-5000">€0 - €5,000</SelectItem>
+                        <SelectItem value="5000-25000">€5,000 - €25,000</SelectItem>
+                        <SelectItem value="25000-100000">€25,000 - €100,000</SelectItem>
+                        <SelectItem value="100000+">€100,000+</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    {errors.monthlyRevenue && (
+                      <p className="text-sm text-destructive">{errors.monthlyRevenue}</p>
+                    )}
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="clientsCount" className="text-foreground">
+                      <Users className="w-4 h-4 inline mr-1" />
+                      Cantidad de clientes activos *
+                    </Label>
+                    <Select
+                      value={formData.clientsCount}
+                      onValueChange={(value) => handleInputChange('clientsCount', value)}
+                    >
+                      <SelectTrigger className={errors.clientsCount ? 'border-destructive' : ''}>
+                        <SelectValue placeholder="Selecciona un rango" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="1-5">1 - 5 clientes</SelectItem>
+                        <SelectItem value="6-15">6 - 15 clientes</SelectItem>
+                        <SelectItem value="16-50">16 - 50 clientes</SelectItem>
+                        <SelectItem value="50+">50+ clientes</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    {errors.clientsCount && (
+                      <p className="text-sm text-destructive">{errors.clientsCount}</p>
+                    )}
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="currentTools" className="text-foreground">
+                    ¿Qué herramientas usas actualmente?
+                  </Label>
+                  <Input
+                    id="currentTools"
+                    value={formData.currentTools}
+                    onChange={(e) => handleInputChange('currentTools', e.target.value)}
+                    placeholder="Ej: Metricool, Hootsuite, Buffer, etc."
+                    className={errors.currentTools ? 'border-destructive' : ''}
+                  />
+                  {errors.currentTools && (
+                    <p className="text-sm text-destructive">{errors.currentTools}</p>
+                  )}
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="challenges" className="text-foreground">
+                    ¿Cuáles son tus principales desafíos en gestión de redes sociales?
+                  </Label>
+                  <Textarea
+                    id="challenges"
+                    value={formData.challenges}
+                    onChange={(e) => handleInputChange('challenges', e.target.value)}
+                    placeholder="Ej: Falta de tiempo para crear contenido, dificultad para medir ROI, etc."
+                    rows={4}
+                    className={errors.challenges ? 'border-destructive' : ''}
+                  />
+                  {errors.challenges && (
+                    <p className="text-sm text-destructive">{errors.challenges}</p>
+                  )}
+                </div>
+
+                <Button
+                  type="submit"
+                  size="lg"
+                  className="w-full text-lg py-6 bg-gradient-to-r from-electric-cyan to-purple-accent hover:opacity-90 text-background font-bold uppercase tracking-wide"
+                >
+                  Solicitar Acceso Anticipado
+                </Button>
+
+                <p className="text-sm text-center text-muted-foreground">
+                  Al enviar este formulario, aceptas que nos pongamos en contacto contigo
+                </p>
+              </form>
+            </CardContent>
+          </Card>
+        </motion.div>
       </div>
     </div>
   );
