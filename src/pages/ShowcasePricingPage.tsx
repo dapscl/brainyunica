@@ -263,8 +263,8 @@ const ShowcasePricingPage = () => {
                   
                   <div className="pt-4 space-y-3">
                     <div>
-                      <p className="text-3xl font-bold text-electric-cyan">{tier.basePrice}<span className="text-sm text-muted-foreground font-normal">/mes</span></p>
-                      <p className="text-sm text-muted-foreground font-medium">+ {tier.percentage} de medios</p>
+                      <p className="text-3xl font-bold text-electric-cyan whitespace-nowrap">{tier.basePrice}<span className="text-sm text-muted-foreground font-normal">/mes</span></p>
+                      <p className="text-sm text-muted-foreground font-medium whitespace-nowrap">+ {tier.percentage} de medios</p>
                     </div>
                     <div className="text-sm text-muted-foreground pt-3 border-t border-border/50">
                       <p className="font-medium">Setup: <span className="text-foreground">{tier.integrationFee}</span></p>
