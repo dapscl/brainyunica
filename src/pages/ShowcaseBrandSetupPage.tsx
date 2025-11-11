@@ -115,7 +115,7 @@ const ShowcaseBrandSetupPage = () => {
     {
       icon: <MessageSquare className="w-6 h-6" />,
       title: "Chat de Respuestas Automáticas",
-      description: "Configura chatbot y respuestas automáticas estilo Manychat",
+      description: "Configura chatbot y respuestas automáticas inteligentes",
       status: "completed",
       details: [
         { label: "Facebook Messenger", value: "Activo - 89% tasa de respuesta" },

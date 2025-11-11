@@ -218,7 +218,7 @@ const WhatsAppProjectManager = () => {
                   ¿Cómo funciona el flujo operativo?
                 </h4>
                 <div className="space-y-2 text-sm text-muted-foreground">
-                  <p>📱 <strong>WhatsApp / Manychat</strong> → Interfaz conversacional</p>
+                  <p>📱 <strong>WhatsApp</strong> → Interfaz conversacional</p>
                   <p>🧠 <strong>BrainybyUnica Logic (Lovable)</strong> → Procesamiento inteligente</p>
                   <p>💾 <strong>Supabase</strong> → Estado de proyectos y aprobaciones</p>
                   <p>✨ <strong>OpenAI GPT-5</strong> → Generación y optimización de contenido</p>

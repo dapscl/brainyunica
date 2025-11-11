@@ -50,25 +50,6 @@ const ShowcasePage = () => {
             Todo en un solo lugar, gestionado desde WhatsApp.
           </p>
           
-          <div className="flex flex-wrap gap-4 justify-center pt-6">
-            <div className="flex items-center gap-2 text-sm">
-              <CheckCircle2 className="w-5 h-5 text-primary" />
-              <span>Sin Metricool</span>
-            </div>
-            <div className="flex items-center gap-2 text-sm">
-              <CheckCircle2 className="w-5 h-5 text-primary" />
-              <span>Sin Manychat</span>
-            </div>
-            <div className="flex items-center gap-2 text-sm">
-              <CheckCircle2 className="w-5 h-5 text-primary" />
-              <span>Sin Monday</span>
-            </div>
-            <div className="flex items-center gap-2 text-sm">
-              <CheckCircle2 className="w-5 h-5 text-primary" />
-              <span>Sin Madgicx</span>
-            </div>
-          </div>
-          
           <div className="flex flex-col sm:flex-row gap-4 justify-center pt-8">
             <Button size="lg" onClick={() => navigate('/showcase/onboarding')} className="gap-2 text-lg px-8 py-6">
               Comenzar Setup Guiado

@@ -255,7 +255,7 @@ const ShowcaseBrandDetailPage = () => {
           </Card>
         </section>
 
-        {/* Calendario Mensual (Metricool) */}
+        {/* Calendario Mensual */}
         <section>
           <div className="mb-6">
             <div className="flex items-center gap-3 mb-2">
@@ -408,7 +408,7 @@ const ShowcaseBrandDetailPage = () => {
           <MultiChannelCommunication />
         </section>
 
-        {/* Manychat - Respuestas Automáticas */}
+        {/* Respuestas Automáticas */}
         <section>
           <div className="mb-6">
             <div className="flex items-center justify-between flex-wrap gap-4">
