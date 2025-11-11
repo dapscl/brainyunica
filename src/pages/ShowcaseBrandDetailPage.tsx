@@ -35,6 +35,7 @@ import demoFitness1 from '@/assets/demo-fitness-1.jpg';
 import demoFitness2 from '@/assets/demo-fitness-2.jpg';
 import AIMediaBuyerPanel from '@/components/showcase/AIMediaBuyerPanel';
 import CreativePerformanceTracker from '@/components/showcase/CreativePerformanceTracker';
+import MultiChannelCommunication from '@/components/showcase/MultiChannelCommunication';
 
 const brandData: Record<string, any> = {
   techstart: {
@@ -400,6 +401,11 @@ const ShowcaseBrandDetailPage = () => {
         {/* Creative Performance Tracker */}
         <section className="mb-16">
           <CreativePerformanceTracker />
+        </section>
+
+        {/* Multi-Channel Communication */}
+        <section className="mb-16">
+          <MultiChannelCommunication />
         </section>
 
         {/* Manychat - Respuestas Automáticas */}

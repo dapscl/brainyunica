@@ -252,28 +252,97 @@ const ShowcaseChatAutomationPage = () => {
               </CardContent>
             </Card>
 
-            {/* Templates */}
-            <Card>
+            {/* Pre-made Templates */}
+            <Card className="border-primary/20 bg-gradient-to-br from-primary/5 to-transparent">
               <CardHeader>
-                <CardTitle className="text-lg">Templates Populares</CardTitle>
+                <CardTitle className="text-lg flex items-center gap-2">
+                  <Zap className="w-4 h-4 text-primary" />
+                  Templates Pre-configurados
+                </CardTitle>
+                <CardDescription>Implementa flujos completos en 1 clic</CardDescription>
               </CardHeader>
               <CardContent className="space-y-3">
-                <div className="border rounded-lg p-3 hover:bg-accent cursor-pointer transition-colors">
-                  <h4 className="font-medium text-sm mb-1">Welcome Series</h4>
-                  <p className="text-xs text-muted-foreground">Secuencia de bienvenida automática</p>
+                <div className="border rounded-lg p-3 hover:shadow-md cursor-pointer transition-all bg-card">
+                  <div className="flex items-center justify-between mb-2">
+                    <h4 className="font-medium text-sm">Welcome Series</h4>
+                    <Badge variant="outline" className="text-xs">PRO</Badge>
+                  </div>
+                  <p className="text-xs text-muted-foreground mb-2">Secuencia de bienvenida con 5 mensajes personalizados</p>
+                  <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                    <span>✓ 3 triggers</span>
+                    <span>•</span>
+                    <span>85% conversión</span>
+                  </div>
                 </div>
-                <div className="border rounded-lg p-3 hover:bg-accent cursor-pointer transition-colors">
-                  <h4 className="font-medium text-sm mb-1">FAQ Automático</h4>
-                  <p className="text-xs text-muted-foreground">Respuestas a preguntas frecuentes</p>
+                
+                <div className="border rounded-lg p-3 hover:shadow-md cursor-pointer transition-all bg-card">
+                  <div className="flex items-center justify-between mb-2">
+                    <h4 className="font-medium text-sm">FAQ Automático</h4>
+                    <Badge variant="default" className="text-xs">Popular</Badge>
+                  </div>
+                  <p className="text-xs text-muted-foreground mb-2">20+ respuestas predefinidas con detección inteligente</p>
+                  <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                    <span>✓ 12 keywords</span>
+                    <span>•</span>
+                    <span>92% precisión</span>
+                  </div>
                 </div>
-                <div className="border rounded-lg p-3 hover:bg-accent cursor-pointer transition-colors">
-                  <h4 className="font-medium text-sm mb-1">Lead Qualifier</h4>
-                  <p className="text-xs text-muted-foreground">Califica leads automáticamente</p>
+                
+                <div className="border rounded-lg p-3 hover:shadow-md cursor-pointer transition-all bg-card">
+                  <div className="flex items-center justify-between mb-2">
+                    <h4 className="font-medium text-sm">Lead Qualifier</h4>
+                    <Badge variant="outline" className="text-xs">PRO</Badge>
+                  </div>
+                  <p className="text-xs text-muted-foreground mb-2">Calificación automática con scoring y segmentación</p>
+                  <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                    <span>✓ 8 preguntas</span>
+                    <span>•</span>
+                    <span>78% completado</span>
+                  </div>
                 </div>
-                <div className="border rounded-lg p-3 hover:bg-accent cursor-pointer transition-colors">
-                  <h4 className="font-medium text-sm mb-1">Giveaway Manager</h4>
-                  <p className="text-xs text-muted-foreground">Gestión de sorteos y concursos</p>
+
+                <div className="border rounded-lg p-3 hover:shadow-md cursor-pointer transition-all bg-card">
+                  <div className="flex items-center justify-between mb-2">
+                    <h4 className="font-medium text-sm">Abandoned Cart Recovery</h4>
+                    <Badge variant="default" className="text-xs">E-commerce</Badge>
+                  </div>
+                  <p className="text-xs text-muted-foreground mb-2">Recupera carritos con secuencia de 3 mensajes</p>
+                  <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                    <span>✓ Auto-seguimiento</span>
+                    <span>•</span>
+                    <span>34% recuperación</span>
+                  </div>
                 </div>
+
+                <div className="border rounded-lg p-3 hover:shadow-md cursor-pointer transition-all bg-card">
+                  <div className="flex items-center justify-between mb-2">
+                    <h4 className="font-medium text-sm">Contest Manager</h4>
+                    <Badge variant="outline" className="text-xs">Viral</Badge>
+                  </div>
+                  <p className="text-xs text-muted-foreground mb-2">Gestión completa de sorteos con validación automática</p>
+                  <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                    <span>✓ Reglas personalizables</span>
+                    <span>•</span>
+                    <span>Winner picker</span>
+                  </div>
+                </div>
+
+                <div className="border rounded-lg p-3 hover:shadow-md cursor-pointer transition-all bg-card">
+                  <div className="flex items-center justify-between mb-2">
+                    <h4 className="font-medium text-sm">Appointment Booking</h4>
+                    <Badge variant="default" className="text-xs">Services</Badge>
+                  </div>
+                  <p className="text-xs text-muted-foreground mb-2">Reserva de citas con integración de calendario</p>
+                  <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                    <span>✓ Google Calendar</span>
+                    <span>•</span>
+                    <span>Recordatorios</span>
+                  </div>
+                </div>
+
+                <Button variant="outline" className="w-full mt-3">
+                  Ver Todos los Templates (24)
+                </Button>
               </CardContent>
             </Card>
 

@@ -1,7 +1,7 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Sparkles, TrendingUp, TrendingDown, AlertCircle, CheckCircle, ArrowRight } from 'lucide-react';
+import { Sparkles, TrendingUp, TrendingDown, AlertCircle, CheckCircle, ArrowRight, Settings } from 'lucide-react';
 
 const AIMediaBuyerPanel = () => {
   const recommendations = [
@@ -176,6 +176,88 @@ const AIMediaBuyerPanel = () => {
         </CardContent>
       </Card>
 
+      {/* AI Bidding Optimizer */}
+      <Card className="border-blue-500/20 bg-gradient-to-br from-blue-500/5 to-transparent">
+        <CardHeader>
+          <div className="flex items-center gap-3">
+            <div className="p-2 rounded-lg bg-blue-500/10">
+              <TrendingUp className="w-6 h-6 text-blue-500" />
+            </div>
+            <div>
+              <CardTitle className="text-xl">AI Bidding Optimizer</CardTitle>
+              <CardDescription>Optimización automática de pujas en tiempo real</CardDescription>
+            </div>
+          </div>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-4">
+            <p className="text-sm font-medium mb-2">🎯 Sistema de Pujas Inteligente Activo</p>
+            <p className="text-xs text-muted-foreground">
+              La IA ajusta automáticamente las pujas cada 2 horas según rendimiento, competencia y objetivos de ROAS
+            </p>
+          </div>
+
+          <div className="space-y-3">
+            <div className="flex items-center justify-between p-3 border rounded-lg bg-card">
+              <div>
+                <p className="text-sm font-medium">LinkedIn Ads - Tech Campaign</p>
+                <p className="text-xs text-muted-foreground mt-1">
+                  Puja aumentada +€2.30 → Proyecta +45 conversiones
+                </p>
+              </div>
+              <Badge variant="default" className="bg-green-500">Optimizado</Badge>
+            </div>
+
+            <div className="flex items-center justify-between p-3 border rounded-lg bg-card">
+              <div>
+                <p className="text-sm font-medium">Meta Ads - Product Launch</p>
+                <p className="text-xs text-muted-foreground mt-1">
+                  Puja reducida -€1.80 → Ahorra €340/día sin perder conversiones
+                </p>
+              </div>
+              <Badge variant="default" className="bg-green-500">Optimizado</Badge>
+            </div>
+
+            <div className="flex items-center justify-between p-3 border rounded-lg bg-card">
+              <div>
+                <p className="text-sm font-medium">Google Ads - Brand Search</p>
+                <p className="text-xs text-muted-foreground mt-1">
+                  Sin cambios → Rendimiento óptimo actual
+                </p>
+              </div>
+              <Badge variant="secondary">Estable</Badge>
+            </div>
+          </div>
+
+          <div className="pt-3 border-t">
+            <p className="text-xs font-medium mb-3">Configuración del Optimizador:</p>
+            <div className="grid grid-cols-2 gap-3 text-xs">
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 rounded-full bg-green-500" />
+                <span>Frecuencia: Cada 2 horas</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 rounded-full bg-green-500" />
+                <span>Objetivo ROAS: 4.0x mínimo</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 rounded-full bg-green-500" />
+                <span>Límite ajuste: ±30%</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 rounded-full bg-green-500" />
+                <span>Machine Learning: Activo</span>
+              </div>
+            </div>
+          </div>
+
+          <Button className="w-full gap-2">
+            <Settings className="w-4 h-4" />
+            Configurar Bidding Strategy
+          </Button>
+        </CardContent>
+      </Card>
+
       {/* Auto-optimization Status */}
       <Card>
         <CardHeader>
@@ -186,7 +268,7 @@ const AIMediaBuyerPanel = () => {
             <div className="flex items-center justify-between p-3 border rounded-lg">
               <div className="flex items-center gap-3">
                 <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-                <span className="text-sm font-medium">Optimización de pujas automática</span>
+                <span className="text-sm font-medium">AI Bidding Optimizer</span>
               </div>
               <Badge variant="default">Activo</Badge>
             </div>
@@ -206,10 +288,10 @@ const AIMediaBuyerPanel = () => {
             </div>
             <div className="flex items-center justify-between p-3 border rounded-lg">
               <div className="flex items-center gap-3">
-                <div className="w-2 h-2 rounded-full bg-gray-400" />
+                <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
                 <span className="text-sm font-medium">Scaling automático de ganadores</span>
               </div>
-              <Badge variant="secondary">Inactivo</Badge>
+              <Badge variant="default">Activo</Badge>
             </div>
           </div>
         </CardContent>
