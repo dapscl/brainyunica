@@ -113,14 +113,28 @@ const ShowcasePricingPage = () => {
     }
   ];
 
-  const adSpendExamples = [
-    { spend: '$1,000 USD', tier: 'Starter', cost: '$500 USD + ($1,000 × 20%) = $700 USD/mes' },
-    { spend: '$5,000 USD', tier: 'Starter', cost: '$500 USD + ($5,000 × 20%) = $1,500 USD/mes' },
-    { spend: '$10,000 USD', tier: 'Small Agencies', cost: '$1,250 USD + ($10,000 × 15%) = $2,750 USD/mes' },
-    { spend: '$25,000 USD', tier: 'Scaled Agencies', cost: '$3,750 USD + ($25,000 × 10%) = $6,250 USD/mes' },
-    { spend: '$50,000 USD', tier: 'Scaled Agencies', cost: '$3,750 USD + ($50,000 × 10%) = $8,750 USD/mes' },
-    { spend: '$100,000+ USD', tier: 'Enterprise', cost: 'Pricing personalizado - Contactar ventas' }
-  ];
+  const adSpendExamplesByTier = {
+    starter: [
+      { spend: '$1,000 USD', cost: '$500 USD + ($1,000 × 20%) = $700 USD/mes' },
+      { spend: '$2,500 USD', cost: '$500 USD + ($2,500 × 20%) = $1,000 USD/mes' },
+      { spend: '$5,000 USD', cost: '$500 USD + ($5,000 × 20%) = $1,500 USD/mes' },
+    ],
+    smallAgencies: [
+      { spend: '$7,500 USD', cost: '$1,250 USD + ($7,500 × 15%) = $2,375 USD/mes' },
+      { spend: '$10,000 USD', cost: '$1,250 USD + ($10,000 × 15%) = $2,750 USD/mes' },
+      { spend: '$20,000 USD', cost: '$1,250 USD + ($20,000 × 15%) = $4,250 USD/mes' },
+    ],
+    scaledAgencies: [
+      { spend: '$25,000 USD', cost: '$3,750 USD + ($25,000 × 10%) = $6,250 USD/mes' },
+      { spend: '$50,000 USD', cost: '$3,750 USD + ($50,000 × 10%) = $8,750 USD/mes' },
+      { spend: '$75,000 USD', cost: '$3,750 USD + ($75,000 × 10%) = $11,250 USD/mes' },
+    ],
+    enterprise: [
+      { spend: '$100,000+ USD', cost: 'Pricing personalizado' },
+      { spend: 'Múltiples marcas', cost: 'Contactar ventas' },
+      { spend: 'Alto volumen', cost: 'Descuentos especiales' },
+    ]
+  };
 
   return (
     <div className="min-h-screen bg-background dark">
@@ -279,34 +293,95 @@ const ShowcasePricingPage = () => {
         </div>
 
         {/* Ad Spend Examples */}
-        <Card className="mb-12">
+        <Card className="mb-12 border-electric-cyan/20 bg-card/30 backdrop-blur-sm">
           <CardHeader>
-            <CardTitle className="text-2xl">Ejemplos de Pricing por Ad Spend</CardTitle>
-            <CardDescription>
+            <CardTitle className="text-3xl md:text-4xl font-bold text-center uppercase tracking-tight">Ejemplos de Pricing por Ad Spend</CardTitle>
+            <CardDescription className="text-center text-base mt-2">
               Calcula tu costo mensual aproximado según tu inversión publicitaria
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="space-y-3">
-              {adSpendExamples.map((example, idx) => (
-                <div 
-                  key={idx} 
-                  className="flex items-center justify-between p-4 border rounded-lg hover:bg-accent transition-colors"
-                >
-                  <div className="flex-1">
-                    <div className="flex items-center gap-3 mb-1">
-                      <span className="font-semibold text-lg">{example.spend}</span>
-                      <Badge variant="secondary">{example.tier}</Badge>
-                    </div>
-                    <p className="text-sm text-muted-foreground">{example.cost}</p>
-                  </div>
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {/* Starter Column */}
+              <div className="space-y-4">
+                <div className="text-center pb-4 border-b border-border/50">
+                  <h3 className="text-xl font-bold text-electric-cyan mb-1">Starter</h3>
+                  <p className="text-sm text-muted-foreground">20% de medios</p>
                 </div>
-              ))}
+                <div className="space-y-3">
+                  {adSpendExamplesByTier.starter.map((example, idx) => (
+                    <div 
+                      key={idx} 
+                      className="p-3 border border-border/50 rounded-lg hover:bg-accent/50 transition-colors backdrop-blur-sm"
+                    >
+                      <p className="font-semibold text-sm mb-1">{example.spend}</p>
+                      <p className="text-xs text-muted-foreground leading-tight">{example.cost}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Small Agencies Column */}
+              <div className="space-y-4">
+                <div className="text-center pb-4 border-b border-border/50">
+                  <h3 className="text-xl font-bold text-purple-accent mb-1">Small Agencies</h3>
+                  <p className="text-sm text-muted-foreground">15% de medios</p>
+                </div>
+                <div className="space-y-3">
+                  {adSpendExamplesByTier.smallAgencies.map((example, idx) => (
+                    <div 
+                      key={idx} 
+                      className="p-3 border border-border/50 rounded-lg hover:bg-accent/50 transition-colors backdrop-blur-sm"
+                    >
+                      <p className="font-semibold text-sm mb-1">{example.spend}</p>
+                      <p className="text-xs text-muted-foreground leading-tight">{example.cost}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Scaled Agencies Column */}
+              <div className="space-y-4">
+                <div className="text-center pb-4 border-b border-border/50">
+                  <h3 className="text-xl font-bold text-amber-500 mb-1">Scaled Agencies</h3>
+                  <p className="text-sm text-muted-foreground">10% de medios</p>
+                </div>
+                <div className="space-y-3">
+                  {adSpendExamplesByTier.scaledAgencies.map((example, idx) => (
+                    <div 
+                      key={idx} 
+                      className="p-3 border border-border/50 rounded-lg hover:bg-accent/50 transition-colors backdrop-blur-sm"
+                    >
+                      <p className="font-semibold text-sm mb-1">{example.spend}</p>
+                      <p className="text-xs text-muted-foreground leading-tight">{example.cost}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Enterprise Column */}
+              <div className="space-y-4">
+                <div className="text-center pb-4 border-b border-border/50">
+                  <h3 className="text-xl font-bold text-red-500 mb-1">Enterprise</h3>
+                  <p className="text-sm text-muted-foreground">10% de medios</p>
+                </div>
+                <div className="space-y-3">
+                  {adSpendExamplesByTier.enterprise.map((example, idx) => (
+                    <div 
+                      key={idx} 
+                      className="p-3 border border-border/50 rounded-lg hover:bg-accent/50 transition-colors backdrop-blur-sm"
+                    >
+                      <p className="font-semibold text-sm mb-1">{example.spend}</p>
+                      <p className="text-xs text-muted-foreground leading-tight">{example.cost}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
 
-            <div className="mt-6 p-4 bg-muted/50 rounded-lg">
-              <p className="text-sm text-muted-foreground">
-                <strong>Nota:</strong> El porcentaje de medios se aplica sobre tu inversión publicitaria mensual total. 
+            <div className="mt-8 p-6 bg-electric-cyan/5 rounded-xl border border-electric-cyan/20 backdrop-blur-sm">
+              <p className="text-sm text-center font-light">
+                <span className="font-bold text-foreground">Nota:</span> El porcentaje de medios se aplica sobre tu inversión publicitaria mensual total. 
                 A mayor tier, menor porcentaje pagas (20% → 15% → 10%), optimizando tu costo conforme escalas.
               </p>
             </div>
@@ -365,19 +440,19 @@ const ShowcasePricingPage = () => {
 
         {/* CTA */}
         <div className="mt-12 text-center">
-          <Card className="border-primary/20 bg-gradient-to-br from-primary/5 to-transparent">
+          <Card className="border-electric-cyan/20 bg-gradient-to-br from-electric-cyan/5 to-transparent backdrop-blur-sm">
             <CardContent className="py-12">
-              <h2 className="text-3xl font-bold mb-4">¿Listo para Comenzar?</h2>
-              <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
-                Empieza con 14 días de prueba gratis. No se requiere tarjeta de crédito. 
-                Cancela en cualquier momento.
+              <h2 className="text-3xl md:text-4xl font-bold mb-4 uppercase tracking-tight">¿Listo para Comenzar?</h2>
+              <p className="text-muted-foreground mb-8 max-w-2xl mx-auto text-lg font-light">
+                Agenda una llamada con nuestro equipo para encontrar el plan perfecto para tu agencia.
               </p>
               <div className="flex gap-4 justify-center">
-                <Button size="lg" className="gap-2">
+                <Button 
+                  size="lg" 
+                  className="gap-2 bg-gradient-to-r from-electric-cyan to-purple-accent hover:opacity-90 text-background font-semibold"
+                  onClick={() => navigate('/lead-capture')}
+                >
                   <Sparkles className="w-4 h-4" />
-                  Comenzar Prueba Gratis
-                </Button>
-                <Button size="lg" variant="outline">
                   Hablar con Ventas
                 </Button>
               </div>
