@@ -7,6 +7,7 @@ import { ShowcaseHeader } from '@/components/showcase/ShowcaseHeader';
 import { ShowcaseBreadcrumbs } from '@/components/showcase/ShowcaseBreadcrumbs';
 import { ShowcaseSEO } from '@/components/showcase/ShowcaseSEO';
 import { useTranslation } from 'react-i18next';
+import { motion } from 'framer-motion';
 
 const ShowcasePricingPage = () => {
   const navigate = useNavigate();
@@ -113,137 +114,157 @@ const ShowcasePricingPage = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
-      <ShowcaseSEO 
+    <div className="min-h-screen bg-background dark">
+      <ShowcaseSEO
         title={t('showcase.pricing.title', 'Pricing')}
         description={t('showcase.pricing.description', 'Transparent pricing that scales with your ad spend. Choose the right plan for your agency.')}
         path="/pricing"
       />
       <ShowcaseHeader />
       
-      <div className="container mx-auto px-4 py-6">
+      <div className="container mx-auto px-4 py-20">
         <ShowcaseBreadcrumbs />
         
-        <div className="text-center max-w-3xl mx-auto mt-6">
-          <Badge className="mb-4" variant="outline">
-            <Sparkles className="w-3 h-3 mr-1" />
+        <motion.div 
+          className="text-center max-w-4xl mx-auto mt-12"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+        >
+          <Badge variant="outline" className="mb-6 px-6 py-3 text-electric-cyan border-electric-cyan/30 bg-electric-cyan/5 backdrop-blur-sm">
+            <Sparkles className="w-4 h-4 mr-2" />
             Pricing Escalable
           </Badge>
-          <h1 className="text-4xl font-bold mb-4">Precio que Crece Contigo</h1>
-          <p className="text-xl text-muted-foreground">
+          <h1 className="text-5xl md:text-7xl font-bold uppercase tracking-tight mb-6">
+            <span className="text-foreground">Precio que</span>{' '}
+            <span className="text-electric-cyan">Crece Contigo</span>
+          </h1>
+          <p className="text-xl text-muted-foreground font-light leading-relaxed">
             Paga solo por lo que inviertes. Nuestro modelo de pricing escala proporcionalmente con tu ad spend, sin sorpresas.
           </p>
-        </div>
+        </motion.div>
       </div>
 
-      <div className="container mx-auto px-4 py-12">
+      <div className="container mx-auto px-4 py-20">
         {/* How it Works */}
-        <Card className="mb-12 border-primary/20 bg-gradient-to-br from-primary/5 to-transparent">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.6, delay: 0.3 }}
+        >
+        <Card className="mb-16 border-electric-cyan/20 bg-card/30 backdrop-blur-sm">
           <CardHeader>
-            <CardTitle className="text-2xl text-center">¿Cómo Funciona el Pricing?</CardTitle>
+            <CardTitle className="text-3xl md:text-4xl font-bold text-center uppercase tracking-tight">¿Cómo Funciona el Pricing?</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="grid md:grid-cols-3 gap-6 text-center">
+            <div className="grid md:grid-cols-3 gap-8 text-center">
               <div>
-                <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-3">
-                  <span className="text-2xl font-bold text-primary">1</span>
+                <div className="w-16 h-16 rounded-full bg-electric-cyan/10 border border-electric-cyan/30 flex items-center justify-center mx-auto mb-4">
+                  <span className="text-3xl font-bold text-electric-cyan">1</span>
                 </div>
-                <h3 className="font-semibold mb-2">Precio Base Mensual</h3>
-                <p className="text-sm text-muted-foreground">
+                <h3 className="font-bold text-lg mb-3 text-foreground">Precio Base Mensual</h3>
+                <p className="text-muted-foreground font-light leading-relaxed">
                   Pago fijo mensual según el tier que elijas (Starter, Professional, Enterprise)
                 </p>
               </div>
               <div>
-                <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-3">
-                  <span className="text-2xl font-bold text-primary">2</span>
+                <div className="w-16 h-16 rounded-full bg-purple-accent/10 border border-purple-accent/30 flex items-center justify-center mx-auto mb-4">
+                  <span className="text-3xl font-bold text-purple-accent">2</span>
                 </div>
-                <h3 className="font-semibold mb-2">Porcentaje Variable de Medios</h3>
-                <p className="text-sm text-muted-foreground">
+                <h3 className="font-bold text-lg mb-3 text-foreground">Porcentaje Variable de Medios</h3>
+                <p className="text-muted-foreground font-light leading-relaxed">
                   Se suma un porcentaje (10-20%) de tu inversión publicitaria mensual según el tier
                 </p>
               </div>
               <div>
-                <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-3">
-                  <span className="text-2xl font-bold text-primary">3</span>
+                <div className="w-16 h-16 rounded-full bg-green-500/10 border border-green-500/30 flex items-center justify-center mx-auto mb-4">
+                  <span className="text-3xl font-bold text-green-500">3</span>
                 </div>
-                <h3 className="font-semibold mb-2">Total Transparente</h3>
-                <p className="text-sm text-muted-foreground">
+                <h3 className="font-bold text-lg mb-3 text-foreground">Total Transparente</h3>
+                <p className="text-muted-foreground font-light leading-relaxed">
                   Sin costos ocultos. Facturación clara con desglose completo cada mes
                 </p>
               </div>
             </div>
 
-            <div className="mt-8 p-4 bg-primary/10 rounded-lg border border-primary/20">
-              <p className="text-center text-sm">
-                <strong>Ejemplo:</strong> Si estás en el tier Small Agencies ($1,250/mes) e inviertes $10,000 en ads, 
-                pagarás: $1,250 + ($10,000 × 15%) = <strong className="text-primary">$2,750/mes</strong>
+            <div className="mt-8 p-6 bg-electric-cyan/5 rounded-xl border border-electric-cyan/20 backdrop-blur-sm">
+              <p className="text-center font-light">
+                <span className="font-bold text-foreground">Ejemplo:</span> Si estás en el tier Small Agencies ($1,250/mes) e inviertes $10,000 en ads, 
+                pagarás: $1,250 + ($10,000 × 15%) = <span className="text-electric-cyan font-bold text-lg">$2,750/mes</span>
               </p>
             </div>
             
-            <div className="mt-4 p-4 bg-amber-500/10 rounded-lg border border-amber-500/20">
-              <p className="text-center text-sm">
-                <strong>Costo de Integración:</strong> Pago único del 50% del precio base mensual al momento de activar cada tier.
+            <div className="mt-4 p-6 bg-purple-accent/5 rounded-xl border border-purple-accent/20 backdrop-blur-sm">
+              <p className="text-center font-light">
+                <span className="font-bold text-foreground">Costo de Integración:</span> Pago único del 50% del precio base mensual al momento de activar cada tier.
               </p>
             </div>
           </CardContent>
         </Card>
+        </motion.div>
 
         {/* Pricing Tiers */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4 mb-12">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
           {pricingTiers.map((tier, idx) => {
             const Icon = tier.icon;
             return (
+              <motion.div
+                key={idx}
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.5 + idx * 0.1 }}
+              >
               <Card 
-                key={idx} 
-                className={`relative overflow-hidden flex flex-col ${
+                className={`relative overflow-hidden flex flex-col bg-card/50 backdrop-blur-sm transition-all duration-500 ${
                   tier.recommended 
-                    ? 'border-primary shadow-lg lg:scale-105 z-10' 
-                    : 'border-border'
+                    ? 'border-electric-cyan shadow-glow-cyan lg:scale-105 z-10' 
+                    : 'border-border/50 hover:border-electric-cyan/30'
                 }`}
               >
                 {tier.recommended && (
-                  <div className="absolute top-0 right-0 bg-primary text-primary-foreground px-3 py-1 text-xs font-medium">
+                  <div className="absolute top-0 right-0 bg-gradient-to-r from-electric-cyan to-purple-accent text-background px-4 py-1.5 text-xs font-bold uppercase tracking-wide">
                     Más Popular
                   </div>
                 )}
                 
                 <CardHeader className="pb-4">
-                  <div className={`w-10 h-10 rounded-lg bg-gradient-to-br ${tier.color} flex items-center justify-center mb-3`}>
-                    <Icon className="w-5 h-5 text-white" />
+                  <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${tier.color} flex items-center justify-center mb-4 shadow-glow`}>
+                    <Icon className="w-6 h-6 text-white" />
                   </div>
-                  <CardTitle className="text-xl">{tier.name}</CardTitle>
-                  <CardDescription className="text-xs line-clamp-2">{tier.description}</CardDescription>
+                  <CardTitle className="text-2xl font-bold">{tier.name}</CardTitle>
+                  <CardDescription className="text-sm line-clamp-2 font-light">{tier.description}</CardDescription>
                   
-                  <div className="pt-3 space-y-2">
+                  <div className="pt-4 space-y-3">
                     <div>
-                      <p className="text-2xl font-bold">{tier.basePrice}<span className="text-sm text-muted-foreground">/mes</span></p>
-                      <p className="text-xs text-muted-foreground">+ {tier.percentage} de medios</p>
+                      <p className="text-3xl font-bold text-electric-cyan">{tier.basePrice}<span className="text-sm text-muted-foreground font-normal">/mes</span></p>
+                      <p className="text-sm text-muted-foreground font-medium">+ {tier.percentage} de medios</p>
                     </div>
-                    <div className="text-xs text-muted-foreground pt-2 border-t">
-                      <p className="font-medium">Setup: {tier.integrationFee}</p>
+                    <div className="text-sm text-muted-foreground pt-3 border-t border-border/50">
+                      <p className="font-medium">Setup: <span className="text-foreground">{tier.integrationFee}</span></p>
                     </div>
                   </div>
                 </CardHeader>
 
-                <CardContent className="space-y-3 flex-1 flex flex-col">
+                <CardContent className="space-y-4 flex-1 flex flex-col">
                   <Button 
-                    className="w-full" 
+                    className={`w-full font-bold ${tier.recommended ? 'bg-gradient-to-r from-electric-cyan to-electric-cyan/90 hover:opacity-90 text-background' : 'border-electric-cyan/30 hover:bg-electric-cyan/10 hover:border-electric-cyan/50'}`}
                     variant={tier.recommended ? 'default' : 'outline'}
                     size="sm"
                   >
                     {tier.name === 'Enterprise' ? 'Contactar Ventas' : 'Comenzar Ahora'}
                   </Button>
 
-                  <div className="space-y-1.5 flex-1">
+                  <div className="space-y-2 flex-1">
                     {tier.features.map((feature, i) => (
                       <div key={i} className="flex items-start gap-2">
-                        <Check className="w-3.5 h-3.5 text-primary mt-0.5 flex-shrink-0" />
-                        <span className="text-xs leading-tight">{feature}</span>
+                        <Check className="w-4 h-4 text-electric-cyan mt-0.5 flex-shrink-0" />
+                        <span className="text-sm leading-tight font-light">{feature}</span>
                       </div>
                     ))}
                   </div>
                 </CardContent>
               </Card>
+              </motion.div>
             );
           })}
         </div>
