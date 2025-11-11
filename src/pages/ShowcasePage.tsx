@@ -28,6 +28,7 @@ import showcasePricingTiers from '@/assets/showcase-pricing-tiers.jpg';
 import { InteractiveDemoFlow } from '@/components/showcase/InteractiveDemoFlow';
 import { PlatformComparison } from '@/components/showcase/PlatformComparison';
 import { InteractiveVideoTutorial } from '@/components/showcase/InteractiveVideoTutorial';
+import { FAQSection } from '@/components/showcase/FAQSection';
 
 const ShowcasePage = () => {
   const navigate = useNavigate();
@@ -602,6 +603,11 @@ const ShowcasePage = () => {
             </CardContent>
           </Card>
         </div>
+      </section>
+
+      {/* FAQ Section */}
+      <section className="container mx-auto px-4 py-20 bg-gradient-to-b from-muted/10 to-background">
+        <FAQSection />
       </section>
 
       {/* Final CTA Section */}
