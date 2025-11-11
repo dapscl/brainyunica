@@ -168,30 +168,54 @@ export default function ShowcaseIndustriesPage() {
       <ShowcaseHeader />
       <ShowcaseBreadcrumbs />
       
-      <main className="min-h-screen bg-dark-surface">
+      <main className="min-h-screen bg-dark-surface dark">
         {/* Hero Section */}
-        <section className="relative py-20 px-4 overflow-hidden bg-gradient-to-b from-dark-surface via-background to-dark-surface">
-          <div className="absolute inset-0 bg-gradient-to-b from-electric-cyan/5 via-transparent to-purple-accent/5" />
+        <section className="relative py-32 px-4 overflow-hidden">
+          <div className="absolute inset-0">
+            <div className="absolute inset-0 bg-gradient-to-b from-electric-cyan/10 via-purple-accent/5 to-transparent" />
+            <div className="absolute top-0 left-1/4 w-96 h-96 bg-electric-cyan/20 rounded-full blur-3xl animate-pulse" />
+            <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-purple-accent/20 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
+          </div>
           
           <div className="container mx-auto max-w-6xl relative z-10">
-            <div className="text-center mb-16">
-              <div className="inline-block mb-6 px-4 py-2 rounded-full border border-electric-cyan/30 bg-electric-cyan/5">
-                <span className="text-sm font-medium text-electric-cyan">
+            <div className="text-center mb-20">
+              <div className="inline-flex items-center gap-2 mb-6 px-6 py-3 rounded-full border border-electric-cyan/40 bg-electric-cyan/10 backdrop-blur-sm shadow-glow-cyan">
+                <CheckCircle2 className="w-4 h-4 text-electric-cyan animate-pulse" />
+                <span className="text-sm font-semibold text-electric-cyan uppercase tracking-wider">
                   {t('showcase.industries.badge', 'Resultados Reales')}
                 </span>
               </div>
               
-              <h1 className="text-5xl md:text-6xl font-bold mb-6">
-                <span className="text-foreground">{t('showcase.industries.hero.title1', 'Transforma tu marketing')}</span>
+              <h1 className="text-6xl md:text-7xl font-bold mb-8 tracking-tight">
+                <span className="text-white">{t('showcase.industries.hero.title1', 'Transforma tu marketing')}</span>
                 <br />
-                <span className="bg-gradient-to-r from-electric-cyan via-purple-accent to-electric-cyan bg-clip-text text-transparent">
+                <span className="bg-gradient-to-r from-electric-cyan via-purple-accent to-pink-500 bg-clip-text text-transparent animate-gradient">
                   {t('showcase.industries.hero.title2', 'sin importar tu industria')}
                 </span>
               </h1>
               
-              <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+              <p className="text-2xl text-foreground/80 max-w-3xl mx-auto font-light leading-relaxed">
                 {t('showcase.industries.hero.subtitle', 'Casos de éxito reales de agencias, empresas, startups y PYMEs que automatizaron su marketing con Brainy.')}
               </p>
+            </div>
+
+            {/* Stats Grid */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto">
+              {[
+                { icon: Users, value: '120+', label: 'Clientes activos' },
+                { icon: TrendingUp, value: '4.2x', label: 'ROI promedio' },
+                { icon: Clock, value: '85%', label: 'Tiempo ahorrado' },
+                { icon: DollarSign, value: '€2M+', label: 'Ad spend gestionado' }
+              ].map((stat, idx) => (
+                <div key={idx} className="relative group">
+                  <div className="absolute inset-0 bg-gradient-to-br from-electric-cyan/20 to-purple-accent/20 rounded-2xl blur-xl opacity-50 group-hover:opacity-100 transition-opacity duration-500" />
+                  <div className="relative bg-dark-surface/80 backdrop-blur-sm border border-electric-cyan/30 rounded-2xl p-6 text-center hover:border-electric-cyan/60 transition-all duration-300 hover:scale-105">
+                    <stat.icon className="w-8 h-8 text-electric-cyan mx-auto mb-3" />
+                    <div className="text-3xl font-bold text-white mb-1">{stat.value}</div>
+                    <div className="text-sm text-muted-foreground">{stat.label}</div>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </section>
@@ -200,69 +224,96 @@ export default function ShowcaseIndustriesPage() {
         {industries.map((industry, index) => (
           <section 
             key={industry.id} 
-            className={`py-20 px-4 ${index % 2 === 0 ? 'bg-dark-surface' : 'bg-gradient-to-b from-background to-dark-surface'}`}
+            className="relative py-32 px-4 overflow-hidden"
           >
-            <div className="container mx-auto max-w-6xl">
-              <div className="grid lg:grid-cols-2 gap-12 items-start">
+            {/* Background Effects */}
+            <div className="absolute inset-0">
+              <div className={`absolute inset-0 bg-gradient-to-br ${industry.color} opacity-5`} />
+              <div className={`absolute top-0 ${index % 2 === 0 ? 'right-0' : 'left-0'} w-96 h-96 bg-gradient-to-br ${industry.color} opacity-10 rounded-full blur-3xl`} />
+            </div>
+
+            <div className="container mx-auto max-w-7xl relative z-10">
+              <div className="grid lg:grid-cols-2 gap-16 items-start">
                 {/* Left: Info */}
-                <div className="space-y-8">
-                  <div>
-                    <div className={`inline-flex items-center gap-3 mb-4 p-3 rounded-xl bg-gradient-to-r ${industry.color}`}>
-                      <industry.icon className="w-8 h-8 text-white" />
+                <div className={`space-y-10 ${index % 2 === 0 ? '' : 'lg:order-2'}`}>
+                  <div className="space-y-6">
+                    <div className="relative inline-block">
+                      <div className={`absolute inset-0 bg-gradient-to-r ${industry.color} rounded-2xl blur-xl opacity-50`} />
+                      <div className={`relative inline-flex items-center gap-4 px-6 py-4 rounded-2xl bg-gradient-to-r ${industry.color} shadow-glow`}>
+                        <industry.icon className="w-10 h-10 text-white drop-shadow-lg" />
+                        <span className="text-2xl font-bold text-white">{industry.title}</span>
+                      </div>
                     </div>
-                    <h2 className="text-4xl font-bold mb-3 text-foreground">{industry.title}</h2>
-                    <p className="text-xl text-electric-cyan mb-4">{industry.subtitle}</p>
-                    <p className="text-muted-foreground leading-relaxed">{industry.description}</p>
+                    
+                    <h2 className="text-4xl md:text-5xl font-bold text-white leading-tight">
+                      {industry.subtitle}
+                    </h2>
+                    <p className="text-xl text-foreground/90 leading-relaxed">{industry.description}</p>
                   </div>
 
-                  <div className="space-y-4">
-                    <h3 className="text-xl font-semibold text-foreground flex items-center gap-2">
-                      <CheckCircle2 className="w-5 h-5 text-electric-cyan" />
-                      {t('showcase.industries.benefits', 'Beneficios Clave')}
-                    </h3>
-                    <ul className="space-y-3">
-                      {industry.benefits.map((benefit, idx) => (
-                        <li key={idx} className="flex items-start gap-3 text-muted-foreground">
-                          <div className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-electric-cyan mt-2" />
-                          <span>{benefit}</span>
-                        </li>
-                      ))}
-                    </ul>
+                  <div className="relative group">
+                    <div className={`absolute inset-0 bg-gradient-to-r ${industry.color} rounded-3xl blur-2xl opacity-20 group-hover:opacity-30 transition-opacity duration-500`} />
+                    <div className="relative bg-dark-surface/90 backdrop-blur-md border border-white/10 rounded-3xl p-8 shadow-2xl hover:border-white/20 transition-all duration-300">
+                      <h3 className="text-xl font-bold text-white flex items-center gap-3 mb-6">
+                        <div className={`p-2 rounded-lg bg-gradient-to-br ${industry.color}`}>
+                          <CheckCircle2 className="w-5 h-5 text-white" />
+                        </div>
+                        {t('showcase.industries.benefits', 'Beneficios Clave')}
+                      </h3>
+                      <ul className="space-y-4">
+                        {industry.benefits.map((benefit, idx) => (
+                          <li key={idx} className="flex items-start gap-4 group/item">
+                            <div className={`flex-shrink-0 w-2 h-2 rounded-full bg-gradient-to-r ${industry.color} mt-2 group-hover/item:scale-150 transition-transform duration-300`} />
+                            <span className="text-foreground/90 text-lg group-hover/item:text-white transition-colors duration-300">{benefit}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
                   </div>
 
                   {/* Testimonial */}
                   <div className="relative group">
-                    <div className="absolute inset-0 bg-gradient-to-r from-electric-cyan/20 to-purple-accent/20 rounded-2xl blur-xl opacity-50 group-hover:opacity-75 transition-opacity" />
-                    <div className="relative bg-dark-surface/80 backdrop-blur-sm border border-border/40 rounded-2xl p-6">
-                      <p className="text-muted-foreground italic mb-4">"{industry.testimonial.quote}"</p>
-                      <div>
-                        <p className="font-semibold text-foreground">{industry.testimonial.author}</p>
-                        <p className="text-sm text-muted-foreground">{industry.testimonial.role}</p>
-                        <p className="text-xs text-electric-cyan mt-1">{industry.testimonial.company}</p>
+                    <div className={`absolute inset-0 bg-gradient-to-r ${industry.color} rounded-3xl blur-2xl opacity-20 group-hover:opacity-40 transition-opacity duration-500`} />
+                    <div className="relative bg-dark-surface/95 backdrop-blur-md border border-white/10 rounded-3xl p-8 shadow-2xl hover:border-white/20 transition-all duration-300">
+                      <div className="mb-6">
+                        <div className="text-6xl text-electric-cyan/20 font-serif leading-none mb-2">"</div>
+                        <p className="text-foreground/90 text-lg italic leading-relaxed">{industry.testimonial.quote}</p>
+                      </div>
+                      <div className="flex items-start gap-4">
+                        <div className={`w-12 h-12 rounded-full bg-gradient-to-br ${industry.color} flex items-center justify-center text-white font-bold text-xl shadow-lg`}>
+                          {industry.testimonial.author[0]}
+                        </div>
+                        <div>
+                          <p className="font-bold text-white text-lg">{industry.testimonial.author}</p>
+                          <p className="text-foreground/70">{industry.testimonial.role}</p>
+                          <p className="text-sm text-electric-cyan mt-1 font-semibold">{industry.testimonial.company}</p>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
 
                 {/* Right: Metrics Comparison */}
-                <div className="space-y-6">
-                  <h3 className="text-2xl font-bold text-center text-foreground mb-8">
+                <div className={`space-y-8 ${index % 2 === 0 ? '' : 'lg:order-1'}`}>
+                  <h3 className="text-3xl font-bold text-center text-white mb-12 uppercase tracking-wider">
                     {t('showcase.industries.comparison', 'Antes vs Después')}
                   </h3>
                   
                   {/* Before */}
-                  <div className="relative">
-                    <div className="absolute inset-0 bg-gradient-to-r from-red-500/10 to-orange-500/10 rounded-2xl blur-xl" />
-                    <div className="relative bg-dark-surface/60 backdrop-blur-sm border border-red-500/30 rounded-2xl p-6">
-                      <div className="flex items-center justify-between mb-4">
-                        <h4 className="text-lg font-semibold text-red-400">{t('showcase.industries.before', 'Antes')}</h4>
-                        <TrendingUp className="w-5 h-5 text-red-400 rotate-180" />
+                  <div className="relative group">
+                    <div className="absolute inset-0 bg-gradient-to-br from-red-500/20 to-orange-500/20 rounded-3xl blur-2xl" />
+                    <div className="relative bg-dark-surface/90 backdrop-blur-md border-2 border-red-500/40 rounded-3xl p-8 hover:border-red-500/60 transition-all duration-300 shadow-2xl">
+                      <div className="flex items-center justify-between mb-6">
+                        <h4 className="text-2xl font-bold text-red-400 uppercase tracking-wide">{t('showcase.industries.before', 'Antes')}</h4>
+                        <div className="p-3 rounded-full bg-red-500/20">
+                          <TrendingUp className="w-6 h-6 text-red-400 rotate-180" />
+                        </div>
                       </div>
-                      <div className="grid grid-cols-2 gap-4">
+                      <div className="grid grid-cols-2 gap-6">
                         {Object.entries(industry.metrics.before).map(([key, value]) => (
-                          <div key={key} className="space-y-1">
-                            <p className="text-xs text-muted-foreground uppercase tracking-wide">{key}</p>
-                            <p className="text-lg font-bold text-foreground">{value}</p>
+                          <div key={key} className="space-y-2 p-4 rounded-xl bg-red-500/5 border border-red-500/20">
+                            <p className="text-xs text-red-300/70 uppercase tracking-wider font-semibold">{key}</p>
+                            <p className="text-2xl font-bold text-white">{value}</p>
                           </div>
                         ))}
                       </div>
@@ -271,24 +322,29 @@ export default function ShowcaseIndustriesPage() {
 
                   {/* Arrow */}
                   <div className="flex justify-center">
-                    <div className="p-3 rounded-full bg-gradient-to-r from-electric-cyan to-purple-accent animate-pulse">
-                      <TrendingUp className="w-6 h-6 text-white" />
+                    <div className="relative">
+                      <div className={`absolute inset-0 bg-gradient-to-r ${industry.color} rounded-full blur-xl opacity-50 animate-pulse`} />
+                      <div className={`relative p-5 rounded-full bg-gradient-to-r ${industry.color} shadow-glow`}>
+                        <TrendingUp className="w-8 h-8 text-white" />
+                      </div>
                     </div>
                   </div>
 
                   {/* After */}
-                  <div className="relative">
-                    <div className="absolute inset-0 bg-gradient-to-r from-electric-cyan/20 to-green-500/20 rounded-2xl blur-xl" />
-                    <div className="relative bg-dark-surface/60 backdrop-blur-sm border border-electric-cyan/50 rounded-2xl p-6">
-                      <div className="flex items-center justify-between mb-4">
-                        <h4 className="text-lg font-semibold text-electric-cyan">{t('showcase.industries.after', 'Después')}</h4>
-                        <TrendingUp className="w-5 h-5 text-green-500" />
+                  <div className="relative group">
+                    <div className={`absolute inset-0 bg-gradient-to-br ${industry.color} opacity-30 rounded-3xl blur-2xl`} />
+                    <div className="relative bg-dark-surface/90 backdrop-blur-md border-2 border-electric-cyan/60 rounded-3xl p-8 hover:border-electric-cyan transition-all duration-300 shadow-2xl shadow-electric-cyan/20">
+                      <div className="flex items-center justify-between mb-6">
+                        <h4 className="text-2xl font-bold text-electric-cyan uppercase tracking-wide">{t('showcase.industries.after', 'Después')}</h4>
+                        <div className="p-3 rounded-full bg-green-500/20">
+                          <TrendingUp className="w-6 h-6 text-green-400" />
+                        </div>
                       </div>
-                      <div className="grid grid-cols-2 gap-4">
+                      <div className="grid grid-cols-2 gap-6">
                         {Object.entries(industry.metrics.after).map(([key, value]) => (
-                          <div key={key} className="space-y-1">
-                            <p className="text-xs text-muted-foreground uppercase tracking-wide">{key}</p>
-                            <p className="text-lg font-bold text-electric-cyan">{value}</p>
+                          <div key={key} className="space-y-2 p-4 rounded-xl bg-electric-cyan/5 border border-electric-cyan/30 hover:border-electric-cyan/60 transition-all duration-300 group/metric">
+                            <p className="text-xs text-electric-cyan/70 uppercase tracking-wider font-semibold">{key}</p>
+                            <p className="text-2xl font-bold text-electric-cyan group-hover/metric:text-white transition-colors duration-300">{value}</p>
                           </div>
                         ))}
                       </div>
