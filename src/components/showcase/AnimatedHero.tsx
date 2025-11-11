@@ -233,7 +233,7 @@ export const AnimatedHero = () => {
           <div className="flex items-start gap-3">
             <MessageSquare className="w-5 h-5 text-electric-cyan" />
             <div className="flex-1">
-              <p className="text-xs font-semibold text-electric-cyan mb-1">WhatsApp Manager</p>
+              <p className="text-xs font-semibold text-electric-cyan mb-1">Mr. Brainy</p>
               <p className="text-xs text-muted-foreground mb-2">Contenido listo para aprobación ✅</p>
               <div className="flex items-center gap-2 text-xs text-electric-cyan/60">
                 <span>Procesando respuesta</span>
