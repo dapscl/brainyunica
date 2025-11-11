@@ -153,7 +153,7 @@ export default function ShowcaseFeaturesPage() {
       <ShowcaseHeader />
       <ShowcaseBreadcrumbs />
       
-      <main className="min-h-screen bg-dark-surface">
+      <main className="min-h-screen bg-dark-surface dark">
         {/* Hero Section */}
         <section className="relative py-20 px-4 overflow-hidden bg-dark-surface">
           <div className="absolute inset-0 bg-gradient-to-b from-electric-cyan/5 via-transparent to-purple-accent/5" />
