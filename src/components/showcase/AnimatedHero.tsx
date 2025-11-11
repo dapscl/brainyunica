@@ -1,6 +1,36 @@
 import { motion } from 'framer-motion';
-import { Calendar, MessageSquare, TrendingUp, Bot, Sparkles, Clock, DollarSign, Target, Zap, CheckCircle, Activity, BarChart3 } from 'lucide-react';
+import { Calendar, MessageSquare, TrendingUp, Bot, Sparkles, Clock, DollarSign, Target, Zap, CheckCircle, Activity, BarChart3, Loader2 } from 'lucide-react';
 import { useEffect, useState } from 'react';
+
+// Typing indicator component
+const TypingIndicator = () => (
+  <div className="flex gap-1">
+    {[0, 1, 2].map((i) => (
+      <motion.div
+        key={i}
+        className="w-1.5 h-1.5 bg-electric-cyan rounded-full"
+        animate={{ opacity: [0.3, 1, 0.3] }}
+        transition={{
+          duration: 1,
+          repeat: Infinity,
+          delay: i * 0.2,
+          ease: "easeInOut"
+        }}
+      />
+    ))}
+  </div>
+);
+
+// Loading spinner component
+const LoadingSpinner = ({ color = "electric-cyan" }: { color?: string }) => (
+  <motion.div
+    animate={{ rotate: 360 }}
+    transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+    className="inline-block"
+  >
+    <Loader2 className={`w-3 h-3 text-${color}`} />
+  </motion.div>
+);
 
 interface Particle {
   id: number;
@@ -202,9 +232,13 @@ export const AnimatedHero = () => {
         >
           <div className="flex items-start gap-3">
             <MessageSquare className="w-5 h-5 text-electric-cyan" />
-            <div>
+            <div className="flex-1">
               <p className="text-xs font-semibold text-electric-cyan mb-1">WhatsApp Manager</p>
-              <p className="text-xs text-muted-foreground">Contenido listo para aprobación ✅</p>
+              <p className="text-xs text-muted-foreground mb-2">Contenido listo para aprobación ✅</p>
+              <div className="flex items-center gap-2 text-xs text-electric-cyan/60">
+                <span>Procesando respuesta</span>
+                <TypingIndicator />
+              </div>
             </div>
           </div>
         </motion.div>
@@ -235,8 +269,12 @@ export const AnimatedHero = () => {
           <div className="flex items-center gap-2">
             <TrendingUp className="w-5 h-5 text-green-500" />
             <div>
-              <p className="text-xs font-semibold text-green-500">AdBrainy™</p>
-              <p className="text-lg font-bold text-foreground mt-1">+47% ROAS</p>
+              <div className="flex items-center gap-2 mb-1">
+                <p className="text-xs font-semibold text-green-500">AdBrainy™</p>
+                <Loader2 className="w-3 h-3 text-green-500 animate-spin" />
+              </div>
+              <p className="text-lg font-bold text-foreground">+47% ROAS</p>
+              <p className="text-xs text-muted-foreground">Optimizando...</p>
             </div>
           </div>
         </motion.div>
@@ -251,8 +289,12 @@ export const AnimatedHero = () => {
           <div className="flex items-center gap-2">
             <Bot className="w-5 h-5 text-purple-500" />
             <div>
-              <p className="text-xs font-semibold text-purple-500">ChatBrainy™</p>
-              <p className="text-xs text-muted-foreground mt-1">89 leads capturados</p>
+              <p className="text-xs font-semibold text-purple-500 mb-1">ChatBrainy™</p>
+              <p className="text-xs text-muted-foreground mb-2">89 leads capturados</p>
+              <div className="flex items-center gap-2 text-xs text-purple-500/60">
+                <span>Respondiendo</span>
+                <TypingIndicator />
+              </div>
             </div>
           </div>
         </motion.div>
@@ -267,6 +309,7 @@ export const AnimatedHero = () => {
           <div className="flex items-center gap-2">
             <Sparkles className="w-4 h-4 text-electric-cyan animate-pulse" />
             <p className="text-xs font-medium text-electric-cyan">3 variantes creadas</p>
+            <Loader2 className="w-3 h-3 text-electric-cyan animate-spin" />
           </div>
         </motion.div>
 
@@ -280,6 +323,7 @@ export const AnimatedHero = () => {
           <div className="flex items-center gap-2">
             <Target className="w-4 h-4 text-purple-400" />
             <p className="text-xs font-medium text-foreground">Nueva tendencia detectada</p>
+            <Loader2 className="w-3 h-3 text-purple-400 animate-spin" />
           </div>
         </motion.div>
 
@@ -291,8 +335,11 @@ export const AnimatedHero = () => {
           className="absolute top-1/2 right-1/4 bg-card/90 backdrop-blur-sm rounded-lg p-3 border border-green-500/40"
         >
           <div className="flex items-center gap-2">
-            <DollarSign className="w-4 h-4 text-green-500" />
-            <p className="text-xs font-medium text-foreground">$2.5K optimizado</p>
+            <Loader2 className="w-4 h-4 text-green-500 animate-spin" />
+            <div>
+              <p className="text-xs font-medium text-foreground">$2.5K optimizado</p>
+              <p className="text-xs text-green-500">Calculando ROI...</p>
+            </div>
           </div>
         </motion.div>
 
@@ -332,6 +379,7 @@ export const AnimatedHero = () => {
           <div className="flex items-center gap-2">
             <Activity className="w-4 h-4 text-purple-400 animate-pulse" />
             <p className="text-xs font-medium text-foreground">127 interacciones</p>
+            <Loader2 className="w-3 h-3 text-purple-400 animate-spin" />
           </div>
         </motion.div>
 
