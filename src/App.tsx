@@ -42,6 +42,8 @@ const ShowcaseBrandSetupPage = lazy(() => import("./pages/ShowcaseBrandSetupPage
 const ShowcaseBrandDetailPage = lazy(() => import("./pages/ShowcaseBrandDetailPage"));
 const ShowcaseContentCreatorPage = lazy(() => import("./pages/ShowcaseContentCreatorPage"));
 const ShowcaseCampaignCreatorPage = lazy(() => import("./pages/ShowcaseCampaignCreatorPage"));
+const ShowcaseChatAutomationPage = lazy(() => import("./pages/ShowcaseChatAutomationPage"));
+const ShowcaseLeadCapturePage = lazy(() => import("./pages/ShowcaseLeadCapturePage"));
 
 const LoadingFallback = () => (
   <div className="min-h-screen bg-background p-8">
@@ -65,6 +67,8 @@ const App = () => {
           <Route path="/showcase/brands/:slug" element={<ShowcaseBrandDetailPage />} />
           <Route path="/showcase/brands/:slug/create-content" element={<ShowcaseContentCreatorPage />} />
           <Route path="/showcase/brands/:slug/create-campaign" element={<ShowcaseCampaignCreatorPage />} />
+          <Route path="/showcase/brands/:slug/chat-automation" element={<ShowcaseChatAutomationPage />} />
+          <Route path="/showcase/brands/:slug/lead-capture" element={<ShowcaseLeadCapturePage />} />
           <Route path="/demo" element={<ProtectedRoute><DemoPage /></ProtectedRoute>} />
           <Route path="/dashboard" element={<ProtectedRoute><DashboardPage /></ProtectedRoute>} />
           <Route path="/organizations" element={<ProtectedRoute><OrganizationsPage /></ProtectedRoute>} />

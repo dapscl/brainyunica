@@ -33,6 +33,8 @@ import demoEcoProduct1 from '@/assets/demo-eco-product-1.jpg';
 import demoEcoProduct2 from '@/assets/demo-eco-product-2.jpg';
 import demoFitness1 from '@/assets/demo-fitness-1.jpg';
 import demoFitness2 from '@/assets/demo-fitness-2.jpg';
+import AIMediaBuyerPanel from '@/components/showcase/AIMediaBuyerPanel';
+import CreativePerformanceTracker from '@/components/showcase/CreativePerformanceTracker';
 
 const brandData: Record<string, any> = {
   techstart: {
@@ -390,23 +392,38 @@ const ShowcaseBrandDetailPage = () => {
           </div>
         </section>
 
+        {/* AI Media Buyer */}
+        <section className="mb-16">
+          <AIMediaBuyerPanel />
+        </section>
+
+        {/* Creative Performance Tracker */}
+        <section className="mb-16">
+          <CreativePerformanceTracker />
+        </section>
+
         {/* Manychat - Respuestas Automáticas */}
         <section>
           <div className="mb-6">
-            <div className="flex items-center gap-3 mb-2">
-              <div className="w-10 h-10 bg-gradient-to-br from-green-500 to-emerald-600 rounded-lg flex items-center justify-center">
-                <Bot className="w-5 h-5 text-white" />
+            <div className="flex items-center justify-between flex-wrap gap-4">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 bg-gradient-to-br from-green-500 to-emerald-600 rounded-lg flex items-center justify-center">
+                  <Bot className="w-5 h-5 text-white" />
+                </div>
+                <div>
+                  <h2 className="text-2xl font-bold">Chat de Respuestas Automáticas</h2>
+                  <p className="text-muted-foreground">
+                    Monitoreo en tiempo real de mensajes y respuestas automatizadas
+                  </p>
+                </div>
               </div>
-              <div>
-                <h2 className="text-2xl font-bold">Chat de Respuestas Automáticas</h2>
-                <p className="text-muted-foreground">
-                  Monitoreo en tiempo real de mensajes y respuestas automatizadas
-                </p>
-              </div>
+              <Button onClick={() => navigate(`/showcase/brands/${slug}/chat-automation`)}>
+                Ver Sistema Completo
+              </Button>
             </div>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
@@ -428,6 +445,34 @@ const ShowcaseBrandDetailPage = () => {
                     <span className="text-sm font-medium">Mensajes Hoy</span>
                     <span className="text-2xl font-bold">127</span>
                   </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Users className="w-5 h-5 text-blue-500" />
+                  Captura de Leads
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between p-3 bg-muted/30 rounded-lg">
+                    <span className="text-sm font-medium">Leads Capturados</span>
+                    <span className="text-2xl font-bold">1,243</span>
+                  </div>
+                  <div className="flex items-center justify-between p-3 bg-muted/30 rounded-lg">
+                    <span className="text-sm font-medium">Tasa de Conversión</span>
+                    <span className="text-2xl font-bold text-green-600">34%</span>
+                  </div>
+                  <Button 
+                    variant="outline" 
+                    className="w-full mt-3"
+                    onClick={() => navigate(`/showcase/brands/${slug}/lead-capture`)}
+                  >
+                    Ver Sistema de Leads
+                  </Button>
                 </div>
               </CardContent>
             </Card>
