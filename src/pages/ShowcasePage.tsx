@@ -26,6 +26,7 @@ import showcaseCreativeTracker from '@/assets/showcase-creative-tracker.jpg';
 import showcaseMultichannel from '@/assets/showcase-multichannel.jpg';
 import showcasePricingTiers from '@/assets/showcase-pricing-tiers.jpg';
 import { InteractiveDemoFlow } from '@/components/showcase/InteractiveDemoFlow';
+import { PlatformComparison } from '@/components/showcase/PlatformComparison';
 
 const ShowcasePage = () => {
   const navigate = useNavigate();
@@ -73,6 +74,11 @@ const ShowcasePage = () => {
         <InteractiveDemoFlow />
       </section>
 
+      {/* Platform Comparison Section */}
+      <section className="container mx-auto px-4 py-20 bg-gradient-to-b from-muted/20 to-background">
+        <PlatformComparison />
+      </section>
+
       {/* WhatsApp Project Manager Section */}
       <section className="container mx-auto px-4 py-20 bg-gradient-to-br from-green-500/5 via-background to-background">
         <div className="max-w-6xl mx-auto">
@@ -85,7 +91,8 @@ const ShowcasePage = () => {
               WhatsApp como Project Manager
             </h2>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              Olvida los dashboards tradicionales. BrainybyUnica gestiona todo tu contenido a través de conversaciones naturales por WhatsApp.
+              Olvida los dashboards complejos. BrainybyUnica gestiona todo tu contenido, aprobaciones y publicaciones 
+              a través de conversaciones naturales por WhatsApp. Tu equipo trabaja desde donde ya está.
             </p>
           </div>
 
@@ -100,8 +107,8 @@ const ShowcasePage = () => {
                 </CardHeader>
                 <CardContent>
                   <p className="text-muted-foreground">
-                    BrainybyUnica te envía el contenido pre-programado para aprobación. Responde con ✅ para publicar, 
-                    o pide sugerencias alternativas generadas por IA.
+                    BrainybyUnica te envía contenido pre-programado directo a tu WhatsApp para aprobación. Responde con ✅ para publicar 
+                    inmediatamente, o pide variantes alternativas generadas por IA en segundos.
                   </p>
                 </CardContent>
               </Card>
@@ -115,8 +122,8 @@ const ShowcasePage = () => {
                 </CardHeader>
                 <CardContent>
                   <p className="text-muted-foreground">
-                    Cada lunes, BrainybyUnica analiza Google Trends y fuentes RSS (TechCrunch, The Drum, AdAge) y te sugiere 
-                    las 3 tendencias más relevantes para tu marca.
+                    Cada lunes, BrainybyUnica analiza automáticamente Google Trends, TechCrunch, The Drum, AdAge y otras fuentes 
+                    clave de tu industria. Te presenta las 3 tendencias más relevantes con propuestas de contenido listas para aprobar.
                   </p>
                 </CardContent>
               </Card>
@@ -130,8 +137,8 @@ const ShowcasePage = () => {
                 </CardHeader>
                 <CardContent>
                   <p className="text-muted-foreground">
-                    Envía una imagen por WhatsApp y BrainybyUnica la programa automáticamente. Publica ahora o calendariza 
-                    para más tarde con un simple mensaje.
+                    Envía una imagen o video por WhatsApp y BrainybyUnica lo calendariza automáticamente en el mejor horario 
+                    para tu audiencia. Publica ahora o programa para más tarde con un simple mensaje de texto.
                   </p>
                 </CardContent>
               </Card>
@@ -161,7 +168,8 @@ const ShowcasePage = () => {
               AI Media Buyer Personal
             </h2>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              Tu asistente de IA analiza tus campañas 24/7 y optimiza automáticamente pujas, presupuestos y audiencias.
+              Tu asistente de IA que analiza tus campañas publicitarias 24/7 y optimiza automáticamente pujas, 
+              presupuestos y audiencias para maximizar tu ROI sin intervención manual.
             </p>
           </div>
 
@@ -185,8 +193,8 @@ const ShowcasePage = () => {
                 </CardHeader>
                 <CardContent>
                   <p className="text-muted-foreground">
-                    Recibe alertas inteligentes cuando una campaña necesita ajustes, con sugerencias específicas 
-                    para mejorar ROAS, reducir CPA y maximizar conversiones.
+                    Recibe alertas inteligentes vía WhatsApp cuando una campaña necesita ajustes, con sugerencias específicas 
+                    basadas en datos en tiempo real para mejorar ROAS, reducir CPA y maximizar conversiones.
                   </p>
                 </CardContent>
               </Card>
@@ -200,8 +208,8 @@ const ShowcasePage = () => {
                 </CardHeader>
                 <CardContent>
                   <p className="text-muted-foreground">
-                    El AI Media Buyer ajusta pujas automáticamente según performance, redistribuye presupuesto 
-                    entre creatividades y pausa ads con baja eficiencia.
+                    El sistema de IA ajusta pujas automáticamente según performance en tiempo real, redistribuye presupuesto 
+                    entre creatividades ganadoras y pausa ads con baja eficiencia sin que tengas que monitorear constantemente.
                   </p>
                 </CardContent>
               </Card>
@@ -215,8 +223,8 @@ const ShowcasePage = () => {
                 </CardHeader>
                 <CardContent>
                   <p className="text-muted-foreground">
-                    Identifica automáticamente cuando una creatividad pierde efectividad y te sugiere 
-                    variantes frescas antes de que afecte tu ROI.
+                    BrainybyUnica identifica automáticamente cuando una creatividad pierde efectividad por saturación de audiencia 
+                    y te sugiere variantes frescas antes de que impacte negativamente en tu ROI.
                   </p>
                 </CardContent>
               </Card>
@@ -237,7 +245,8 @@ const ShowcasePage = () => {
               Seguimiento Individual por Creatividad
             </h2>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              Monitorea el rendimiento de cada pieza creativa con métricas detalladas, A/B testing automático y análisis de engagement.
+              Monitorea el rendimiento de cada pieza creativa individual con métricas detalladas, A/B testing automático 
+              y análisis de engagement por plataforma. Identifica qué contenido funciona mejor y replica el éxito.
             </p>
           </div>
 
@@ -314,7 +323,8 @@ const ShowcasePage = () => {
               Bandeja de Entrada Omnicanal
             </h2>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              Gestiona WhatsApp, Instagram DMs, Facebook Messenger, LinkedIn y Email desde un solo lugar con automatizaciones inteligentes.
+              Centraliza WhatsApp Business, Instagram DMs, Facebook Messenger, LinkedIn y Email en una sola bandeja de entrada 
+              unificada. Respuestas automáticas con IA, lead scoring y segmentación inteligente incluida.
             </p>
           </div>
 
@@ -338,8 +348,8 @@ const ShowcasePage = () => {
                 </CardHeader>
                 <CardContent>
                   <p className="text-muted-foreground">
-                    La IA responde automáticamente FAQs, califica leads y deriva conversaciones complejas 
-                    a tu equipo humano cuando es necesario.
+                    La IA de BrainybyUnica responde automáticamente preguntas frecuentes en lenguaje natural, califica leads 
+                    según intención de compra y deriva conversaciones complejas a tu equipo humano solo cuando es necesario.
                   </p>
                 </CardContent>
               </Card>
@@ -353,8 +363,8 @@ const ShowcasePage = () => {
                 </CardHeader>
                 <CardContent>
                   <p className="text-muted-foreground">
-                    Convierte comentarios en Instagram/Facebook en conversaciones privadas automáticamente. 
-                    Captura leads sin perder ninguna oportunidad.
+                    BrainybyUnica convierte automáticamente comentarios públicos en Instagram y Facebook en conversaciones 
+                    privadas. Captura leads en el momento de máximo interés sin perder ninguna oportunidad de negocio.
                   </p>
                 </CardContent>
               </Card>
@@ -368,8 +378,8 @@ const ShowcasePage = () => {
                 </CardHeader>
                 <CardContent>
                   <p className="text-muted-foreground">
-                    Etiqueta y segmenta contactos automáticamente según su interacción. 
-                    La IA asigna puntuación de calidad a cada lead.
+                    El sistema etiqueta y segmenta contactos automáticamente según comportamiento e interacciones. 
+                    La IA asigna puntuación de calidad a cada lead para priorizar tu seguimiento comercial.
                   </p>
                 </CardContent>
               </Card>
@@ -390,7 +400,8 @@ const ShowcasePage = () => {
               Precio Variable según tu Inversión Publicitaria
             </h2>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              Paga solo por lo que usas. Nuestro modelo de pricing escala con tu inversión en ads, sin sorpresas.
+              Modelo de pricing escalable y transparente basado en tu inversión publicitaria. Pagas solo por lo que usas, 
+              sin costos ocultos ni límites artificiales. A mayor escala, mejor precio relativo.
             </p>
           </div>
 
