@@ -157,11 +157,6 @@ const ShowcasePricingPage = () => {
       { spend: t('showcase.pricing.adSpendExamples.scaledAgencies.example1.spend'), cost: t('showcase.pricing.adSpendExamples.scaledAgencies.example1.cost') },
       { spend: t('showcase.pricing.adSpendExamples.scaledAgencies.example2.spend'), cost: t('showcase.pricing.adSpendExamples.scaledAgencies.example2.cost') },
       { spend: t('showcase.pricing.adSpendExamples.scaledAgencies.example3.spend'), cost: t('showcase.pricing.adSpendExamples.scaledAgencies.example3.cost') },
-    ],
-    enterprise: [
-      { spend: t('showcase.pricing.adSpendExamples.enterprise.example1.spend'), cost: t('showcase.pricing.adSpendExamples.enterprise.example1.cost') },
-      { spend: t('showcase.pricing.adSpendExamples.enterprise.example2.spend'), cost: t('showcase.pricing.adSpendExamples.enterprise.example2.cost') },
-      { spend: t('showcase.pricing.adSpendExamples.enterprise.example3.spend'), cost: t('showcase.pricing.adSpendExamples.enterprise.example3.cost') },
     ]
   };
 
@@ -387,7 +382,7 @@ const ShowcasePricingPage = () => {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               {/* Starter Column */}
               <div className="space-y-4">
                 <div className="text-center pb-4 border-b border-border/50">
@@ -437,25 +432,6 @@ const ShowcasePricingPage = () => {
                     <div 
                       key={idx} 
                       className="p-3 border border-border/50 rounded-lg hover:bg-accent/50 transition-all duration-300 backdrop-blur-sm hover:-translate-y-1 hover:shadow-[0_0_20px_rgba(245,158,11,0.2)] hover:border-amber-500/40"
-                    >
-                      <p className="font-semibold text-sm mb-1">{example.spend}</p>
-                      <p className="text-xs text-muted-foreground leading-tight">{example.cost}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Enterprise Column */}
-              <div className="space-y-4">
-                <div className="text-center pb-4 border-b border-border/50">
-                  <h3 className="text-xl font-bold text-red-500 mb-1">{t('showcase.pricing.tiers.enterprise.name')}</h3>
-                  <p className="text-sm text-muted-foreground">{t('showcase.pricing.tiers.enterprise.percentage')} {t('showcase.pricing.adSpendExamples.mediaPercentage')}</p>
-                </div>
-                <div className="space-y-3">
-                  {adSpendExamplesByTier.enterprise.map((example, idx) => (
-                    <div 
-                      key={idx} 
-                      className="p-3 border border-border/50 rounded-lg hover:bg-accent/50 transition-all duration-300 backdrop-blur-sm hover:-translate-y-1 hover:shadow-[0_0_20px_rgba(239,68,68,0.2)] hover:border-red-500/40"
                     >
                       <p className="font-semibold text-sm mb-1">{example.spend}</p>
                       <p className="text-xs text-muted-foreground leading-tight">{example.cost}</p>

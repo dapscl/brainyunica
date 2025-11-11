@@ -342,10 +342,10 @@
     "platformComparison": {
       "badge": "Comparativa",
       "title": "Una Plataforma que Reemplaza Todo",
-      "subtitle": "En lugar de contratar 4-6 herramientas diferentes, BrainybyUnica centraliza todas las capacidades que necesitas para gestionar tu marketing digital desde un solo lugar.",
+      "subtitle": "En lugar de contratar 4-6 herramientas diferentes, Brainy centraliza todas las capacidades que necesitas para gestionar tu marketing digital desde un solo lugar.",
       "functionality": "Funcionalidad",
       "traditional": "Enfoque Tradicional",
-      "brainy": "BrainybyUnica",
+      "brainy": "Brainy",
       "features": {
         "social": {
           "category": "Gestión de Redes Sociales",
@@ -405,7 +405,7 @@
     },
     "interactiveDemo": {
       "title": "Demo Interactivo: Flujo Completo",
-      "subtitle": "Observa cómo BrainybyUnica gestiona todo el proceso desde la aprobación por WhatsApp hasta la publicación automática en redes sociales",
+      "subtitle": "Observa cómo Brainy gestiona todo el proceso desde la aprobación por WhatsApp hasta la publicación automática en redes sociales",
       "assistantName": "Mr. Brainy",
       "online": "En línea",
       "startDemo": "Iniciar Demo Interactivo",
@@ -413,7 +413,7 @@
       "processSteps": "Pasos del Proceso",
       "simulating": "Simulando flujo en tiempo real...",
       "completedTitle": "Demo Completado",
-      "completedText": "Este es el flujo completo de gestión conversacional con BrainybyUnica: desde la aprobación por WhatsApp hasta la publicación automática en redes sociales, todo en tiempo real."
+      "completedText": "Este es el flujo completo de gestión conversacional con Brainy: desde la aprobación por WhatsApp hasta la publicación automática en redes sociales, todo en tiempo real."
     },
     "pricing": {
       "title": "Precios",
@@ -507,7 +507,7 @@
           "targetAudience": "Grupos corporativos, holdings o agencias multinivel sin límites",
           "basePrice": "Desde $5,000 USD",
           "integrationFee": "Variable",
-          "percentage": "10%",
+          "percentage": "5%",
           "cta": {
             "title": "Solución personalizada para tu organización",
             "subtitle": "Usuarios ilimitados, marcas ilimitadas, integraciones personalizadas y soporte 24/7 dedicado.",
@@ -555,7 +555,7 @@
         "conversations": {
           "message1": "Hola Carolina 👋 Hoy tenemos este contenido pre-aprobado para publicar a las 12:00:",
           "message2": "Sí, quiero hacer un cambio",
-          "message3": "Mientras otros planifican su lunes, tu contenido ya está al aire. Así de fácil con BrainybyUnica. 🚀",
+          "message3": "Mientras otros planifican su lunes, tu contenido ya está al aire. Así de fácil con Brainy. 🚀",
           "from": "Tú",
           "brainy": "Brainy"
         },

@@ -342,10 +342,10 @@
     "platformComparison": {
       "badge": "Comparison",
       "title": "One Platform that Replaces Everything",
-      "subtitle": "Instead of hiring 4-6 different tools, BrainybyUnica centralizes all the capabilities you need to manage your digital marketing from a single place.",
+      "subtitle": "Instead of hiring 4-6 different tools, Brainy centralizes all the capabilities you need to manage your digital marketing from a single place.",
       "functionality": "Functionality",
       "traditional": "Traditional Approach",
-      "brainy": "BrainybyUnica",
+      "brainy": "Brainy",
       "features": {
         "social": {
           "category": "Social Media Management",
@@ -405,7 +405,7 @@
     },
     "interactiveDemo": {
       "title": "Interactive Demo: Complete Flow",
-      "subtitle": "Watch how BrainybyUnica manages the entire process from WhatsApp approval to automatic publishing on social networks",
+      "subtitle": "Watch how Brainy manages the entire process from WhatsApp approval to automatic publishing on social networks",
       "assistantName": "Mr. Brainy",
       "online": "Online",
       "startDemo": "Start Interactive Demo",
@@ -413,7 +413,7 @@
       "processSteps": "Process Steps",
       "simulating": "Simulating real-time flow...",
       "completedTitle": "Demo Completed",
-      "completedText": "This is the complete conversational management flow with BrainybyUnica: from WhatsApp approval to automatic publishing on social networks, all in real time."
+      "completedText": "This is the complete conversational management flow with Brainy: from WhatsApp approval to automatic publishing on social networks, all in real time."
     },
     "pricing": {
       "title": "Pricing",
@@ -507,7 +507,7 @@
           "targetAudience": "Corporate groups, holdings or multi-level agencies without limits",
           "basePrice": "From $5,000 USD",
           "integrationFee": "Variable",
-          "percentage": "10%",
+          "percentage": "5%",
           "cta": {
             "title": "Custom solution for your organization",
             "subtitle": "Unlimited users, unlimited brands, custom integrations and dedicated 24/7 support.",
@@ -555,7 +555,7 @@
         "conversations": {
           "message1": "Hi Carolina 👋 Today we have this pre-approved content to publish at 12:00:",
           "message2": "Yes, I want to make a change",
-          "message3": "While others plan their Monday, your content is already live. That easy with BrainybyUnica. 🚀",
+          "message3": "While others plan their Monday, your content is already live. That easy with Brainy. 🚀",
           "from": "You",
           "brainy": "Brainy"
         },

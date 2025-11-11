@@ -15,81 +15,81 @@ export const FAQSection = () => {
   const faqCategories = [
     {
       id: "pricing",
-      title: "Pricing y Facturación",
+      title: t('showcase.faq.categories.pricing.title'),
       icon: DollarSign,
       color: "text-green-500",
       questions: [
         {
-          q: "¿Cómo funciona el modelo de pricing variable?",
-          a: "BrainybyUnica cobra un precio base mensual según tu tier (Starter, Small Agencies, Scaled Agencies, o Enterprise) más un porcentaje de tu inversión publicitaria mensual. Por ejemplo, en el tier Starter pagas $500/mes + 20% de tu ad spend. A mayor tier, menor porcentaje pagas (20% → 15% → 10%), optimizando tu costo conforme escalas."
+          q: t('showcase.faq.categories.pricing.questions.variablePricing.q'),
+          a: t('showcase.faq.categories.pricing.questions.variablePricing.a')
         },
         {
-          q: "¿Qué incluye el costo de integración del 50%?",
-          a: "El costo de integración es un pago único equivalente al 50% de tu precio base mensual. Incluye: configuración completa de tu cuenta, integración de todas tus redes sociales, setup de automatizaciones de chat, entrenamiento personalizado del tono de voz de tu marca, y onboarding dedicado con tu account manager."
+          q: t('showcase.faq.categories.pricing.questions.integrationCost.q'),
+          a: t('showcase.faq.categories.pricing.questions.integrationCost.a')
         },
         {
-          q: "¿Puedo cambiar de tier en cualquier momento?",
-          a: "Sí, puedes actualizar tu tier en cualquier momento. El upgrade es inmediato y solo pagas la diferencia prorrateada del mes en curso más el costo de integración del nuevo tier. Si reduces tu tier, el cambio se aplica al inicio del siguiente ciclo de facturación sin penalizaciones."
+          q: t('showcase.faq.categories.pricing.questions.tierChange.q'),
+          a: t('showcase.faq.categories.pricing.questions.tierChange.a')
         },
       ]
     },
     {
       id: "integration",
-      title: "Integración y Setup",
+      title: t('showcase.faq.categories.integration.title'),
       icon: Wrench,
       color: "text-blue-500",
       questions: [
         {
-          q: "¿Cuánto tiempo toma la integración inicial?",
-          a: "El proceso de integración completo toma entre 3-5 días hábiles. Día 1-2: Configuración de información de marca y conexión de canales sociales. Día 3: Setup de métodos de pago y configuración de automatizaciones. Día 4-5: Entrenamiento de tono de voz con IA y testing completo. Tu account manager te guía en cada paso."
+          q: t('showcase.faq.categories.integration.questions.setupTime.q'),
+          a: t('showcase.faq.categories.integration.questions.setupTime.a')
         },
         {
-          q: "¿Qué plataformas sociales puedo conectar?",
-          a: "BrainybyUnica se integra con Facebook, Instagram, LinkedIn, TikTok, Twitter/X, Threads y YouTube. También conectamos WhatsApp Business API para la gestión conversacional. Todas las integraciones se configuran durante el onboarding inicial sin costo adicional."
+          q: t('showcase.faq.categories.integration.questions.platforms.q'),
+          a: t('showcase.faq.categories.integration.questions.platforms.a')
         },
         {
-          q: "¿Necesito conocimientos técnicos para usar la plataforma?",
-          a: "No, BrainybyUnica está diseñado para usuarios no técnicos. La gestión principal se hace desde WhatsApp usando lenguaje natural. Tu equipo no necesita aprender dashboards complejos ni herramientas técnicas. Durante el onboarding te enseñamos todo lo necesario en menos de 1 hora."
+          q: t('showcase.faq.categories.integration.questions.technicalKnowledge.q'),
+          a: t('showcase.faq.categories.integration.questions.technicalKnowledge.a')
         },
       ]
     },
     {
       id: "features",
-      title: "Características y Funcionalidad",
+      title: t('showcase.faq.categories.features.title'),
       icon: Sparkles,
       color: "text-purple-500",
       questions: [
         {
-          q: "¿Cómo funciona el WhatsApp Project Manager?",
-          a: "BrainybyUnica usa WhatsApp como interfaz principal de gestión. Te envía contenido pre-aprobado para revisión, respondes con ✅ para aprobar o pides cambios en lenguaje natural. La IA genera variantes alternativas en segundos, programa publicaciones automáticamente y te notifica cuando todo está publicado con métricas en tiempo real."
+          q: t('showcase.faq.categories.features.questions.whatsappManager.q'),
+          a: t('showcase.faq.categories.features.questions.whatsappManager.a')
         },
         {
-          q: "¿Qué es el AI Media Buyer y cómo me ayuda?",
-          a: "El AI Media Buyer es tu asistente personal de campañas publicitarias. Monitorea tus ads 24/7, optimiza pujas automáticamente, redistribuye presupuesto entre creatividades ganadoras, detecta fatiga creativa antes de que afecte tu ROI, y te envía alertas con recomendaciones específicas vía WhatsApp cuando necesitas tomar decisiones estratégicas."
+          q: t('showcase.faq.categories.features.questions.mediaBuyer.q'),
+          a: t('showcase.faq.categories.features.questions.mediaBuyer.a')
         },
         {
-          q: "¿Cuántas marcas puedo gestionar simultáneamente?",
-          a: "Depende de tu tier: Starter (1 marca), Small Agencies (hasta 5 marcas), Scaled Agencies (hasta 15 marcas), Enterprise (marcas ilimitadas). Cada marca tiene su propio WhatsApp Project Manager, calendario independiente y configuración de tono de voz separada."
+          q: t('showcase.faq.categories.features.questions.brandLimit.q'),
+          a: t('showcase.faq.categories.features.questions.brandLimit.a')
         },
       ]
     },
     {
       id: "support",
-      title: "Soporte y Asistencia",
+      title: t('showcase.faq.categories.support.title'),
       icon: HeadphonesIcon,
       color: "text-orange-500",
       questions: [
         {
-          q: "¿Qué tipo de soporte ofrecen?",
-          a: "Starter: Soporte por email con respuesta en 24h. Small Agencies: Soporte prioritario con respuesta en 4-6h más acceso a knowledge base. Scaled Agencies: Soporte prioritario + manager dedicado con reuniones mensuales. Enterprise: Soporte 24/7 con SLA garantizado 99.9% más onboarding personalizado y training continuo."
+          q: t('showcase.faq.categories.support.questions.supportTypes.q'),
+          a: t('showcase.faq.categories.support.questions.supportTypes.a')
         },
         {
-          q: "¿Ofrecen capacitación para mi equipo?",
-          a: "Sí, todos los tiers incluyen onboarding inicial. Small Agencies y superior reciben training adicional: sesiones grupales mensuales sobre nuevas features, webinars de best practices, y acceso a biblioteca de tutoriales en video. Enterprise incluye training personalizado on-site o remoto según necesidades específicas."
+          q: t('showcase.faq.categories.support.questions.training.q'),
+          a: t('showcase.faq.categories.support.questions.training.a')
         },
         {
-          q: "¿Hay garantía de devolución?",
-          a: "Ofrecemos 14 días de prueba gratis sin requerir tarjeta de crédito. Si después de activar tu suscripción no estás satisfecho en los primeros 30 días, reembolsamos el 100% del precio base (no incluye costo de integración ni porcentaje de ad spend ya ejecutado). Sin preguntas ni complicaciones."
+          q: t('showcase.faq.categories.support.questions.refund.q'),
+          a: t('showcase.faq.categories.support.questions.refund.a')
         },
       ]
     }
@@ -106,10 +106,10 @@ export const FAQSection = () => {
       <div className="text-center max-w-3xl mx-auto">
         <Badge variant="outline" className="mb-4 px-4 py-2 border-electric-cyan/30 bg-electric-cyan/5">
           <HelpCircle className="w-4 h-4 mr-2" />
-          Preguntas Frecuentes
+          {t('showcase.faq.badge')}
         </Badge>
         <h2 className="text-4xl md:text-5xl font-bold mb-4 text-foreground uppercase tracking-tight">
-          Todo lo que Necesitas Saber
+          {t('showcase.faq.title')}
         </h2>
         <p className="text-xl text-muted-foreground font-light">
           {t('showcase.faq.subtitle')} {t('showcase.faq.notFound')}
@@ -170,25 +170,24 @@ export const FAQSection = () => {
       >
         <Card className="bg-gradient-to-br from-electric-cyan/10 to-purple-accent/10 border-electric-cyan/20 mt-12 backdrop-blur-sm">
           <CardContent className="p-8 text-center">
-            <h3 className="text-2xl font-bold mb-3 text-foreground uppercase tracking-tight">¿Aún tienes preguntas?</h3>
+            <h3 className="text-2xl font-bold mb-3 text-foreground uppercase tracking-tight">{t('showcase.faq.stillQuestions.title')}</h3>
             <p className="text-muted-foreground mb-6 max-w-2xl mx-auto font-light">
-              Nuestro equipo está disponible para resolver cualquier duda adicional. 
-              Agenda una demo personalizada o escríbenos directamente.
+              {t('showcase.faq.stillQuestions.subtitle')}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a 
-                href="https://calendly.com/brainybyunica" 
+                href="https://calendly.com/brainy" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center px-6 py-3 rounded-md bg-electric-cyan text-background font-bold hover:opacity-90 transition-all duration-300 uppercase tracking-wide"
               >
-                Agendar Demo
+                {t('showcase.faq.stillQuestions.scheduleDemo')}
               </a>
               <a 
-                href="mailto:hola@brainybyunica.com"
+                href="mailto:hola@brainy.unica.la"
                 className="inline-flex items-center justify-center px-6 py-3 rounded-md border border-border/50 bg-background/50 backdrop-blur-sm hover:bg-muted transition-all duration-300 font-medium"
               >
-                Contactar Ventas
+                {t('showcase.faq.stillQuestions.contactSales')}
               </a>
             </div>
           </CardContent>

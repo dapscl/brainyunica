@@ -3,10 +3,16 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Lightbulb, TrendingUp, Eye, Heart, Share2, Search, Filter, Play } from 'lucide-react';
+import { Lightbulb, TrendingUp, Eye, Heart, Share2, Search, Filter } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
+import adExample1 from '@/assets/showcase-ad-example-1.jpg';
+import adExample2 from '@/assets/showcase-ad-example-2.jpg';
+import adExample3 from '@/assets/showcase-ad-example-3.jpg';
+import adExample4 from '@/assets/showcase-ad-example-4.jpg';
 
 const InspirationLibrary = () => {
+  const { t } = useTranslation();
   const winningAds = [
     {
       id: 1,
@@ -19,20 +25,20 @@ const InspirationLibrary = () => {
       ctr: '8.5%',
       roi: '5.2x',
       insights: 'Hook fuerte en primeros 3s, CTA claro, prueba social efectiva',
-      thumbnail: '/demo-tech-product-1.jpg'
+      thumbnail: adExample1
     },
     {
       id: 2,
       title: 'Fitness Challenge Campaign',
       platform: 'Instagram',
       industry: 'Health & Wellness',
-      format: 'Carousel',
+      format: 'Story',
       views: '1.8M',
       engagement: '15.2%',
       ctr: '9.1%',
       roi: '4.8x',
       insights: 'Storytelling emocional, transformación antes/después, comunidad activa',
-      thumbnail: '/demo-fitness-1.jpg'
+      thumbnail: adExample2
     },
     {
       id: 3,
@@ -45,8 +51,21 @@ const InspirationLibrary = () => {
       ctr: '7.2%',
       roi: '3.9x',
       insights: 'Valores de marca claros, impacto ambiental medible, diseño minimalista',
-      thumbnail: '/demo-eco-product-1.jpg'
+      thumbnail: adExample3
     },
+    {
+      id: 4,
+      title: 'Luxury Accessories Collection',
+      platform: 'Instagram',
+      industry: 'Fashion',
+      format: 'Carousel',
+      views: '1.2M',
+      engagement: '14.3%',
+      ctr: '8.8%',
+      roi: '6.1x',
+      insights: 'Fotografía editorial premium, uso estratégico de colores dorados, aspiracional',
+      thumbnail: adExample4
+    }
   ];
 
   const topPerformers = [
@@ -73,10 +92,10 @@ const InspirationLibrary = () => {
             </div>
             <div>
               <CardTitle className="text-2xl font-bold tracking-tight text-foreground uppercase">
-                Biblioteca de Inspiración
+                {t('showcase.inspirationLibrary.title')}
               </CardTitle>
               <p className="text-base text-muted-foreground font-light">
-                Ads ganadores de la industria con análisis detallado de rendimiento
+                {t('showcase.inspirationLibrary.subtitle')}
               </p>
             </div>
           </div>
@@ -163,97 +182,91 @@ const InspirationLibrary = () => {
                 <TabsTrigger value="story">Story</TabsTrigger>
               </TabsList>
 
-              <TabsContent value="all" className="space-y-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                 {winningAds.map((ad, idx) => (
                   <motion.div
                     key={ad.id}
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.3, delay: idx * 0.1 }}
-                    className="border border-border/50 rounded-lg p-4 bg-card/20 backdrop-blur-sm hover:shadow-lg hover:border-electric-cyan/30 transition-all duration-300"
+                    className="border border-border/50 rounded-lg overflow-hidden bg-card/20 backdrop-blur-sm hover:shadow-lg hover:border-electric-cyan/30 transition-all duration-300"
                   >
-                    <div className="flex gap-4">
-                      {/* Thumbnail */}
-                      <div className="relative w-48 h-32 rounded-lg overflow-hidden bg-muted/30 flex-shrink-0">
-                        <div className="absolute inset-0 flex items-center justify-center">
-                          <Play className="w-12 h-12 text-electric-cyan opacity-80" />
+                    {/* Thumbnail */}
+                    <div className="relative h-48 overflow-hidden bg-muted/30">
+                      <img 
+                        src={ad.thumbnail} 
+                        alt={ad.title}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+
+                    {/* Content */}
+                    <div className="p-4">
+                      <div className="mb-3">
+                        <h3 className="font-bold text-base mb-2 text-foreground line-clamp-2">{ad.title}</h3>
+                        <div className="flex flex-wrap gap-2 mb-2">
+                          <Badge variant="secondary" className="bg-electric-cyan/10 text-electric-cyan text-xs">{ad.platform}</Badge>
+                          <Badge variant="outline" className="border-border/50 text-xs">{ad.industry}</Badge>
+                          <Badge variant="outline" className="border-border/50 text-xs">{ad.format}</Badge>
                         </div>
                       </div>
 
-                      {/* Content */}
-                      <div className="flex-1">
-                        <div className="flex items-start justify-between mb-2">
-                          <div>
-                            <h3 className="font-bold text-lg mb-1 text-foreground">{ad.title}</h3>
-                            <div className="flex gap-2 mb-2">
-                              <Badge variant="secondary" className="bg-electric-cyan/10 text-electric-cyan">{ad.platform}</Badge>
-                              <Badge variant="outline" className="border-border/50">{ad.industry}</Badge>
-                              <Badge variant="outline" className="border-border/50">{ad.format}</Badge>
-                            </div>
+                      {/* Metrics Grid */}
+                      <div className="grid grid-cols-2 gap-2 mb-3 pb-3 border-b border-border/50">
+                        <div>
+                          <p className="text-xs text-muted-foreground mb-1">{t('showcase.inspirationLibrary.metrics.views')}</p>
+                          <div className="flex items-center gap-1">
+                            <Eye className="w-3 h-3 text-muted-foreground" />
+                            <p className="text-sm font-bold text-foreground">{ad.views}</p>
                           </div>
                         </div>
+                        <div>
+                          <p className="text-xs text-muted-foreground mb-1">{t('showcase.inspirationLibrary.metrics.engagement')}</p>
+                          <div className="flex items-center gap-1">
+                            <Heart className="w-3 h-3 text-muted-foreground" />
+                            <p className="text-sm font-bold text-foreground">{ad.engagement}</p>
+                          </div>
+                        </div>
+                        <div>
+                          <p className="text-xs text-muted-foreground mb-1">{t('showcase.inspirationLibrary.metrics.ctr')}</p>
+                          <div className="flex items-center gap-1">
+                            <TrendingUp className="w-3 h-3 text-muted-foreground" />
+                            <p className="text-sm font-bold text-foreground">{ad.ctr}</p>
+                          </div>
+                        </div>
+                        <div>
+                          <p className="text-xs text-muted-foreground mb-1">{t('showcase.inspirationLibrary.metrics.roi')}</p>
+                          <div className="flex items-center gap-1">
+                            <TrendingUp className="w-3 h-3 text-green-500" />
+                            <p className="text-sm font-bold text-green-500">{ad.roi}</p>
+                          </div>
+                        </div>
+                      </div>
 
-                        {/* Metrics */}
-                        <div className="grid grid-cols-4 gap-4 mb-3 pb-3 border-b border-border/50">
-                          <div>
-                            <p className="text-xs text-muted-foreground mb-1">Vistas</p>
-                            <div className="flex items-center gap-1">
-                              <Eye className="w-3 h-3 text-muted-foreground" />
-                              <p className="text-sm font-bold text-foreground">{ad.views}</p>
-                            </div>
-                          </div>
-                          <div>
-                            <p className="text-xs text-muted-foreground mb-1">Engagement</p>
-                            <div className="flex items-center gap-1">
-                              <Heart className="w-3 h-3 text-muted-foreground" />
-                              <p className="text-sm font-bold text-foreground">{ad.engagement}</p>
-                            </div>
-                          </div>
-                          <div>
-                            <p className="text-xs text-muted-foreground mb-1">CTR</p>
-                            <div className="flex items-center gap-1">
-                              <TrendingUp className="w-3 h-3 text-muted-foreground" />
-                              <p className="text-sm font-bold text-foreground">{ad.ctr}</p>
-                            </div>
-                          </div>
-                          <div>
-                            <p className="text-xs text-muted-foreground mb-1">ROI</p>
-                            <div className="flex items-center gap-1">
-                              <TrendingUp className="w-3 h-3 text-green-500" />
-                              <p className="text-sm font-bold text-green-500">{ad.roi}</p>
-                            </div>
-                          </div>
-                        </div>
+                      {/* Insights */}
+                      <div className="bg-accent/30 rounded-lg p-2 mb-3 backdrop-blur-sm">
+                        <p className="text-xs font-medium text-muted-foreground mb-1">
+                          🎯 {t('showcase.inspirationLibrary.metrics.keyInsights')}
+                        </p>
+                        <p className="text-xs text-foreground line-clamp-2">{ad.insights}</p>
+                      </div>
 
-                        {/* Insights */}
-                        <div className="bg-accent/30 rounded-lg p-3 mb-3 backdrop-blur-sm">
-                          <p className="text-xs font-medium text-muted-foreground mb-1">
-                            🎯 Insights Clave
-                          </p>
-                          <p className="text-sm text-foreground">{ad.insights}</p>
-                        </div>
-
-                        {/* Actions */}
-                        <div className="flex gap-2">
-                          <Button variant="outline" size="sm" className="gap-1 border-border/50">
-                            <Eye className="w-3 h-3" />
-                            Ver Análisis Completo
-                          </Button>
-                          <Button variant="outline" size="sm" className="gap-1 border-border/50">
-                            <Share2 className="w-3 h-3" />
-                            Usar como Referencia
-                          </Button>
-                          <Button variant="outline" size="sm" className="gap-1 border-electric-cyan/30 hover:bg-electric-cyan/10">
-                            <Play className="w-3 h-3" />
-                            Crear Similar con IA
-                          </Button>
-                        </div>
+                      {/* Actions */}
+                      <div className="flex flex-col gap-2">
+                        <Button variant="outline" size="sm" className="w-full text-xs border-border/50">
+                          <Eye className="w-3 h-3 mr-1" />
+                          {t('showcase.inspirationLibrary.actions.viewFullAnalysis')}
+                        </Button>
+                        <Button variant="outline" size="sm" className="w-full text-xs border-electric-cyan/30 hover:bg-electric-cyan/10">
+                          <Share2 className="w-3 h-3 mr-1" />
+                          {t('showcase.inspirationLibrary.actions.createSimilarAI')}
+                        </Button>
                       </div>
                     </div>
                   </motion.div>
                 ))}
-              </TabsContent>
+              </div>
             </Tabs>
           </CardContent>
         </Card>

@@ -49,7 +49,7 @@ export const ShowcaseSEO = ({
       <meta name="twitter:title" content={fullTitle} />
       <meta name="twitter:description" content={metaDescription} />
       <meta name="twitter:image" content={imageUrl} />
-      <meta name="twitter:creator" content="@BrainybyUnica" />
+      <meta name="twitter:creator" content="@Brainy" />
 
       {/* Additional SEO Tags */}
       <meta name="robots" content="index, follow" />

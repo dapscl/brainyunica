@@ -21,7 +21,7 @@ const demoSteps = [
     messages: [
       {
         sender: "brainy" as const,
-        text: "Hola Carolina 👋\nHoy tenemos este contenido pre-aprobado para publicar a las 12:00:\n\n🧩 'Los lunes son para planificar. Pero si BrainybyUnica lo hace solo, ¿qué haces tú?'\n\n¿Quieres revisarlo antes de que salga?\n✅ Sí / ❌ No",
+        text: "Hola Carolina 👋\nHoy tenemos este contenido pre-aprobado para publicar a las 12:00:\n\n🧩 'Los lunes son para planificar. Pero si Brainy lo hace solo, ¿qué haces tú?'\n\n¿Quieres revisarlo antes de que salga?\n✅ Sí / ❌ No",
         time: "09:15",
         type: "approval" as const,
       },
@@ -40,7 +40,7 @@ const demoSteps = [
       },
       {
         sender: "brainy" as const,
-        text: "Perfecto 💡\nAquí tienes el copy editable:\n\n'Los lunes son para planificar. Pero si BrainybyUnica lo hace solo, ¿qué haces tú?'\n\nEscríbeme el nuevo texto o dime 'sugiere versión'.",
+        text: "Perfecto 💡\nAquí tienes el copy editable:\n\n'Los lunes son para planificar. Pero si Brainy lo hace solo, ¿qué haces tú?'\n\nEscríbeme el nuevo texto o dime 'sugiere versión'.",
         time: "09:17",
       },
     ],
@@ -58,7 +58,7 @@ const demoSteps = [
       },
       {
         sender: "brainy" as const,
-        text: "Mientras otros planifican su lunes, tu contenido ya está al aire.\nAsí de fácil con BrainybyUnica. 🚀\n\n¿Publicamos este?\n✅ Sí / 🔁 Probar otra / ❌ Cancelar",
+        text: "Mientras otros planifican su lunes, tu contenido ya está al aire.\nAsí de fácil con Brainy. 🚀\n\n¿Publicamos este?\n✅ Sí / 🔁 Probar otra / ❌ Cancelar",
         time: "09:18",
         type: "suggestion" as const,
       },

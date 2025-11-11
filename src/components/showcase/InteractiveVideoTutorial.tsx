@@ -33,7 +33,7 @@ export const InteractiveVideoTutorial = () => {
     {
       id: 1,
       title: "Recepción de Contenido",
-      description: "BrainybyUnica te envía el contenido pre-aprobado directamente a tu WhatsApp con vista previa completa",
+      description: "Brainy te envía el contenido pre-aprobado directamente a tu WhatsApp con vista previa completa",
       duration: 5,
       icon: MessageCircle,
       visual: "whatsapp"
@@ -65,7 +65,7 @@ export const InteractiveVideoTutorial = () => {
     {
       id: 5,
       title: "Calendarización Automática",
-      description: "BrainybyUnica programa automáticamente la publicación en el mejor horario para tu audiencia",
+      description: "Brainy programa automáticamente la publicación en el mejor horario para tu audiencia",
       duration: 4,
       icon: Calendar,
       visual: "scheduling"
@@ -158,7 +158,7 @@ export const InteractiveVideoTutorial = () => {
                     <MessageCircle className="w-5 h-5 text-primary-foreground" />
                   </div>
                   <div>
-                    <p className="font-semibold text-sm">BrainybyUnica</p>
+                    <p className="font-semibold text-sm">Brainy</p>
                     <p className="text-xs text-muted-foreground">en línea</p>
                   </div>
                 </div>
