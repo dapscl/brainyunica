@@ -14,10 +14,14 @@
     --popover: 0 0% 100%;
     --popover-foreground: 240 10% 3.9%;
     
-    /* Unica.la color scheme - Purple/Pink gradient */
+    /* Brainy color scheme - Deep Blue, Electric Cyan, Coral */
     --primary: 336 83% 57%; /* Pink #E94980 */
     --primary-foreground: 0 0% 100%;
     --primary-glow: 336 100% 75%;
+    
+    --deep-blue: 220 80% 20%;
+    --electric-cyan: 190 95% 55%;
+    --coral: 10 85% 65%;
     
     --secondary: 270 50% 92%;
     --secondary-foreground: 270 20% 20%;
@@ -25,7 +29,7 @@
     --muted: 270 20% 96%;
     --muted-foreground: 240 3.8% 46.1%;
     
-    --accent: 336 83% 57%;
+    --accent: 190 95% 55%;
     --accent-foreground: 0 0% 100%;
     
     --destructive: 0 84.2% 60.2%;
@@ -33,44 +37,51 @@
     
     --border: 240 5.9% 90%;
     --input: 240 5.9% 90%;
-    --ring: 336 83% 57%;
+    --ring: 190 95% 55%;
     --radius: 1rem;
     
     /* Gradients */
-    --gradient-hero: linear-gradient(135deg, hsl(270 60% 60%) 0%, hsl(300 70% 65%) 50%, hsl(200 70% 75%) 100%);
-    --gradient-primary: linear-gradient(135deg, hsl(336 83% 57%), hsl(336 100% 75%));
+    --gradient-hero: linear-gradient(135deg, hsl(220 80% 20%) 0%, hsl(220 70% 30%) 100%);
+    --gradient-primary: linear-gradient(135deg, hsl(190 95% 55%), hsl(220 80% 20%));
+    --gradient-glow: linear-gradient(135deg, hsl(190 95% 55% / 0.3), hsl(10 85% 65% / 0.3));
     
     /* Shadows */
-    --shadow-glow: 0 10px 40px -10px hsl(336 83% 57% / 0.3);
+    --shadow-glow: 0 10px 40px -10px hsl(190 95% 55% / 0.3);
+    --shadow-glow-blue: 0 20px 60px -15px hsl(220 80% 20% / 0.5);
+    --shadow-glow-cyan: 0 0 40px hsl(190 95% 55% / 0.4);
   }
 
   .dark {
-    --background: 270 30% 8%;
+    --background: 220 40% 8%;
     --foreground: 0 0% 98%;
-    --card: 270 25% 12%;
+    --card: 220 35% 12%;
     --card-foreground: 0 0% 98%;
-    --popover: 270 25% 12%;
+    --popover: 220 35% 12%;
     --popover-foreground: 0 0% 98%;
     
     --primary: 336 83% 57%;
     --primary-foreground: 0 0% 100%;
     --primary-glow: 336 100% 75%;
     
-    --secondary: 270 20% 20%;
+    --deep-blue: 220 80% 20%;
+    --electric-cyan: 190 95% 55%;
+    --coral: 10 85% 65%;
+    
+    --secondary: 220 30% 18%;
     --secondary-foreground: 0 0% 98%;
     
-    --muted: 270 20% 20%;
+    --muted: 220 30% 18%;
     --muted-foreground: 240 5% 64.9%;
     
-    --accent: 336 83% 57%;
+    --accent: 190 95% 55%;
     --accent-foreground: 0 0% 100%;
     
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
     
-    --border: 270 20% 20%;
-    --input: 270 20% 20%;
-    --ring: 336 83% 57%;
+    --border: 220 30% 18%;
+    --input: 220 30% 18%;
+    --ring: 190 95% 55%;
   }
 }
 
@@ -109,9 +120,43 @@
   background: var(--gradient-primary);
 }
 
-/* Smooth transitions */
+/* Smooth transitions and animations */
 @layer utilities {
   .transition-smooth {
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
+  
+  .glow-effect {
+    box-shadow: 0 0 30px hsl(var(--electric-cyan) / 0.3);
+  }
+  
+  .glow-effect-coral {
+    box-shadow: 0 0 30px hsl(var(--coral) / 0.3);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 20px hsl(var(--electric-cyan) / 0.4);
+  }
+  50% {
+    box-shadow: 0 0 40px hsl(var(--electric-cyan) / 0.6);
+  }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
 }

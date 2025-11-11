@@ -79,14 +79,20 @@ export default {
         warning: {
           DEFAULT: 'hsl(var(--warning))',
           foreground: 'hsl(var(--warning-foreground))'
-        }
+        },
+        'deep-blue': 'hsl(var(--deep-blue))',
+        'electric-cyan': 'hsl(var(--electric-cyan))',
+        'coral': 'hsl(var(--coral))'
 			},
 			backgroundImage: {
 				'gradient-hero': 'var(--gradient-hero)',
 				'gradient-primary': 'var(--gradient-primary)',
+				'gradient-glow': 'var(--gradient-glow)',
 			},
 			boxShadow: {
 				'glow': 'var(--shadow-glow)',
+				'glow-blue': 'var(--shadow-glow-blue)',
+				'glow-cyan': 'var(--shadow-glow-cyan)',
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
