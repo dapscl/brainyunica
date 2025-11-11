@@ -12,85 +12,99 @@ const ShowcasePricingPage = () => {
       name: 'Starter',
       icon: Zap,
       color: 'from-blue-500 to-cyan-500',
-      adSpend: 'Hasta €5K/mes',
-      basePrice: '€297',
-      percentage: '3%',
-      maxMonthly: '€447',
-      description: 'Perfecto para empezar con paid media y automatización',
+      adSpend: 'Equipos pequeños, startups o marcas personales que quieren centralizar todo',
+      basePrice: '$500',
+      integrationFee: '$250',
+      percentage: '20%',
+      maxMonthly: 'Variable',
+      description: 'Empieza a operar con inteligencia',
       features: [
-        'Gestión de hasta 3 marcas',
-        'Calendario de contenido ilimitado',
-        'Chat automation básico (hasta 1,000 contactos)',
-        'AI Media Buyer con recomendaciones',
-        'Creative Performance Tracker',
-        'Multi-channel: WhatsApp, Email, SMS',
-        'Biblioteca de inspiración',
-        'Templates pre-configurados (12)',
-        'Soporte por email',
-        '1 usuario incluido'
+        '1 marca completa con acceso total',
+        'IA para copys e imágenes',
+        'Editor visual + calendarización',
+        'Hasta 100 publicaciones/mes',
+        'Integración Meta y Google Ads',
+        'Dashboard de métricas esenciales',
+        '3 usuarios incluidos',
+        '100 GB de almacenamiento'
       ],
       recommended: false
     },
     {
-      name: 'Professional',
+      name: 'Small Agencies',
       icon: TrendingUp,
       color: 'from-purple-500 to-pink-500',
-      adSpend: '€5K - €25K/mes',
-      basePrice: '€597',
-      percentage: '2.5%',
-      maxMonthly: '€1,222',
-      description: 'Para agencias y empresas en crecimiento',
+      adSpend: 'Agencias boutique o estudios creativos que gestionan varias marcas',
+      basePrice: '$1,250',
+      integrationFee: '$625',
+      percentage: '15%',
+      maxMonthly: 'Variable',
+      description: 'Escala sin perder el control',
       features: [
-        'Todo lo de Starter, más:',
-        'Gestión de marcas ilimitadas',
-        'Chat automation avanzado (hasta 10,000 contactos)',
-        'AI Video Generator con avatares ilimitados',
-        'AI Bidding Optimizer automático',
-        'Creative Fatigue Detection',
-        'Lead Capture & Segmentation avanzada',
-        'Reporting personalizado y exportable',
-        'Templates premium (24+)',
-        'Integraciones API personalizadas',
-        'Soporte prioritario',
-        'Hasta 5 usuarios'
+        'Hasta 5 marcas activas completas',
+        'IA avanzada: copys, imágenes y variaciones',
+        'Flujos de aprobación internos + cliente',
+        'Hasta 500 publicaciones/mes',
+        'Meta, Google, TikTok y LinkedIn',
+        'Dashboards en tiempo real',
+        '10 usuarios incluidos',
+        '500 GB de almacenamiento'
       ],
       recommended: true
     },
     {
-      name: 'Enterprise',
+      name: 'Scaled Agencies',
       icon: Crown,
       color: 'from-amber-500 to-orange-500',
-      adSpend: '€25K+/mes',
-      basePrice: '€997',
-      percentage: '2%',
-      maxMonthly: 'Custom',
-      description: 'Solución completa para grandes organizaciones',
+      adSpend: 'Agencias medianas o equipos de marketing corporativos con alto volumen',
+      basePrice: '$3,750',
+      integrationFee: '$1,875',
+      percentage: '10%',
+      maxMonthly: 'Variable',
+      description: 'Optimiza con datos y automatización',
       features: [
-        'Todo lo de Professional, más:',
-        'Multi-organización y white-label',
-        'Chat automation enterprise (contactos ilimitados)',
-        'AI Video Generator con avatares personalizados',
-        'Bidding strategies personalizadas',
-        'Account manager dedicado',
-        'Onboarding personalizado y training',
-        'SLA garantizado 99.9%',
-        'Seguridad y compliance avanzado',
-        'API dedicada con rate limits elevados',
-        'Integraciones custom bajo demanda',
-        'Soporte 24/7 prioritario',
-        'Usuarios ilimitados'
+        'Hasta 15 marcas operando en paralelo',
+        'Automatización total (n8n / Zapier)',
+        'IA ilimitada (texto + imagen)',
+        'Hasta 2,000 publicaciones/mes',
+        'Meta, Google, TikTok y LinkedIn completo',
+        'Analítica avanzada y dashboards cruzados',
+        '25 usuarios incluidos',
+        '1 TB de almacenamiento',
+        'Soporte prioritario con manager'
+      ],
+      recommended: false
+    },
+    {
+      name: 'Enterprise',
+      icon: Crown,
+      color: 'from-red-500 to-pink-600',
+      adSpend: 'Grupos corporativos, holdings o agencias multinivel sin límites',
+      basePrice: 'Desde $5,000',
+      integrationFee: 'Variable',
+      percentage: '10%',
+      maxMonthly: 'Variable',
+      description: 'Marcas y usuarios ilimitados',
+      features: [
+        'Marcas y usuarios ilimitados',
+        'API abierta + CRM, ERP, Data Lakes',
+        'Dashboards personalizados (Mix™)',
+        'IA multimodal (texto, imagen, voz, video)',
+        'Soporte dedicado 24/7',
+        'Data compliance + seguridad avanzada',
+        'Implementación y onboarding personalizado'
       ],
       recommended: false
     }
   ];
 
   const adSpendExamples = [
-    { spend: '€2,500', tier: 'Starter', cost: '€297 + €75 = €372/mes' },
-    { spend: '€5,000', tier: 'Starter → Professional', cost: '€447/mes (max Starter) o €597/mes (base Professional)' },
-    { spend: '€10,000', tier: 'Professional', cost: '€597 + €250 = €847/mes' },
-    { spend: '€25,000', tier: 'Professional → Enterprise', cost: '€1,222/mes (max Professional) o €997/mes (base Enterprise)' },
-    { spend: '€50,000', tier: 'Enterprise', cost: '€997 + €1,000 = €1,997/mes' },
-    { spend: '€100,000+', tier: 'Enterprise', cost: 'Pricing personalizado - Contactar ventas' }
+    { spend: '$1,000', tier: 'Starter', cost: '$500 + ($1,000 × 20%) = $700/mes' },
+    { spend: '$5,000', tier: 'Starter', cost: '$500 + ($5,000 × 20%) = $1,500/mes' },
+    { spend: '$10,000', tier: 'Small Agencies', cost: '$1,250 + ($10,000 × 15%) = $2,750/mes' },
+    { spend: '$25,000', tier: 'Scaled Agencies', cost: '$3,750 + ($25,000 × 10%) = $6,250/mes' },
+    { spend: '$50,000', tier: 'Scaled Agencies', cost: '$3,750 + ($50,000 × 10%) = $8,750/mes' },
+    { spend: '$100,000+', tier: 'Enterprise', cost: 'Pricing personalizado - Contactar ventas' }
   ];
 
   return (
@@ -142,9 +156,9 @@ const ShowcasePricingPage = () => {
                 <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-3">
                   <span className="text-2xl font-bold text-primary">2</span>
                 </div>
-                <h3 className="font-semibold mb-2">Porcentaje de Ad Spend</h3>
+                <h3 className="font-semibold mb-2">Porcentaje Variable de Medios</h3>
                 <p className="text-sm text-muted-foreground">
-                  Se suma un pequeño porcentaje (2-3%) de tu inversión publicitaria mensual
+                  Se suma un porcentaje (10-20%) de tu inversión publicitaria mensual según el tier
                 </p>
               </div>
               <div>
@@ -160,8 +174,14 @@ const ShowcasePricingPage = () => {
 
             <div className="mt-8 p-4 bg-primary/10 rounded-lg border border-primary/20">
               <p className="text-center text-sm">
-                <strong>Ejemplo:</strong> Si estás en el tier Professional (€597/mes) e inviertes €10,000 en ads, 
-                pagarás: €597 + (€10,000 × 2.5%) = <strong className="text-primary">€847/mes</strong>
+                <strong>Ejemplo:</strong> Si estás en el tier Small Agencies ($1,250/mes) e inviertes $10,000 en ads, 
+                pagarás: $1,250 + ($10,000 × 15%) = <strong className="text-primary">$2,750/mes</strong>
+              </p>
+            </div>
+            
+            <div className="mt-4 p-4 bg-amber-500/10 rounded-lg border border-amber-500/20">
+              <p className="text-center text-sm">
+                <strong>Costo de Integración:</strong> Pago único del 50% del precio base mensual al momento de activar cada tier.
               </p>
             </div>
           </CardContent>
@@ -195,15 +215,12 @@ const ShowcasePricingPage = () => {
                   
                   <div className="pt-4 space-y-2">
                     <div>
-                      <p className="text-3xl font-bold">{tier.basePrice}</p>
-                      <p className="text-xs text-muted-foreground">+ {tier.percentage} del ad spend</p>
+                      <p className="text-3xl font-bold">{tier.basePrice}<span className="text-lg text-muted-foreground">/mes</span></p>
+                      <p className="text-xs text-muted-foreground">+ {tier.percentage} de inversión en medios</p>
                     </div>
-                    <Badge variant="outline" className="text-xs">
-                      {tier.adSpend}
-                    </Badge>
-                    <p className="text-xs text-muted-foreground">
-                      Máximo mensual: {tier.maxMonthly}
-                    </p>
+                    <div className="text-xs text-muted-foreground pt-2 border-t">
+                      <p className="font-medium">Setup: {tier.integrationFee} (una sola vez)</p>
+                    </div>
                   </div>
                 </CardHeader>
 
@@ -258,8 +275,8 @@ const ShowcasePricingPage = () => {
 
             <div className="mt-6 p-4 bg-muted/50 rounded-lg">
               <p className="text-sm text-muted-foreground">
-                <strong>Nota:</strong> Cuando alcanzas el límite superior de un tier, puedes optar por quedarte 
-                en el máximo de ese tier o actualizar al siguiente nivel para acceder a funcionalidades premium.
+                <strong>Nota:</strong> El porcentaje de medios se aplica sobre tu inversión publicitaria mensual total. 
+                A mayor tier, menor porcentaje pagas (20% → 15% → 10%), optimizando tu costo conforme escalas.
               </p>
             </div>
           </CardContent>
