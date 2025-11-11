@@ -652,19 +652,9 @@
             "cost": "$3,750 USD + ($75,000 × 10%) = $11,250 USD/mes"
           }
         },
-        "enterprise": {
-          "example1": {
-            "spend": "$100,000+ USD",
-            "cost": "Pricing personalizado"
-          },
-          "example2": {
-            "spend": "Múltiples marcas",
-            "cost": "Contactar ventas"
-          },
-          "example3": {
-            "spend": "Alto volumen",
-            "cost": "Descuentos especiales"
-          }
+        "note": {
+          "label": "Nota:",
+          "text": "El porcentaje de medios se aplica sobre tu inversión publicitaria mensual total. A mayor tier, menor porcentaje pagas (20% → 15% → 10%), optimizando tu costo conforme escalas."
         }
       },
       "comparison": {

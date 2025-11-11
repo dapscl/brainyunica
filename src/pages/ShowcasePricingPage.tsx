@@ -443,8 +443,7 @@ const ShowcasePricingPage = () => {
 
             <div className="mt-8 p-6 bg-electric-cyan/5 rounded-xl border border-electric-cyan/20 backdrop-blur-sm">
               <p className="text-sm text-center font-light">
-                <span className="font-bold text-foreground">Nota:</span> El porcentaje de medios se aplica sobre tu inversión publicitaria mensual total. 
-                A mayor tier, menor porcentaje pagas (20% → 15% → 10%), optimizando tu costo conforme escalas.
+                <span className="font-bold text-foreground">{t('showcase.pricing.adSpendExamples.note.label')}</span> {t('showcase.pricing.adSpendExamples.note.text')}
               </p>
             </div>
           </CardContent>

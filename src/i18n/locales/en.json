@@ -652,19 +652,9 @@
             "cost": "$3,750 USD + ($75,000 × 10%) = $11,250 USD/mo"
           }
         },
-        "enterprise": {
-          "example1": {
-            "spend": "$100,000+ USD",
-            "cost": "Custom pricing"
-          },
-          "example2": {
-            "spend": "Multiple brands",
-            "cost": "Contact sales"
-          },
-          "example3": {
-            "spend": "High volume",
-            "cost": "Special discounts"
-          }
+        "note": {
+          "label": "Note:",
+          "text": "The media percentage applies to your total monthly advertising spend. The higher the tier, the lower the percentage you pay (20% → 15% → 10%), optimizing your cost as you scale."
         }
       },
       "comparison": {
