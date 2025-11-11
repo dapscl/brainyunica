@@ -260,6 +260,149 @@
       "simulating": "Simulating real-time flow...",
       "completedTitle": "Demo Completed",
       "completedText": "This is the complete conversational management flow with BrainybyUnica: from WhatsApp approval to automatic publishing on social networks, all in real time."
+    },
+    "pricing": {
+      "title": "Pricing",
+      "description": "Transparent pricing that scales with your ad spend. Choose the right plan for your agency.",
+      "badge": "Scalable Pricing",
+      "headline": {
+        "line1": "Pricing that",
+        "line2": "Grows With You"
+      },
+      "subtitle": "Pay only for what you invest. Our pricing model scales proportionally with your ad spend, no surprises.",
+      "howItWorks": {
+        "title": "How Does Pricing Work?",
+        "step1": {
+          "title": "Monthly Base Price",
+          "description": "Fixed monthly payment according to your chosen tier (Starter, Small Agencies, Scaled Agencies, Enterprise)"
+        },
+        "step2": {
+          "title": "Variable Media Percentage",
+          "description": "A percentage (10-20%) of your monthly ad spend is added depending on the tier"
+        },
+        "step3": {
+          "title": "Transparent Total",
+          "description": "No hidden costs. Clear billing with complete breakdown every month"
+        },
+        "example": "Example: If you're on the Small Agencies tier ($1,250 USD/month) and invest $10,000 USD in ads, you'll pay: $1,250 USD + ($10,000 × 15%) =",
+        "exampleTotal": "$2,750 USD/month",
+        "integrationFee": "Integration Cost: One-time payment of 50% of the monthly base price when activating each tier."
+      },
+      "tiers": {
+        "starter": {
+          "name": "Starter",
+          "description": "Start operating with intelligence",
+          "targetAudience": "Small teams, startups or personal brands that want to centralize everything",
+          "basePrice": "$500 USD",
+          "integrationFee": "$250 USD",
+          "percentage": "20%",
+          "features": {
+            "users": "3 users with full access to the entire platform",
+            "whatsapp": "WhatsApp Project Manager included for each user",
+            "brainies": "5 Brainies: Creator, Calendar, Ad, Chat and Trend",
+            "brands": "1 complete brand with all functionalities",
+            "ai": "AI for copy, images and variations",
+            "editor": "Visual editor + automatic scheduling",
+            "posts": "Up to 100 posts/month",
+            "integrations": "Meta and Google Ads integration",
+            "dashboard": "Essential metrics dashboard",
+            "storage": "100 GB storage"
+          }
+        },
+        "smallAgencies": {
+          "name": "Small Agencies",
+          "description": "Scale without losing control",
+          "targetAudience": "Boutique agencies or creative studios managing multiple brands",
+          "basePrice": "$1,250 USD",
+          "integrationFee": "$625 USD",
+          "percentage": "15%",
+          "features": {
+            "users": "10 users with full access to the entire platform",
+            "whatsapp": "WhatsApp Project Manager included for each user",
+            "brainies": "5 Brainies: Creator, Calendar, Ad, Chat and Trend",
+            "brands": "Up to 5 complete active brands",
+            "ai": "Advanced AI: copy, images and variations",
+            "workflows": "Internal + client approval workflows",
+            "posts": "Up to 500 posts/month",
+            "integrations": "Meta, Google, TikTok and LinkedIn",
+            "dashboard": "Real-time dashboards",
+            "storage": "500 GB storage"
+          }
+        },
+        "scaledAgencies": {
+          "name": "Scaled Agencies",
+          "description": "Optimize with data and automation",
+          "targetAudience": "Medium agencies or corporate marketing teams with high volume",
+          "basePrice": "$3,750 USD",
+          "integrationFee": "$1,875 USD",
+          "percentage": "10%",
+          "features": {
+            "users": "25 users with full access to the entire platform",
+            "whatsapp": "WhatsApp Project Manager included for each user",
+            "brainies": "5 Brainies: Creator, Calendar, Ad, Chat and Trend",
+            "brands": "Up to 15 brands operating in parallel",
+            "automation": "Total automation (n8n / Zapier)",
+            "ai": "Unlimited AI (text + image)",
+            "posts": "Up to 2,000 posts/month",
+            "integrations": "Meta, Google, TikTok and LinkedIn complete",
+            "analytics": "Advanced analytics and cross dashboards",
+            "storage": "1 TB storage",
+            "support": "Priority support with manager"
+          }
+        },
+        "enterprise": {
+          "name": "Enterprise",
+          "description": "Unlimited brands and users",
+          "targetAudience": "Corporate groups, holdings or multi-level agencies without limits",
+          "basePrice": "From $5,000 USD",
+          "integrationFee": "Variable",
+          "percentage": "10%",
+          "features": {
+            "users": "Unlimited users with full access to the entire platform",
+            "whatsapp": "WhatsApp Project Manager included for each user",
+            "brainies": "5 Brainies: Creator, Calendar, Ad, Chat and Trend",
+            "brands": "Unlimited brands",
+            "integrations": "Open API + CRM, ERP, Data Lakes",
+            "dashboards": "Custom dashboards (Mix™)",
+            "ai": "Multimodal AI (text, image, voice, video)",
+            "support": "24/7 dedicated support",
+            "compliance": "Data compliance + advanced security",
+            "onboarding": "Custom implementation and onboarding"
+          }
+        },
+        "mostPopular": "Most Popular",
+        "getStarted": "Start Now",
+        "contactSales": "Contact Sales"
+      },
+      "adSpendExamples": {
+        "title": "Pricing Examples by Ad Spend",
+        "subtitle": "Calculate your approximate monthly cost based on your ad spend"
+      },
+      "whyVariable": {
+        "title": "Why Variable Pricing?",
+        "fairScalability": {
+          "title": "Fair Scalability",
+          "description": "You only pay more when you invest more. If you reduce your ad spend, your cost also drops automatically."
+        },
+        "alignedIncentives": {
+          "title": "Aligned Incentives",
+          "description": "Our success is tied to yours. When your campaigns grow, we grow with you."
+        },
+        "noLimits": {
+          "title": "No Artificial Limits",
+          "description": "We don't limit users, contacts or functionalities by \"plans\". The entire tier is available."
+        },
+        "transparency": {
+          "title": "Total Transparency",
+          "description": "Real-time dashboard with your accumulated ad spend and current monthly cost projection."
+        }
+      },
+      "cta": {
+        "title": "Ready to Start?",
+        "subtitle": "Schedule a call with our team to find the perfect plan for your agency.",
+        "button": "Talk to Sales"
+      },
+      "note": "Note: The media percentage is applied to your total monthly ad spend. The higher the tier, the lower the percentage you pay (20% → 15% → 10%), optimizing your cost as you scale."
     }
   }
 }

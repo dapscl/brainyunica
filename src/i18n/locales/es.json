@@ -261,6 +261,149 @@
       "simulating": "Simulando flujo en tiempo real...",
       "completedTitle": "Demo Completado",
       "completedText": "Este es el flujo completo de gestión conversacional con BrainybyUnica: desde la aprobación por WhatsApp hasta la publicación automática en redes sociales, todo en tiempo real."
+    },
+    "pricing": {
+      "title": "Precios",
+      "description": "Pricing transparente que escala con tu inversión publicitaria. Elige el plan correcto para tu agencia.",
+      "badge": "Pricing Escalable",
+      "headline": {
+        "line1": "Precio que",
+        "line2": "Crece Contigo"
+      },
+      "subtitle": "Paga solo por lo que inviertes. Nuestro modelo de pricing escala proporcionalmente con tu ad spend, sin sorpresas.",
+      "howItWorks": {
+        "title": "¿Cómo Funciona el Pricing?",
+        "step1": {
+          "title": "Precio Base Mensual",
+          "description": "Pago fijo mensual según el tier que elijas (Starter, Professional, Enterprise)"
+        },
+        "step2": {
+          "title": "Porcentaje Variable de Medios",
+          "description": "Se suma un porcentaje (10-20%) de tu inversión publicitaria mensual según el tier"
+        },
+        "step3": {
+          "title": "Total Transparente",
+          "description": "Sin costos ocultos. Facturación clara con desglose completo cada mes"
+        },
+        "example": "Ejemplo: Si estás en el tier Small Agencies ($1,250 USD/mes) e inviertes $10,000 USD en ads, pagarás: $1,250 USD + ($10,000 × 15%) =",
+        "exampleTotal": "$2,750 USD/mes",
+        "integrationFee": "Costo de Integración: Pago único del 50% del precio base mensual al momento de activar cada tier."
+      },
+      "tiers": {
+        "starter": {
+          "name": "Starter",
+          "description": "Empieza a operar con inteligencia",
+          "targetAudience": "Equipos pequeños, startups o marcas personales que quieren centralizar todo",
+          "basePrice": "$500 USD",
+          "integrationFee": "$250 USD",
+          "percentage": "20%",
+          "features": {
+            "users": "3 usuarios con acceso completo a toda la plataforma",
+            "whatsapp": "WhatsApp Project Manager incluido para cada usuario",
+            "brainies": "5 Brainies: Creator, Calendar, Ad, Chat y Trend",
+            "brands": "1 marca completa con todas las funcionalidades",
+            "ai": "IA para copys, imágenes y variaciones",
+            "editor": "Editor visual + calendarización automática",
+            "posts": "Hasta 100 publicaciones/mes",
+            "integrations": "Integración Meta y Google Ads",
+            "dashboard": "Dashboard de métricas esenciales",
+            "storage": "100 GB de almacenamiento"
+          }
+        },
+        "smallAgencies": {
+          "name": "Small Agencies",
+          "description": "Escala sin perder el control",
+          "targetAudience": "Agencias boutique o estudios creativos que gestionan varias marcas",
+          "basePrice": "$1,250 USD",
+          "integrationFee": "$625 USD",
+          "percentage": "15%",
+          "features": {
+            "users": "10 usuarios con acceso completo a toda la plataforma",
+            "whatsapp": "WhatsApp Project Manager incluido para cada usuario",
+            "brainies": "5 Brainies: Creator, Calendar, Ad, Chat y Trend",
+            "brands": "Hasta 5 marcas activas completas",
+            "ai": "IA avanzada: copys, imágenes y variaciones",
+            "workflows": "Flujos de aprobación internos + cliente",
+            "posts": "Hasta 500 publicaciones/mes",
+            "integrations": "Meta, Google, TikTok y LinkedIn",
+            "dashboard": "Dashboards en tiempo real",
+            "storage": "500 GB de almacenamiento"
+          }
+        },
+        "scaledAgencies": {
+          "name": "Scaled Agencies",
+          "description": "Optimiza con datos y automatización",
+          "targetAudience": "Agencias medianas o equipos de marketing corporativos con alto volumen",
+          "basePrice": "$3,750 USD",
+          "integrationFee": "$1,875 USD",
+          "percentage": "10%",
+          "features": {
+            "users": "25 usuarios con acceso completo a toda la plataforma",
+            "whatsapp": "WhatsApp Project Manager incluido para cada usuario",
+            "brainies": "5 Brainies: Creator, Calendar, Ad, Chat y Trend",
+            "brands": "Hasta 15 marcas operando en paralelo",
+            "automation": "Automatización total (n8n / Zapier)",
+            "ai": "IA ilimitada (texto + imagen)",
+            "posts": "Hasta 2,000 publicaciones/mes",
+            "integrations": "Meta, Google, TikTok y LinkedIn completo",
+            "analytics": "Analítica avanzada y dashboards cruzados",
+            "storage": "1 TB de almacenamiento",
+            "support": "Soporte prioritario con manager"
+          }
+        },
+        "enterprise": {
+          "name": "Enterprise",
+          "description": "Marcas y usuarios ilimitados",
+          "targetAudience": "Grupos corporativos, holdings o agencias multinivel sin límites",
+          "basePrice": "Desde $5,000 USD",
+          "integrationFee": "Variable",
+          "percentage": "10%",
+          "features": {
+            "users": "Usuarios ilimitados con acceso completo a toda la plataforma",
+            "whatsapp": "WhatsApp Project Manager incluido para cada usuario",
+            "brainies": "5 Brainies: Creator, Calendar, Ad, Chat y Trend",
+            "brands": "Marcas ilimitadas",
+            "integrations": "API abierta + CRM, ERP, Data Lakes",
+            "dashboards": "Dashboards personalizados (Mix™)",
+            "ai": "IA multimodal (texto, imagen, voz, video)",
+            "support": "Soporte dedicado 24/7",
+            "compliance": "Data compliance + seguridad avanzada",
+            "onboarding": "Implementación y onboarding personalizado"
+          }
+        },
+        "mostPopular": "Más Popular",
+        "getStarted": "Comenzar Ahora",
+        "contactSales": "Contactar Ventas"
+      },
+      "adSpendExamples": {
+        "title": "Ejemplos de Pricing por Ad Spend",
+        "subtitle": "Calcula tu costo mensual aproximado según tu inversión publicitaria"
+      },
+      "whyVariable": {
+        "title": "¿Por Qué Pricing Variable?",
+        "fairScalability": {
+          "title": "Escalabilidad Justa",
+          "description": "Solo pagas más cuando inviertes más. Si reduces tu ad spend, tu costo también baja automáticamente."
+        },
+        "alignedIncentives": {
+          "title": "Alineación de Incentivos",
+          "description": "Nuestro éxito está ligado al tuyo. Cuando tus campañas crecen, nosotros crecemos contigo."
+        },
+        "noLimits": {
+          "title": "Sin Límites Artificiales",
+          "description": "No limitamos usuarios, contactos o funcionalidades por \"planes\". Todo el tier está disponible."
+        },
+        "transparency": {
+          "title": "Transparencia Total",
+          "description": "Dashboard en tiempo real con tu ad spend acumulado y proyección del costo mensual actual."
+        }
+      },
+      "cta": {
+        "title": "¿Listo para Comenzar?",
+        "subtitle": "Agenda una llamada con nuestro equipo para encontrar el plan perfecto para tu agencia.",
+        "button": "Hablar con Ventas"
+      },
+      "note": "Nota: El porcentaje de medios se aplica sobre tu inversión publicitaria mensual total. A mayor tier, menor porcentaje pagas (20% → 15% → 10%), optimizando tu costo conforme escalas."
     }
   }
 }

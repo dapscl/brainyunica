@@ -15,99 +15,99 @@ const ShowcasePricingPage = () => {
 
   const pricingTiers = [
     {
-      name: 'Starter',
+      name: t('showcase.pricing.tiers.starter.name'),
       icon: Zap,
       color: 'from-blue-500 to-cyan-500',
-      adSpend: 'Equipos pequeños, startups o marcas personales que quieren centralizar todo',
-      basePrice: '$500 USD',
-      integrationFee: '$250 USD',
-      percentage: '20%',
+      adSpend: t('showcase.pricing.tiers.starter.targetAudience'),
+      basePrice: t('showcase.pricing.tiers.starter.basePrice'),
+      integrationFee: t('showcase.pricing.tiers.starter.integrationFee'),
+      percentage: t('showcase.pricing.tiers.starter.percentage'),
       maxMonthly: 'Variable',
-      description: 'Empieza a operar con inteligencia',
+      description: t('showcase.pricing.tiers.starter.description'),
       features: [
-        '3 usuarios con acceso completo a toda la plataforma',
-        'WhatsApp Project Manager incluido para cada usuario',
-        '5 Brainies: Creator, Calendar, Ad, Chat y Trend',
-        '1 marca completa con todas las funcionalidades',
-        'IA para copys, imágenes y variaciones',
-        'Editor visual + calendarización automática',
-        'Hasta 100 publicaciones/mes',
-        'Integración Meta y Google Ads',
-        'Dashboard de métricas esenciales',
-        '100 GB de almacenamiento'
+        t('showcase.pricing.tiers.starter.features.users'),
+        t('showcase.pricing.tiers.starter.features.whatsapp'),
+        t('showcase.pricing.tiers.starter.features.brainies'),
+        t('showcase.pricing.tiers.starter.features.brands'),
+        t('showcase.pricing.tiers.starter.features.ai'),
+        t('showcase.pricing.tiers.starter.features.editor'),
+        t('showcase.pricing.tiers.starter.features.posts'),
+        t('showcase.pricing.tiers.starter.features.integrations'),
+        t('showcase.pricing.tiers.starter.features.dashboard'),
+        t('showcase.pricing.tiers.starter.features.storage')
       ],
       recommended: false
     },
     {
-      name: 'Small Agencies',
+      name: t('showcase.pricing.tiers.smallAgencies.name'),
       icon: TrendingUp,
       color: 'from-purple-500 to-pink-500',
-      adSpend: 'Agencias boutique o estudios creativos que gestionan varias marcas',
-      basePrice: '$1,250 USD',
-      integrationFee: '$625 USD',
-      percentage: '15%',
+      adSpend: t('showcase.pricing.tiers.smallAgencies.targetAudience'),
+      basePrice: t('showcase.pricing.tiers.smallAgencies.basePrice'),
+      integrationFee: t('showcase.pricing.tiers.smallAgencies.integrationFee'),
+      percentage: t('showcase.pricing.tiers.smallAgencies.percentage'),
       maxMonthly: 'Variable',
-      description: 'Escala sin perder el control',
+      description: t('showcase.pricing.tiers.smallAgencies.description'),
       features: [
-        '10 usuarios con acceso completo a toda la plataforma',
-        'WhatsApp Project Manager incluido para cada usuario',
-        '5 Brainies: Creator, Calendar, Ad, Chat y Trend',
-        'Hasta 5 marcas activas completas',
-        'IA avanzada: copys, imágenes y variaciones',
-        'Flujos de aprobación internos + cliente',
-        'Hasta 500 publicaciones/mes',
-        'Meta, Google, TikTok y LinkedIn',
-        'Dashboards en tiempo real',
-        '500 GB de almacenamiento'
+        t('showcase.pricing.tiers.smallAgencies.features.users'),
+        t('showcase.pricing.tiers.smallAgencies.features.whatsapp'),
+        t('showcase.pricing.tiers.smallAgencies.features.brainies'),
+        t('showcase.pricing.tiers.smallAgencies.features.brands'),
+        t('showcase.pricing.tiers.smallAgencies.features.ai'),
+        t('showcase.pricing.tiers.smallAgencies.features.workflows'),
+        t('showcase.pricing.tiers.smallAgencies.features.posts'),
+        t('showcase.pricing.tiers.smallAgencies.features.integrations'),
+        t('showcase.pricing.tiers.smallAgencies.features.dashboard'),
+        t('showcase.pricing.tiers.smallAgencies.features.storage')
       ],
       recommended: true
     },
     {
-      name: 'Scaled Agencies',
+      name: t('showcase.pricing.tiers.scaledAgencies.name'),
       icon: Crown,
       color: 'from-amber-500 to-orange-500',
-      adSpend: 'Agencias medianas o equipos de marketing corporativos con alto volumen',
-      basePrice: '$3,750 USD',
-      integrationFee: '$1,875 USD',
-      percentage: '10%',
+      adSpend: t('showcase.pricing.tiers.scaledAgencies.targetAudience'),
+      basePrice: t('showcase.pricing.tiers.scaledAgencies.basePrice'),
+      integrationFee: t('showcase.pricing.tiers.scaledAgencies.integrationFee'),
+      percentage: t('showcase.pricing.tiers.scaledAgencies.percentage'),
       maxMonthly: 'Variable',
-      description: 'Optimiza con datos y automatización',
+      description: t('showcase.pricing.tiers.scaledAgencies.description'),
       features: [
-        '25 usuarios con acceso completo a toda la plataforma',
-        'WhatsApp Project Manager incluido para cada usuario',
-        '5 Brainies: Creator, Calendar, Ad, Chat y Trend',
-        'Hasta 15 marcas operando en paralelo',
-        'Automatización total (n8n / Zapier)',
-        'IA ilimitada (texto + imagen)',
-        'Hasta 2,000 publicaciones/mes',
-        'Meta, Google, TikTok y LinkedIn completo',
-        'Analítica avanzada y dashboards cruzados',
-        '1 TB de almacenamiento',
-        'Soporte prioritario con manager'
+        t('showcase.pricing.tiers.scaledAgencies.features.users'),
+        t('showcase.pricing.tiers.scaledAgencies.features.whatsapp'),
+        t('showcase.pricing.tiers.scaledAgencies.features.brainies'),
+        t('showcase.pricing.tiers.scaledAgencies.features.brands'),
+        t('showcase.pricing.tiers.scaledAgencies.features.automation'),
+        t('showcase.pricing.tiers.scaledAgencies.features.ai'),
+        t('showcase.pricing.tiers.scaledAgencies.features.posts'),
+        t('showcase.pricing.tiers.scaledAgencies.features.integrations'),
+        t('showcase.pricing.tiers.scaledAgencies.features.analytics'),
+        t('showcase.pricing.tiers.scaledAgencies.features.storage'),
+        t('showcase.pricing.tiers.scaledAgencies.features.support')
       ],
       recommended: false
     },
     {
-      name: 'Enterprise',
+      name: t('showcase.pricing.tiers.enterprise.name'),
       icon: Crown,
       color: 'from-red-500 to-pink-600',
-      adSpend: 'Grupos corporativos, holdings o agencias multinivel sin límites',
-      basePrice: 'Desde $5,000 USD',
-      integrationFee: 'Variable',
-      percentage: '10%',
+      adSpend: t('showcase.pricing.tiers.enterprise.targetAudience'),
+      basePrice: t('showcase.pricing.tiers.enterprise.basePrice'),
+      integrationFee: t('showcase.pricing.tiers.enterprise.integrationFee'),
+      percentage: t('showcase.pricing.tiers.enterprise.percentage'),
       maxMonthly: 'Variable',
-      description: 'Marcas y usuarios ilimitados',
+      description: t('showcase.pricing.tiers.enterprise.description'),
       features: [
-        'Usuarios ilimitados con acceso completo a toda la plataforma',
-        'WhatsApp Project Manager incluido para cada usuario',
-        '5 Brainies: Creator, Calendar, Ad, Chat y Trend',
-        'Marcas ilimitadas',
-        'API abierta + CRM, ERP, Data Lakes',
-        'Dashboards personalizados (Mix™)',
-        'IA multimodal (texto, imagen, voz, video)',
-        'Soporte dedicado 24/7',
-        'Data compliance + seguridad avanzada',
-        'Implementación y onboarding personalizado'
+        t('showcase.pricing.tiers.enterprise.features.users'),
+        t('showcase.pricing.tiers.enterprise.features.whatsapp'),
+        t('showcase.pricing.tiers.enterprise.features.brainies'),
+        t('showcase.pricing.tiers.enterprise.features.brands'),
+        t('showcase.pricing.tiers.enterprise.features.integrations'),
+        t('showcase.pricing.tiers.enterprise.features.dashboards'),
+        t('showcase.pricing.tiers.enterprise.features.ai'),
+        t('showcase.pricing.tiers.enterprise.features.support'),
+        t('showcase.pricing.tiers.enterprise.features.compliance'),
+        t('showcase.pricing.tiers.enterprise.features.onboarding')
       ],
       recommended: false
     }
@@ -156,14 +156,14 @@ const ShowcasePricingPage = () => {
         >
           <Badge variant="outline" className="mb-6 px-6 py-3 text-electric-cyan border-electric-cyan/30 bg-electric-cyan/5 backdrop-blur-sm">
             <Sparkles className="w-4 h-4 mr-2" />
-            Pricing Escalable
+            {t('showcase.pricing.badge')}
           </Badge>
           <h1 className="text-5xl md:text-7xl font-bold uppercase tracking-tight mb-6">
-            <span className="text-foreground">Precio que</span>{' '}
-            <span className="text-electric-cyan">Crece Contigo</span>
+            <span className="text-foreground">{t('showcase.pricing.headline.line1')}</span>{' '}
+            <span className="text-electric-cyan">{t('showcase.pricing.headline.line2')}</span>
           </h1>
           <p className="text-xl text-muted-foreground font-light leading-relaxed">
-            Paga solo por lo que inviertes. Nuestro modelo de pricing escala proporcionalmente con tu ad spend, sin sorpresas.
+            {t('showcase.pricing.subtitle')}
           </p>
         </motion.div>
       </div>
@@ -177,7 +177,7 @@ const ShowcasePricingPage = () => {
         >
         <Card className="mb-16 border-electric-cyan/20 bg-card/30 backdrop-blur-sm">
           <CardHeader>
-            <CardTitle className="text-3xl md:text-4xl font-bold text-center uppercase tracking-tight">¿Cómo Funciona el Pricing?</CardTitle>
+            <CardTitle className="text-3xl md:text-4xl font-bold text-center uppercase tracking-tight">{t('showcase.pricing.howItWorks.title')}</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="grid md:grid-cols-3 gap-8 text-center">
@@ -185,41 +185,40 @@ const ShowcasePricingPage = () => {
                 <div className="w-16 h-16 rounded-full bg-electric-cyan/10 border border-electric-cyan/30 flex items-center justify-center mx-auto mb-4">
                   <span className="text-3xl font-bold text-electric-cyan">1</span>
                 </div>
-                <h3 className="font-bold text-lg mb-3 text-foreground">Precio Base Mensual</h3>
+                <h3 className="font-bold text-lg mb-3 text-foreground">{t('showcase.pricing.howItWorks.step1.title')}</h3>
                 <p className="text-muted-foreground font-light leading-relaxed">
-                  Pago fijo mensual según el tier que elijas (Starter, Professional, Enterprise)
+                  {t('showcase.pricing.howItWorks.step1.description')}
                 </p>
               </div>
               <div>
                 <div className="w-16 h-16 rounded-full bg-purple-accent/10 border border-purple-accent/30 flex items-center justify-center mx-auto mb-4">
                   <span className="text-3xl font-bold text-purple-accent">2</span>
                 </div>
-                <h3 className="font-bold text-lg mb-3 text-foreground">Porcentaje Variable de Medios</h3>
+                <h3 className="font-bold text-lg mb-3 text-foreground">{t('showcase.pricing.howItWorks.step2.title')}</h3>
                 <p className="text-muted-foreground font-light leading-relaxed">
-                  Se suma un porcentaje (10-20%) de tu inversión publicitaria mensual según el tier
+                  {t('showcase.pricing.howItWorks.step2.description')}
                 </p>
               </div>
               <div>
                 <div className="w-16 h-16 rounded-full bg-green-500/10 border border-green-500/30 flex items-center justify-center mx-auto mb-4">
                   <span className="text-3xl font-bold text-green-500">3</span>
                 </div>
-                <h3 className="font-bold text-lg mb-3 text-foreground">Total Transparente</h3>
+                <h3 className="font-bold text-lg mb-3 text-foreground">{t('showcase.pricing.howItWorks.step3.title')}</h3>
                 <p className="text-muted-foreground font-light leading-relaxed">
-                  Sin costos ocultos. Facturación clara con desglose completo cada mes
+                  {t('showcase.pricing.howItWorks.step3.description')}
                 </p>
               </div>
             </div>
 
             <div className="mt-8 p-6 bg-electric-cyan/5 rounded-xl border border-electric-cyan/20 backdrop-blur-sm">
               <p className="text-center font-light">
-                <span className="font-bold text-foreground">Ejemplo:</span> Si estás en el tier Small Agencies ($1,250 USD/mes) e inviertes $10,000 USD en ads, 
-                pagarás: $1,250 USD + ($10,000 × 15%) = <span className="text-electric-cyan font-bold text-lg">$2,750 USD/mes</span>
+                {t('showcase.pricing.howItWorks.example')} <span className="text-electric-cyan font-bold text-lg">{t('showcase.pricing.howItWorks.exampleTotal')}</span>
               </p>
             </div>
             
             <div className="mt-4 p-6 bg-purple-accent/5 rounded-xl border border-purple-accent/20 backdrop-blur-sm">
               <p className="text-center font-light">
-                <span className="font-bold text-foreground">Costo de Integración:</span> Pago único del 50% del precio base mensual al momento de activar cada tier.
+                {t('showcase.pricing.howItWorks.integrationFee')}
               </p>
             </div>
           </CardContent>
@@ -246,7 +245,7 @@ const ShowcasePricingPage = () => {
               >
                 {tier.recommended && (
                   <div className="absolute top-0 right-0 bg-gradient-to-r from-electric-cyan to-purple-accent text-background px-4 py-1.5 text-xs font-bold uppercase tracking-wide">
-                    Más Popular
+                    {t('showcase.pricing.tiers.mostPopular')}
                   </div>
                 )}
                 
@@ -274,7 +273,7 @@ const ShowcasePricingPage = () => {
                     variant={tier.recommended ? 'default' : 'outline'}
                     size="sm"
                   >
-                    {tier.name === 'Enterprise' ? 'Contactar Ventas' : 'Comenzar Ahora'}
+                    {tier.name === t('showcase.pricing.tiers.enterprise.name') ? t('showcase.pricing.tiers.contactSales') : t('showcase.pricing.tiers.getStarted')}
                   </Button>
 
                   <div className="space-y-2 flex-1">
@@ -391,47 +390,47 @@ const ShowcasePricingPage = () => {
         {/* Why Variable Pricing */}
         <Card>
           <CardHeader>
-            <CardTitle className="text-2xl">¿Por Qué Pricing Variable?</CardTitle>
+            <CardTitle className="text-2xl">{t('showcase.pricing.whyVariable.title')}</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="grid md:grid-cols-2 gap-6">
               <div className="space-y-3">
                 <h3 className="font-semibold flex items-center gap-2">
                   <Check className="w-5 h-5 text-green-500" />
-                  Escalabilidad Justa
+                  {t('showcase.pricing.whyVariable.fairScalability.title')}
                 </h3>
                 <p className="text-sm text-muted-foreground pl-7">
-                  Solo pagas más cuando inviertes más. Si reduces tu ad spend, tu costo también baja automáticamente.
+                  {t('showcase.pricing.whyVariable.fairScalability.description')}
                 </p>
               </div>
 
               <div className="space-y-3">
                 <h3 className="font-semibold flex items-center gap-2">
                   <Check className="w-5 h-5 text-green-500" />
-                  Alineación de Incentivos
+                  {t('showcase.pricing.whyVariable.alignedIncentives.title')}
                 </h3>
                 <p className="text-sm text-muted-foreground pl-7">
-                  Nuestro éxito está ligado al tuyo. Cuando tus campañas crecen, nosotros crecemos contigo.
+                  {t('showcase.pricing.whyVariable.alignedIncentives.description')}
                 </p>
               </div>
 
               <div className="space-y-3">
                 <h3 className="font-semibold flex items-center gap-2">
                   <Check className="w-5 h-5 text-green-500" />
-                  Sin Límites Artificiales
+                  {t('showcase.pricing.whyVariable.noLimits.title')}
                 </h3>
                 <p className="text-sm text-muted-foreground pl-7">
-                  No limitamos usuarios, contactos o funcionalidades por "planes". Todo el tier está disponible.
+                  {t('showcase.pricing.whyVariable.noLimits.description')}
                 </p>
               </div>
 
               <div className="space-y-3">
                 <h3 className="font-semibold flex items-center gap-2">
                   <Check className="w-5 h-5 text-green-500" />
-                  Transparencia Total
+                  {t('showcase.pricing.whyVariable.transparency.title')}
                 </h3>
                 <p className="text-sm text-muted-foreground pl-7">
-                  Dashboard en tiempo real con tu ad spend acumulado y proyección del costo mensual actual.
+                  {t('showcase.pricing.whyVariable.transparency.description')}
                 </p>
               </div>
             </div>
@@ -442,9 +441,9 @@ const ShowcasePricingPage = () => {
         <div className="mt-12 text-center">
           <Card className="border-electric-cyan/20 bg-gradient-to-br from-electric-cyan/5 to-transparent backdrop-blur-sm">
             <CardContent className="py-12">
-              <h2 className="text-3xl md:text-4xl font-bold mb-4 uppercase tracking-tight">¿Listo para Comenzar?</h2>
+              <h2 className="text-3xl md:text-4xl font-bold mb-4 uppercase tracking-tight">{t('showcase.pricing.cta.title')}</h2>
               <p className="text-muted-foreground mb-8 max-w-2xl mx-auto text-lg font-light">
-                Agenda una llamada con nuestro equipo para encontrar el plan perfecto para tu agencia.
+                {t('showcase.pricing.cta.subtitle')}
               </p>
               <div className="flex gap-4 justify-center">
                 <Button 
@@ -453,7 +452,7 @@ const ShowcasePricingPage = () => {
                   onClick={() => navigate('/lead-capture')}
                 >
                   <Sparkles className="w-4 h-4" />
-                  Hablar con Ventas
+                  {t('showcase.pricing.cta.button')}
                 </Button>
               </div>
             </CardContent>
