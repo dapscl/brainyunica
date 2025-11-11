@@ -14,6 +14,7 @@ export const ShowcaseHeader = () => {
 
   const navLinks = [
     { path: '/', label: t('showcase.nav.home', 'Home') },
+    { path: '/industries', label: t('showcase.nav.industries', 'Para quién') },
     { path: '/pricing', label: t('showcase.nav.pricing', 'Pricing') },
   ];
 
