@@ -13,9 +13,9 @@ export const ShowcaseHeader = () => {
   const isActive = (path: string) => location.pathname === path;
 
   const navLinks = [
-    { path: '/', label: t('showcase.nav.home', 'Home') },
-    { path: '/industries', label: t('showcase.nav.industries', 'Para quién') },
-    { path: '/pricing', label: t('showcase.nav.pricing', 'Pricing') },
+    { path: '/', label: t('showcase.nav.home', '¿Qué es Brainy?') },
+    { path: '/pricing', label: t('showcase.nav.pricing', 'Precios') },
+    { path: '/features', label: t('showcase.nav.features', 'Funcionalidades') },
   ];
 
   return (
