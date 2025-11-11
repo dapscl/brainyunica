@@ -478,15 +478,16 @@
           "ai": "Features IA",
           "integrations": "Integraciones",
           "workflows": "Flujos de Aprobación",
-          "automation": "Automatización Total",
-          "support": "Soporte Prioritario"
+          "automation": "Automatización (n8n/Zapier)",
+          "support": "Soporte"
         },
         "values": {
           "unlimited": "Ilimitado",
           "advanced": "Avanzada",
           "standard": "Estándar",
           "custom": "Personalizado",
-          "basic": "Básicas"
+          "basic": "Básicas",
+          "priority": "Prioritario"
         }
       },
       "inherited": {

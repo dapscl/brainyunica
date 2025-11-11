@@ -93,21 +93,12 @@ export const PricingComparison = ({ tiers }: PricingComparisonProps) => {
     {
       key: 'whatsapp',
       label: t('showcase.pricing.comparison.categories.whatsapp', 'WhatsApp Manager'),
-      getValue: (tier: PricingTier) => {
-        return tier.features.some(f => f.toLowerCase().includes('whatsapp')) ? '✓' : '-';
-      }
+      getValue: () => '✓' // Todos los planes incluyen WhatsApp Manager
     },
     {
       key: 'brainies',
       label: t('showcase.pricing.comparison.categories.brainies', '5 Brainies'),
-      getValue: (tier: PricingTier) => {
-        return tier.features.some(f => 
-          f.toLowerCase().includes('brainy') || 
-          f.toLowerCase().includes('brainie') ||
-          f.toLowerCase().includes('creator') ||
-          f.toLowerCase().includes('calendar')
-        ) ? '✓' : '-';
-      }
+      getValue: () => '✓' // Todos los planes incluyen los 5 Brainies
     },
     {
       key: 'ai',
@@ -118,7 +109,7 @@ export const PricingComparison = ({ tiers }: PricingComparisonProps) => {
           f.toLowerCase().includes('ia:') ||
           f.toLowerCase().includes('ai ')
         );
-        if (!aiFeature) return '-';
+        if (!aiFeature) return t('showcase.pricing.comparison.values.standard', 'Standard');
         if (aiFeature.toLowerCase().includes('ilimitada') || aiFeature.toLowerCase().includes('unlimited')) {
           return t('showcase.pricing.comparison.values.unlimited', 'Unlimited');
         }
@@ -137,49 +128,42 @@ export const PricingComparison = ({ tiers }: PricingComparisonProps) => {
           f.toLowerCase().includes('integration') ||
           f.toLowerCase().includes('meta')
         );
-        if (!intFeature) return '-';
+        if (!intFeature) return 'Meta, Google';
         if (intFeature.includes('TikTok') || intFeature.includes('LinkedIn')) {
           return 'Meta, Google, TikTok, LinkedIn';
         }
-        if (intFeature.includes('Meta')) {
-          return 'Meta, Google';
-        }
-        return t('showcase.pricing.comparison.values.basic', 'Basic');
+        return 'Meta, Google';
       }
     },
     {
       key: 'workflows',
       label: t('showcase.pricing.comparison.categories.workflows', 'Approval Workflows'),
-      getValue: (tier: PricingTier) => {
-        const workflowFeature = tier.features.find(f => 
-          f.toLowerCase().includes('flujo') || 
-          f.toLowerCase().includes('workflow') ||
-          f.toLowerCase().includes('aprobación') ||
-          f.toLowerCase().includes('approval')
-        );
-        return workflowFeature ? '✓' : '-';
-      }
+      getValue: () => '✓' // Todos los planes incluyen workflows de aprobación
     },
     {
       key: 'automation',
-      label: t('showcase.pricing.comparison.categories.automation', 'Full Automation'),
+      label: t('showcase.pricing.comparison.categories.automation', 'Automation (n8n/Zapier)'),
       getValue: (tier: PricingTier) => {
         const autoFeature = tier.features.find(f => 
           f.toLowerCase().includes('automatización total') ||
-          f.toLowerCase().includes('full automation')
+          f.toLowerCase().includes('full automation') ||
+          f.toLowerCase().includes('n8n') ||
+          f.toLowerCase().includes('zapier')
         );
         return autoFeature ? '✓' : '-';
       }
     },
     {
       key: 'support',
-      label: t('showcase.pricing.comparison.categories.support', 'Priority Support'),
+      label: t('showcase.pricing.comparison.categories.support', 'Support'),
       getValue: (tier: PricingTier) => {
         const supportFeature = tier.features.find(f => 
           f.toLowerCase().includes('soporte prioritario') ||
           f.toLowerCase().includes('priority support')
         );
-        return supportFeature ? '✓' : '-';
+        return supportFeature ? 
+          t('showcase.pricing.comparison.values.priority', 'Priority') : 
+          t('showcase.pricing.comparison.values.standard', 'Standard');
       }
     }
   ];

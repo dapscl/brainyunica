@@ -28,11 +28,11 @@ export const LanguageSelector = () => {
         <Button 
           variant="outline" 
           size="sm"
-          className="gap-2 bg-card/50 backdrop-blur-sm border-border/50 hover:bg-card hover:border-electric-cyan/30 transition-all duration-300"
+          className="gap-2 bg-card/50 backdrop-blur-sm border-border/50 hover:bg-card hover:border-electric-cyan/30 transition-all duration-300 text-foreground"
         >
           <span className="text-lg">{currentLanguage.flag}</span>
-          <span className="hidden sm:inline text-sm font-medium">{currentLanguage.name}</span>
-          <Globe className="h-4 w-4 text-muted-foreground" />
+          <span className="hidden sm:inline text-sm font-medium text-foreground">{currentLanguage.name}</span>
+          <Globe className="h-4 w-4 text-foreground/70" />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="bg-card/95 backdrop-blur-sm border-border/50">
@@ -40,10 +40,10 @@ export const LanguageSelector = () => {
           <DropdownMenuItem
             key={language.code}
             onClick={() => changeLanguage(language.code)}
-            className="cursor-pointer hover:bg-accent"
+            className="cursor-pointer hover:bg-accent text-foreground"
           >
             <span className="mr-2 text-lg">{language.flag}</span>
-            <span className="font-medium">{language.name}</span>
+            <span className="font-medium text-foreground">{language.name}</span>
             {currentLanguage.code === language.code && (
               <span className="ml-auto text-electric-cyan">✓</span>
             )}
