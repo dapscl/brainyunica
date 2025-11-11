@@ -25,6 +25,7 @@ import showcaseWhatsAppManager from '@/assets/showcase-whatsapp-manager.jpg';
 import showcaseCreativeTracker from '@/assets/showcase-creative-tracker.jpg';
 import showcaseMultichannel from '@/assets/showcase-multichannel.jpg';
 import showcasePricingTiers from '@/assets/showcase-pricing-tiers.jpg';
+import { InteractiveDemoFlow } from '@/components/showcase/InteractiveDemoFlow';
 
 const ShowcasePage = () => {
   const navigate = useNavigate();
@@ -73,11 +74,22 @@ const ShowcasePage = () => {
               Comenzar Setup Guiado
               <ArrowRight className="w-5 h-5" />
             </Button>
-            <Button size="lg" variant="outline" onClick={() => navigate('/showcase/brands')} className="text-lg px-8 py-6">
-              Ver Demo Completo
+            <Button 
+              size="lg" 
+              variant="outline" 
+              onClick={() => document.getElementById('demo-interactivo')?.scrollIntoView({ behavior: 'smooth' })}
+              className="text-lg px-8 py-6 gap-2"
+            >
+              <TrendingUp className="w-5 h-5" />
+              Ver Demo Interactivo
             </Button>
           </div>
         </div>
+      </section>
+
+      {/* Interactive Demo Section */}
+      <section id="demo-interactivo" className="container mx-auto px-4 py-20 bg-gradient-to-b from-background to-secondary/10">
+        <InteractiveDemoFlow />
       </section>
 
       {/* WhatsApp Project Manager Section */}
