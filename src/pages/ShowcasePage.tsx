@@ -27,6 +27,7 @@ import showcaseMultichannel from '@/assets/showcase-multichannel.jpg';
 import showcasePricingTiers from '@/assets/showcase-pricing-tiers.jpg';
 import { InteractiveDemoFlow } from '@/components/showcase/InteractiveDemoFlow';
 import { PlatformComparison } from '@/components/showcase/PlatformComparison';
+import { InteractiveVideoTutorial } from '@/components/showcase/InteractiveVideoTutorial';
 
 const ShowcasePage = () => {
   const navigate = useNavigate();
@@ -72,6 +73,11 @@ const ShowcasePage = () => {
       {/* Interactive Demo Section */}
       <section id="demo-interactivo" className="container mx-auto px-4 py-20 bg-gradient-to-b from-background to-secondary/10">
         <InteractiveDemoFlow />
+      </section>
+
+      {/* Video Tutorial Section */}
+      <section className="container mx-auto px-4 py-20 bg-gradient-to-b from-secondary/10 to-background">
+        <InteractiveVideoTutorial />
       </section>
 
       {/* Platform Comparison Section */}
