@@ -467,7 +467,27 @@
         "basePrice": "Precio Base",
         "mediaPercentage": "% de Medios",
         "selectMore": "Selecciona al menos 2 planes para comparar",
-        "selectPlans": "Selecciona planes arriba para comenzar la comparación"
+        "selectPlans": "Selecciona planes arriba para comenzar la comparación",
+        "categories": {
+          "users": "Usuarios",
+          "brands": "Marcas",
+          "posts": "Posts/mes",
+          "storage": "Almacenamiento",
+          "whatsapp": "WhatsApp Manager",
+          "brainies": "5 Brainies",
+          "ai": "Features IA",
+          "integrations": "Integraciones",
+          "workflows": "Flujos de Aprobación",
+          "automation": "Automatización Total",
+          "support": "Soporte Prioritario"
+        },
+        "values": {
+          "unlimited": "Ilimitado",
+          "advanced": "Avanzada",
+          "standard": "Estándar",
+          "custom": "Personalizado",
+          "basic": "Básicas"
+        }
       },
       "inherited": {
         "showAll": "Ver todo incluido",

@@ -467,7 +467,27 @@
         "basePrice": "Base Price",
         "mediaPercentage": "Media %",
         "selectMore": "Select at least 2 plans to compare",
-        "selectPlans": "Select plans above to start comparison"
+        "selectPlans": "Select plans above to start comparison",
+        "categories": {
+          "users": "Users",
+          "brands": "Brands",
+          "posts": "Posts/month",
+          "storage": "Storage",
+          "whatsapp": "WhatsApp Manager",
+          "brainies": "5 Brainies",
+          "ai": "AI Features",
+          "integrations": "Platform Integrations",
+          "workflows": "Approval Workflows",
+          "automation": "Full Automation",
+          "support": "Priority Support"
+        },
+        "values": {
+          "unlimited": "Unlimited",
+          "advanced": "Advanced",
+          "standard": "Standard",
+          "custom": "Custom",
+          "basic": "Basic"
+        }
       },
       "inherited": {
         "showAll": "Show all included",

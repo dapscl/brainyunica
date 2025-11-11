@@ -3,7 +3,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Badge } from '@/components/ui/badge';
-import { Check, X, AlertCircle } from 'lucide-react';
+import { Check, AlertCircle } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -36,17 +36,153 @@ export const PricingComparison = ({ tiers }: PricingComparisonProps) => {
     });
   };
 
-  const getAllFeatures = () => {
-    const allFeatures = new Set<string>();
-    selectedTiers.forEach(tierIndex => {
-      tiers[tierIndex].features.forEach(feature => allFeatures.add(feature));
-    });
-    return Array.from(allFeatures);
-  };
-
-  const hasFeature = (tierIndex: number, feature: string) => {
-    return tiers[tierIndex].features.includes(feature);
-  };
+  // Define comparison categories with value extraction logic
+  const comparisonCategories = [
+    {
+      key: 'users',
+      label: t('showcase.pricing.comparison.categories.users', 'Users'),
+      getValue: (tier: PricingTier) => {
+        const userFeature = tier.features.find(f => 
+          f.toLowerCase().includes('usuario') || 
+          f.toLowerCase().includes('user')
+        );
+        if (!userFeature) return '-';
+        const match = userFeature.match(/(\d+)/);
+        return match ? match[1] : '-';
+      }
+    },
+    {
+      key: 'brands',
+      label: t('showcase.pricing.comparison.categories.brands', 'Brands'),
+      getValue: (tier: PricingTier) => {
+        const brandFeature = tier.features.find(f => 
+          f.toLowerCase().includes('marca') || 
+          f.toLowerCase().includes('brand')
+        );
+        if (!brandFeature) return '-';
+        const match = brandFeature.match(/(\d+)/);
+        return match ? match[1] : '1';
+      }
+    },
+    {
+      key: 'posts',
+      label: t('showcase.pricing.comparison.categories.posts', 'Posts/month'),
+      getValue: (tier: PricingTier) => {
+        const postFeature = tier.features.find(f => 
+          f.toLowerCase().includes('publicacion') || 
+          f.toLowerCase().includes('post')
+        );
+        if (!postFeature) return '-';
+        const match = postFeature.match(/(\d+(?:[,\.]\d+)?)/);
+        return match ? match[1] : '-';
+      }
+    },
+    {
+      key: 'storage',
+      label: t('showcase.pricing.comparison.categories.storage', 'Storage'),
+      getValue: (tier: PricingTier) => {
+        const storageFeature = tier.features.find(f => 
+          f.toLowerCase().includes('almacenamiento') || 
+          f.toLowerCase().includes('storage')
+        );
+        if (!storageFeature) return '-';
+        const match = storageFeature.match(/(\d+\s*[GT]B)/i);
+        return match ? match[1] : '-';
+      }
+    },
+    {
+      key: 'whatsapp',
+      label: t('showcase.pricing.comparison.categories.whatsapp', 'WhatsApp Manager'),
+      getValue: (tier: PricingTier) => {
+        return tier.features.some(f => f.toLowerCase().includes('whatsapp')) ? '✓' : '-';
+      }
+    },
+    {
+      key: 'brainies',
+      label: t('showcase.pricing.comparison.categories.brainies', '5 Brainies'),
+      getValue: (tier: PricingTier) => {
+        return tier.features.some(f => 
+          f.toLowerCase().includes('brainy') || 
+          f.toLowerCase().includes('brainie') ||
+          f.toLowerCase().includes('creator') ||
+          f.toLowerCase().includes('calendar')
+        ) ? '✓' : '-';
+      }
+    },
+    {
+      key: 'ai',
+      label: t('showcase.pricing.comparison.categories.ai', 'AI Features'),
+      getValue: (tier: PricingTier) => {
+        const aiFeature = tier.features.find(f => 
+          f.toLowerCase().includes('ia ') || 
+          f.toLowerCase().includes('ia:') ||
+          f.toLowerCase().includes('ai ')
+        );
+        if (!aiFeature) return '-';
+        if (aiFeature.toLowerCase().includes('ilimitada') || aiFeature.toLowerCase().includes('unlimited')) {
+          return t('showcase.pricing.comparison.values.unlimited', 'Unlimited');
+        }
+        if (aiFeature.toLowerCase().includes('avanzada') || aiFeature.toLowerCase().includes('advanced')) {
+          return t('showcase.pricing.comparison.values.advanced', 'Advanced');
+        }
+        return t('showcase.pricing.comparison.values.standard', 'Standard');
+      }
+    },
+    {
+      key: 'integrations',
+      label: t('showcase.pricing.comparison.categories.integrations', 'Platform Integrations'),
+      getValue: (tier: PricingTier) => {
+        const intFeature = tier.features.find(f => 
+          f.toLowerCase().includes('integración') || 
+          f.toLowerCase().includes('integration') ||
+          f.toLowerCase().includes('meta')
+        );
+        if (!intFeature) return '-';
+        if (intFeature.includes('TikTok') || intFeature.includes('LinkedIn')) {
+          return 'Meta, Google, TikTok, LinkedIn';
+        }
+        if (intFeature.includes('Meta')) {
+          return 'Meta, Google';
+        }
+        return t('showcase.pricing.comparison.values.basic', 'Basic');
+      }
+    },
+    {
+      key: 'workflows',
+      label: t('showcase.pricing.comparison.categories.workflows', 'Approval Workflows'),
+      getValue: (tier: PricingTier) => {
+        const workflowFeature = tier.features.find(f => 
+          f.toLowerCase().includes('flujo') || 
+          f.toLowerCase().includes('workflow') ||
+          f.toLowerCase().includes('aprobación') ||
+          f.toLowerCase().includes('approval')
+        );
+        return workflowFeature ? '✓' : '-';
+      }
+    },
+    {
+      key: 'automation',
+      label: t('showcase.pricing.comparison.categories.automation', 'Full Automation'),
+      getValue: (tier: PricingTier) => {
+        const autoFeature = tier.features.find(f => 
+          f.toLowerCase().includes('automatización total') ||
+          f.toLowerCase().includes('full automation')
+        );
+        return autoFeature ? '✓' : '-';
+      }
+    },
+    {
+      key: 'support',
+      label: t('showcase.pricing.comparison.categories.support', 'Priority Support'),
+      getValue: (tier: PricingTier) => {
+        const supportFeature = tier.features.find(f => 
+          f.toLowerCase().includes('soporte prioritario') ||
+          f.toLowerCase().includes('priority support')
+        );
+        return supportFeature ? '✓' : '-';
+      }
+    }
+  ];
 
   return (
     <div className="space-y-8">
@@ -156,20 +292,22 @@ export const PricingComparison = ({ tiers }: PricingComparisonProps) => {
                         ))}
                       </tr>
 
-                      {/* Features Rows */}
-                      {getAllFeatures().map((feature, idx) => (
+                      {/* Category Rows */}
+                      {comparisonCategories.map((category, idx) => (
                         <tr key={idx} className="border-b border-border/50 hover:bg-accent/30 transition-colors">
-                          <td className="p-4 text-sm sticky left-0 bg-card/50 backdrop-blur-sm">
-                            {feature}
+                          <td className="p-4 font-medium sticky left-0 bg-card/50 backdrop-blur-sm">
+                            {category.label}
                           </td>
                           {selectedTiers.map(tierIndex => (
                             <td key={tierIndex} className="p-4 text-center">
                               {tiers[tierIndex].isEnterprise ? (
-                                <AlertCircle className="w-5 h-5 text-amber-500 mx-auto" />
-                              ) : hasFeature(tierIndex, feature) ? (
-                                <Check className="w-5 h-5 text-green-500 mx-auto" />
+                                <span className="text-amber-500 font-semibold">
+                                  {t('showcase.pricing.comparison.values.custom', 'Personalizado')}
+                                </span>
                               ) : (
-                                <X className="w-5 h-5 text-muted-foreground/30 mx-auto" />
+                                <span className="font-bold text-foreground">
+                                  {category.getValue(tiers[tierIndex])}
+                                </span>
                               )}
                             </td>
                           ))}
