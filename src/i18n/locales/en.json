@@ -175,6 +175,156 @@
       "avgRoi": "Average ROI",
       "footer": "These are just some of the metrics. Your agency could be next."
     },
+    "creativePerformance": {
+      "title": "Creative Performance Tracker",
+      "subtitle": "Detailed tracking of each advertising creative's performance",
+      "performanceByCreative": "Performance by Creative",
+      "comparativeAnalysis": "Comparative analysis of all active creatives",
+      "creativeFatigueIndex": "Creative Fatigue Index",
+      "statusLabels": {
+        "topPerformer": "Top Performer",
+        "requiresAttention": "Requires Attention",
+        "normal": "Normal"
+      },
+      "metrics": {
+        "impressions": "Impressions",
+        "clicks": "Clicks",
+        "ctr": "CTR",
+        "spend": "Spend",
+        "conversions": "Conversions",
+        "cpa": "CPA",
+        "roas": "ROAS",
+        "fatigue": "Fatigue",
+        "activeDays": "Active for {days} days"
+      }
+    },
+    "multiChannel": {
+      "title": "Multi-Channel Communication",
+      "subtitle": "Unified management of WhatsApp, Email and SMS from a single platform",
+      "performanceByChannel": "Performance by Channel",
+      "comparativeMetrics": "Comparative metrics of all active channels",
+      "channelStatus": {
+        "active": "Active",
+        "inactive": "Inactive"
+      },
+      "metrics": {
+        "sent": "Sent messages",
+        "openRate": "Open rate",
+        "clickRate": "Click rate",
+        "opened": "Opened",
+        "clicked": "Clicked"
+      }
+    },
+    "inspirationLibrary": {
+      "title": "Inspiration Library",
+      "subtitle": "Industry-winning ads with detailed performance analysis",
+      "topPerformersMonth": "Top Performers of the Month",
+      "searchPlaceholder": "Search by industry, platform or format...",
+      "filters": "Filters",
+      "analyzedWinningAds": "Analyzed Winning Ads",
+      "highPerformanceCreatives": "High-performance creatives with actionable insights",
+      "tabs": {
+        "all": "All",
+        "video": "Video",
+        "image": "Image",
+        "carousel": "Carousel",
+        "story": "Story"
+      },
+      "metrics": {
+        "views": "Views",
+        "engagement": "Engagement",
+        "ctr": "CTR",
+        "roi": "ROI",
+        "keyInsights": "Key Insights"
+      },
+      "actions": {
+        "viewFullAnalysis": "View Full Analysis",
+        "useAsReference": "Use as Reference",
+        "createSimilarAI": "Create Similar with AI"
+      }
+    },
+    "faq": {
+      "badge": "Frequently Asked Questions",
+      "title": "Everything You Need to Know",
+      "subtitle": "Detailed answers to the most common questions about Brainy.",
+      "notFound": "Can't find what you're looking for? Contact us directly.",
+      "categories": {
+        "pricing": {
+          "title": "Pricing and Billing",
+          "questions": {
+            "variablePricing": {
+              "q": "How does the variable pricing model work?",
+              "a": "Brainy charges a monthly base price according to your tier (Starter, Small Agencies, Scaled Agencies, or Enterprise) plus a percentage of your monthly ad spend. For example, on the Starter tier you pay $500/month + 20% of your ad spend. The higher the tier, the lower the percentage you pay (20% → 15% → 10%), optimizing your cost as you scale."
+            },
+            "integrationCost": {
+              "q": "What does the 50% integration cost include?",
+              "a": "The integration cost is a one-time payment equivalent to 50% of your monthly base price. It includes: complete account setup, integration of all your social networks, chat automation setup, personalized brand voice training, and dedicated onboarding with your account manager."
+            },
+            "tierChange": {
+              "q": "Can I change tiers at any time?",
+              "a": "Yes, you can upgrade your tier at any time. The upgrade is immediate and you only pay the prorated difference for the current month plus the integration cost of the new tier. If you downgrade your tier, the change applies at the start of the next billing cycle with no penalties."
+            }
+          }
+        },
+        "integration": {
+          "title": "Integration and Setup",
+          "questions": {
+            "setupTime": {
+              "q": "How long does the initial integration take?",
+              "a": "The complete integration process takes 3-5 business days. Day 1-2: Brand information setup and social channel connection. Day 3: Payment methods setup and automation configuration. Day 4-5: AI voice training and complete testing. Your account manager guides you through each step."
+            },
+            "platforms": {
+              "q": "Which social platforms can I connect?",
+              "a": "Brainy integrates with Facebook, Instagram, LinkedIn, TikTok, Twitter/X, Threads and YouTube. We also connect WhatsApp Business API for conversational management. All integrations are configured during initial onboarding at no additional cost."
+            },
+            "technicalKnowledge": {
+              "q": "Do I need technical knowledge to use the platform?",
+              "a": "No, Brainy is designed for non-technical users. Main management is done from WhatsApp using natural language. Your team doesn't need to learn complex dashboards or technical tools. During onboarding we teach you everything necessary in less than 1 hour."
+            }
+          }
+        },
+        "features": {
+          "title": "Features and Functionality",
+          "questions": {
+            "whatsappManager": {
+              "q": "How does the WhatsApp Project Manager work?",
+              "a": "Brainy uses WhatsApp as the main management interface. It sends you pre-approved content for review, you respond with ✅ to approve or request changes in natural language. The AI generates alternative versions in seconds, schedules publications automatically and notifies you when everything is published with real-time metrics."
+            },
+            "mediaBuyer": {
+              "q": "What is the AI Media Buyer and how does it help me?",
+              "a": "The AI Media Buyer is your personal advertising campaign assistant. It monitors your ads 24/7, automatically optimizes bids, redistributes budget among winning creatives, detects creative fatigue before it affects your ROI, and sends you alerts with specific recommendations via WhatsApp when you need to make strategic decisions."
+            },
+            "brandLimit": {
+              "q": "How many brands can I manage simultaneously?",
+              "a": "It depends on your tier: Starter (1 brand), Small Agencies (up to 5 brands), Scaled Agencies (up to 15 brands), Enterprise (unlimited brands). Each brand has its own WhatsApp Project Manager, independent calendar and separate voice configuration."
+            }
+          }
+        },
+        "support": {
+          "title": "Support and Assistance",
+          "questions": {
+            "supportTypes": {
+              "q": "What type of support do you offer?",
+              "a": "Starter: Email support with 24h response. Small Agencies: Priority support with 4-6h response plus knowledge base access. Scaled Agencies: Priority support + dedicated manager with monthly meetings. Enterprise: 24/7 support with 99.9% guaranteed SLA plus personalized onboarding and continuous training."
+            },
+            "training": {
+              "q": "Do you offer training for my team?",
+              "a": "Yes, all tiers include initial onboarding. Small Agencies and above receive additional training: monthly group sessions on new features, best practice webinars, and access to video tutorial library. Enterprise includes personalized on-site or remote training according to specific needs."
+            },
+            "refund": {
+              "q": "Is there a refund guarantee?",
+              "a": "We offer a 14-day free trial without requiring a credit card. If after activating your subscription you're not satisfied in the first 30 days, we refund 100% of the base price (does not include integration cost or ad spend percentage already executed). No questions or complications."
+            }
+          }
+        }
+      },
+      "stillQuestions": {
+        "title": "Still have questions?",
+        "subtitle": "Our team is available to answer any additional questions. Schedule a personalized demo or write to us directly.",
+        "scheduleDemo": "Schedule Demo",
+        "contactSales": "Contact Sales"
+      }
+    },
     "connected": {
       "title": "Everything connected.",
       "titleHighlight": "Everything synchronized.",

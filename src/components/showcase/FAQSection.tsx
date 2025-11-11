@@ -8,8 +8,10 @@ import {
 } from "@/components/ui/accordion";
 import { HelpCircle, DollarSign, Wrench, HeadphonesIcon, Sparkles } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 
 export const FAQSection = () => {
+  const { t } = useTranslation();
   const faqCategories = [
     {
       id: "pricing",
@@ -110,8 +112,7 @@ export const FAQSection = () => {
           Todo lo que Necesitas Saber
         </h2>
         <p className="text-xl text-muted-foreground font-light">
-          Respuestas detalladas a las preguntas más comunes sobre BrainybyUnica. 
-          ¿No encuentras lo que buscas? Contáctanos directamente.
+          {t('showcase.faq.subtitle')} {t('showcase.faq.notFound')}
         </p>
       </div>
 

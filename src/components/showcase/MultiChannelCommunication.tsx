@@ -3,8 +3,10 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { MessageSquare, Mail, Smartphone, Send, Users, TrendingUp, CheckCircle2 } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 
 const MultiChannelCommunication = () => {
+  const { t } = useTranslation();
   const channels = [
     {
       name: 'WhatsApp',
@@ -76,10 +78,10 @@ const MultiChannelCommunication = () => {
             </div>
             <div>
               <CardTitle className="text-2xl font-bold tracking-tight text-foreground uppercase">
-                Comunicación Omnicanal
+                {t('showcase.multiChannel.title')}
               </CardTitle>
               <p className="text-base text-muted-foreground font-light">
-                Gestión unificada de WhatsApp, Email y SMS desde una sola plataforma
+                {t('showcase.multiChannel.subtitle')}
               </p>
             </div>
           </div>

@@ -3,8 +3,10 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { TrendingUp, TrendingDown, Eye, MousePointer, DollarSign, Users, AlertTriangle, BarChart3 } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 
 const CreativePerformanceTracker = () => {
+  const { t } = useTranslation();
   const creatives = [
     {
       id: 1,
@@ -100,10 +102,10 @@ const CreativePerformanceTracker = () => {
             </div>
             <div>
               <CardTitle className="text-2xl font-bold tracking-tight text-foreground uppercase">
-                Creative Performance Tracker
+                {t('showcase.creativePerformance.title')}
               </CardTitle>
               <p className="text-base text-muted-foreground font-light">
-                Seguimiento detallado del rendimiento de cada creatividad publicitaria
+                {t('showcase.creativePerformance.subtitle')}
               </p>
             </div>
           </div>
@@ -113,8 +115,8 @@ const CreativePerformanceTracker = () => {
       {/* Performance Overview */}
       <Card className="border-border/50 bg-card/30 backdrop-blur-sm">
         <CardHeader>
-          <CardTitle className="text-xl font-bold uppercase tracking-tight">Rendimiento por Creatividad</CardTitle>
-          <p className="text-sm text-muted-foreground font-light">Análisis comparativo de todas las creatividades activas</p>
+          <CardTitle className="text-xl font-bold uppercase tracking-tight">{t('showcase.creativePerformance.performanceByCreative')}</CardTitle>
+          <p className="text-sm text-muted-foreground font-light">{t('showcase.creativePerformance.comparativeAnalysis')}</p>
         </CardHeader>
         <CardContent className="space-y-6">
           {creatives.map((creative, idx) => (
