@@ -3,6 +3,10 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { ArrowLeft, ArrowRight, ExternalLink } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { ShowcaseHeader } from '@/components/showcase/ShowcaseHeader';
+import { ShowcaseBreadcrumbs } from '@/components/showcase/ShowcaseBreadcrumbs';
+import { ShowcaseSEO } from '@/components/showcase/ShowcaseSEO';
+import { useTranslation } from 'react-i18next';
 import demoTechstartImage from '@/assets/demo-techstart.jpg';
 import demoEcogreenImage from '@/assets/demo-ecogreen.jpg';
 import demoFitlifeImage from '@/assets/demo-fitlife.jpg';
@@ -54,29 +58,25 @@ const brands = [
 
 const ShowcaseBrandsPage = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Header */}
-      <div className="border-b bg-card">
-        <div className="container mx-auto px-4 py-6">
-          <div className="flex items-center justify-between">
-            <div>
-              <Button 
-                variant="ghost" 
-                size="sm" 
-                onClick={() => navigate('/')}
-                className="mb-2"
-              >
-                <ArrowLeft className="w-4 h-4 mr-2" />
-                Volver a Inicio
-              </Button>
-              <h1 className="text-3xl font-bold">Demo de la Plataforma</h1>
-              <p className="text-muted-foreground mt-1">
-                Explora cómo gestionar múltiples marcas con funcionalidades avanzadas
-              </p>
-            </div>
-          </div>
+      <ShowcaseSEO 
+        title={t('showcase.brands.title', 'Brands')}
+        description={t('showcase.brands.description', 'Explore how to manage multiple brands with advanced AI-powered features')}
+        path="/brands"
+      />
+      <ShowcaseHeader />
+      
+      <div className="container mx-auto px-4 py-6">
+        <ShowcaseBreadcrumbs />
+        
+        <div className="mt-6">
+          <h1 className="text-3xl font-bold">{t('showcase.brands.heading', 'Demo de la Plataforma')}</h1>
+          <p className="text-muted-foreground mt-1">
+            {t('showcase.brands.subheading', 'Explora cómo gestionar múltiples marcas con funcionalidades avanzadas')}
+          </p>
         </div>
       </div>
 

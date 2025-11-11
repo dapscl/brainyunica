@@ -11,6 +11,10 @@ import { ArrowLeft, CheckCircle2, Sparkles, TrendingUp, Users, DollarSign } from
 import { motion } from 'framer-motion';
 import { useToast } from '@/hooks/use-toast';
 import { z } from 'zod';
+import { ShowcaseHeader } from '@/components/showcase/ShowcaseHeader';
+import { ShowcaseBreadcrumbs } from '@/components/showcase/ShowcaseBreadcrumbs';
+import { ShowcaseSEO } from '@/components/showcase/ShowcaseSEO';
+import { useTranslation } from 'react-i18next';
 
 const leadSchema = z.object({
   fullName: z.string().trim().min(2, { message: "El nombre debe tener al menos 2 caracteres" }).max(100),
@@ -225,17 +229,19 @@ const ShowcaseLeadCapturePage = () => {
     );
   }
 
+  const { t } = useTranslation();
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-deep-blue via-background to-background dark">
-      <div className="container mx-auto px-4 py-12">
-        <Button
-          variant="ghost"
-          onClick={() => navigate('/')}
-          className="mb-8 text-foreground hover:text-electric-cyan"
-        >
-          <ArrowLeft className="w-4 h-4 mr-2" />
-          Volver al Showcase
-        </Button>
+      <ShowcaseSEO 
+        title={t('showcase.leadCapture.title', 'Request Early Access')}
+        description={t('showcase.leadCapture.description', 'Join the agencies automating their future with AI-powered marketing')}
+        path="/lead-capture"
+      />
+      <ShowcaseHeader />
+      
+      <div className="container mx-auto px-4 py-6">
+        <ShowcaseBreadcrumbs />
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}

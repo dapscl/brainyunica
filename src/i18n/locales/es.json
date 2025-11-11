@@ -86,6 +86,31 @@
     "yearly": "Anual"
   },
   "showcase": {
+    "nav": {
+      "home": "Inicio",
+      "brands": "Marcas",
+      "pricing": "Precios",
+      "onboarding": "Onboarding",
+      "getStarted": "Comenzar"
+    },
+    "breadcrumbs": {
+      "home": "Inicio",
+      "brands": "Marcas",
+      "setup": "Configuración",
+      "createContent": "Crear Contenido",
+      "createCampaign": "Crear Campaña",
+      "chatAutomation": "Automatización de Chat",
+      "videoGenerator": "Generador de Video",
+      "inspiration": "Biblioteca de Inspiración",
+      "leadCapture": "Captura de Leads",
+      "pricing": "Precios",
+      "onboarding": "Onboarding"
+    },
+    "seo": {
+      "defaultTitle": "Brainy by Unica - Plataforma de Marketing con IA",
+      "defaultDescription": "Mira cómo funciona una agencia cuando la IA la dirige. Brainy automatiza contenido, anuncios y conversaciones desde un solo lugar. Sin estrés. Sin procesos. Sin límites.",
+      "keywords": "marketing IA, automatización de marketing, gestión redes sociales, optimización anuncios, creación contenido, automatización chat, plataforma marketing digital"
+    },
     "hero": {
       "badge": "El futuro del marketing funcionando solo",
       "title": {

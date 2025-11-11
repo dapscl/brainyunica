@@ -3,9 +3,14 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Badge } from '@/components/ui/badge';
 import { ArrowLeft, Check, TrendingUp, Zap, Crown, Sparkles } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { ShowcaseHeader } from '@/components/showcase/ShowcaseHeader';
+import { ShowcaseBreadcrumbs } from '@/components/showcase/ShowcaseBreadcrumbs';
+import { ShowcaseSEO } from '@/components/showcase/ShowcaseSEO';
+import { useTranslation } from 'react-i18next';
 
 const ShowcasePricingPage = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const pricingTiers = [
     {
@@ -109,29 +114,25 @@ const ShowcasePricingPage = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Header */}
-      <div className="border-b bg-card">
-        <div className="container mx-auto px-4 py-6">
-          <Button 
-            variant="ghost" 
-            size="sm" 
-            onClick={() => navigate('/')}
-            className="mb-4"
-          >
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            Volver al Showcase
-          </Button>
-          
-          <div className="text-center max-w-3xl mx-auto">
-            <Badge className="mb-4" variant="outline">
-              <Sparkles className="w-3 h-3 mr-1" />
-              Pricing Escalable
-            </Badge>
-            <h1 className="text-4xl font-bold mb-4">Precio que Crece Contigo</h1>
-            <p className="text-xl text-muted-foreground">
-              Paga solo por lo que inviertes. Nuestro modelo de pricing escala proporcionalmente con tu ad spend, sin sorpresas.
-            </p>
-          </div>
+      <ShowcaseSEO 
+        title={t('showcase.pricing.title', 'Pricing')}
+        description={t('showcase.pricing.description', 'Transparent pricing that scales with your ad spend. Choose the right plan for your agency.')}
+        path="/pricing"
+      />
+      <ShowcaseHeader />
+      
+      <div className="container mx-auto px-4 py-6">
+        <ShowcaseBreadcrumbs />
+        
+        <div className="text-center max-w-3xl mx-auto mt-6">
+          <Badge className="mb-4" variant="outline">
+            <Sparkles className="w-3 h-3 mr-1" />
+            Pricing Escalable
+          </Badge>
+          <h1 className="text-4xl font-bold mb-4">Precio que Crece Contigo</h1>
+          <p className="text-xl text-muted-foreground">
+            Paga solo por lo que inviertes. Nuestro modelo de pricing escala proporcionalmente con tu ad spend, sin sorpresas.
+          </p>
         </div>
       </div>
 

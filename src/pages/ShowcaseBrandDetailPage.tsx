@@ -2,6 +2,10 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { ShowcaseHeader } from '@/components/showcase/ShowcaseHeader';
+import { ShowcaseBreadcrumbs } from '@/components/showcase/ShowcaseBreadcrumbs';
+import { ShowcaseSEO } from '@/components/showcase/ShowcaseSEO';
+import { useTranslation } from 'react-i18next';
 import { 
   ArrowLeft, 
   Video,
@@ -67,6 +71,7 @@ const platformIcons: Record<string, any> = {
 const ShowcaseBrandDetailPage = () => {
   const { slug } = useParams();
   const navigate = useNavigate();
+  const { t } = useTranslation();
   
   const brand = slug ? brandData[slug] : null;
 
@@ -172,7 +177,18 @@ const ShowcaseBrandDetailPage = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Header */}
+      <ShowcaseSEO 
+        title={`${brand.name} - ${t('showcase.brandDetail.title', 'Brand Detail')}`}
+        description={brand.description}
+        path={`/brands/${slug}`}
+      />
+      <ShowcaseHeader />
+      
+      <div className="container mx-auto px-4 py-6">
+        <ShowcaseBreadcrumbs />
+      </div>
+
+      {/* Brand Header */}
       <div className="border-b bg-card">
         <div className="container mx-auto px-4 py-6">
           <div className="flex items-center gap-4 mb-4">

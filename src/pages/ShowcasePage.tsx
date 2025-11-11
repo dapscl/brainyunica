@@ -23,7 +23,8 @@ import WhatsAppProjectManager from '@/components/showcase/WhatsAppProjectManager
 import InspirationLibrary from '@/components/showcase/InspirationLibrary';
 import { FAQSection } from '@/components/showcase/FAQSection';
 import { AnimatedMetrics } from '@/components/showcase/AnimatedMetrics';
-import { LanguageSelector } from '@/components/layout/LanguageSelector';
+import { ShowcaseHeader } from '@/components/showcase/ShowcaseHeader';
+import { ShowcaseSEO } from '@/components/showcase/ShowcaseSEO';
 import { motion } from 'framer-motion';
 
 const ShowcasePage = () => {
@@ -32,13 +33,11 @@ const ShowcasePage = () => {
 
   return (
     <div className="min-h-screen bg-background dark">
-      {/* Language Selector - Fixed position */}
-      <div className="fixed top-4 right-4 z-50">
-        <LanguageSelector />
-      </div>
+      <ShowcaseSEO />
+      <ShowcaseHeader />
 
       {/* Hero Section */}
-      <section className="container mx-auto px-4 pt-32 pb-20">
+      <section className="container mx-auto px-4 pt-20 pb-20">
         <div className="text-center max-w-6xl mx-auto space-y-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -61,12 +60,8 @@ const ShowcasePage = () => {
               {t('showcase.hero.title.line1')}
             </span>
             <br />
-            <span className="text-foreground">
-              {t('showcase.hero.title.line2')}
-            </span>
-            <br />
             <span className="text-electric-cyan">
-              {t('showcase.hero.title.line3')}
+              {t('showcase.hero.title.line2')}
             </span>
           </motion.h1>
           

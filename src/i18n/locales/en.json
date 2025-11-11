@@ -86,12 +86,36 @@
     "yearly": "Yearly"
   },
   "showcase": {
+    "nav": {
+      "home": "Home",
+      "brands": "Brands",
+      "pricing": "Pricing",
+      "onboarding": "Onboarding",
+      "getStarted": "Get Started"
+    },
+    "breadcrumbs": {
+      "home": "Home",
+      "brands": "Brands",
+      "setup": "Setup",
+      "createContent": "Create Content",
+      "createCampaign": "Create Campaign",
+      "chatAutomation": "Chat Automation",
+      "videoGenerator": "Video Generator",
+      "inspiration": "Inspiration Library",
+      "leadCapture": "Lead Capture",
+      "pricing": "Pricing",
+      "onboarding": "Onboarding"
+    },
+    "seo": {
+      "defaultTitle": "Brainy by Unica - AI-Powered Marketing Platform",
+      "defaultDescription": "See how an agency works when AI runs it. Brainy automates content, ads, and conversations from one place. No stress. No processes. No limits.",
+      "keywords": "AI marketing, marketing automation, social media management, ad optimization, content creation, chat automation, digital marketing platform"
+    },
     "hero": {
       "badge": "The future of marketing running itself",
       "title": {
         "line1": "See how an agency works",
-        "line2": "when AI",
-        "line3": "runs it"
+        "line2": "when AI runs it"
       },
       "subtitle": "Brainy automates content, ads, and conversations from one place.",
       "subtitleBold": "No stress. No processes. No limits.",
