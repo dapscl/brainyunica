@@ -159,6 +159,82 @@
       "product": "Brainy.",
       "button": "Request early access →",
       "footer": "Join the agencies and companies that have already automated their future"
+    },
+    "platformComparison": {
+      "badge": "Comparison",
+      "title": "One Platform that Replaces Everything",
+      "subtitle": "Instead of hiring 4-6 different tools, BrainybyUnica centralizes all the capabilities you need to manage your digital marketing from a single place.",
+      "functionality": "Functionality",
+      "traditional": "Traditional Approach",
+      "brainy": "BrainybyUnica",
+      "features": {
+        "social": {
+          "category": "Social Media Management",
+          "description": "Multi-channel planning, scheduling and publishing",
+          "traditional": "Separate platform with complex dashboard",
+          "brainy": "Conversational management via WhatsApp with AI"
+        },
+        "chat": {
+          "category": "Chat Automation",
+          "description": "Automatic responses and conversational flows",
+          "traditional": "Dedicated tool with visual flows",
+          "brainy": "Natively integrated with content management"
+        },
+        "ads": {
+          "category": "Advertising Campaigns",
+          "description": "Media buying, optimization and ROI tracking",
+          "traditional": "Independent paid media platform",
+          "brainy": "AI Media Buyer with real-time recommendations"
+        },
+        "projects": {
+          "category": "Project Management",
+          "description": "Tasks, approvals and team collaboration",
+          "traditional": "Separate project management software",
+          "brainy": "Approval workflow integrated in WhatsApp"
+        },
+        "analytics": {
+          "category": "Analytics and Reporting",
+          "description": "Metrics, dashboards and exportable reports",
+          "traditional": "Data scattered across multiple platforms",
+          "brainy": "Unified real-time view of the entire ecosystem"
+        },
+        "content": {
+          "category": "Content Generation",
+          "description": "AI-powered copy, image and video creation",
+          "traditional": "Not included - requires additional tools",
+          "brainy": "Integrated multimodal generator (text, image, video)"
+        },
+        "leads": {
+          "category": "Lead Capture",
+          "description": "Forms, segmentation and nurturing",
+          "traditional": "Separate CRM or marketing automation tool",
+          "brainy": "Lead system with conversational automation"
+        },
+        "trends": {
+          "category": "Trends and Inspiration",
+          "description": "Trend monitoring and reference library",
+          "traditional": "Manual research or extra subscriptions",
+          "brainy": "Automatic weekly analysis with content suggestions"
+        }
+      },
+      "results": {
+        "title": "The Result",
+        "cost": "Reduction in tool costs",
+        "speed": "Faster in approvals",
+        "visibility": "Unified visibility"
+      }
+    },
+    "interactiveDemo": {
+      "title": "Interactive Demo: Complete Flow",
+      "subtitle": "Watch how BrainybyUnica manages the entire process from WhatsApp approval to automatic publishing on social networks",
+      "assistantName": "BrainybyUnica Assistant",
+      "online": "Online",
+      "startDemo": "Start Interactive Demo",
+      "restartDemo": "Restart Demo",
+      "processSteps": "Process Steps",
+      "simulating": "Simulating real-time flow...",
+      "completedTitle": "Demo Completed",
+      "completedText": "This is the complete conversational management flow with BrainybyUnica: from WhatsApp approval to automatic publishing on social networks, all in real time."
     }
   }
 }

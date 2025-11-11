@@ -159,6 +159,82 @@
       "product": "Brainy.",
       "button": "Solicita acceso anticipado →",
       "footer": "Únete a las agencias y empresas que ya automatizaron su futuro"
+    },
+    "platformComparison": {
+      "badge": "Comparativa",
+      "title": "Una Plataforma que Reemplaza Todo",
+      "subtitle": "En lugar de contratar 4-6 herramientas diferentes, BrainybyUnica centraliza todas las capacidades que necesitas para gestionar tu marketing digital desde un solo lugar.",
+      "functionality": "Funcionalidad",
+      "traditional": "Enfoque Tradicional",
+      "brainy": "BrainybyUnica",
+      "features": {
+        "social": {
+          "category": "Gestión de Redes Sociales",
+          "description": "Planificación, calendarización y publicación multicanal",
+          "traditional": "Plataforma separada con dashboard complejo",
+          "brainy": "Gestión conversacional vía WhatsApp con IA"
+        },
+        "chat": {
+          "category": "Automatización de Chat",
+          "description": "Respuestas automáticas y flujos conversacionales",
+          "traditional": "Herramienta dedicada con flujos visuales",
+          "brainy": "Integrado nativamente con gestión de contenido"
+        },
+        "ads": {
+          "category": "Campañas Publicitarias",
+          "description": "Media buying, optimización y seguimiento de ROI",
+          "traditional": "Plataforma de paid media independiente",
+          "brainy": "AI Media Buyer con recomendaciones en tiempo real"
+        },
+        "projects": {
+          "category": "Gestión de Proyectos",
+          "description": "Tareas, aprobaciones y colaboración de equipo",
+          "traditional": "Software de project management por separado",
+          "brainy": "Flujo de aprobaciones integrado en WhatsApp"
+        },
+        "analytics": {
+          "category": "Analytics y Reporting",
+          "description": "Métricas, dashboards y reportes exportables",
+          "traditional": "Datos dispersos en múltiples plataformas",
+          "brainy": "Vista unificada en tiempo real de todo el ecosistema"
+        },
+        "content": {
+          "category": "Generación de Contenido",
+          "description": "Creación de copys, imágenes y videos con IA",
+          "traditional": "No incluido - requiere herramientas adicionales",
+          "brainy": "Generador multimodal (texto, imagen, video) integrado"
+        },
+        "leads": {
+          "category": "Captura de Leads",
+          "description": "Formularios, segmentación y nurturing",
+          "traditional": "CRM o herramienta de marketing automation separada",
+          "brainy": "Sistema de leads con automatización conversacional"
+        },
+        "trends": {
+          "category": "Tendencias e Inspiración",
+          "description": "Monitoreo de trends y biblioteca de referencias",
+          "traditional": "Investigación manual o suscripciones extra",
+          "brainy": "Análisis automático semanal con sugerencias de contenido"
+        }
+      },
+      "results": {
+        "title": "El Resultado",
+        "cost": "Reducción en costos de herramientas",
+        "speed": "Más rápido en aprobaciones",
+        "visibility": "Visibilidad unificada"
+      }
+    },
+    "interactiveDemo": {
+      "title": "Demo Interactivo: Flujo Completo",
+      "subtitle": "Observa cómo BrainybyUnica gestiona todo el proceso desde la aprobación por WhatsApp hasta la publicación automática en redes sociales",
+      "assistantName": "BrainybyUnica Assistant",
+      "online": "En línea",
+      "startDemo": "Iniciar Demo Interactivo",
+      "restartDemo": "Reiniciar Demo",
+      "processSteps": "Pasos del Proceso",
+      "simulating": "Simulando flujo en tiempo real...",
+      "completedTitle": "Demo Completado",
+      "completedText": "Este es el flujo completo de gestión conversacional con BrainybyUnica: desde la aprobación por WhatsApp hasta la publicación automática en redes sociales, todo en tiempo real."
     }
   }
 }

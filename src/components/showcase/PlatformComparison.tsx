@@ -1,144 +1,141 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Check, X } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 
 export const PlatformComparison = () => {
+  const { t } = useTranslation();
+  
   const features = [
-    {
-      category: "Gestión de Redes Sociales",
-      description: "Planificación, calendarización y publicación multicanal",
-      traditional: "Plataforma separada con dashboard complejo",
-      brainy: "Gestión conversacional vía WhatsApp con IA"
-    },
-    {
-      category: "Automatización de Chat",
-      description: "Respuestas automáticas y flujos conversacionales",
-      traditional: "Herramienta dedicada con flujos visuales",
-      brainy: "Integrado nativamente con gestión de contenido"
-    },
-    {
-      category: "Campañas Publicitarias",
-      description: "Media buying, optimización y seguimiento de ROI",
-      traditional: "Plataforma de paid media independiente",
-      brainy: "AI Media Buyer con recomendaciones en tiempo real"
-    },
-    {
-      category: "Gestión de Proyectos",
-      description: "Tareas, aprobaciones y colaboración de equipo",
-      traditional: "Software de project management por separado",
-      brainy: "Flujo de aprobaciones integrado en WhatsApp"
-    },
-    {
-      category: "Analytics y Reporting",
-      description: "Métricas, dashboards y reportes exportables",
-      traditional: "Datos dispersos en múltiples plataformas",
-      brainy: "Vista unificada en tiempo real de todo el ecosistema"
-    },
-    {
-      category: "Generación de Contenido",
-      description: "Creación de copys, imágenes y videos con IA",
-      traditional: "No incluido - requiere herramientas adicionales",
-      brainy: "Generador multimodal (texto, imagen, video) integrado"
-    },
-    {
-      category: "Captura de Leads",
-      description: "Formularios, segmentación y nurturing",
-      traditional: "CRM o herramienta de marketing automation separada",
-      brainy: "Sistema de leads con automatización conversacional"
-    },
-    {
-      category: "Tendencias e Inspiración",
-      description: "Monitoreo de trends y biblioteca de referencias",
-      traditional: "Investigación manual o suscripciones extra",
-      brainy: "Análisis automático semanal con sugerencias de contenido"
-    }
+    'social', 'chat', 'ads', 'projects', 'analytics', 'content', 'leads', 'trends'
   ];
 
   return (
     <div className="space-y-8">
-      <div className="text-center max-w-3xl mx-auto mb-12">
-        <Badge variant="outline" className="mb-4 px-4 py-2">
-          Comparativa
+      <motion.div 
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6 }}
+        className="text-center max-w-3xl mx-auto mb-12"
+      >
+        <Badge variant="outline" className="mb-4 px-4 py-2 bg-card/30 backdrop-blur-sm border-electric-cyan/30">
+          {t('showcase.platformComparison.badge')}
         </Badge>
-        <h2 className="text-4xl md:text-5xl font-bold mb-4">
-          Una Plataforma que Reemplaza Todo
+        <h2 className="text-4xl md:text-5xl font-bold mb-4 text-foreground">
+          {t('showcase.platformComparison.title')}
         </h2>
         <p className="text-xl text-muted-foreground">
-          En lugar de contratar 4-6 herramientas diferentes, BrainybyUnica centraliza todas 
-          las capacidades que necesitas para gestionar tu marketing digital desde un solo lugar.
+          {t('showcase.platformComparison.subtitle')}
         </p>
-      </div>
+      </motion.div>
 
-      <div className="grid lg:grid-cols-3 gap-4 mb-8">
-        <Card className="lg:col-span-1 bg-muted/30">
+      <motion.div 
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5, delay: 0.2 }}
+        className="grid lg:grid-cols-3 gap-4 mb-8"
+      >
+        <Card className="lg:col-span-1 bg-card/30 backdrop-blur-sm border-border/50">
           <CardHeader>
-            <CardTitle className="text-center">Funcionalidad</CardTitle>
+            <CardTitle className="text-center text-foreground">{t('showcase.platformComparison.functionality')}</CardTitle>
           </CardHeader>
         </Card>
-        <Card className="lg:col-span-1 bg-muted/50">
+        <Card className="lg:col-span-1 bg-card/20 backdrop-blur-sm border-border/30">
           <CardHeader>
-            <CardTitle className="text-center flex items-center justify-center gap-2">
+            <CardTitle className="text-center flex items-center justify-center gap-2 text-muted-foreground">
               <X className="w-5 h-5 text-destructive" />
-              Enfoque Tradicional
+              {t('showcase.platformComparison.traditional')}
             </CardTitle>
           </CardHeader>
         </Card>
-        <Card className="lg:col-span-1 bg-primary/5 border-primary/20">
+        <Card className="lg:col-span-1 bg-electric-cyan/5 backdrop-blur-sm border-electric-cyan/30 hover:shadow-glow-cyan transition-all duration-300">
           <CardHeader>
-            <CardTitle className="text-center flex items-center justify-center gap-2 text-primary">
+            <CardTitle className="text-center flex items-center justify-center gap-2 text-electric-cyan">
               <Check className="w-5 h-5" />
-              BrainybyUnica
+              {t('showcase.platformComparison.brainy')}
             </CardTitle>
           </CardHeader>
         </Card>
-      </div>
+      </motion.div>
 
       <div className="space-y-3">
         {features.map((feature, idx) => (
-          <div key={idx} className="grid lg:grid-cols-3 gap-4 items-start">
-            <Card className="h-full">
+          <motion.div 
+            key={idx}
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: idx * 0.1 }}
+            className="grid lg:grid-cols-3 gap-4 items-start"
+          >
+            <Card className="h-full bg-card/30 backdrop-blur-sm border-border/50 hover:bg-card/40 transition-all duration-300">
               <CardContent className="p-4">
-                <h3 className="font-semibold mb-1">{feature.category}</h3>
-                <p className="text-sm text-muted-foreground">{feature.description}</p>
+                <h3 className="font-semibold mb-1 text-foreground">{t(`showcase.platformComparison.features.${feature}.category`)}</h3>
+                <p className="text-sm text-muted-foreground">{t(`showcase.platformComparison.features.${feature}.description`)}</p>
               </CardContent>
             </Card>
             
-            <Card className="h-full bg-muted/30">
+            <Card className="h-full bg-card/20 backdrop-blur-sm border-border/30">
               <CardContent className="p-4 flex items-center gap-3">
                 <X className="w-5 h-5 text-destructive flex-shrink-0" />
-                <p className="text-sm">{feature.traditional}</p>
+                <p className="text-sm text-muted-foreground">{t(`showcase.platformComparison.features.${feature}.traditional`)}</p>
               </CardContent>
             </Card>
 
-            <Card className="h-full bg-primary/5 border-primary/20">
+            <Card className="h-full bg-electric-cyan/5 backdrop-blur-sm border-electric-cyan/30 hover:shadow-glow-cyan transition-all duration-300">
               <CardContent className="p-4 flex items-center gap-3">
-                <Check className="w-5 h-5 text-primary flex-shrink-0" />
-                <p className="text-sm font-medium">{feature.brainy}</p>
+                <Check className="w-5 h-5 text-electric-cyan flex-shrink-0" />
+                <p className="text-sm font-medium text-foreground">{t(`showcase.platformComparison.features.${feature}.brainy`)}</p>
               </CardContent>
             </Card>
-          </div>
+          </motion.div>
         ))}
       </div>
 
-      <Card className="bg-gradient-to-br from-primary/10 to-primary/5 border-primary/20 mt-12">
-        <CardContent className="p-8 text-center">
-          <h3 className="text-2xl font-bold mb-3">El Resultado</h3>
-          <div className="grid md:grid-cols-3 gap-6 mt-6">
-            <div>
-              <p className="text-4xl font-bold text-primary mb-2">-70%</p>
-              <p className="text-sm text-muted-foreground">Reducción en costos de herramientas</p>
+      <motion.div
+        initial={{ opacity: 0, y: 30, scale: 0.95 }}
+        whileInView={{ opacity: 1, y: 0, scale: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6, delay: 0.3 }}
+      >
+        <Card className="bg-gradient-to-br from-electric-cyan/10 via-purple-accent/10 to-deep-blue/20 backdrop-blur-sm border-electric-cyan/30 mt-12 hover:shadow-glow-cyan transition-all duration-500">
+          <CardContent className="p-8 text-center">
+            <h3 className="text-2xl font-bold mb-3 text-foreground">{t('showcase.platformComparison.results.title')}</h3>
+            <div className="grid md:grid-cols-3 gap-6 mt-6">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.8 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.5 }}
+              >
+                <p className="text-4xl font-bold text-electric-cyan mb-2">-70%</p>
+                <p className="text-sm text-muted-foreground">{t('showcase.platformComparison.results.cost')}</p>
+              </motion.div>
+              <motion.div
+                initial={{ opacity: 0, scale: 0.8 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.6 }}
+              >
+                <p className="text-4xl font-bold text-electric-cyan mb-2">5x</p>
+                <p className="text-sm text-muted-foreground">{t('showcase.platformComparison.results.speed')}</p>
+              </motion.div>
+              <motion.div
+                initial={{ opacity: 0, scale: 0.8 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.7 }}
+              >
+                <p className="text-4xl font-bold text-electric-cyan mb-2">100%</p>
+                <p className="text-sm text-muted-foreground">{t('showcase.platformComparison.results.visibility')}</p>
+              </motion.div>
             </div>
-            <div>
-              <p className="text-4xl font-bold text-primary mb-2">5x</p>
-              <p className="text-sm text-muted-foreground">Más rápido en aprobaciones</p>
-            </div>
-            <div>
-              <p className="text-4xl font-bold text-primary mb-2">100%</p>
-              <p className="text-sm text-muted-foreground">Visibilidad unificada</p>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
+          </CardContent>
+        </Card>
+      </motion.div>
     </div>
   );
 };

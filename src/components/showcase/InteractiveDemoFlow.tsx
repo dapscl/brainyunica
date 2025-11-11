@@ -3,6 +3,7 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { MessageSquare, Send, CheckCircle2, Calendar, TrendingUp, Image } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useTranslation } from "react-i18next";
 
 interface Message {
   sender: "brainy" | "user";
@@ -98,6 +99,7 @@ const demoSteps = [
 ];
 
 export function InteractiveDemoFlow() {
+  const { t } = useTranslation();
   const [currentStep, setCurrentStep] = useState(0);
   const [displayedMessages, setDisplayedMessages] = useState<Message[]>([]);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -127,25 +129,37 @@ export function InteractiveDemoFlow() {
 
   return (
     <div className="w-full max-w-6xl mx-auto space-y-8">
-      <div className="text-center space-y-4">
-        <h2 className="text-4xl font-bold bg-gradient-to-r from-primary via-primary/80 to-accent bg-clip-text text-transparent">
-          Demo Interactivo: Flujo Completo
+      <motion.div 
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6 }}
+        className="text-center space-y-4"
+      >
+        <h2 className="text-4xl font-bold bg-gradient-to-r from-electric-cyan via-purple-accent to-electric-cyan bg-clip-text text-transparent">
+          {t('showcase.interactiveDemo.title')}
         </h2>
         <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-          Observa cómo BrainybyUnica gestiona todo el proceso desde la aprobación por WhatsApp hasta la publicación automática en redes sociales
+          {t('showcase.interactiveDemo.subtitle')}
         </p>
-      </div>
+      </motion.div>
 
-      <div className="grid lg:grid-cols-2 gap-8">
+      <motion.div 
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5, delay: 0.2 }}
+        className="grid lg:grid-cols-2 gap-8"
+      >
         {/* WhatsApp Chat Simulation */}
-        <Card className="p-6 bg-gradient-to-br from-background to-secondary/5 border-2">
-          <div className="flex items-center gap-3 mb-6 pb-4 border-b">
-            <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center">
-              <MessageSquare className="w-6 h-6 text-primary-foreground" />
+        <Card className="p-6 bg-card/30 backdrop-blur-sm border-electric-cyan/30 hover:shadow-glow-cyan transition-all duration-300">
+          <div className="flex items-center gap-3 mb-6 pb-4 border-b border-border/50">
+            <div className="w-12 h-12 rounded-full bg-gradient-to-br from-electric-cyan to-purple-accent flex items-center justify-center shadow-glow-cyan">
+              <MessageSquare className="w-6 h-6 text-foreground" />
             </div>
             <div>
-              <h3 className="font-semibold text-lg">BrainybyUnica Assistant</h3>
-              <p className="text-sm text-muted-foreground">En línea</p>
+              <h3 className="font-semibold text-lg text-foreground">{t('showcase.interactiveDemo.assistantName')}</h3>
+              <p className="text-sm text-muted-foreground">{t('showcase.interactiveDemo.online')}</p>
             </div>
           </div>
 
@@ -160,10 +174,10 @@ export function InteractiveDemoFlow() {
                   className={`flex ${msg.sender === "user" ? "justify-end" : "justify-start"}`}
                 >
                   <div
-                    className={`max-w-[80%] rounded-2xl p-4 ${
+                    className={`max-w-[80%] rounded-2xl p-4 backdrop-blur-sm ${
                       msg.sender === "user"
-                        ? "bg-primary text-primary-foreground ml-auto"
-                        : "bg-secondary text-secondary-foreground"
+                        ? "bg-electric-cyan/20 text-foreground ml-auto border border-electric-cyan/30"
+                        : "bg-card/50 text-foreground border border-border/30"
                     }`}
                   >
                     <p className="whitespace-pre-line text-sm leading-relaxed">{msg.text}</p>
@@ -176,18 +190,18 @@ export function InteractiveDemoFlow() {
 
           {!isPlaying && displayedMessages.length === 0 && (
             <div className="flex items-center justify-center h-[500px]">
-              <Button onClick={startDemo} size="lg" className="gap-2">
+              <Button onClick={startDemo} size="lg" className="gap-2 bg-electric-cyan hover:bg-electric-cyan/90 text-foreground shadow-glow-cyan">
                 <Send className="w-5 h-5" />
-                Iniciar Demo Interactivo
+                {t('showcase.interactiveDemo.startDemo')}
               </Button>
             </div>
           )}
 
           {!isPlaying && displayedMessages.length > 0 && (
             <div className="mt-6 flex justify-center">
-              <Button onClick={startDemo} variant="outline" size="lg" className="gap-2">
+              <Button onClick={startDemo} variant="outline" size="lg" className="gap-2 border-electric-cyan/50 hover:bg-electric-cyan/10">
                 <Send className="w-5 h-5" />
-                Reiniciar Demo
+                {t('showcase.interactiveDemo.restartDemo')}
               </Button>
             </div>
           )}
@@ -195,7 +209,7 @@ export function InteractiveDemoFlow() {
 
         {/* Process Steps */}
         <div className="space-y-4">
-          <h3 className="text-2xl font-semibold mb-6">Pasos del Proceso</h3>
+          <h3 className="text-2xl font-semibold mb-6 text-foreground">{t('showcase.interactiveDemo.processSteps')}</h3>
           {demoSteps.map((step, idx) => (
             <motion.div
               key={step.id}
@@ -207,22 +221,22 @@ export function InteractiveDemoFlow() {
               transition={{ duration: 0.3 }}
             >
               <Card
-                className={`p-6 border-2 transition-all duration-300 ${
+                className={`p-6 border-2 transition-all duration-300 backdrop-blur-sm ${
                   idx < currentStep
-                    ? "bg-primary/5 border-primary/50"
+                    ? "bg-electric-cyan/5 border-electric-cyan/50 shadow-glow-cyan"
                     : idx === currentStep && isPlaying
-                    ? "bg-accent/10 border-accent shadow-lg"
-                    : "bg-secondary/5 border-border"
+                    ? "bg-purple-accent/10 border-purple-accent shadow-lg"
+                    : "bg-card/20 border-border/30"
                 }`}
               >
                 <div className="flex items-start gap-4">
                   <div
-                    className={`w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 ${
+                    className={`w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 transition-all duration-300 ${
                       idx < currentStep
-                        ? "bg-primary text-primary-foreground"
+                        ? "bg-electric-cyan text-foreground shadow-glow-cyan"
                         : idx === currentStep && isPlaying
-                        ? "bg-accent text-accent-foreground"
-                        : "bg-muted text-muted-foreground"
+                        ? "bg-purple-accent text-foreground"
+                        : "bg-card/40 text-muted-foreground"
                     }`}
                   >
                     {idx < currentStep ? (
@@ -238,7 +252,7 @@ export function InteractiveDemoFlow() {
                     )}
                   </div>
                   <div className="flex-1">
-                    <h4 className="font-semibold text-lg mb-1">{step.title}</h4>
+                    <h4 className="font-semibold text-lg mb-1 text-foreground">{step.title}</h4>
                     <p className="text-sm text-muted-foreground">{step.description}</p>
                   </div>
                 </div>
@@ -250,10 +264,10 @@ export function InteractiveDemoFlow() {
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              className="mt-6 p-4 bg-accent/10 border border-accent rounded-lg"
+              className="mt-6 p-4 bg-purple-accent/10 border border-purple-accent rounded-lg backdrop-blur-sm"
             >
-              <p className="text-sm text-center text-accent-foreground">
-                ⏳ Simulando flujo en tiempo real...
+              <p className="text-sm text-center text-foreground">
+                ⏳ {t('showcase.interactiveDemo.simulating')}
               </p>
             </motion.div>
           )}
@@ -262,20 +276,19 @@ export function InteractiveDemoFlow() {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="mt-6 p-6 bg-gradient-to-br from-primary/10 to-accent/10 border-2 border-primary rounded-lg"
+              className="mt-6 p-6 bg-gradient-to-br from-electric-cyan/10 via-purple-accent/10 to-deep-blue/20 border-2 border-electric-cyan/50 rounded-lg backdrop-blur-sm hover:shadow-glow-cyan transition-all duration-500"
             >
               <div className="flex items-center gap-3 mb-3">
-                <CheckCircle2 className="w-6 h-6 text-primary" />
-                <h4 className="font-semibold text-lg">Demo Completado</h4>
+                <CheckCircle2 className="w-6 h-6 text-electric-cyan" />
+                <h4 className="font-semibold text-lg text-foreground">{t('showcase.interactiveDemo.completedTitle')}</h4>
               </div>
               <p className="text-sm text-muted-foreground">
-                Este es el flujo completo de gestión conversacional con BrainybyUnica: desde la aprobación por
-                WhatsApp hasta la publicación automática en redes sociales, todo en tiempo real.
+                {t('showcase.interactiveDemo.completedText')}
               </p>
             </motion.div>
           )}
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 }
