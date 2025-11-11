@@ -65,7 +65,7 @@ const ShowcaseBrandsPage = () => {
               <Button 
                 variant="ghost" 
                 size="sm" 
-                onClick={() => navigate('/showcase')}
+                onClick={() => navigate('/')}
                 className="mb-2"
               >
                 <ArrowLeft className="w-4 h-4 mr-2" />
@@ -134,7 +134,7 @@ const ShowcaseBrandsPage = () => {
                 <div className="flex gap-2 pt-2">
                   <Button 
                     className="flex-1 gap-2" 
-                    onClick={() => navigate(`/showcase/brands/${brand.slug}/setup`)}
+                    onClick={() => navigate(`/brands/${brand.slug}/setup`)}
                   >
                     Ver Brand Setup
                     <ArrowRight className="w-4 h-4" />

@@ -160,7 +160,7 @@ const ShowcaseOnboardingPage = () => {
 
     // Simulate completion
     setTimeout(() => {
-      navigate('/showcase/brands');
+      navigate('/brands');
     }, 2000);
   };
 
@@ -176,7 +176,7 @@ const ShowcaseOnboardingPage = () => {
             <Button 
               variant="ghost" 
               size="sm" 
-              onClick={() => navigate('/showcase')}
+              onClick={() => navigate('/')}
             >
               <ArrowLeft className="w-4 h-4 mr-2" />
               Salir del Onboarding

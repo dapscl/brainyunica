@@ -63,21 +63,21 @@ const App = () => {
       <Sonner />
       <Suspense fallback={<LoadingFallback />}>
         <Routes>
-          <Route path="/" element={<LandingPage />} />
+          <Route path="/" element={<ShowcasePage />} />
           <Route path="/auth" element={<AuthPage />} />
-          <Route path="/showcase" element={<ShowcasePage />} />
-          <Route path="/showcase/lead-capture" element={<ShowcaseLeadCapturePage />} />
-          <Route path="/showcase/onboarding" element={<ShowcaseOnboardingPage />} />
-          <Route path="/showcase/pricing" element={<ShowcasePricingPage />} />
-          <Route path="/showcase/brands" element={<ShowcaseBrandsPage />} />
-          <Route path="/showcase/brands/:slug/setup" element={<ShowcaseBrandSetupPage />} />
-          <Route path="/showcase/brands/:slug" element={<ShowcaseBrandDetailPage />} />
-          <Route path="/showcase/brands/:slug/create-content" element={<ShowcaseContentCreatorPage />} />
-          <Route path="/showcase/brands/:slug/create-campaign" element={<ShowcaseCampaignCreatorPage />} />
-          <Route path="/showcase/brands/:slug/chat-automation" element={<ShowcaseChatAutomationPage />} />
-          <Route path="/showcase/brands/:slug/lead-capture" element={<ShowcaseLeadCapturePage />} />
-          <Route path="/showcase/brands/:slug/video-generator" element={<ShowcaseVideoGeneratorPage />} />
-          <Route path="/showcase/brands/:slug/inspiration" element={<ShowcaseInspirationLibraryPage />} />
+          <Route path="/lead-capture" element={<ShowcaseLeadCapturePage />} />
+          <Route path="/onboarding" element={<ShowcaseOnboardingPage />} />
+          <Route path="/pricing" element={<ShowcasePricingPage />} />
+          <Route path="/brands" element={<ShowcaseBrandsPage />} />
+          <Route path="/brands/:slug/setup" element={<ShowcaseBrandSetupPage />} />
+          <Route path="/brands/:slug" element={<ShowcaseBrandDetailPage />} />
+          <Route path="/brands/:slug/create-content" element={<ShowcaseContentCreatorPage />} />
+          <Route path="/brands/:slug/create-campaign" element={<ShowcaseCampaignCreatorPage />} />
+          <Route path="/brands/:slug/chat-automation" element={<ShowcaseChatAutomationPage />} />
+          <Route path="/brands/:slug/lead-capture" element={<ShowcaseLeadCapturePage />} />
+          <Route path="/brands/:slug/video-generator" element={<ShowcaseVideoGeneratorPage />} />
+          <Route path="/brands/:slug/inspiration" element={<ShowcaseInspirationLibraryPage />} />
+          <Route path="/landing" element={<LandingPage />} />
           <Route path="/demo" element={<ProtectedRoute><DemoPage /></ProtectedRoute>} />
           <Route path="/dashboard" element={<ProtectedRoute><DashboardPage /></ProtectedRoute>} />
           <Route path="/organizations" element={<ProtectedRoute><OrganizationsPage /></ProtectedRoute>} />

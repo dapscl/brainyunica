@@ -70,7 +70,7 @@ const ShowcaseVideoGeneratorPage = () => {
           <Button 
             variant="ghost" 
             size="sm" 
-            onClick={() => navigate(`/showcase/brands/${slug}`)}
+            onClick={() => navigate(`/brands/${slug}`)}
             className="mb-4"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />

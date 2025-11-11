@@ -57,7 +57,7 @@ const ShowcaseBrandSetupPage = () => {
             <CardDescription>La marca que buscas no existe en nuestro demo.</CardDescription>
           </CardHeader>
           <CardContent>
-            <Button onClick={() => navigate('/showcase/brands')}>
+            <Button onClick={() => navigate('/brands')}>
               <ArrowLeft className="w-4 h-4 mr-2" />
               Volver al Demo
             </Button>
@@ -162,7 +162,7 @@ const ShowcaseBrandSetupPage = () => {
           <Button 
             variant="ghost" 
             size="sm" 
-            onClick={() => navigate('/showcase/brands')}
+            onClick={() => navigate('/brands')}
             className="mb-4"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
@@ -319,7 +319,7 @@ const ShowcaseBrandSetupPage = () => {
         <div className="mt-8 flex justify-end">
           <Button 
             size="lg" 
-            onClick={() => navigate(`/showcase/brands/${slug}`)}
+            onClick={() => navigate(`/brands/${slug}`)}
             className="gap-2"
           >
             Ver Workflow Completo

@@ -89,7 +89,7 @@ const ShowcasePage = () => {
           >
             <Button 
               size="lg" 
-              onClick={() => navigate('/showcase/lead-capture')} 
+              onClick={() => navigate('/lead-capture')}
               className="gap-2 text-lg px-10 py-7 bg-gradient-to-r from-electric-cyan to-electric-cyan/90 hover:opacity-90 text-background font-bold uppercase tracking-wide shadow-glow-cyan transition-all duration-300"
             >
               🚀 {t('showcase.hero.ctaPrimary')}
@@ -343,7 +343,7 @@ const ShowcasePage = () => {
 
             <Button 
               size="lg"
-              onClick={() => navigate('/showcase/lead-capture')}
+              onClick={() => navigate('/lead-capture')}
               className="text-xl px-12 py-8 bg-gradient-to-r from-electric-cyan to-purple-accent hover:opacity-90 text-background font-bold uppercase tracking-wide shadow-glow-cyan transition-all duration-300"
             >
               {t('showcase.finalCta.button')}

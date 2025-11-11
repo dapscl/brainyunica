@@ -209,7 +209,7 @@ const ShowcaseLeadCapturePage = () => {
                   <Button
                     size="lg"
                     className="w-full text-lg py-6 bg-gradient-to-r from-electric-cyan to-purple-accent hover:opacity-90 text-background font-bold"
-                    onClick={() => navigate('/showcase')}
+                    onClick={() => navigate('/')}
                   >
                     Volver al Showcase
                   </Button>
@@ -230,7 +230,7 @@ const ShowcaseLeadCapturePage = () => {
       <div className="container mx-auto px-4 py-12">
         <Button
           variant="ghost"
-          onClick={() => navigate('/showcase')}
+          onClick={() => navigate('/')}
           className="mb-8 text-foreground hover:text-electric-cyan"
         >
           <ArrowLeft className="w-4 h-4 mr-2" />

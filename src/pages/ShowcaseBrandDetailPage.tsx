@@ -79,7 +79,7 @@ const ShowcaseBrandDetailPage = () => {
             <CardDescription>La marca que buscas no existe en nuestro demo.</CardDescription>
           </CardHeader>
           <CardContent>
-            <Button onClick={() => navigate('/showcase/brands')}>
+            <Button onClick={() => navigate('/brands')}>
               <ArrowLeft className="w-4 h-4 mr-2" />
               Volver al Demo
             </Button>
@@ -179,7 +179,7 @@ const ShowcaseBrandDetailPage = () => {
             <Button 
               variant="ghost" 
               size="sm" 
-              onClick={() => navigate(`/showcase/brands/${slug}/setup`)}
+              onClick={() => navigate(`/brands/${slug}/setup`)}
             >
               <ArrowLeft className="w-4 h-4 mr-2" />
               Volver a Setup
@@ -341,7 +341,7 @@ const ShowcaseBrandDetailPage = () => {
                 12 piezas creadas y programadas para diversas plataformas
               </p>
             </div>
-            <Button size="lg" onClick={() => navigate(`/showcase/brands/${slug}/create-content`)}>
+            <Button size="lg" onClick={() => navigate(`/brands/${slug}/create-content`)}>
               Crear Nuevo Contenido
             </Button>
           </div>
@@ -423,7 +423,7 @@ const ShowcaseBrandDetailPage = () => {
                   </p>
                 </div>
               </div>
-              <Button onClick={() => navigate(`/showcase/brands/${slug}/chat-automation`)}>
+              <Button onClick={() => navigate(`/brands/${slug}/chat-automation`)}>
                 Ver Sistema Completo
               </Button>
             </div>
@@ -475,7 +475,7 @@ const ShowcaseBrandDetailPage = () => {
                   <Button 
                     variant="outline" 
                     className="w-full mt-3"
-                    onClick={() => navigate(`/showcase/brands/${slug}/lead-capture`)}
+                    onClick={() => navigate(`/brands/${slug}/lead-capture`)}
                   >
                     Ver Sistema de Leads
                   </Button>
@@ -547,7 +547,7 @@ const ShowcaseBrandDetailPage = () => {
                     <span>{channel.name}</span>
                   </Badge>
                 ))}
-                <Button size="lg" onClick={() => navigate(`/showcase/brands/${slug}/create-campaign`)}>
+                <Button size="lg" onClick={() => navigate(`/brands/${slug}/create-campaign`)}>
                   Crear Nueva Campaña
                 </Button>
               </div>
@@ -723,7 +723,7 @@ const ShowcaseBrandDetailPage = () => {
                   </p>
                 </div>
               </div>
-              <Button size="lg" onClick={() => navigate(`/showcase/brands/${slug}/video-generator`)}>
+              <Button size="lg" onClick={() => navigate(`/brands/${slug}/video-generator`)}>
                 Abrir Generador de Video
               </Button>
             </div>
@@ -817,7 +817,7 @@ const ShowcaseBrandDetailPage = () => {
                   </p>
                 </div>
               </div>
-              <Button size="lg" onClick={() => navigate(`/showcase/brands/${slug}/inspiration`)}>
+              <Button size="lg" onClick={() => navigate(`/brands/${slug}/inspiration`)}>
                 Explorar Biblioteca
               </Button>
             </div>
