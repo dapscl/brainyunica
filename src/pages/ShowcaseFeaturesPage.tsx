@@ -155,7 +155,7 @@ export default function ShowcaseFeaturesPage() {
       
       <main className="min-h-screen bg-dark-surface">
         {/* Hero Section */}
-        <section className="relative py-20 px-4 overflow-hidden bg-gradient-to-b from-dark-surface via-background to-dark-surface">
+        <section className="relative py-20 px-4 overflow-hidden bg-dark-surface">
           <div className="absolute inset-0 bg-gradient-to-b from-electric-cyan/5 via-transparent to-purple-accent/5" />
           
           <div className="container mx-auto max-w-6xl relative z-10">
@@ -191,7 +191,7 @@ export default function ShowcaseFeaturesPage() {
         </section>
 
         {/* WhatsApp Section - Hero Feature */}
-        <section className="py-20 px-4 bg-gradient-to-b from-dark-surface to-background">
+        <section className="py-20 px-4 bg-dark-surface">
           <div className="container mx-auto max-w-6xl">
             <SectionTitle
               title={t('showcase.features.whatsapp.sectionTitle', 'Gestiona todo tu marketing')}
@@ -238,7 +238,7 @@ export default function ShowcaseFeaturesPage() {
         </section>
 
         {/* Industries Section */}
-        <section className="py-20 px-4 bg-gradient-to-b from-background to-dark-surface">
+        <section className="py-20 px-4 bg-dark-surface">
           <div className="container mx-auto max-w-6xl">
             <SectionTitle
               title={t('showcase.features.whoItsFor.title', '¿A quién')}

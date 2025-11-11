@@ -41,12 +41,12 @@ export const RotatingWord = ({ words, interval = 3000, typingSpeed = 100 }: Rota
   }, [displayedText, isTyping, currentIndex, words, interval, typingSpeed]);
 
   return (
-    <span className="inline-block min-w-[200px]">
-      {displayedText}
+    <span className="inline-block relative">
+      <span className="inline-block text-left">{displayedText}</span>
       <motion.span
         animate={{ opacity: [1, 0] }}
         transition={{ duration: 0.5, repeat: Infinity, repeatType: "reverse" }}
-        className="inline-block ml-1"
+        className="inline-block"
       >
         |
       </motion.span>
