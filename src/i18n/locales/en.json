@@ -571,6 +571,41 @@
         "subtitle": "Schedule a personalized demo and discover how the 5 Brainies can transform your marketing.",
         "demo": "Request Demo",
         "pricing": "See Pricing"
+      },
+      "whatsapp": {
+        "title": "WhatsApp Project Manager",
+        "description": "Your personal assistant that coordinates everything from a conversation",
+        "feature1": "Approve content with a simple message",
+        "feature2": "Request changes and receive new versions instantly",
+        "feature3": "Launch complete campaigns from chat",
+        "feature4": "Receive real-time performance updates",
+        "feature5": "Manage multiple brands from one conversation",
+        "sectionTitle": "The key",
+        "sectionHighlight": "differentiator",
+        "sectionSubtitle": "Manage all your marketing from WhatsApp. No complicated dashboards. Just conversation."
+      }
+    },
+    "industries": {
+      "seo": {
+        "title": "Industries - Brainy by Unica",
+        "description": "Discover how Brainy transforms marketing for agencies, enterprises, startups and SMEs. Real success stories and proven metrics."
+      },
+      "badge": "Real Results",
+      "hero": {
+        "title1": "Transform your marketing",
+        "title2": "regardless of your industry",
+        "subtitle": "Real success stories from agencies, enterprises, startups and SMEs that automated their marketing with Brainy."
+      },
+      "benefits": "Key Benefits",
+      "comparison": "Before vs After",
+      "before": "Before",
+      "after": "After",
+      "cta": {
+        "title1": "Ready to",
+        "title2": "transform your industry?",
+        "subtitle": "Join the companies that already automated their marketing with Brainy.",
+        "demo": "Request Demo",
+        "pricing": "See Pricing"
       }
     }
   }

@@ -3,7 +3,7 @@ import { ShowcaseHeader } from '@/components/showcase/ShowcaseHeader';
 import { ShowcaseSEO } from '@/components/showcase/ShowcaseSEO';
 import { ShowcaseBreadcrumbs } from '@/components/showcase/ShowcaseBreadcrumbs';
 import { SectionTitle } from '@/components/showcase/SectionTitle';
-import { GlowCard } from '@/components/showcase/GlowCard';
+import { BrainCard } from '@/components/showcase/BrainCard';
 import { AnimatedButton } from '@/components/showcase/AnimatedButton';
 import { Link } from 'react-router-dom';
 import { 
@@ -21,12 +21,23 @@ import {
 export default function ShowcaseFeaturesPage() {
   const { t } = useTranslation();
 
+  const whatsappFeature = {
+    title: t('showcase.features.whatsapp.title', 'WhatsApp Project Manager'),
+    description: t('showcase.features.whatsapp.description', 'Tu asistente personal que coordina todo desde una conversación'),
+    features: [
+      t('showcase.features.whatsapp.feature1', 'Aprueba contenido con un simple mensaje'),
+      t('showcase.features.whatsapp.feature2', 'Solicita cambios y recibe nuevas versiones al instante'),
+      t('showcase.features.whatsapp.feature3', 'Lanza campañas completas desde el chat'),
+      t('showcase.features.whatsapp.feature4', 'Recibe actualizaciones de performance en tiempo real'),
+      t('showcase.features.whatsapp.feature5', 'Gestiona múltiples marcas desde una conversación'),
+    ]
+  };
+
   const brainies = [
     {
       icon: Sparkles,
       title: 'CreatorBrainy™',
-      color: 'from-purple-accent to-purple-accent/60',
-      glowColor: 'shadow-glow-purple',
+      color: 'purple' as const,
       features: [
         t('showcase.features.creator.feature1', 'Generación automática de copys optimizados por IA'),
         t('showcase.features.creator.feature2', 'Creación de imágenes y videos adaptados a cada plataforma'),
@@ -38,8 +49,7 @@ export default function ShowcaseFeaturesPage() {
     {
       icon: Calendar,
       title: 'CalendarBrainy™',
-      color: 'from-blue-500 to-blue-600',
-      glowColor: 'shadow-glow-cyan',
+      color: 'blue' as const,
       features: [
         t('showcase.features.calendar.feature1', 'Calendarización inteligente en horarios óptimos'),
         t('showcase.features.calendar.feature2', 'Distribución estratégica de contenido multicanal'),
@@ -51,8 +61,7 @@ export default function ShowcaseFeaturesPage() {
     {
       icon: Target,
       title: 'AdBrainy™',
-      color: 'from-electric-cyan to-cyan-400',
-      glowColor: 'shadow-glow-cyan',
+      color: 'cyan' as const,
       features: [
         t('showcase.features.ad.feature1', 'Optimización automática de pujas en tiempo real'),
         t('showcase.features.ad.feature2', 'Redistribución inteligente de presupuestos'),
@@ -64,8 +73,7 @@ export default function ShowcaseFeaturesPage() {
     {
       icon: MessageCircle,
       title: 'ChatBrainy™',
-      color: 'from-green-500 to-emerald-600',
-      glowColor: 'shadow-glow-green',
+      color: 'green' as const,
       features: [
         t('showcase.features.chat.feature1', 'Respuestas automáticas contextuales 24/7'),
         t('showcase.features.chat.feature2', 'Calificación de intención de compra en tiempo real'),
@@ -77,8 +85,7 @@ export default function ShowcaseFeaturesPage() {
     {
       icon: TrendingUp,
       title: 'TrendBrainy™',
-      color: 'from-purple-accent to-pink-500',
-      glowColor: 'shadow-glow-purple',
+      color: 'purple' as const,
       features: [
         t('showcase.features.trend.feature1', 'Análisis semanal automático de Google Trends'),
         t('showcase.features.trend.feature2', 'Monitoreo de competencia y benchmarking'),
@@ -145,9 +152,9 @@ export default function ShowcaseFeaturesPage() {
       <ShowcaseHeader />
       <ShowcaseBreadcrumbs />
       
-      <main className="min-h-screen bg-gradient-to-b from-dark-surface via-background to-dark-surface">
+      <main className="min-h-screen bg-dark-surface">
         {/* Hero Section */}
-        <section className="relative py-20 px-4 overflow-hidden">
+        <section className="relative py-20 px-4 overflow-hidden bg-gradient-to-b from-dark-surface via-background to-dark-surface">
           <div className="absolute inset-0 bg-gradient-to-b from-electric-cyan/5 via-transparent to-purple-accent/5" />
           
           <div className="container mx-auto max-w-6xl relative z-10">
@@ -173,8 +180,30 @@ export default function ShowcaseFeaturesPage() {
           </div>
         </section>
 
+        {/* WhatsApp Section - Hero Feature */}
+        <section className="py-20 px-4 bg-gradient-to-b from-dark-surface to-background">
+          <div className="container mx-auto max-w-6xl">
+            <SectionTitle
+              title={t('showcase.features.whatsapp.sectionTitle', 'El diferenciador')}
+              highlight={t('showcase.features.whatsapp.sectionHighlight', 'clave')}
+              subtitle={t('showcase.features.whatsapp.sectionSubtitle', 'Gestiona todo tu marketing desde WhatsApp. Sin dashboards complicados. Solo conversación.')}
+            />
+
+            <div className="mt-16">
+              <BrainCard
+                icon={MessageCircle}
+                title={whatsappFeature.title}
+                description={whatsappFeature.description}
+                features={whatsappFeature.features}
+                color="green"
+                delay={0}
+              />
+            </div>
+          </div>
+        </section>
+
         {/* Brainies Section */}
-        <section className="py-20 px-4">
+        <section className="py-20 px-4 bg-dark-surface">
           <div className="container mx-auto max-w-6xl">
             <SectionTitle
               title={t('showcase.features.brainies.title', 'Conoce a los')}
@@ -184,32 +213,22 @@ export default function ShowcaseFeaturesPage() {
 
             <div className="grid gap-8 mt-16">
               {brainies.map((brainy, index) => (
-                <GlowCard key={index} className="p-8">
-                  <div className="flex items-start gap-6">
-                    <div className={`flex-shrink-0 p-4 rounded-xl bg-gradient-to-br ${brainy.color} ${brainy.glowColor}`}>
-                      <brainy.icon className="w-8 h-8 text-white" />
-                    </div>
-                    
-                    <div className="flex-1">
-                      <h3 className="text-2xl font-bold mb-4 text-foreground">{brainy.title}</h3>
-                      <ul className="space-y-3">
-                        {brainy.features.map((feature, idx) => (
-                          <li key={idx} className="flex items-start gap-3">
-                            <div className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-electric-cyan mt-2" />
-                            <span className="text-muted-foreground">{feature}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
-                </GlowCard>
+                <BrainCard
+                  key={index}
+                  icon={brainy.icon}
+                  title={brainy.title}
+                  description=""
+                  features={brainy.features}
+                  color={brainy.color}
+                  delay={index * 0.1}
+                />
               ))}
             </div>
           </div>
         </section>
 
         {/* Industries Section */}
-        <section className="py-20 px-4">
+        <section className="py-20 px-4 bg-gradient-to-b from-background to-dark-surface">
           <div className="container mx-auto max-w-6xl">
             <SectionTitle
               title={t('showcase.features.whoItsFor.title', '¿A quién')}
@@ -219,60 +238,66 @@ export default function ShowcaseFeaturesPage() {
 
             <div className="grid md:grid-cols-2 gap-8 mt-16">
               {industries.map((industry, index) => (
-                <GlowCard key={index} className="p-8">
-                  <div className="flex items-start gap-4 mb-6">
-                    <div className="flex-shrink-0 p-3 rounded-lg bg-gradient-to-br from-electric-cyan to-purple-accent">
-                      <industry.icon className="w-6 h-6 text-white" />
+                <div key={index} className="relative group">
+                  <div className="absolute inset-0 bg-gradient-to-r from-electric-cyan/20 to-purple-accent/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  <div className="relative bg-dark-surface/50 backdrop-blur-sm border border-border/40 rounded-2xl p-8 hover:border-electric-cyan/50 transition-all duration-300">
+                    <div className="flex items-start gap-4 mb-6">
+                      <div className="flex-shrink-0 p-3 rounded-lg bg-gradient-to-br from-electric-cyan to-purple-accent">
+                        <industry.icon className="w-6 h-6 text-white" />
+                      </div>
+                      <div>
+                        <h3 className="text-2xl font-bold mb-2 text-foreground">{industry.title}</h3>
+                        <p className="text-muted-foreground">{industry.description}</p>
+                      </div>
                     </div>
-                    <div>
-                      <h3 className="text-2xl font-bold mb-2 text-foreground">{industry.title}</h3>
-                      <p className="text-muted-foreground">{industry.description}</p>
-                    </div>
+                    
+                    <ul className="space-y-3">
+                      {industry.benefits.map((benefit, idx) => (
+                        <li key={idx} className="flex items-start gap-3">
+                          <div className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-electric-cyan mt-2" />
+                          <span className="text-muted-foreground text-sm">{benefit}</span>
+                        </li>
+                      ))}
+                    </ul>
                   </div>
-                  
-                  <ul className="space-y-3">
-                    {industry.benefits.map((benefit, idx) => (
-                      <li key={idx} className="flex items-start gap-3">
-                        <div className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-electric-cyan mt-2" />
-                        <span className="text-muted-foreground text-sm">{benefit}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </GlowCard>
+                </div>
               ))}
             </div>
           </div>
         </section>
 
         {/* Final CTA */}
-        <section className="py-20 px-4">
+        <section className="py-20 px-4 bg-dark-surface">
           <div className="container mx-auto max-w-4xl">
-            <GlowCard className="p-12 text-center">
-              <h2 className="text-4xl font-bold mb-6">
-                <span className="text-foreground">{t('showcase.features.cta.title1', '¿Listo para ver')}</span>
-                <br />
-                <span className="bg-gradient-to-r from-electric-cyan to-purple-accent bg-clip-text text-transparent">
-                  {t('showcase.features.cta.title2', 'Brainy en acción?')}
-                </span>
-              </h2>
-              
-              <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-                {t('showcase.features.cta.subtitle', 'Agenda una demo personalizada y descubre cómo los 5 Brainies pueden transformar tu marketing.')}
-              </p>
-              
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Link to="/lead-capture">
-                  <AnimatedButton size="lg">
-                    {t('showcase.features.cta.demo', 'Solicitar Demo')}
-                  </AnimatedButton>
-                </Link>
-                <Link to="/pricing">
-                  <AnimatedButton size="lg" variant="outline">
-                    {t('showcase.features.cta.pricing', 'Ver Precios')}
-                  </AnimatedButton>
-                </Link>
+            <div className="relative group">
+              <div className="absolute inset-0 bg-gradient-to-r from-electric-cyan/30 to-purple-accent/30 rounded-3xl blur-2xl opacity-50 group-hover:opacity-75 transition-opacity duration-500" />
+              <div className="relative bg-dark-surface/80 backdrop-blur-sm border border-electric-cyan/30 rounded-3xl p-12 text-center">
+                <h2 className="text-4xl font-bold mb-6">
+                  <span className="text-foreground">{t('showcase.features.cta.title1', '¿Listo para ver')}</span>
+                  <br />
+                  <span className="bg-gradient-to-r from-electric-cyan to-purple-accent bg-clip-text text-transparent">
+                    {t('showcase.features.cta.title2', 'Brainy en acción?')}
+                  </span>
+                </h2>
+                
+                <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
+                  {t('showcase.features.cta.subtitle', 'Agenda una demo personalizada y descubre cómo los 5 Brainies pueden transformar tu marketing.')}
+                </p>
+                
+                <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                  <Link to="/lead-capture">
+                    <AnimatedButton size="lg">
+                      {t('showcase.features.cta.demo', 'Solicitar Demo')}
+                    </AnimatedButton>
+                  </Link>
+                  <Link to="/pricing">
+                    <AnimatedButton size="lg" variant="outline">
+                      {t('showcase.features.cta.pricing', 'Ver Precios')}
+                    </AnimatedButton>
+                  </Link>
+                </div>
               </div>
-            </GlowCard>
+            </div>
           </div>
         </section>
       </main>

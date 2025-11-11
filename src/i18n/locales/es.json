@@ -572,6 +572,97 @@
         "subtitle": "Agenda una demo personalizada y descubre cómo los 5 Brainies pueden transformar tu marketing.",
         "demo": "Solicitar Demo",
         "pricing": "Ver Precios"
+      },
+      "whatsapp": {
+        "title": "WhatsApp Project Manager",
+        "description": "Tu asistente personal que coordina todo desde una conversación",
+        "feature1": "Aprueba contenido con un simple mensaje",
+        "feature2": "Solicita cambios y recibe nuevas versiones al instante",
+        "feature3": "Lanza campañas completas desde el chat",
+        "feature4": "Recibe actualizaciones de performance en tiempo real",
+        "feature5": "Gestiona múltiples marcas desde una conversación",
+        "sectionTitle": "El diferenciador",
+        "sectionHighlight": "clave",
+        "sectionSubtitle": "Gestiona todo tu marketing desde WhatsApp. Sin dashboards complicados. Solo conversación."
+      }
+    },
+    "industries": {
+      "seo": {
+        "title": "Industrias - Brainy by Unica",
+        "description": "Descubre cómo Brainy transforma el marketing de agencias, empresas, startups y PYMEs. Casos de éxito reales y métricas comprobadas."
+      },
+      "badge": "Resultados Reales",
+      "hero": {
+        "title1": "Transforma tu marketing",
+        "title2": "sin importar tu industria",
+        "subtitle": "Casos de éxito reales de agencias, empresas, startups y PYMEs que automatizaron su marketing con Brainy."
+      },
+      "benefits": "Beneficios Clave",
+      "comparison": "Antes vs Después",
+      "before": "Antes",
+      "after": "Después",
+      "cta": {
+        "title1": "¿Listo para",
+        "title2": "transformar tu industria?",
+        "subtitle": "Únete a las empresas que ya automatizaron su marketing con Brainy.",
+        "demo": "Solicitar Demo",
+        "pricing": "Ver Precios"
+      },
+      "agencies": {
+        "title": "Agencias",
+        "subtitle": "Gestiona múltiples clientes sin caos",
+        "description": "Escala tu agencia sin contratar más personal. Brainy automatiza todo el flujo de trabajo para que puedas gestionar hasta 15 marcas diferentes con un solo equipo.",
+        "benefit1": "Hasta 15 marcas operando en paralelo",
+        "benefit2": "Flujos de aprobación cliente-agencia automatizados",
+        "benefit3": "Dashboard consolidado de todos los clientes",
+        "benefit4": "Facturación transparente basada en ad spend real",
+        "testimonial": {
+          "quote": "Pasamos de gestionar 3 clientes con un equipo de 8 personas a gestionar 12 clientes con el mismo equipo. Brainy nos permitió escalar sin perder calidad.",
+          "author": "María González",
+          "role": "CEO, Digital Wave Agency"
+        }
+      },
+      "enterprises": {
+        "title": "Empresas",
+        "subtitle": "Centraliza todo tu marketing corporativo",
+        "description": "Unifica todas tus marcas y submarcas en una sola plataforma. Control total, visibilidad completa y reportes ejecutivos automáticos para la dirección.",
+        "benefit1": "Múltiples marcas y sub-marcas organizadas",
+        "benefit2": "Control granular de permisos por equipos",
+        "benefit3": "Integraciones con CRM, ERP y herramientas internas",
+        "benefit4": "Reportes ejecutivos automáticos para directivos",
+        "testimonial": {
+          "quote": "Antes teníamos 4 herramientas diferentes y ninguna visibilidad real. Ahora todo el grupo corporativo opera desde Brainy con total transparencia.",
+          "author": "Carlos Mendoza",
+          "role": "CMO, TechCorp Group"
+        }
+      },
+      "startups": {
+        "title": "Startups",
+        "subtitle": "Crece rápido sin aumentar costos",
+        "description": "Marketing de nivel enterprise con presupuesto de startup. Automatización completa desde el día uno para que puedas enfocarte en product-market fit y crecimiento.",
+        "benefit1": "Setup completo en menos de 24 horas",
+        "benefit2": "Pricing accesible que escala con tu facturación",
+        "benefit3": "Operación ágil con solo 1-2 personas",
+        "benefit4": "Automatización total desde el primer día",
+        "testimonial": {
+          "quote": "Como startup lean, no podíamos contratar un equipo de marketing completo. Brainy nos dio capacidades de agencia con costo de herramienta SaaS.",
+          "author": "Ana Ruiz",
+          "role": "Founder & CEO, FitTech"
+        }
+      },
+      "smes": {
+        "title": "PYMEs",
+        "subtitle": "Marketing profesional sin complicaciones",
+        "description": "No necesitas ser experto en marketing digital. Brainy te guía paso a paso y automatiza todo el proceso para que obtengas resultados profesionales sin conocimiento técnico.",
+        "benefit1": "Interfaz simple sin curva de aprendizaje",
+        "benefit2": "Sin necesidad de expertos en marketing",
+        "benefit3": "Resultados medibles desde el primer mes",
+        "benefit4": "Soporte en español y onboarding guiado",
+        "testimonial": {
+          "quote": "Nunca había usado herramientas de marketing digital. Con Brainy simplemente chateamos por WhatsApp y todo se hace solo. Es increíble.",
+          "author": "Roberto Silva",
+          "role": "Dueño, Café Silva"
+        }
       }
     }
   }

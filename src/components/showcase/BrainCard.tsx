@@ -6,6 +6,7 @@ interface BrainCardProps {
   icon: LucideIcon;
   title: string;
   description: string;
+  features?: string[];
   color: 'cyan' | 'purple' | 'blue' | 'green';
   delay?: number;
 }
@@ -31,7 +32,7 @@ const glowClasses = {
   green: 'group-hover:shadow-[0_0_40px_hsl(140_70%_50%_/_0.4)]',
 };
 
-export const BrainCard = ({ icon: Icon, title, description, color, delay = 0 }: BrainCardProps) => {
+export const BrainCard = ({ icon: Icon, title, description, features, color, delay = 0 }: BrainCardProps) => {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -40,16 +41,27 @@ export const BrainCard = ({ icon: Icon, title, description, color, delay = 0 }: 
       transition={{ duration: 0.5, delay }}
     >
       <Card 
-        className={`group relative overflow-hidden bg-gradient-to-br ${colorClasses[color]} backdrop-blur-sm border transition-all duration-500 hover:scale-105 ${glowClasses[color]}`}
+        className={`group relative overflow-hidden bg-gradient-to-br ${colorClasses[color]} backdrop-blur-sm border transition-all duration-500 hover:scale-[1.02] ${glowClasses[color]}`}
       >
-        <CardContent className="p-6 relative z-10">
-          <div className="flex items-start gap-4">
-            <div className={`p-3 rounded-lg bg-background/50 ${iconColorClasses[color]} transition-transform duration-500 group-hover:scale-110 group-hover:rotate-6`}>
-              <Icon className="w-6 h-6" />
+        <CardContent className="p-8 relative z-10">
+          <div className="flex items-start gap-6">
+            <div className={`flex-shrink-0 p-4 rounded-xl bg-background/50 ${iconColorClasses[color]} transition-transform duration-500 group-hover:scale-110 group-hover:rotate-6`}>
+              <Icon className="w-8 h-8" />
             </div>
             <div className="flex-1">
-              <h3 className="text-xl font-bold mb-2 tracking-tight text-foreground">{title}</h3>
-              <p className="text-sm text-muted-foreground leading-relaxed">{description}</p>
+              <h3 className="text-2xl font-bold mb-2 tracking-tight text-foreground">{title}</h3>
+              {description && <p className="text-muted-foreground mb-4 leading-relaxed">{description}</p>}
+              
+              {features && features.length > 0 && (
+                <ul className="space-y-3">
+                  {features.map((feature, idx) => (
+                    <li key={idx} className="flex items-start gap-3">
+                      <div className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-electric-cyan mt-2" />
+                      <span className="text-muted-foreground">{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+              )}
             </div>
           </div>
         </CardContent>
