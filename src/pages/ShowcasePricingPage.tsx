@@ -19,8 +19,8 @@ const ShowcasePricingPage = () => {
       icon: Zap,
       color: 'from-blue-500 to-cyan-500',
       adSpend: 'Equipos pequeños, startups o marcas personales que quieren centralizar todo',
-      basePrice: '$500',
-      integrationFee: '$250',
+      basePrice: '$500 USD',
+      integrationFee: '$250 USD',
       percentage: '20%',
       maxMonthly: 'Variable',
       description: 'Empieza a operar con inteligencia',
@@ -41,8 +41,8 @@ const ShowcasePricingPage = () => {
       icon: TrendingUp,
       color: 'from-purple-500 to-pink-500',
       adSpend: 'Agencias boutique o estudios creativos que gestionan varias marcas',
-      basePrice: '$1,250',
-      integrationFee: '$625',
+      basePrice: '$1,250 USD',
+      integrationFee: '$625 USD',
       percentage: '15%',
       maxMonthly: 'Variable',
       description: 'Escala sin perder el control',
@@ -63,8 +63,8 @@ const ShowcasePricingPage = () => {
       icon: Crown,
       color: 'from-amber-500 to-orange-500',
       adSpend: 'Agencias medianas o equipos de marketing corporativos con alto volumen',
-      basePrice: '$3,750',
-      integrationFee: '$1,875',
+      basePrice: '$3,750 USD',
+      integrationFee: '$1,875 USD',
       percentage: '10%',
       maxMonthly: 'Variable',
       description: 'Optimiza con datos y automatización',
@@ -86,7 +86,7 @@ const ShowcasePricingPage = () => {
       icon: Crown,
       color: 'from-red-500 to-pink-600',
       adSpend: 'Grupos corporativos, holdings o agencias multinivel sin límites',
-      basePrice: 'Desde $5,000',
+      basePrice: 'Desde $5,000 USD',
       integrationFee: 'Variable',
       percentage: '10%',
       maxMonthly: 'Variable',
@@ -105,12 +105,12 @@ const ShowcasePricingPage = () => {
   ];
 
   const adSpendExamples = [
-    { spend: '$1,000', tier: 'Starter', cost: '$500 + ($1,000 × 20%) = $700/mes' },
-    { spend: '$5,000', tier: 'Starter', cost: '$500 + ($5,000 × 20%) = $1,500/mes' },
-    { spend: '$10,000', tier: 'Small Agencies', cost: '$1,250 + ($10,000 × 15%) = $2,750/mes' },
-    { spend: '$25,000', tier: 'Scaled Agencies', cost: '$3,750 + ($25,000 × 10%) = $6,250/mes' },
-    { spend: '$50,000', tier: 'Scaled Agencies', cost: '$3,750 + ($50,000 × 10%) = $8,750/mes' },
-    { spend: '$100,000+', tier: 'Enterprise', cost: 'Pricing personalizado - Contactar ventas' }
+    { spend: '$1,000 USD', tier: 'Starter', cost: '$500 USD + ($1,000 × 20%) = $700 USD/mes' },
+    { spend: '$5,000 USD', tier: 'Starter', cost: '$500 USD + ($5,000 × 20%) = $1,500 USD/mes' },
+    { spend: '$10,000 USD', tier: 'Small Agencies', cost: '$1,250 USD + ($10,000 × 15%) = $2,750 USD/mes' },
+    { spend: '$25,000 USD', tier: 'Scaled Agencies', cost: '$3,750 USD + ($25,000 × 10%) = $6,250 USD/mes' },
+    { spend: '$50,000 USD', tier: 'Scaled Agencies', cost: '$3,750 USD + ($50,000 × 10%) = $8,750 USD/mes' },
+    { spend: '$100,000+ USD', tier: 'Enterprise', cost: 'Pricing personalizado - Contactar ventas' }
   ];
 
   return (
@@ -189,8 +189,8 @@ const ShowcasePricingPage = () => {
 
             <div className="mt-8 p-6 bg-electric-cyan/5 rounded-xl border border-electric-cyan/20 backdrop-blur-sm">
               <p className="text-center font-light">
-                <span className="font-bold text-foreground">Ejemplo:</span> Si estás en el tier Small Agencies ($1,250/mes) e inviertes $10,000 en ads, 
-                pagarás: $1,250 + ($10,000 × 15%) = <span className="text-electric-cyan font-bold text-lg">$2,750/mes</span>
+                <span className="font-bold text-foreground">Ejemplo:</span> Si estás en el tier Small Agencies ($1,250 USD/mes) e inviertes $10,000 USD en ads, 
+                pagarás: $1,250 USD + ($10,000 × 15%) = <span className="text-electric-cyan font-bold text-lg">$2,750 USD/mes</span>
               </p>
             </div>
             

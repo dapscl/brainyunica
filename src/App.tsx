@@ -66,17 +66,17 @@ const App = () => {
           <Route path="/" element={<ShowcasePage />} />
           <Route path="/auth" element={<AuthPage />} />
           <Route path="/lead-capture" element={<ShowcaseLeadCapturePage />} />
-          <Route path="/onboarding" element={<ShowcaseOnboardingPage />} />
+          <Route path="/onboarding" element={<ProtectedRoute><ShowcaseOnboardingPage /></ProtectedRoute>} />
           <Route path="/pricing" element={<ShowcasePricingPage />} />
-          <Route path="/brands" element={<ShowcaseBrandsPage />} />
-          <Route path="/brands/:slug/setup" element={<ShowcaseBrandSetupPage />} />
-          <Route path="/brands/:slug" element={<ShowcaseBrandDetailPage />} />
-          <Route path="/brands/:slug/create-content" element={<ShowcaseContentCreatorPage />} />
-          <Route path="/brands/:slug/create-campaign" element={<ShowcaseCampaignCreatorPage />} />
-          <Route path="/brands/:slug/chat-automation" element={<ShowcaseChatAutomationPage />} />
-          <Route path="/brands/:slug/lead-capture" element={<ShowcaseLeadCapturePage />} />
-          <Route path="/brands/:slug/video-generator" element={<ShowcaseVideoGeneratorPage />} />
-          <Route path="/brands/:slug/inspiration" element={<ShowcaseInspirationLibraryPage />} />
+          <Route path="/brands" element={<ProtectedRoute><ShowcaseBrandsPage /></ProtectedRoute>} />
+          <Route path="/brands/:slug/setup" element={<ProtectedRoute><ShowcaseBrandSetupPage /></ProtectedRoute>} />
+          <Route path="/brands/:slug" element={<ProtectedRoute><ShowcaseBrandDetailPage /></ProtectedRoute>} />
+          <Route path="/brands/:slug/create-content" element={<ProtectedRoute><ShowcaseContentCreatorPage /></ProtectedRoute>} />
+          <Route path="/brands/:slug/create-campaign" element={<ProtectedRoute><ShowcaseCampaignCreatorPage /></ProtectedRoute>} />
+          <Route path="/brands/:slug/chat-automation" element={<ProtectedRoute><ShowcaseChatAutomationPage /></ProtectedRoute>} />
+          <Route path="/brands/:slug/lead-capture" element={<ProtectedRoute><ShowcaseLeadCapturePage /></ProtectedRoute>} />
+          <Route path="/brands/:slug/video-generator" element={<ProtectedRoute><ShowcaseVideoGeneratorPage /></ProtectedRoute>} />
+          <Route path="/brands/:slug/inspiration" element={<ProtectedRoute><ShowcaseInspirationLibraryPage /></ProtectedRoute>} />
           <Route path="/landing" element={<LandingPage />} />
           <Route path="/demo" element={<ProtectedRoute><DemoPage /></ProtectedRoute>} />
           <Route path="/dashboard" element={<ProtectedRoute><DashboardPage /></ProtectedRoute>} />
