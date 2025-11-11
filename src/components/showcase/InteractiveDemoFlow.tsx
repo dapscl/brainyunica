@@ -20,7 +20,7 @@ const demoSteps = [
     messages: [
       {
         sender: "brainy" as const,
-        text: "Hola Carolina 👋\nHoy tenemos este contenido pre-aprobado para publicar a las 12:00:\n\n🧩 'Los lunes son para planificar. Pero si Brainy lo hace solo, ¿qué haces tú?'\n\n¿Quieres revisarlo antes de que salga?\n✅ Sí / ❌ No",
+        text: "Hola Carolina 👋\nHoy tenemos este contenido pre-aprobado para publicar a las 12:00:\n\n🧩 'Los lunes son para planificar. Pero si BrainybyUnica lo hace solo, ¿qué haces tú?'\n\n¿Quieres revisarlo antes de que salga?\n✅ Sí / ❌ No",
         time: "09:15",
         type: "approval" as const,
       },
@@ -39,7 +39,7 @@ const demoSteps = [
       },
       {
         sender: "brainy" as const,
-        text: "Perfecto 💡\nAquí tienes el copy editable:\n\n'Los lunes son para planificar. Pero si Brainy lo hace solo, ¿qué haces tú?'\n\nEscríbeme el nuevo texto o dime 'sugiere versión'.",
+        text: "Perfecto 💡\nAquí tienes el copy editable:\n\n'Los lunes son para planificar. Pero si BrainybyUnica lo hace solo, ¿qué haces tú?'\n\nEscríbeme el nuevo texto o dime 'sugiere versión'.",
         time: "09:17",
       },
     ],
@@ -57,7 +57,7 @@ const demoSteps = [
       },
       {
         sender: "brainy" as const,
-        text: "Mientras otros planifican su lunes, tu contenido ya está al aire.\nAsí de fácil con Brainy. 🚀\n\n¿Publicamos este?\n✅ Sí / 🔁 Probar otra / ❌ Cancelar",
+        text: "Mientras otros planifican su lunes, tu contenido ya está al aire.\nAsí de fácil con BrainybyUnica. 🚀\n\n¿Publicamos este?\n✅ Sí / 🔁 Probar otra / ❌ Cancelar",
         time: "09:18",
         type: "suggestion" as const,
       },
@@ -132,7 +132,7 @@ export function InteractiveDemoFlow() {
           Demo Interactivo: Flujo Completo
         </h2>
         <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-          Observa cómo Brainy gestiona todo el proceso desde la aprobación por WhatsApp hasta la publicación automática en redes sociales
+          Observa cómo BrainybyUnica gestiona todo el proceso desde la aprobación por WhatsApp hasta la publicación automática en redes sociales
         </p>
       </div>
 
@@ -144,7 +144,7 @@ export function InteractiveDemoFlow() {
               <MessageSquare className="w-6 h-6 text-primary-foreground" />
             </div>
             <div>
-              <h3 className="font-semibold text-lg">Brainy Assistant</h3>
+              <h3 className="font-semibold text-lg">BrainybyUnica Assistant</h3>
               <p className="text-sm text-muted-foreground">En línea</p>
             </div>
           </div>
@@ -269,7 +269,7 @@ export function InteractiveDemoFlow() {
                 <h4 className="font-semibold text-lg">Demo Completado</h4>
               </div>
               <p className="text-sm text-muted-foreground">
-                Este es el flujo completo de gestión conversacional con Brainy: desde la aprobación por
+                Este es el flujo completo de gestión conversacional con BrainybyUnica: desde la aprobación por
                 WhatsApp hasta la publicación automática en redes sociales, todo en tiempo real.
               </p>
             </motion.div>

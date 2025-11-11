@@ -104,7 +104,7 @@ const ShowcasePage = () => {
               WhatsApp como Project Manager
             </h2>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              Olvida los dashboards tradicionales. Brainy gestiona todo tu contenido a través de conversaciones naturales por WhatsApp.
+              Olvida los dashboards tradicionales. BrainybyUnica gestiona todo tu contenido a través de conversaciones naturales por WhatsApp.
             </p>
           </div>
 
@@ -119,7 +119,7 @@ const ShowcasePage = () => {
                 </CardHeader>
                 <CardContent>
                   <p className="text-muted-foreground">
-                    Brainy te envía el contenido pre-programado para aprobación. Responde con ✅ para publicar, 
+                    BrainybyUnica te envía el contenido pre-programado para aprobación. Responde con ✅ para publicar, 
                     o pide sugerencias alternativas generadas por IA.
                   </p>
                 </CardContent>
@@ -134,7 +134,7 @@ const ShowcasePage = () => {
                 </CardHeader>
                 <CardContent>
                   <p className="text-muted-foreground">
-                    Cada lunes, Brainy analiza Google Trends y fuentes RSS (TechCrunch, The Drum, AdAge) y te sugiere 
+                    Cada lunes, BrainybyUnica analiza Google Trends y fuentes RSS (TechCrunch, The Drum, AdAge) y te sugiere 
                     las 3 tendencias más relevantes para tu marca.
                   </p>
                 </CardContent>
@@ -149,7 +149,7 @@ const ShowcasePage = () => {
                 </CardHeader>
                 <CardContent>
                   <p className="text-muted-foreground">
-                    Envía una imagen por WhatsApp y Brainy la programa automáticamente. Publica ahora o calendariza 
+                    Envía una imagen por WhatsApp y BrainybyUnica la programa automáticamente. Publica ahora o calendariza 
                     para más tarde con un simple mensaje.
                   </p>
                 </CardContent>

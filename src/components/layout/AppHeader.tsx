@@ -53,7 +53,7 @@ export const AppHeader = () => {
           >
             <Package className="h-8 w-8 text-primary" />
             <div className="flex flex-col">
-              <span className="text-xl font-bold leading-none">Brainy</span>
+              <span className="text-xl font-bold leading-none">BrainybyUnica</span>
               <span className="text-xs text-muted-foreground leading-none">Command Center</span>
             </div>
           </div>

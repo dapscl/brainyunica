@@ -27,7 +27,7 @@ const WhatsAppProjectManager = () => {
     setIsEnabled(true);
     toast({
       title: "✅ WhatsApp Project Manager Activado",
-      description: "Brainy está listo para gestionar tu marca de forma conversacional",
+      description: "BrainybyUnica está listo para gestionar tu marca de forma conversacional",
     });
   };
 
@@ -96,7 +96,7 @@ const WhatsAppProjectManager = () => {
     },
     {
       sender: "brainy",
-      message: "🧩 'Los lunes son para planificar. Pero si Brainy lo hace solo, ¿qué haces tú?'",
+      message: "🧩 'Los lunes son para planificar. Pero si BrainybyUnica lo hace solo, ¿qué haces tú?'",
       time: "09:30",
     },
     {
@@ -121,7 +121,7 @@ const WhatsAppProjectManager = () => {
     },
     {
       sender: "brainy",
-      message: "'Mientras otros planifican su lunes, tu contenido ya está al aire. Así de fácil con Brainy.'\n\n¿Publicamos este? ✅ Sí / 🔁 Probar otra / ❌ Cancelar",
+      message: "'Mientras otros planifican su lunes, tu contenido ya está al aire. Así de fácil con BrainybyUnica.'\n\n¿Publicamos este? ✅ Sí / 🔁 Probar otra / ❌ Cancelar",
       time: "09:36",
     },
   ];
@@ -159,7 +159,7 @@ const WhatsAppProjectManager = () => {
             <h3 className="font-semibold">Sugerencias con IA</h3>
           </div>
           <p className="text-sm text-muted-foreground">
-            Brainy te propone contenido basado en tendencias cada lunes automáticamente
+            BrainybyUnica te propone contenido basado en tendencias cada lunes automáticamente
           </p>
         </Card>
         
@@ -219,7 +219,7 @@ const WhatsAppProjectManager = () => {
                 </h4>
                 <div className="space-y-2 text-sm text-muted-foreground">
                   <p>📱 <strong>WhatsApp / Manychat</strong> → Interfaz conversacional</p>
-                  <p>🧠 <strong>Brainy Logic (Lovable)</strong> → Procesamiento inteligente</p>
+                  <p>🧠 <strong>BrainybyUnica Logic (Lovable)</strong> → Procesamiento inteligente</p>
                   <p>💾 <strong>Supabase</strong> → Estado de proyectos y aprobaciones</p>
                   <p>✨ <strong>OpenAI GPT-5</strong> → Generación y optimización de contenido</p>
                   <p>📊 <strong>Google Trends + RSS</strong> → Captación de tendencias</p>
@@ -338,7 +338,7 @@ const WhatsAppProjectManager = () => {
 
         <TabsContent value="example" className="space-y-4">
           <Card className="p-6">
-            <h3 className="text-lg font-semibold mb-4">Conversación Real con Brainy</h3>
+            <h3 className="text-lg font-semibold mb-4">Conversación Real con BrainybyUnica</h3>
             <div className="space-y-4 max-h-[500px] overflow-y-auto">
               {conversationExample.map((msg, idx) => (
                 <div

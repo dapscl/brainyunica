@@ -135,7 +135,7 @@ const LandingPage = () => {
           <div className="flex items-center gap-2">
             <Package className="h-8 w-8 text-primary" />
             <div className="flex flex-col">
-              <span className="text-xl font-bold leading-none">Brainy</span>
+              <span className="text-xl font-bold leading-none">BrainybyUnica</span>
               <span className="text-xs text-muted-foreground leading-none">by única.la</span>
             </div>
           </div>
@@ -155,7 +155,7 @@ const LandingPage = () => {
         <div className="container mx-auto px-4 py-20 md:py-32">
           <div className="max-w-4xl mx-auto text-center">
             <h1 className="text-5xl md:text-7xl font-bold mb-6 text-white">
-              Brainy Command Center
+              BrainybyUnica
             </h1>
             <p className="text-sm md:text-base text-white/70 mb-2 uppercase tracking-wider">
               by única.la
@@ -207,7 +207,7 @@ const LandingPage = () => {
               </div>
             </div>
             <p className="text-xl font-semibold mt-8 text-primary">
-              Con Brainy Command Center, tu marca opera sin silos.
+              Con BrainybyUnica, tu marca opera sin silos.
             </p>
           </div>
         </div>
@@ -356,7 +356,7 @@ const LandingPage = () => {
             Empieza hoy
           </h2>
           <p className="text-xl mb-8 text-white/90 max-w-2xl mx-auto">
-            Agenda tu demo privada y descubre cómo Brainy Command Center puede transformar tu operación de marketing.
+            Agenda tu demo privada y descubre cómo BrainybyUnica puede transformar tu operación de marketing.
           </p>
           <Button 
             size="lg" 
@@ -376,7 +376,7 @@ const LandingPage = () => {
             <div className="flex items-center gap-2">
               <Package className="h-6 w-6 text-primary" />
               <div className="flex flex-col">
-                <span className="font-bold leading-none">Brainy Command Center</span>
+                <span className="font-bold leading-none">BrainybyUnica</span>
                 <span className="text-xs text-muted-foreground leading-none">by única.la</span>
               </div>
             </div>

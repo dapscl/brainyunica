@@ -57,7 +57,7 @@ const DashboardPage = () => {
 
       <main className="container mx-auto px-4 py-8">
         <div className="mb-8">
-          <h2 className="text-3xl font-bold mb-2">Brainy Command Center</h2>
+          <h2 className="text-3xl font-bold mb-2">BrainybyUnica</h2>
           <p className="text-muted-foreground">
             Tu centro de gestión integral para marketing, creatividad y análisis
           </p>
