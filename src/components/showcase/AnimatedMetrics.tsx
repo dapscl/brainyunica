@@ -1,4 +1,5 @@
 import { useEffect, useState, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { motion, useInView } from 'framer-motion';
 import { Users, Clock, Zap, TrendingUp } from 'lucide-react';
 
@@ -21,7 +22,7 @@ const AnimatedMetric = ({ icon: Icon, value, suffix, prefix = '', label, color, 
   useEffect(() => {
     if (!isInView) return;
 
-    const duration = 2000; // 2 seconds
+    const duration = 2000;
     const steps = 60;
     const increment = value / steps;
     let currentStep = 0;
@@ -91,12 +92,14 @@ const AnimatedMetric = ({ icon: Icon, value, suffix, prefix = '', label, color, 
 };
 
 export const AnimatedMetrics = () => {
+  const { t } = useTranslation();
+
   const metrics: MetricProps[] = [
     {
       icon: Users,
       value: 10000,
       suffix: '+',
-      label: 'Leads Generados',
+      label: t('showcase.metrics.leadsGenerated'),
       color: 'from-electric-cyan to-blue-500',
       delay: 0,
     },
@@ -104,7 +107,7 @@ export const AnimatedMetrics = () => {
       icon: Clock,
       value: 500,
       suffix: '+',
-      label: 'Horas Ahorradas',
+      label: t('showcase.metrics.hoursSaved'),
       color: 'from-purple-500 to-purple-accent',
       delay: 0.1,
     },
@@ -112,7 +115,7 @@ export const AnimatedMetrics = () => {
       icon: Zap,
       value: 95,
       suffix: '%',
-      label: 'Automatización',
+      label: t('showcase.metrics.automation'),
       color: 'from-green-500 to-emerald-500',
       delay: 0.2,
       isPercentage: true,
@@ -122,7 +125,7 @@ export const AnimatedMetrics = () => {
       value: 250,
       suffix: '%',
       prefix: '+',
-      label: 'ROI Promedio',
+      label: t('showcase.metrics.avgRoi'),
       color: 'from-electric-cyan to-purple-accent',
       delay: 0.3,
       isPercentage: true,
@@ -140,11 +143,11 @@ export const AnimatedMetrics = () => {
           transition={{ duration: 0.6 }}
           className="text-center space-y-4"
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-foreground">
-            Resultados que <span className="text-electric-cyan">hablan por sí solos</span>
+          <h2 className="text-4xl md:text-5xl font-bold text-foreground uppercase tracking-tight">
+            {t('showcase.metrics.title')} <span className="text-electric-cyan">{t('showcase.metrics.titleHighlight')}</span>
           </h2>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Métricas reales de agencias y empresas que automatizaron su marketing con Brainy
+          <p className="text-xl text-muted-foreground max-w-3xl mx-auto font-light">
+            {t('showcase.metrics.subtitle')}
           </p>
         </motion.div>
 
@@ -163,8 +166,8 @@ export const AnimatedMetrics = () => {
           transition={{ duration: 0.6, delay: 0.4 }}
           className="text-center"
         >
-          <p className="text-lg text-muted-foreground italic">
-            "Estas son solo algunas de las métricas. Tu agencia podría ser la siguiente."
+          <p className="text-lg text-muted-foreground italic font-light">
+            "{t('showcase.metrics.footer')}"
           </p>
         </motion.div>
       </div>

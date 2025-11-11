@@ -10,9 +10,10 @@ import {
   TrendingUp,
   Zap,
   Palette,
-  Eye
+  Globe
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { AnimatedHero } from '@/components/showcase/AnimatedHero';
 import { BrainCard } from '@/components/showcase/BrainCard';
 import AIMediaBuyerPanel from '@/components/showcase/AIMediaBuyerPanel';
@@ -22,13 +23,20 @@ import WhatsAppProjectManager from '@/components/showcase/WhatsAppProjectManager
 import InspirationLibrary from '@/components/showcase/InspirationLibrary';
 import { FAQSection } from '@/components/showcase/FAQSection';
 import { AnimatedMetrics } from '@/components/showcase/AnimatedMetrics';
+import { LanguageSelector } from '@/components/layout/LanguageSelector';
 import { motion } from 'framer-motion';
 
 const ShowcasePage = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-deep-blue via-background to-background dark">
+    <div className="min-h-screen bg-background dark">
+      {/* Language Selector - Fixed position */}
+      <div className="fixed top-4 right-4 z-50">
+        <LanguageSelector />
+      </div>
+
       {/* Hero Section */}
       <section className="container mx-auto px-4 pt-32 pb-20">
         <div className="text-center max-w-6xl mx-auto space-y-8">
@@ -37,9 +45,9 @@ const ShowcasePage = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <Badge variant="outline" className="mb-6 px-6 py-3 text-electric-cyan border-electric-cyan/30 bg-electric-cyan/5">
+            <Badge variant="outline" className="mb-6 px-6 py-3 text-electric-cyan border-electric-cyan/30 bg-electric-cyan/5 backdrop-blur-sm">
               <Sparkles className="w-4 h-4 mr-2" />
-              El futuro del marketing funcionando solo
+              {t('showcase.hero.badge')}
             </Badge>
           </motion.div>
           
@@ -50,15 +58,15 @@ const ShowcasePage = () => {
             transition={{ duration: 0.6, delay: 0.2 }}
           >
             <span className="bg-gradient-to-r from-foreground via-electric-cyan to-purple-accent bg-clip-text text-transparent">
-              Mira cómo funciona
+              {t('showcase.hero.title.line1')}
             </span>
             <br />
             <span className="text-foreground">
-              una agencia cuando
+              {t('showcase.hero.title.line2')}
             </span>
             <br />
             <span className="text-electric-cyan">
-              la IA la dirige
+              {t('showcase.hero.title.line3')}
             </span>
           </motion.h1>
           
@@ -68,9 +76,9 @@ const ShowcasePage = () => {
             animate={{ opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.4 }}
           >
-            Brainy automatiza contenido, anuncios y conversaciones desde un solo lugar.
+            {t('showcase.hero.subtitle')}
             <br />
-            <span className="text-foreground font-medium">Sin estrés. Sin procesos. Sin límites.</span>
+            <span className="text-foreground font-medium">{t('showcase.hero.subtitleBold')}</span>
           </motion.p>
           
           <motion.div 
@@ -82,18 +90,18 @@ const ShowcasePage = () => {
             <Button 
               size="lg" 
               onClick={() => navigate('/showcase/lead-capture')} 
-              className="gap-2 text-lg px-10 py-7 bg-electric-cyan hover:bg-electric-cyan/90 text-background font-bold uppercase tracking-wide shadow-glow-cyan"
+              className="gap-2 text-lg px-10 py-7 bg-gradient-to-r from-electric-cyan to-electric-cyan/90 hover:opacity-90 text-background font-bold uppercase tracking-wide shadow-glow-cyan transition-all duration-300"
             >
-              🚀 Ver Brainy en acción
+              🚀 {t('showcase.hero.ctaPrimary')}
               <ArrowRight className="w-5 h-5" />
             </Button>
             <Button 
               size="lg" 
               variant="outline" 
               onClick={() => document.getElementById('brains')?.scrollIntoView({ behavior: 'smooth' })}
-              className="text-lg px-10 py-7 gap-2 border-electric-cyan/30 text-electric-cyan hover:bg-electric-cyan/10 uppercase tracking-wide"
+              className="text-lg px-10 py-7 gap-2 border-electric-cyan/30 bg-background/50 backdrop-blur-sm text-electric-cyan hover:bg-electric-cyan/10 uppercase tracking-wide transition-all duration-300"
             >
-              Descubre las inteligencias
+              {t('showcase.hero.ctaSecondary')}
             </Button>
           </motion.div>
         </div>
@@ -110,7 +118,7 @@ const ShowcasePage = () => {
       </section>
 
       {/* Brains Section */}
-      <section id="brains" className="container mx-auto px-4 py-32 bg-gradient-to-b from-background to-deep-blue/20">
+      <section id="brains" className="container mx-auto px-4 py-32">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
             <motion.h2 
@@ -120,7 +128,7 @@ const ShowcasePage = () => {
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
             >
-              <span className="text-foreground">Cómo trabaja</span> <span className="text-electric-cyan">Brainy</span>
+              <span className="text-foreground">{t('showcase.brains.title')}</span> <span className="text-electric-cyan">{t('showcase.brains.titleHighlight')}</span>
             </motion.h2>
             <motion.p 
               className="text-xl text-muted-foreground max-w-3xl mx-auto font-light"
@@ -129,39 +137,39 @@ const ShowcasePage = () => {
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.2 }}
             >
-              Detrás de Brainy hay cinco inteligencias que colaboran entre sí:
+              {t('showcase.brains.subtitle')}
             </motion.p>
           </div>
 
           <div className="grid md:grid-cols-2 gap-6">
             <BrainCard 
               icon={Palette}
-              title="CreatorBrainy™"
-              description="Crea contenido y versiones automáticamente. Genera variantes, optimiza copy y adapta creatividades a cada plataforma sin intervención manual."
+              title={t('showcase.brains.creator.title')}
+              description={t('showcase.brains.creator.description')}
               color="purple"
               delay={0}
             />
             
             <BrainCard 
               icon={Calendar}
-              title="CalendarBrainy™"
-              description="Agenda, coordina y publica sin intervención. Selecciona los mejores horarios, distribuye contenido estratégicamente y ejecuta publicaciones automáticas."
+              title={t('showcase.brains.calendar.title')}
+              description={t('showcase.brains.calendar.description')}
               color="purple"
               delay={0.1}
             />
             
             <BrainCard 
               icon={Target}
-              title="AdBrainy™"
-              description="Ejecuta y optimiza tus campañas con precisión. Ajusta pujas en tiempo real, redistribuye presupuestos y maximiza ROAS automáticamente."
+              title={t('showcase.brains.ad.title')}
+              description={t('showcase.brains.ad.description')}
               color="cyan"
               delay={0.2}
             />
             
             <BrainCard 
               icon={MessageSquare}
-              title="ChatBrainy™"
-              description="Responde, conversa y convierte leads en tiempo real. Automatiza respuestas, califica intención de compra y captura oportunidades al instante."
+              title={t('showcase.brains.chat.title')}
+              description={t('showcase.brains.chat.description')}
               color="green"
               delay={0.3}
             />
@@ -169,8 +177,8 @@ const ShowcasePage = () => {
             <div className="md:col-span-2">
               <BrainCard 
                 icon={TrendingUp}
-                title="TrendBrainy™"
-                description="Detecta lo que está pasando y propone nuevas ideas. Analiza tendencias, monitorea competencia y sugiere contenido relevante automáticamente cada semana."
+                title={t('showcase.brains.trend.title')}
+                description={t('showcase.brains.trend.description')}
                 color="blue"
                 delay={0.4}
               />
@@ -184,13 +192,13 @@ const ShowcasePage = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.5 }}
           >
-            Todo ocurre de manera fluida, como si tuvieras un equipo completo trabajando sin parar.
+            {t('showcase.brains.footer')}
           </motion.p>
         </div>
       </section>
 
       {/* Results in Action Section */}
-      <section className="container mx-auto px-4 py-32 bg-gradient-to-b from-deep-blue/20 to-background">
+      <section className="container mx-auto px-4 py-32">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-20">
             <motion.h2 
@@ -200,7 +208,7 @@ const ShowcasePage = () => {
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
             >
-              <span className="text-foreground">Resultados</span> <span className="text-purple-accent">en acción</span>
+              <span className="text-foreground">{t('showcase.results.title')}</span> <span className="text-purple-accent">{t('showcase.results.titleHighlight')}</span>
             </motion.h2>
             <motion.p 
               className="text-xl text-muted-foreground max-w-3xl mx-auto font-light"
@@ -209,9 +217,9 @@ const ShowcasePage = () => {
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.2 }}
             >
-              Cada showcase muestra una sola cosa: cómo la automatización inteligente transforma el rendimiento de una marca.
+              {t('showcase.results.subtitle')}
               <br />
-              <span className="text-foreground font-medium">Sin comparaciones. Solo evidencia.</span>
+              <span className="text-foreground font-medium">{t('showcase.results.subtitleBold')}</span>
             </motion.p>
           </div>
 
@@ -226,14 +234,14 @@ const ShowcasePage = () => {
       </section>
 
       {/* Conversations Section */}
-      <section className="container mx-auto px-4 py-32 bg-gradient-to-b from-background to-deep-blue/20">
+      <section className="container mx-auto px-4 py-32">
         <div className="max-w-4xl mx-auto text-center">
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="relative p-12 rounded-3xl bg-gradient-to-br from-green-500/10 via-background to-background border border-green-500/20 shadow-[0_0_60px_hsl(140_70%_50%_/_0.3)]"
+            className="relative p-12 rounded-3xl bg-card/30 backdrop-blur-sm border border-green-500/20 shadow-[0_0_60px_hsl(140_70%_50%_/_0.2)] hover:shadow-[0_0_80px_hsl(140_70%_50%_/_0.3)] transition-all duration-500"
           >
             <div className="absolute -top-6 left-1/2 -translate-x-1/2">
               <div className="bg-green-500 p-4 rounded-2xl shadow-glow">
@@ -241,20 +249,18 @@ const ShowcasePage = () => {
               </div>
             </div>
 
-            <h2 className="text-4xl md:text-5xl font-bold mb-6 uppercase tracking-tight">
-              Conversaciones que hacen
+            <h2 className="text-4xl md:text-5xl font-bold mb-6 uppercase tracking-tight text-foreground">
+              {t('showcase.conversations.title')}
               <br />
-              <span className="text-green-500">más que hablar</span>
+              <span className="text-green-500">{t('showcase.conversations.titleHighlight')}</span>
             </h2>
             
             <p className="text-xl text-muted-foreground mb-8 font-light leading-relaxed">
-              Brainy coordina, aprueba y publica desde una conversación.
-              <br />
-              Un mensaje basta para lanzar una campaña, aprobar un copy o generar un anuncio.
+              {t('showcase.conversations.description')}
             </p>
 
             <p className="text-lg text-foreground font-medium italic">
-              Así se siente tener un asistente creativo que trabaja por ti, todo el día.
+              {t('showcase.conversations.footer')}
             </p>
           </motion.div>
         </div>
@@ -264,7 +270,7 @@ const ShowcasePage = () => {
       <AnimatedMetrics />
 
       {/* Everything Connected Section */}
-      <section className="container mx-auto px-4 py-32 bg-gradient-to-b from-deep-blue/20 to-background">
+      <section className="container mx-auto px-4 py-32">
         <div className="max-w-4xl mx-auto text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -274,7 +280,7 @@ const ShowcasePage = () => {
           >
             <div className="flex justify-center mb-8">
               <div className="relative">
-                <Zap className="w-20 h-20 text-electric-cyan animate-pulse-glow" />
+                <Zap className="w-20 h-20 text-electric-cyan animate-pulse" />
                 <motion.div
                   animate={{ rotate: 360 }}
                   transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
@@ -284,19 +290,17 @@ const ShowcasePage = () => {
             </div>
 
             <h2 className="text-5xl md:text-6xl font-bold mb-6 uppercase tracking-tight text-foreground">
-              <span className="text-foreground">Todo conectado.</span>
+              <span className="text-foreground">{t('showcase.connected.title')}</span>
               <br />
-              <span className="text-electric-cyan">Todo sincronizado.</span>
+              <span className="text-electric-cyan">{t('showcase.connected.titleHighlight')}</span>
             </h2>
             
             <p className="text-xl text-muted-foreground mb-4 font-light leading-relaxed">
-              Cada acción, cada publicación, cada anuncio.
-              <br />
-              Todo se actualiza en tiempo real dentro de un mismo cerebro digital.
+              {t('showcase.connected.description')}
             </p>
 
             <p className="text-2xl text-foreground font-bold">
-              No hay fragmentación. Solo fluidez.
+              {t('showcase.connected.footer')}
             </p>
           </motion.div>
         </div>
@@ -308,14 +312,14 @@ const ShowcasePage = () => {
       </section>
 
       {/* Final CTA */}
-      <section className="container mx-auto px-4 py-32 bg-gradient-to-b from-background to-deep-blue">
+      <section className="container mx-auto px-4 py-32">
         <div className="max-w-4xl mx-auto text-center">
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="relative p-16 rounded-3xl bg-gradient-to-br from-electric-cyan/10 via-background to-purple-accent/10 border border-electric-cyan/30 shadow-glow-blue"
+            className="relative p-16 rounded-3xl bg-card/30 backdrop-blur-sm border border-electric-cyan/30 shadow-glow-cyan hover:shadow-[0_0_100px_hsl(189_94%_63%_/_0.4)] transition-all duration-500"
           >
             <div className="absolute -top-6 left-1/2 -translate-x-1/2">
               <div className="bg-gradient-to-r from-electric-cyan to-purple-accent p-5 rounded-2xl shadow-glow-cyan">
@@ -324,29 +328,29 @@ const ShowcasePage = () => {
             </div>
 
             <h2 className="text-4xl md:text-6xl font-bold mb-6 uppercase tracking-tight text-foreground">
-              <span className="text-foreground">El futuro de las agencias</span>
+              <span className="text-foreground">{t('showcase.finalCta.title')}</span>
               <br />
-              <span className="text-electric-cyan">no usa más herramientas.</span>
+              <span className="text-electric-cyan">{t('showcase.finalCta.titleHighlight')}</span>
             </h2>
             
             <p className="text-2xl text-foreground font-medium mb-4">
-              Usa una sola que lo hace todo.
+              {t('showcase.finalCta.subtitle')}
             </p>
 
             <p className="text-5xl font-bold mb-12 bg-gradient-to-r from-electric-cyan to-purple-accent bg-clip-text text-transparent">
-              Brainy.
+              {t('showcase.finalCta.product')}
             </p>
 
             <Button 
               size="lg"
               onClick={() => navigate('/showcase/lead-capture')}
-              className="text-xl px-12 py-8 bg-gradient-to-r from-electric-cyan to-purple-accent hover:opacity-90 text-background font-bold uppercase tracking-wide shadow-glow-cyan"
+              className="text-xl px-12 py-8 bg-gradient-to-r from-electric-cyan to-purple-accent hover:opacity-90 text-background font-bold uppercase tracking-wide shadow-glow-cyan transition-all duration-300"
             >
-              Solicita acceso anticipado →
+              {t('showcase.finalCta.button')}
             </Button>
 
             <p className="text-sm text-foreground/70 mt-6 font-light">
-              Únete a las agencias y empresas que ya automatizaron su futuro
+              {t('showcase.finalCta.footer')}
             </p>
           </motion.div>
         </div>

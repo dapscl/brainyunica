@@ -48,7 +48,7 @@ export const BrainCard = ({ icon: Icon, title, description, color, delay = 0 }: 
               <Icon className="w-6 h-6" />
             </div>
             <div className="flex-1">
-              <h3 className="text-xl font-bold mb-2 tracking-tight">{title}</h3>
+              <h3 className="text-xl font-bold mb-2 tracking-tight text-foreground">{title}</h3>
               <p className="text-sm text-muted-foreground leading-relaxed">{description}</p>
             </div>
           </div>

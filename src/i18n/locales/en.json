@@ -84,5 +84,81 @@
     "weekly": "Weekly",
     "monthly": "Monthly",
     "yearly": "Yearly"
+  },
+  "showcase": {
+    "hero": {
+      "badge": "The future of marketing running itself",
+      "title": {
+        "line1": "See how an agency works",
+        "line2": "when AI",
+        "line3": "runs it"
+      },
+      "subtitle": "Brainy automates content, ads, and conversations from one place.",
+      "subtitleBold": "No stress. No processes. No limits.",
+      "ctaPrimary": "See Brainy in action",
+      "ctaSecondary": "Discover the intelligences"
+    },
+    "brains": {
+      "title": "How",
+      "titleHighlight": "Brainy",
+      "subtitle": "Behind Brainy are five intelligences working together:",
+      "creator": {
+        "title": "CreatorBrainy™",
+        "description": "Creates content and versions automatically. Generates variants, optimizes copy, and adapts creatives to each platform without manual intervention."
+      },
+      "calendar": {
+        "title": "CalendarBrainy™",
+        "description": "Schedules, coordinates, and publishes without intervention. Selects the best times, distributes content strategically, and executes automatic publications."
+      },
+      "ad": {
+        "title": "AdBrainy™",
+        "description": "Executes and optimizes your campaigns with precision. Adjusts bids in real-time, redistributes budgets, and maximizes ROAS automatically."
+      },
+      "chat": {
+        "title": "ChatBrainy™",
+        "description": "Responds, converses, and converts leads in real-time. Automates responses, qualifies purchase intent, and captures opportunities instantly."
+      },
+      "trend": {
+        "title": "TrendBrainy™",
+        "description": "Detects what's happening and proposes new ideas. Analyzes trends, monitors competition, and suggests relevant content automatically every week."
+      },
+      "footer": "Everything happens smoothly, as if you had a complete team working non-stop."
+    },
+    "results": {
+      "title": "Results",
+      "titleHighlight": "in action",
+      "subtitle": "Each showcase displays one thing: how intelligent automation transforms a brand's performance.",
+      "subtitleBold": "No comparisons. Just evidence."
+    },
+    "conversations": {
+      "title": "Conversations that do",
+      "titleHighlight": "more than talk",
+      "description": "Brainy coordinates, approves, and publishes from a conversation. One message is enough to launch a campaign, approve copy, or generate an ad.",
+      "footer": "This is what it feels like to have a creative assistant working for you, all day long."
+    },
+    "metrics": {
+      "title": "Results that",
+      "titleHighlight": "speak for themselves",
+      "subtitle": "Real metrics from agencies and companies that automated their marketing with Brainy",
+      "leadsGenerated": "Leads Generated",
+      "hoursSaved": "Hours Saved",
+      "automation": "Automation",
+      "avgRoi": "Average ROI",
+      "footer": "These are just some of the metrics. Your agency could be next."
+    },
+    "connected": {
+      "title": "Everything connected.",
+      "titleHighlight": "Everything synchronized.",
+      "description": "Every action, every publication, every ad. Everything updates in real-time within a single digital brain.",
+      "footer": "No fragmentation. Only fluidity."
+    },
+    "finalCta": {
+      "title": "The future of agencies",
+      "titleHighlight": "doesn't use more tools.",
+      "subtitle": "Uses one that does everything.",
+      "product": "Brainy.",
+      "button": "Request early access →",
+      "footer": "Join the agencies and companies that have already automated their future"
+    }
   }
 }
