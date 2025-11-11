@@ -242,10 +242,10 @@ const ShowcasePricingPage = () => {
                 }}
               >
               <Card 
-                className={`relative overflow-hidden flex flex-col bg-card/50 backdrop-blur-sm transition-all duration-500 ${
+                className={`relative overflow-hidden flex flex-col bg-card/50 backdrop-blur-sm transition-all duration-500 hover:-translate-y-2 hover:scale-[1.02] ${
                   tier.recommended 
-                    ? 'border-electric-cyan shadow-glow-cyan lg:scale-105 z-10' 
-                    : 'border-border/50 hover:border-electric-cyan/30'
+                    ? 'border-electric-cyan shadow-glow-cyan lg:scale-105 z-10 hover:shadow-[0_0_40px_rgba(34,211,238,0.4)]' 
+                    : 'border-border/50 hover:border-electric-cyan/50 hover:shadow-[0_0_30px_rgba(34,211,238,0.3)]'
                 }`}
               >
                 {tier.recommended && (
@@ -322,7 +322,7 @@ const ShowcasePricingPage = () => {
                   {adSpendExamplesByTier.starter.map((example, idx) => (
                     <div 
                       key={idx} 
-                      className="p-3 border border-border/50 rounded-lg hover:bg-accent/50 transition-colors backdrop-blur-sm"
+                      className="p-3 border border-border/50 rounded-lg hover:bg-accent/50 transition-all duration-300 backdrop-blur-sm hover:-translate-y-1 hover:shadow-[0_0_20px_rgba(34,211,238,0.2)] hover:border-electric-cyan/40"
                     >
                       <p className="font-semibold text-sm mb-1">{example.spend}</p>
                       <p className="text-xs text-muted-foreground leading-tight">{example.cost}</p>
@@ -341,7 +341,7 @@ const ShowcasePricingPage = () => {
                   {adSpendExamplesByTier.smallAgencies.map((example, idx) => (
                     <div 
                       key={idx} 
-                      className="p-3 border border-border/50 rounded-lg hover:bg-accent/50 transition-colors backdrop-blur-sm"
+                      className="p-3 border border-border/50 rounded-lg hover:bg-accent/50 transition-all duration-300 backdrop-blur-sm hover:-translate-y-1 hover:shadow-[0_0_20px_rgba(168,85,247,0.2)] hover:border-purple-accent/40"
                     >
                       <p className="font-semibold text-sm mb-1">{example.spend}</p>
                       <p className="text-xs text-muted-foreground leading-tight">{example.cost}</p>
@@ -360,7 +360,7 @@ const ShowcasePricingPage = () => {
                   {adSpendExamplesByTier.scaledAgencies.map((example, idx) => (
                     <div 
                       key={idx} 
-                      className="p-3 border border-border/50 rounded-lg hover:bg-accent/50 transition-colors backdrop-blur-sm"
+                      className="p-3 border border-border/50 rounded-lg hover:bg-accent/50 transition-all duration-300 backdrop-blur-sm hover:-translate-y-1 hover:shadow-[0_0_20px_rgba(245,158,11,0.2)] hover:border-amber-500/40"
                     >
                       <p className="font-semibold text-sm mb-1">{example.spend}</p>
                       <p className="text-xs text-muted-foreground leading-tight">{example.cost}</p>
@@ -379,7 +379,7 @@ const ShowcasePricingPage = () => {
                   {adSpendExamplesByTier.enterprise.map((example, idx) => (
                     <div 
                       key={idx} 
-                      className="p-3 border border-border/50 rounded-lg hover:bg-accent/50 transition-colors backdrop-blur-sm"
+                      className="p-3 border border-border/50 rounded-lg hover:bg-accent/50 transition-all duration-300 backdrop-blur-sm hover:-translate-y-1 hover:shadow-[0_0_20px_rgba(239,68,68,0.2)] hover:border-red-500/40"
                     >
                       <p className="font-semibold text-sm mb-1">{example.spend}</p>
                       <p className="text-xs text-muted-foreground leading-tight">{example.cost}</p>
