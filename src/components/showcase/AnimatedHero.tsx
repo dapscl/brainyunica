@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Calendar, MessageSquare, TrendingUp, Bot } from 'lucide-react';
+import { Calendar, MessageSquare, TrendingUp, Bot, Sparkles, Clock, DollarSign, Target, Zap, CheckCircle, Activity, BarChart3 } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
 interface Particle {
@@ -254,6 +254,110 @@ export const AnimatedHero = () => {
               <p className="text-xs font-semibold text-purple-500">ChatBrainy™</p>
               <p className="text-xs text-muted-foreground mt-1">89 leads capturados</p>
             </div>
+          </div>
+        </motion.div>
+
+        {/* CreatorBrainy Notification */}
+        <motion.div
+          initial={{ opacity: 0, x: 50 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8, delay: 1, repeat: Infinity, repeatDelay: 8, repeatType: "reverse" }}
+          className="absolute top-1/3 right-16 bg-card/90 backdrop-blur-sm rounded-lg p-3 border border-electric-cyan/40 shadow-lg"
+        >
+          <div className="flex items-center gap-2">
+            <Sparkles className="w-4 h-4 text-electric-cyan animate-pulse" />
+            <p className="text-xs font-medium text-electric-cyan">3 variantes creadas</p>
+          </div>
+        </motion.div>
+
+        {/* TrendBrainy Alert */}
+        <motion.div
+          initial={{ opacity: 0, y: -30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 3.5, repeat: Infinity, repeatDelay: 8, repeatType: "reverse" }}
+          className="absolute top-1/2 left-1/4 bg-card/90 backdrop-blur-sm rounded-lg p-3 border border-purple-400/40"
+        >
+          <div className="flex items-center gap-2">
+            <Target className="w-4 h-4 text-purple-400" />
+            <p className="text-xs font-medium text-foreground">Nueva tendencia detectada</p>
+          </div>
+        </motion.div>
+
+        {/* Budget Alert */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8, delay: 5, repeat: Infinity, repeatDelay: 8, repeatType: "reverse" }}
+          className="absolute top-1/2 right-1/4 bg-card/90 backdrop-blur-sm rounded-lg p-3 border border-green-500/40"
+        >
+          <div className="flex items-center gap-2">
+            <DollarSign className="w-4 h-4 text-green-500" />
+            <p className="text-xs font-medium text-foreground">$2.5K optimizado</p>
+          </div>
+        </motion.div>
+
+        {/* Campaign Status */}
+        <motion.div
+          initial={{ opacity: 0, x: -30 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8, delay: 2.5, repeat: Infinity, repeatDelay: 8, repeatType: "reverse" }}
+          className="absolute bottom-1/3 left-16 bg-card/90 backdrop-blur-sm rounded-lg px-3 py-2 border border-green-500/40"
+        >
+          <div className="flex items-center gap-2">
+            <CheckCircle className="w-4 h-4 text-green-500" />
+            <p className="text-xs font-medium text-foreground">Campaña activa</p>
+          </div>
+        </motion.div>
+
+        {/* Sync Indicator */}
+        <motion.div
+          initial={{ opacity: 0, rotate: 10 }}
+          animate={{ opacity: 1, rotate: 0 }}
+          transition={{ duration: 0.8, delay: 4.5, repeat: Infinity, repeatDelay: 8, repeatType: "reverse" }}
+          className="absolute bottom-1/2 left-1/3 bg-card/90 backdrop-blur-sm rounded-full px-3 py-2 border border-electric-cyan/40"
+        >
+          <div className="flex items-center gap-1">
+            <Zap className="w-3 h-3 text-electric-cyan animate-pulse" />
+            <p className="text-xs font-medium text-electric-cyan">Sync</p>
+          </div>
+        </motion.div>
+
+        {/* Real-time Activity */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 6.5, repeat: Infinity, repeatDelay: 8, repeatType: "reverse" }}
+          className="absolute bottom-1/4 right-1/3 bg-card/90 backdrop-blur-sm rounded-lg p-3 border border-purple-400/40"
+        >
+          <div className="flex items-center gap-2">
+            <Activity className="w-4 h-4 text-purple-400 animate-pulse" />
+            <p className="text-xs font-medium text-foreground">127 interacciones</p>
+          </div>
+        </motion.div>
+
+        {/* Content Progress */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8, delay: 7.5, repeat: Infinity, repeatDelay: 8, repeatType: "reverse" }}
+          className="absolute top-2/3 left-1/2 -translate-x-1/2 bg-card/90 backdrop-blur-sm rounded-lg p-3 border border-electric-cyan/40"
+        >
+          <div className="flex items-center gap-2">
+            <Clock className="w-4 h-4 text-electric-cyan" />
+            <p className="text-xs font-medium text-foreground">Publicando en 2h</p>
+          </div>
+        </motion.div>
+
+        {/* Performance Badge */}
+        <motion.div
+          initial={{ opacity: 0, x: 30 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8, delay: 1.5, repeat: Infinity, repeatDelay: 8, repeatType: "reverse" }}
+          className="absolute top-1/4 right-1/3 bg-green-500/20 backdrop-blur-sm rounded-full px-3 py-1.5 border border-green-500/50"
+        >
+          <div className="flex items-center gap-1">
+            <BarChart3 className="w-3 h-3 text-green-500" />
+            <p className="text-xs font-bold text-green-500">↑ 34%</p>
           </div>
         </motion.div>
 
