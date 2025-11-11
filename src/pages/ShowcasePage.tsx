@@ -21,6 +21,7 @@ import MultiChannelCommunication from '@/components/showcase/MultiChannelCommuni
 import WhatsAppProjectManager from '@/components/showcase/WhatsAppProjectManager';
 import InspirationLibrary from '@/components/showcase/InspirationLibrary';
 import { FAQSection } from '@/components/showcase/FAQSection';
+import { AnimatedMetrics } from '@/components/showcase/AnimatedMetrics';
 import { motion } from 'framer-motion';
 
 const ShowcasePage = () => {
@@ -258,6 +259,9 @@ const ShowcasePage = () => {
           </motion.div>
         </div>
       </section>
+
+      {/* Animated Metrics Section */}
+      <AnimatedMetrics />
 
       {/* Everything Connected Section */}
       <section className="container mx-auto px-4 py-32 bg-gradient-to-b from-deep-blue/20 to-background">
