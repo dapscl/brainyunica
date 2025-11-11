@@ -48,6 +48,7 @@ const ShowcaseVideoGeneratorPage = lazy(() => import("./pages/ShowcaseVideoGener
 const ShowcaseInspirationLibraryPage = lazy(() => import("./pages/ShowcaseInspirationLibraryPage"));
 const ShowcasePricingPage = lazy(() => import("./pages/ShowcasePricingPage"));
 const ShowcaseOnboardingPage = lazy(() => import("./pages/ShowcaseOnboardingPage"));
+const ShowcaseDemoMenuPage = lazy(() => import("./pages/ShowcaseDemoMenuPage"));
 
 const LoadingFallback = () => (
   <div className="min-h-screen bg-background p-8">
@@ -78,7 +79,8 @@ const App = () => {
           <Route path="/brands/:slug/video-generator" element={<ProtectedRoute><ShowcaseVideoGeneratorPage /></ProtectedRoute>} />
           <Route path="/brands/:slug/inspiration" element={<ProtectedRoute><ShowcaseInspirationLibraryPage /></ProtectedRoute>} />
           <Route path="/landing" element={<LandingPage />} />
-          <Route path="/demo" element={<ProtectedRoute><DemoPage /></ProtectedRoute>} />
+          <Route path="/demo" element={<ProtectedRoute><ShowcaseDemoMenuPage /></ProtectedRoute>} />
+          <Route path="/demo-generator" element={<ProtectedRoute><DemoPage /></ProtectedRoute>} />
           <Route path="/dashboard" element={<ProtectedRoute><DashboardPage /></ProtectedRoute>} />
           <Route path="/organizations" element={<ProtectedRoute><OrganizationsPage /></ProtectedRoute>} />
           <Route path="/organizations/new" element={<ProtectedRoute><CreateOrganizationPage /></ProtectedRoute>} />
