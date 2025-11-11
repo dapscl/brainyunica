@@ -14,6 +14,53 @@ export type Database = {
   }
   public: {
     Tables: {
+      ad_spend_logs: {
+        Row: {
+          amount: number
+          campaign_id: string | null
+          campaign_name: string | null
+          channel: string
+          created_at: string
+          date: string
+          id: string
+          metadata: Json | null
+          organization_id: string
+          updated_at: string
+        }
+        Insert: {
+          amount: number
+          campaign_id?: string | null
+          campaign_name?: string | null
+          channel: string
+          created_at?: string
+          date?: string
+          id?: string
+          metadata?: Json | null
+          organization_id: string
+          updated_at?: string
+        }
+        Update: {
+          amount?: number
+          campaign_id?: string | null
+          campaign_name?: string | null
+          channel?: string
+          created_at?: string
+          date?: string
+          id?: string
+          metadata?: Json | null
+          organization_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ad_spend_logs_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       audit_logs: {
         Row: {
           action: string
@@ -718,6 +765,19 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      get_ad_spend_metrics: {
+        Args: {
+          _end_date?: string
+          _organization_id: string
+          _start_date?: string
+        }
+        Returns: {
+          campaign_performance: Json
+          channel_breakdown: Json
+          daily_spend: Json
+          total_spend: number
+        }[]
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]

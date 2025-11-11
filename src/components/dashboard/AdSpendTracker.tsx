@@ -4,34 +4,12 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { AreaChart, Area, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from "recharts";
-import { TrendingUp, AlertTriangle, DollarSign, Zap } from "lucide-react";
+import { TrendingUp, AlertTriangle, DollarSign, Zap, Plus, RefreshCw } from "lucide-react";
 import { FaFacebook, FaLinkedin, FaGoogle } from "react-icons/fa";
-
-// Mock data - en producción vendría de Supabase
-const currentMonthSpend = 18500;
-const channelBreakdown = [
-  { channel: "Facebook Ads", spend: 8200, icon: FaFacebook, color: "hsl(var(--primary))" },
-  { channel: "LinkedIn Ads", spend: 6800, icon: FaLinkedin, color: "hsl(var(--accent))" },
-  { channel: "Google Ads", spend: 3500, icon: FaGoogle, color: "hsl(var(--secondary))" },
-];
-
-const monthlyComparison = [
-  { month: "Ene", spend: 12400 },
-  { month: "Feb", spend: 15200 },
-  { month: "Mar", spend: 14800 },
-  { month: "Abr", spend: 16500 },
-  { month: "May", spend: 18500 },
-];
-
-const dailySpend = [
-  { day: "Lun", facebook: 1200, linkedin: 980, google: 450 },
-  { day: "Mar", facebook: 1350, linkedin: 1100, google: 520 },
-  { day: "Mié", facebook: 1180, linkedin: 950, google: 480 },
-  { day: "Jue", facebook: 1420, linkedin: 1200, google: 610 },
-  { day: "Vie", facebook: 1310, linkedin: 1050, google: 530 },
-  { day: "Sáb", facebook: 920, linkedin: 780, google: 380 },
-  { day: "Dom", facebook: 820, linkedin: 740, google: 330 },
-];
+import { useAdSpendLogs, useAdSpendMetrics, useBulkAddAdSpend } from "@/hooks/useAdSpend";
+import { useUserOrganizations } from "@/hooks/useUserOrganizations";
+import { Skeleton } from "@/components/ui/skeleton";
+import { format, subDays, startOfMonth, endOfMonth, subMonths } from "date-fns";
 
 const calculatePricing = (adSpend: number) => {
   if (adSpend <= 5000) {
@@ -68,14 +46,116 @@ const calculatePricing = (adSpend: number) => {
 };
 
 export function AdSpendTracker() {
-  const pricing = calculatePricing(currentMonthSpend);
-  const projectedMonthlySpend = currentMonthSpend * 1.15; // Proyección con 15% de crecimiento
-  const projectedCost = calculatePricing(projectedMonthlySpend);
+  const { organizations } = useUserOrganizations();
+  const currentOrgId = organizations?.[0]?.id;
 
+  // Get current month date range
+  const today = new Date();
+  const currentMonthStart = format(startOfMonth(today), 'yyyy-MM-dd');
+  const currentMonthEnd = format(endOfMonth(today), 'yyyy-MM-dd');
+
+  // Get data from Supabase
+  const { data: logs, isLoading: logsLoading } = useAdSpendLogs(currentOrgId, currentMonthStart, currentMonthEnd);
+  const { data: metrics, isLoading: metricsLoading } = useAdSpendMetrics(currentOrgId, currentMonthStart, currentMonthEnd);
+  const bulkAddMutation = useBulkAddAdSpend();
+
+  // Calculate current month spend
+  const currentMonthSpend = metrics?.total_spend ? Number(metrics.total_spend) : 0;
+  
+  // Channel breakdown from real data
+  const channelBreakdown = metrics?.channel_breakdown 
+    ? Object.entries(metrics.channel_breakdown).map(([channel, spend]) => ({
+        channel: channel.includes('Facebook') ? 'Facebook Ads' : channel.includes('LinkedIn') ? 'LinkedIn Ads' : 'Google Ads',
+        spend: Number(spend),
+        icon: channel.includes('Facebook') ? FaFacebook : channel.includes('LinkedIn') ? FaLinkedin : FaGoogle,
+        color: channel.includes('Facebook') ? "hsl(var(--primary))" : channel.includes('LinkedIn') ? "hsl(var(--accent))" : "hsl(var(--secondary))",
+      }))
+    : [];
+
+  const pricing = calculatePricing(currentMonthSpend);
+  const projectedMonthlySpend = currentMonthSpend * 1.15;
+  const projectedCost = calculatePricing(projectedMonthlySpend);
   const showAlert = pricing.progress > 85;
+  const isLoading = logsLoading || metricsLoading;
+
+  // Generate demo data
+  const handleGenerateDemoData = async () => {
+    if (!currentOrgId) return;
+
+    const demoLogs = [];
+    const channels = ['Facebook', 'LinkedIn', 'Google'];
+    
+    // Generate data for the last 30 days
+    for (let i = 0; i < 30; i++) {
+      const date = format(subDays(today, i), 'yyyy-MM-dd');
+      
+      channels.forEach(channel => {
+        const amount = Math.floor(Math.random() * 1000) + 500;
+        demoLogs.push({
+          organization_id: currentOrgId,
+          channel,
+          amount,
+          date,
+          campaign_id: `campaign-${channel.toLowerCase()}-${i}`,
+          campaign_name: `${channel} Campaign ${Math.floor(i / 7) + 1}`,
+          metadata: {},
+        });
+      });
+    }
+
+    await bulkAddMutation.mutateAsync(demoLogs);
+  };
+
+  if (isLoading) {
+    return (
+      <div className="space-y-6">
+        <Skeleton className="h-24 w-full" />
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <Skeleton className="h-40" />
+          <Skeleton className="h-40" />
+          <Skeleton className="h-40" />
+        </div>
+        <Skeleton className="h-64 w-full" />
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">
+      {/* Demo Data Generator */}
+      {currentMonthSpend === 0 && (
+        <Card className="border-dashed border-2">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <Plus className="h-5 w-5" />
+              Comenzar con Datos de Demo
+            </CardTitle>
+            <CardDescription>
+              No hay datos de ad spend aún. Genera datos de demostración para ver el dashboard en acción.
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Button 
+              onClick={handleGenerateDemoData}
+              disabled={bulkAddMutation.isPending}
+              className="w-full md:w-auto"
+            >
+              {bulkAddMutation.isPending ? (
+                <>
+                  <RefreshCw className="h-4 w-4 mr-2 animate-spin" />
+                  Generando datos...
+                </>
+              ) : (
+                <>
+                  <Plus className="h-4 w-4 mr-2" />
+                  Generar Datos Demo
+                </>
+              )}
+            </Button>
+          </CardContent>
+        </Card>
+      )}
+
       {/* Alert when approaching tier limit */}
       {showAlert && pricing.nextTierAt && (
         <Alert className="border-warning bg-warning/10">
@@ -176,8 +256,13 @@ export function AdSpendTracker() {
           <CardDescription>Distribución de inversión en el mes actual</CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="space-y-4">
-            {channelBreakdown.map((channel) => {
+          {channelBreakdown.length === 0 ? (
+            <p className="text-sm text-muted-foreground text-center py-8">
+              No hay datos de canales disponibles
+            </p>
+          ) : (
+            <div className="space-y-4">
+              {channelBreakdown.map((channel) => {
               const Icon = channel.icon;
               const percentage = (channel.spend / currentMonthSpend) * 100;
               return (
@@ -201,19 +286,37 @@ export function AdSpendTracker() {
                 </div>
               );
             })}
+            </div>
+          )}
+        </CardContent>
+      </Card>
+
+      {/* Note about historical data */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Datos en Tiempo Real</CardTitle>
+          <CardDescription>
+            El sistema está conectado a Supabase y mostrando datos reales de tu organización. 
+            Los gráficos históricos se generarán automáticamente a medida que agregues más datos.
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="text-sm text-muted-foreground">
+            <p>Total de registros: <span className="font-semibold text-foreground">{logs?.length || 0}</span></p>
+            <p>Última actualización: <span className="font-semibold text-foreground">{format(today, 'dd/MM/yyyy HH:mm')}</span></p>
           </div>
         </CardContent>
       </Card>
 
-      {/* Monthly Comparison Chart */}
-      <Card>
+      {/* Monthly Comparison Chart - Commented out until we have historical data */}
+      {/* <Card>
         <CardHeader>
           <CardTitle>Evolución Mensual de Ad Spend</CardTitle>
-          <CardDescription>Comparación de inversión publicitaria en los últimos 5 meses</CardDescription>
+          <CardDescription>Comparación de inversión publicitaria</CardDescription>
         </CardHeader>
         <CardContent>
           <ResponsiveContainer width="100%" height={300}>
-            <AreaChart data={monthlyComparison}>
+            <AreaChart data={[]}>
               <defs>
                 <linearGradient id="colorSpend" x1="0" y1="0" x2="0" y2="1">
                   <stop offset="5%" stopColor="hsl(var(--primary))" stopOpacity={0.3}/>
@@ -250,17 +353,17 @@ export function AdSpendTracker() {
             </AreaChart>
           </ResponsiveContainer>
         </CardContent>
-      </Card>
+      </Card> */}
 
-      {/* Daily Breakdown by Channel */}
-      <Card>
+      {/* Daily Breakdown by Channel - Commented out until we have enough data */}
+      {/* <Card>
         <CardHeader>
           <CardTitle>Distribución Semanal por Canal</CardTitle>
           <CardDescription>Inversión diaria desglosada por plataforma publicitaria</CardDescription>
         </CardHeader>
         <CardContent>
           <ResponsiveContainer width="100%" height={300}>
-            <BarChart data={dailySpend}>
+            <BarChart data={[]}>
               <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
               <XAxis 
                 dataKey="day" 
@@ -290,7 +393,7 @@ export function AdSpendTracker() {
             </BarChart>
           </ResponsiveContainer>
         </CardContent>
-      </Card>
+      </Card> */}
 
       {/* Upgrade Plan CTA */}
       <Card className="border-primary/20 bg-gradient-to-r from-primary/5 to-accent/5">
