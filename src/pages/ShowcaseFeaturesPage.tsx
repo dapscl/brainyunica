@@ -171,15 +171,7 @@ export default function ShowcaseFeaturesPage() {
                 <br />
                 <span className="text-foreground">{t('showcase.features.hero.title2prefix', 'para automatizar tu ')}</span>
                 <span className="bg-gradient-to-r from-electric-cyan via-purple-accent to-electric-cyan bg-clip-text text-transparent">
-                  <RotatingWord 
-                    words={[
-                      t('showcase.features.hero.word1', 'agencia'),
-                      t('showcase.features.hero.word2', 'Pyme'),
-                      t('showcase.features.hero.word3', 'Startup'),
-                      t('showcase.features.hero.word4', 'empresa'),
-                      t('showcase.features.hero.word5', 'marca')
-                    ]}
-                  />
+                  {t('showcase.features.hero.word', 'marketing')}
                 </span>
               </h1>
               
