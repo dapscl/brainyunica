@@ -702,6 +702,183 @@ const ShowcaseBrandDetailPage = () => {
           </Card>
         </section>
 
+        {/* AI Video Generator (Creatify) */}
+        <section>
+          <div className="mb-6">
+            <div className="flex items-center justify-between flex-wrap gap-4">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 bg-gradient-to-br from-purple-500 to-pink-600 rounded-lg flex items-center justify-center">
+                  <Video className="w-5 h-5 text-white" />
+                </div>
+                <div>
+                  <h2 className="text-2xl font-bold">Generador de Video con IA</h2>
+                  <p className="text-muted-foreground">
+                    Convierte URLs en videos profesionales con avatares AI en minutos
+                  </p>
+                </div>
+              </div>
+              <Button size="lg" onClick={() => navigate(`/showcase/brands/${slug}/video-generator`)}>
+                Abrir Generador de Video
+              </Button>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Video className="w-5 h-5 text-purple-500" />
+                  Videos Generados
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between p-3 bg-muted/30 rounded-lg">
+                    <span className="text-sm font-medium">Este Mes</span>
+                    <span className="text-2xl font-bold text-purple-600">24</span>
+                  </div>
+                  <div className="flex items-center justify-between p-3 bg-muted/30 rounded-lg">
+                    <span className="text-sm font-medium">Tiempo Ahorrado</span>
+                    <span className="text-2xl font-bold">18h</span>
+                  </div>
+                  <div className="flex items-center justify-between p-3 bg-muted/30 rounded-lg">
+                    <span className="text-sm font-medium">Engagement Promedio</span>
+                    <span className="text-2xl font-bold text-green-600">9.2%</span>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Zap className="w-5 h-5 text-yellow-500" />
+                  Testing Automático
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm text-muted-foreground mb-4">
+                  Crea variantes automáticas de tus videos para A/B testing y optimización de rendimiento
+                </p>
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between text-xs">
+                    <span className="text-muted-foreground">Variantes creadas</span>
+                    <span className="font-semibold">48</span>
+                  </div>
+                  <div className="flex items-center justify-between text-xs">
+                    <span className="text-muted-foreground">Tests A/B activos</span>
+                    <span className="font-semibold">6</span>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Users className="w-5 h-5 text-blue-500" />
+                  Avatares AI Disponibles
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-3">
+                  {['Emma', 'Marcus', 'Sofia', 'David'].map((avatar) => (
+                    <div key={avatar} className="flex items-center gap-3 p-2 border rounded-lg">
+                      <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-xs font-semibold">
+                        {avatar[0]}
+                      </div>
+                      <span className="text-sm font-medium">{avatar}</span>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </section>
+
+        {/* Inspiration Library */}
+        <section>
+          <div className="mb-6">
+            <div className="flex items-center justify-between flex-wrap gap-4">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 bg-gradient-to-br from-amber-500 to-orange-600 rounded-lg flex items-center justify-center">
+                  <TrendingUp className="w-5 h-5 text-white" />
+                </div>
+                <div>
+                  <h2 className="text-2xl font-bold">Biblioteca de Inspiración</h2>
+                  <p className="text-muted-foreground">
+                    Ads ganadores de la industria con análisis detallado de rendimiento
+                  </p>
+                </div>
+              </div>
+              <Button size="lg" onClick={() => navigate(`/showcase/brands/${slug}/inspiration`)}>
+                Explorar Biblioteca
+              </Button>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+            {[
+              { metric: 'Ads Analizados', value: '847', icon: Eye },
+              { metric: 'Mejor CTR', value: '14.8%', icon: MousePointerClick },
+              { metric: 'Mejor ROI', value: '8.3x', icon: TrendingUp },
+              { metric: 'Industrias', value: '24', icon: Target }
+            ].map((stat, idx) => {
+              const Icon = stat.icon;
+              return (
+                <Card key={idx}>
+                  <CardHeader className="pb-3">
+                    <CardTitle className="text-sm font-medium text-muted-foreground flex items-center gap-2">
+                      <Icon className="w-4 h-4" />
+                      {stat.metric}
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="text-3xl font-bold">{stat.value}</div>
+                  </CardContent>
+                </Card>
+              );
+            })}
+          </div>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>Top 3 Ads de Alto Rendimiento</CardTitle>
+              <CardDescription>Creatividades destacadas de este mes con métricas excepcionales</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                {[
+                  { title: 'SaaS Product Launch', platform: 'LinkedIn', ctr: '8.5%', roi: '5.2x', views: '2.4M' },
+                  { title: 'Fitness Challenge', platform: 'Instagram', ctr: '9.1%', roi: '4.8x', views: '1.8M' },
+                  { title: 'Eco Product Showcase', platform: 'Facebook', ctr: '7.2%', roi: '3.9x', views: '980K' }
+                ].map((ad, idx) => (
+                  <div key={idx} className="border rounded-lg p-4 space-y-3">
+                    <div>
+                      <h4 className="font-semibold mb-1">{ad.title}</h4>
+                      <Badge variant="outline">{ad.platform}</Badge>
+                    </div>
+                    <div className="grid grid-cols-3 gap-2 text-xs">
+                      <div>
+                        <p className="text-muted-foreground">CTR</p>
+                        <p className="font-semibold text-green-600">{ad.ctr}</p>
+                      </div>
+                      <div>
+                        <p className="text-muted-foreground">ROI</p>
+                        <p className="font-semibold text-green-600">{ad.roi}</p>
+                      </div>
+                      <div>
+                        <p className="text-muted-foreground">Views</p>
+                        <p className="font-semibold">{ad.views}</p>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+        </section>
+
         {/* Reporting en Tiempo Real */}
         <section>
           <div className="mb-6">

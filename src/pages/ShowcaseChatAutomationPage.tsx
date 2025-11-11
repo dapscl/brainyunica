@@ -167,6 +167,70 @@ const ShowcaseChatAutomationPage = () => {
 
           {/* Sidebar */}
           <div className="space-y-6">
+            {/* Comment → DM Automation */}
+            <Card className="border-primary/20 bg-gradient-to-br from-primary/5 to-transparent">
+              <CardHeader>
+                <CardTitle className="text-lg">Comment → DM Automation</CardTitle>
+                <CardDescription>Convierte comentarios en conversaciones privadas automáticamente</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-3">
+                <div className="border rounded-lg p-3 bg-card">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-sm font-medium">Instagram Comments</span>
+                    <Badge variant="default">Activo</Badge>
+                  </div>
+                  <p className="text-xs text-muted-foreground mb-2">
+                    Keywords detectadas: precio, disponible, interesado
+                  </p>
+                  <div className="grid grid-cols-2 gap-2 text-xs">
+                    <div>
+                      <p className="text-muted-foreground">Auto-respuestas</p>
+                      <p className="font-semibold">127</p>
+                    </div>
+                    <div>
+                      <p className="text-muted-foreground">Conversiones</p>
+                      <p className="font-semibold">34</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="border rounded-lg p-3 bg-card">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-sm font-medium">Story Mentions</span>
+                    <Badge variant="default">Activo</Badge>
+                  </div>
+                  <p className="text-xs text-muted-foreground mb-2">
+                    Respuesta automática a menciones con agradecimiento
+                  </p>
+                  <div className="grid grid-cols-2 gap-2 text-xs">
+                    <div>
+                      <p className="text-muted-foreground">Menciones</p>
+                      <p className="font-semibold">89</p>
+                    </div>
+                    <div>
+                      <p className="text-muted-foreground">Engagement</p>
+                      <p className="font-semibold">94%</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="border rounded-lg p-3 bg-card">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-sm font-medium">Giveaway Manager</span>
+                    <Badge variant="secondary">Configurar</Badge>
+                  </div>
+                  <p className="text-xs text-muted-foreground">
+                    Automatiza sorteos y concursos con validación de participación
+                  </p>
+                </div>
+
+                <Button variant="outline" className="w-full gap-2 mt-3">
+                  <Settings className="w-4 h-4" />
+                  Configurar Automatizaciones
+                </Button>
+              </CardContent>
+            </Card>
+
             {/* Quick Actions */}
             <Card>
               <CardHeader>
