@@ -50,7 +50,7 @@ export const ShowcaseHeader = () => {
                   className={`text-sm font-medium transition-all duration-300 ${
                     isActive(link.path)
                       ? 'text-electric-cyan bg-electric-cyan/10'
-                      : 'text-foreground/80 hover:text-electric-cyan hover:bg-electric-cyan/5'
+                      : 'text-white/90 hover:text-electric-cyan hover:bg-electric-cyan/5'
                   }`}
                 >
                   {link.label}
@@ -74,7 +74,7 @@ export const ShowcaseHeader = () => {
 
           {/* Mobile Menu Button */}
           <button
-            className="md:hidden p-2 text-foreground hover:text-electric-cyan transition-colors"
+            className="md:hidden p-2 text-white hover:text-electric-cyan transition-colors"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label="Toggle menu"
           >
@@ -92,7 +92,7 @@ export const ShowcaseHeader = () => {
                   className={`w-full justify-start text-sm font-medium transition-all duration-300 ${
                     isActive(link.path)
                       ? 'text-electric-cyan bg-electric-cyan/10'
-                      : 'text-foreground/80 hover:text-electric-cyan hover:bg-electric-cyan/5'
+                      : 'text-white/90 hover:text-electric-cyan hover:bg-electric-cyan/5'
                   }`}
                 >
                   {link.label}
