@@ -24,16 +24,21 @@ export const ShowcaseHeader = () => {
       <div className="container mx-auto px-4">
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
-          <Link to="/" className="flex items-center space-x-2 group">
+          <Link to="/" className="flex items-center space-x-3 group">
             <div className="relative">
               <div className="absolute inset-0 bg-gradient-to-r from-electric-cyan to-purple-accent rounded-lg blur-md opacity-50 group-hover:opacity-75 transition-opacity" />
               <div className="relative bg-gradient-to-r from-electric-cyan to-purple-accent p-2 rounded-lg">
                 <span className="text-dark-surface font-bold text-xl">B</span>
               </div>
             </div>
-            <span className="text-xl font-bold bg-gradient-to-r from-electric-cyan to-purple-accent bg-clip-text text-transparent">
-              Brainy
-            </span>
+            <div className="flex flex-col">
+              <span className="text-xl font-bold bg-gradient-to-r from-electric-cyan to-purple-accent bg-clip-text text-transparent leading-tight">
+                Brainy
+              </span>
+              <span className="text-[10px] text-muted-foreground font-medium tracking-wide uppercase hidden sm:block">
+                {t('showcase.nav.tagline')}
+              </span>
+            </div>
           </Link>
 
           {/* Desktop Navigation */}
