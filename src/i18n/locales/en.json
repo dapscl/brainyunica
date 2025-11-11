@@ -829,6 +829,124 @@
         "subtitle": "Join the companies that already automated their marketing with Brainy.",
         "demo": "Request Demo",
         "pricing": "See Pricing"
+      },
+      "stats": {
+        "activeClients": "Active clients",
+        "avgRoi": "Average ROI",
+        "timeSaved": "Time saved",
+        "adSpendManaged": "Ad spend managed"
+      },
+      "agencies": {
+        "title": "Agencies",
+        "subtitle": "Manage multiple clients without chaos",
+        "description": "Scale your agency without hiring more staff. Brainy automates the entire workflow so you can manage up to 15 different brands with a single team.",
+        "benefit1": "Up to 15 brands operating in parallel",
+        "benefit2": "Automated client-agency approval flows",
+        "benefit3": "Consolidated dashboard of all clients",
+        "benefit4": "Transparent billing based on real ad spend",
+        "testimonial": {
+          "quote": "We went from managing 3 clients with a team of 8 people to managing 12 clients with the same team. Brainy allowed us to scale without losing quality.",
+          "author": "María González",
+          "role": "CEO, Digital Wave Agency"
+        },
+        "metrics": {
+          "before": {
+            "clients": "3 clients",
+            "team": "8 people",
+            "hours": "160 hrs/mo",
+            "profit": "15% margin"
+          },
+          "after": {
+            "clients": "12 clients",
+            "team": "8 people",
+            "hours": "40 hrs/mo",
+            "profit": "42% margin"
+          }
+        }
+      },
+      "enterprises": {
+        "title": "Enterprises",
+        "subtitle": "Centralize all your corporate marketing",
+        "description": "Unify all your brands and sub-brands on one platform. Total control, complete visibility and automatic executive reports for management.",
+        "benefit1": "Multiple organized brands and sub-brands",
+        "benefit2": "Granular permission control by teams",
+        "benefit3": "Integrations with CRM, ERP and internal tools",
+        "benefit4": "Automatic executive reports for management",
+        "testimonial": {
+          "quote": "Before we had 4 different tools and no real visibility. Now the entire corporate group operates from Brainy with total transparency.",
+          "author": "Carlos Mendoza",
+          "role": "CMO, TechCorp Group"
+        },
+        "metrics": {
+          "before": {
+            "tools": "6 tools",
+            "cost": "$12K/mo",
+            "visibility": "30% data",
+            "time": "20 days/report"
+          },
+          "after": {
+            "tools": "1 platform",
+            "cost": "$4.5K/mo",
+            "visibility": "100% data",
+            "time": "Real-time"
+          }
+        }
+      },
+      "startups": {
+        "title": "Startups",
+        "subtitle": "Grow fast without increasing costs",
+        "description": "Enterprise-level marketing with startup budget. Complete automation from day one so you can focus on product-market fit and growth.",
+        "benefit1": "Complete setup in less than 24 hours",
+        "benefit2": "Affordable pricing that scales with your revenue",
+        "benefit3": "Agile operation with just 1-2 people",
+        "benefit4": "Total automation from day one",
+        "testimonial": {
+          "quote": "As a lean startup, we couldn't hire a complete marketing team. Brainy gave us agency capabilities at SaaS tool cost.",
+          "author": "Ana Ruiz",
+          "role": "Founder & CEO, FitTech"
+        },
+        "metrics": {
+          "before": {
+            "budget": "$8K/mo",
+            "team": "2 freelancers",
+            "content": "10 posts/mo",
+            "leads": "45 leads/mo"
+          },
+          "after": {
+            "budget": "$2K/mo",
+            "team": "1 person",
+            "content": "80 posts/mo",
+            "leads": "380 leads/mo"
+          }
+        }
+      },
+      "smes": {
+        "title": "SMEs",
+        "subtitle": "Professional marketing without complications",
+        "description": "You don't need to be a digital marketing expert. Brainy guides you step by step and automates the entire process so you get professional results without technical knowledge.",
+        "benefit1": "Simple interface with no learning curve",
+        "benefit2": "No need for marketing experts",
+        "benefit3": "Measurable results from the first month",
+        "benefit4": "Spanish support and guided onboarding",
+        "testimonial": {
+          "quote": "I had never used digital marketing tools. With Brainy we simply chat on WhatsApp and everything happens automatically. It's incredible.",
+          "author": "Roberto Silva",
+          "role": "Owner, Café Silva"
+        },
+        "metrics": {
+          "before": {
+            "presence": "Facebook only",
+            "posts": "Irregular",
+            "sales": "12 sales/mo",
+            "roi": "Not measurable"
+          },
+          "after": {
+            "presence": "5 platforms",
+            "posts": "60 posts/mo",
+            "sales": "47 sales/mo",
+            "roi": "4.2x ROAS"
+          }
+        }
       }
     }
   }

@@ -42,16 +42,16 @@ export default function ShowcaseIndustriesPage() {
       },
       metrics: {
         before: {
-          clients: '3 clientes',
-          team: '8 personas',
-          hours: '160 hrs/mes',
-          profit: '15% margen'
+          clients: t('showcase.industries.agencies.metrics.before.clients'),
+          team: t('showcase.industries.agencies.metrics.before.team'),
+          hours: t('showcase.industries.agencies.metrics.before.hours'),
+          profit: t('showcase.industries.agencies.metrics.before.profit')
         },
         after: {
-          clients: '12 clientes',
-          team: '8 personas',
-          hours: '40 hrs/mes',
-          profit: '42% margen'
+          clients: t('showcase.industries.agencies.metrics.after.clients'),
+          team: t('showcase.industries.agencies.metrics.after.team'),
+          hours: t('showcase.industries.agencies.metrics.after.hours'),
+          profit: t('showcase.industries.agencies.metrics.after.profit')
         }
       }
     },
@@ -76,16 +76,16 @@ export default function ShowcaseIndustriesPage() {
       },
       metrics: {
         before: {
-          tools: '6 herramientas',
-          cost: '$12K/mes',
-          visibility: '30% datos',
-          time: '20 días/reporte'
+          tools: t('showcase.industries.enterprises.metrics.before.tools'),
+          cost: t('showcase.industries.enterprises.metrics.before.cost'),
+          visibility: t('showcase.industries.enterprises.metrics.before.visibility'),
+          time: t('showcase.industries.enterprises.metrics.before.time')
         },
         after: {
-          tools: '1 plataforma',
-          cost: '$4.5K/mes',
-          visibility: '100% datos',
-          time: 'Tiempo real'
+          tools: t('showcase.industries.enterprises.metrics.after.tools'),
+          cost: t('showcase.industries.enterprises.metrics.after.cost'),
+          visibility: t('showcase.industries.enterprises.metrics.after.visibility'),
+          time: t('showcase.industries.enterprises.metrics.after.time')
         }
       }
     },
@@ -110,16 +110,16 @@ export default function ShowcaseIndustriesPage() {
       },
       metrics: {
         before: {
-          budget: '$8K/mes',
-          team: '2 freelancers',
-          content: '10 posts/mes',
-          leads: '45 leads/mes'
+          budget: t('showcase.industries.startups.metrics.before.budget'),
+          team: t('showcase.industries.startups.metrics.before.team'),
+          content: t('showcase.industries.startups.metrics.before.content'),
+          leads: t('showcase.industries.startups.metrics.before.leads')
         },
         after: {
-          budget: '$2K/mes',
-          team: '1 persona',
-          content: '80 posts/mes',
-          leads: '380 leads/mes'
+          budget: t('showcase.industries.startups.metrics.after.budget'),
+          team: t('showcase.industries.startups.metrics.after.team'),
+          content: t('showcase.industries.startups.metrics.after.content'),
+          leads: t('showcase.industries.startups.metrics.after.leads')
         }
       }
     },
@@ -144,16 +144,16 @@ export default function ShowcaseIndustriesPage() {
       },
       metrics: {
         before: {
-          presence: 'Solo Facebook',
-          posts: 'Irregular',
-          sales: '12 ventas/mes',
-          roi: 'No medible'
+          presence: t('showcase.industries.smes.metrics.before.presence'),
+          posts: t('showcase.industries.smes.metrics.before.posts'),
+          sales: t('showcase.industries.smes.metrics.before.sales'),
+          roi: t('showcase.industries.smes.metrics.before.roi')
         },
         after: {
-          presence: '5 plataformas',
-          posts: '60 posts/mes',
-          sales: '47 ventas/mes',
-          roi: '4.2x ROAS'
+          presence: t('showcase.industries.smes.metrics.after.presence'),
+          posts: t('showcase.industries.smes.metrics.after.posts'),
+          sales: t('showcase.industries.smes.metrics.after.sales'),
+          roi: t('showcase.industries.smes.metrics.after.roi')
         }
       }
     }
@@ -202,10 +202,10 @@ export default function ShowcaseIndustriesPage() {
             {/* Stats Grid */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto">
               {[
-                { icon: Users, value: '120+', label: 'Clientes activos' },
-                { icon: TrendingUp, value: '4.2x', label: 'ROI promedio' },
-                { icon: Clock, value: '85%', label: 'Tiempo ahorrado' },
-                { icon: DollarSign, value: '€2M+', label: 'Ad spend gestionado' }
+                { icon: Users, value: '120+', label: t('showcase.industries.stats.activeClients') },
+                { icon: TrendingUp, value: '4.2x', label: t('showcase.industries.stats.avgRoi') },
+                { icon: Clock, value: '85%', label: t('showcase.industries.stats.timeSaved') },
+                { icon: DollarSign, value: '€2M+', label: t('showcase.industries.stats.adSpendManaged') }
               ].map((stat, idx) => (
                 <div key={idx} className="relative group">
                   <div className="absolute inset-0 bg-gradient-to-br from-electric-cyan/20 to-purple-accent/20 rounded-2xl blur-xl opacity-50 group-hover:opacity-100 transition-opacity duration-500" />

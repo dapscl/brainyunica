@@ -830,6 +830,12 @@
         "demo": "Solicitar Demo",
         "pricing": "Ver Precios"
       },
+      "stats": {
+        "activeClients": "Clientes activos",
+        "avgRoi": "ROI promedio",
+        "timeSaved": "Tiempo ahorrado",
+        "adSpendManaged": "Ad spend gestionado"
+      },
       "agencies": {
         "title": "Agencias",
         "subtitle": "Gestiona múltiples clientes sin caos",
@@ -842,6 +848,20 @@
           "quote": "Pasamos de gestionar 3 clientes con un equipo de 8 personas a gestionar 12 clientes con el mismo equipo. Brainy nos permitió escalar sin perder calidad.",
           "author": "María González",
           "role": "CEO, Digital Wave Agency"
+        },
+        "metrics": {
+          "before": {
+            "clients": "3 clientes",
+            "team": "8 personas",
+            "hours": "160 hrs/mes",
+            "profit": "15% margen"
+          },
+          "after": {
+            "clients": "12 clientes",
+            "team": "8 personas",
+            "hours": "40 hrs/mes",
+            "profit": "42% margen"
+          }
         }
       },
       "enterprises": {
@@ -856,6 +876,20 @@
           "quote": "Antes teníamos 4 herramientas diferentes y ninguna visibilidad real. Ahora todo el grupo corporativo opera desde Brainy con total transparencia.",
           "author": "Carlos Mendoza",
           "role": "CMO, TechCorp Group"
+        },
+        "metrics": {
+          "before": {
+            "tools": "6 herramientas",
+            "cost": "$12K/mes",
+            "visibility": "30% datos",
+            "time": "20 días/reporte"
+          },
+          "after": {
+            "tools": "1 plataforma",
+            "cost": "$4.5K/mes",
+            "visibility": "100% datos",
+            "time": "Tiempo real"
+          }
         }
       },
       "startups": {
@@ -870,6 +904,20 @@
           "quote": "Como startup lean, no podíamos contratar un equipo de marketing completo. Brainy nos dio capacidades de agencia con costo de herramienta SaaS.",
           "author": "Ana Ruiz",
           "role": "Founder & CEO, FitTech"
+        },
+        "metrics": {
+          "before": {
+            "budget": "$8K/mes",
+            "team": "2 freelancers",
+            "content": "10 posts/mes",
+            "leads": "45 leads/mes"
+          },
+          "after": {
+            "budget": "$2K/mes",
+            "team": "1 persona",
+            "content": "80 posts/mes",
+            "leads": "380 leads/mes"
+          }
         }
       },
       "smes": {
@@ -884,6 +932,20 @@
           "quote": "Nunca había usado herramientas de marketing digital. Con Brainy simplemente chateamos por WhatsApp y todo se hace solo. Es increíble.",
           "author": "Roberto Silva",
           "role": "Dueño, Café Silva"
+        },
+        "metrics": {
+          "before": {
+            "presence": "Solo Facebook",
+            "posts": "Irregular",
+            "sales": "12 ventas/mes",
+            "roi": "No medible"
+          },
+          "after": {
+            "presence": "5 plataformas",
+            "posts": "60 posts/mes",
+            "sales": "47 ventas/mes",
+            "roi": "4.2x ROAS"
+          }
         }
       }
     }
