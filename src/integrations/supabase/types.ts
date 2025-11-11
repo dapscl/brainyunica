@@ -347,6 +347,59 @@ export type Database = {
           },
         ]
       }
+      content_suggestions: {
+        Row: {
+          brand_id: string
+          content_draft: string | null
+          created_at: string
+          description: string | null
+          id: string
+          metadata: Json | null
+          source: string | null
+          status: string
+          suggestion_type: string
+          title: string
+          trend_score: number | null
+          updated_at: string
+        }
+        Insert: {
+          brand_id: string
+          content_draft?: string | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          metadata?: Json | null
+          source?: string | null
+          status?: string
+          suggestion_type?: string
+          title: string
+          trend_score?: number | null
+          updated_at?: string
+        }
+        Update: {
+          brand_id?: string
+          content_draft?: string | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          metadata?: Json | null
+          source?: string | null
+          status?: string
+          suggestion_type?: string
+          title?: string
+          trend_score?: number | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "content_suggestions_brand_id_fkey"
+            columns: ["brand_id"]
+            isOneToOne: false
+            referencedRelation: "brands"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       content_templates: {
         Row: {
           category: string
@@ -739,6 +792,50 @@ export type Database = {
           },
         ]
       }
+      trend_tracking: {
+        Row: {
+          category: string | null
+          created_at: string
+          id: string
+          metadata: Json | null
+          organization_id: string
+          source: string
+          tracked_at: string
+          trend_keyword: string
+          trend_score: number
+        }
+        Insert: {
+          category?: string | null
+          created_at?: string
+          id?: string
+          metadata?: Json | null
+          organization_id: string
+          source: string
+          tracked_at?: string
+          trend_keyword: string
+          trend_score: number
+        }
+        Update: {
+          category?: string | null
+          created_at?: string
+          id?: string
+          metadata?: Json | null
+          organization_id?: string
+          source?: string
+          tracked_at?: string
+          trend_keyword?: string
+          trend_score?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "trend_tracking_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       user_roles: {
         Row: {
           created_at: string | null
@@ -759,6 +856,94 @@ export type Database = {
           user_id?: string
         }
         Relationships: []
+      }
+      whatsapp_conversations: {
+        Row: {
+          brand_id: string
+          conversation_state: string
+          created_at: string
+          id: string
+          last_message_at: string | null
+          metadata: Json | null
+          phone_number: string
+          updated_at: string
+        }
+        Insert: {
+          brand_id: string
+          conversation_state?: string
+          created_at?: string
+          id?: string
+          last_message_at?: string | null
+          metadata?: Json | null
+          phone_number: string
+          updated_at?: string
+        }
+        Update: {
+          brand_id?: string
+          conversation_state?: string
+          created_at?: string
+          id?: string
+          last_message_at?: string | null
+          metadata?: Json | null
+          phone_number?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "whatsapp_conversations_brand_id_fkey"
+            columns: ["brand_id"]
+            isOneToOne: false
+            referencedRelation: "brands"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      whatsapp_messages: {
+        Row: {
+          content: string
+          conversation_id: string
+          created_at: string
+          direction: string
+          id: string
+          media_url: string | null
+          message_id: string | null
+          message_type: string
+          metadata: Json | null
+          status: string | null
+        }
+        Insert: {
+          content: string
+          conversation_id: string
+          created_at?: string
+          direction: string
+          id?: string
+          media_url?: string | null
+          message_id?: string | null
+          message_type?: string
+          metadata?: Json | null
+          status?: string | null
+        }
+        Update: {
+          content?: string
+          conversation_id?: string
+          created_at?: string
+          direction?: string
+          id?: string
+          media_url?: string | null
+          message_id?: string | null
+          message_type?: string
+          metadata?: Json | null
+          status?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "whatsapp_messages_conversation_id_fkey"
+            columns: ["conversation_id"]
+            isOneToOne: false
+            referencedRelation: "whatsapp_conversations"
+            referencedColumns: ["id"]
+          },
+        ]
       }
     }
     Views: {
