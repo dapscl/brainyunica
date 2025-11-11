@@ -3,7 +3,10 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
-import { ArrowLeft, Calendar, Facebook, Instagram, Linkedin, Twitter, CheckCircle2, Clock, XCircle, AlertCircle } from 'lucide-react';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { ArrowLeft, Calendar, Facebook, Instagram, Linkedin, Twitter, CheckCircle2, Clock, XCircle, AlertCircle, TrendingUp, Users, Eye, DollarSign, MousePointerClick, BarChart3 } from 'lucide-react';
+import { Calendar as CalendarComponent } from '@/components/ui/calendar';
+import { useState } from 'react';
 import demoTechstartImage from '@/assets/demo-techstart.jpg';
 import demoEcogreenImage from '@/assets/demo-ecogreen.jpg';
 import demoFitlifeImage from '@/assets/demo-fitlife.jpg';
@@ -177,6 +180,7 @@ const platformIcons: Record<string, any> = {
 const ShowcaseBrandDetailPage = () => {
   const { slug } = useParams();
   const navigate = useNavigate();
+  const [selectedDate, setSelectedDate] = useState<Date | undefined>(new Date(2025, 0, 15));
   
   const brand = slug ? brandData[slug] : null;
 
@@ -265,103 +269,406 @@ const ShowcaseBrandDetailPage = () => {
         </div>
       </div>
 
-      {/* Content Examples */}
+      {/* Content Sections */}
       <div className="container mx-auto px-4 py-12">
-        <div className="mb-8">
-          <h2 className="text-2xl font-bold mb-2">Gestión de Contenido</h2>
-          <p className="text-muted-foreground">
-            Visualiza cómo la plataforma gestiona la calendarización, multicanal y aprobaciones para cada contenido
-          </p>
-        </div>
+        <Tabs defaultValue="workflow" className="w-full">
+          <TabsList className="grid w-full grid-cols-4 mb-8">
+            <TabsTrigger value="workflow">Workflow de Aprobación</TabsTrigger>
+            <TabsTrigger value="calendar">Calendario</TabsTrigger>
+            <TabsTrigger value="ads">Media Ads</TabsTrigger>
+            <TabsTrigger value="reporting">Reporting</TabsTrigger>
+          </TabsList>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {brand.examples.map((example: any) => (
-            <Card key={example.id} className="overflow-hidden">
-              <div className="relative h-48 overflow-hidden">
-                <img 
-                  src={example.image} 
-                  alt={example.title}
-                  className="w-full h-full object-cover"
-                />
-                <Badge 
-                  className={`absolute top-3 right-3 ${statusColors[example.status]}`}
-                >
-                  {example.status}
-                </Badge>
-              </div>
-              
-              <CardHeader>
-                <CardTitle className="text-lg line-clamp-2">
-                  {example.title}
-                </CardTitle>
-                <div className="flex items-center gap-2 text-sm text-muted-foreground pt-2">
-                  <Calendar className="w-4 h-4" />
-                  {new Date(example.date).toLocaleDateString('es-ES', {
-                    day: 'numeric',
-                    month: 'long',
-                    year: 'numeric'
-                  })}
-                  <span className="text-muted-foreground">•</span>
-                  <Clock className="w-4 h-4" />
-                  {example.time}
-                </div>
-              </CardHeader>
-              
-              <CardContent className="space-y-4">
-                <p className="text-sm text-muted-foreground line-clamp-3">
-                  {example.content}
-                </p>
-                
-                <div className="flex flex-wrap gap-2">
-                  {example.platforms.map((platform: string) => {
-                    const Icon = platformIcons[platform];
-                    return (
-                      <div 
-                        key={platform}
-                        className="flex items-center gap-1 px-2 py-1 rounded-md bg-muted text-xs"
-                      >
-                        <Icon className="w-3 h-3" />
-                        <span className="capitalize">{platform}</span>
-                      </div>
-                    );
-                  })}
-                </div>
+          {/* Workflow Tab */}
+          <TabsContent value="workflow" className="space-y-6">
+            <div className="mb-6">
+              <h2 className="text-2xl font-bold mb-2">Workflow de Aprobación</h2>
+              <p className="text-muted-foreground">
+                Sistema de revisión y aprobación multi-nivel para control de calidad del contenido
+              </p>
+            </div>
 
-                {/* Approval Workflow */}
-                <div className="space-y-2 pt-2 border-t">
-                  <h4 className="text-xs font-semibold text-muted-foreground">Workflow de Aprobación</h4>
-                  {example.approvals.map((approval: any, idx: number) => (
-                    <div key={idx} className="flex items-start gap-2 text-xs">
-                      <Avatar className="w-6 h-6 mt-0.5">
-                        <AvatarFallback className="text-[10px]">
-                          {approval.reviewer.split(' ').map((n: string) => n[0]).join('')}
-                        </AvatarFallback>
-                      </Avatar>
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-2">
-                          <span className="font-medium truncate">{approval.reviewer}</span>
-                          {getApprovalIcon(approval.status)}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {brand.examples.map((example: any) => (
+                <Card key={example.id} className="overflow-hidden">
+                  <div className="relative h-48 overflow-hidden">
+                    <img 
+                      src={example.image} 
+                      alt={example.title}
+                      className="w-full h-full object-cover"
+                    />
+                    <Badge 
+                      className={`absolute top-3 right-3 ${statusColors[example.status]}`}
+                    >
+                      {example.status}
+                    </Badge>
+                  </div>
+                  
+                  <CardHeader>
+                    <CardTitle className="text-lg line-clamp-2">
+                      {example.title}
+                    </CardTitle>
+                    <div className="flex items-center gap-2 text-sm text-muted-foreground pt-2">
+                      <Calendar className="w-4 h-4" />
+                      {new Date(example.date).toLocaleDateString('es-ES', {
+                        day: 'numeric',
+                        month: 'long',
+                        year: 'numeric'
+                      })}
+                      <span className="text-muted-foreground">•</span>
+                      <Clock className="w-4 h-4" />
+                      {example.time}
+                    </div>
+                  </CardHeader>
+                  
+                  <CardContent className="space-y-4">
+                    <p className="text-sm text-muted-foreground line-clamp-3">
+                      {example.content}
+                    </p>
+                    
+                    <div className="flex flex-wrap gap-2">
+                      {example.platforms.map((platform: string) => {
+                        const Icon = platformIcons[platform];
+                        return (
+                          <div 
+                            key={platform}
+                            className="flex items-center gap-1 px-2 py-1 rounded-md bg-muted text-xs"
+                          >
+                            <Icon className="w-3 h-3" />
+                            <span className="capitalize">{platform}</span>
+                          </div>
+                        );
+                      })}
+                    </div>
+
+                    {/* Approval Workflow */}
+                    <div className="space-y-2 pt-2 border-t">
+                      <h4 className="text-xs font-semibold text-muted-foreground">Workflow de Aprobación</h4>
+                      {example.approvals.map((approval: any, idx: number) => (
+                        <div key={idx} className="flex items-start gap-2 text-xs">
+                          <Avatar className="w-6 h-6 mt-0.5">
+                            <AvatarFallback className="text-[10px]">
+                              {approval.reviewer.split(' ').map((n: string) => n[0]).join('')}
+                            </AvatarFallback>
+                          </Avatar>
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-center gap-2">
+                              <span className="font-medium truncate">{approval.reviewer}</span>
+                              {getApprovalIcon(approval.status)}
+                            </div>
+                            <p className="text-muted-foreground text-[10px]">{approval.role}</p>
+                            {approval.comment && (
+                              <p className="text-muted-foreground mt-1 text-[11px] italic">
+                                "{approval.comment}"
+                              </p>
+                            )}
+                          </div>
+                          <Badge 
+                            variant="outline" 
+                            className="text-[10px] shrink-0"
+                          >
+                            {getApprovalText(approval.status)}
+                          </Badge>
                         </div>
-                        <p className="text-muted-foreground text-[10px]">{approval.role}</p>
-                        {approval.comment && (
-                          <p className="text-muted-foreground mt-1 text-[11px] italic">
-                            "{approval.comment}"
+                      ))}
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </TabsContent>
+
+          {/* Calendar Tab */}
+          <TabsContent value="calendar" className="space-y-6">
+            <div className="mb-6">
+              <h2 className="text-2xl font-bold mb-2">Calendario de Contenido</h2>
+              <p className="text-muted-foreground">
+                Visualiza y gestiona tu contenido programado, publicado y en borrador
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-[300px_1fr] gap-6">
+              <Card>
+                <CardHeader>
+                  <CardTitle className="text-lg">Enero 2025</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <CalendarComponent
+                    mode="single"
+                    selected={selectedDate}
+                    onSelect={setSelectedDate}
+                    className="rounded-md border"
+                  />
+                  <div className="mt-4 space-y-2">
+                    <div className="flex items-center gap-2 text-sm">
+                      <div className="w-3 h-3 rounded-full bg-green-500"></div>
+                      <span>Publicado</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-sm">
+                      <div className="w-3 h-3 rounded-full bg-blue-500"></div>
+                      <span>Programado</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-sm">
+                      <div className="w-3 h-3 rounded-full bg-gray-500"></div>
+                      <span>Borrador</span>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              <div className="space-y-4">
+                {brand.examples.map((example: any) => (
+                  <Card key={example.id}>
+                    <CardContent className="p-4">
+                      <div className="flex gap-4">
+                        <img 
+                          src={example.image} 
+                          alt={example.title}
+                          className="w-20 h-20 rounded object-cover"
+                        />
+                        <div className="flex-1">
+                          <div className="flex items-start justify-between mb-2">
+                            <h3 className="font-semibold">{example.title}</h3>
+                            <Badge className={statusColors[example.status]}>
+                              {example.status}
+                            </Badge>
+                          </div>
+                          <p className="text-sm text-muted-foreground line-clamp-2 mb-3">
+                            {example.content}
                           </p>
-                        )}
+                          <div className="flex items-center gap-4 text-xs text-muted-foreground">
+                            <div className="flex items-center gap-1">
+                              <Calendar className="w-3 h-3" />
+                              {new Date(example.date).toLocaleDateString('es-ES', {
+                                day: 'numeric',
+                                month: 'short'
+                              })}
+                            </div>
+                            <div className="flex items-center gap-1">
+                              <Clock className="w-3 h-3" />
+                              {example.time}
+                            </div>
+                            <div className="flex gap-1">
+                              {example.platforms.map((platform: string) => {
+                                const Icon = platformIcons[platform];
+                                return <Icon key={platform} className="w-3 h-3" />;
+                              })}
+                            </div>
+                          </div>
+                        </div>
                       </div>
-                      <Badge 
-                        variant="outline" 
-                        className="text-[10px] shrink-0"
-                      >
-                        {getApprovalText(approval.status)}
-                      </Badge>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </div>
+          </TabsContent>
+
+          {/* Media Ads Tab */}
+          <TabsContent value="ads" className="space-y-6">
+            <div className="mb-6">
+              <h2 className="text-2xl font-bold mb-2">Panel de Media Ads</h2>
+              <p className="text-muted-foreground">
+                Monitorea el rendimiento de tus campañas publicitarias en Meta, Google y otras plataformas
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+              <Card>
+                <CardHeader className="pb-3">
+                  <CardTitle className="text-sm font-medium text-muted-foreground">Inversión Total</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="flex items-center justify-between">
+                    <span className="text-2xl font-bold">$182,909</span>
+                    <DollarSign className="w-5 h-5 text-muted-foreground" />
+                  </div>
+                </CardContent>
+              </Card>
+              <Card>
+                <CardHeader className="pb-3">
+                  <CardTitle className="text-sm font-medium text-muted-foreground">Impresiones</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="flex items-center justify-between">
+                    <span className="text-2xl font-bold">489,982</span>
+                    <Eye className="w-5 h-5 text-muted-foreground" />
+                  </div>
+                </CardContent>
+              </Card>
+              <Card>
+                <CardHeader className="pb-3">
+                  <CardTitle className="text-sm font-medium text-muted-foreground">Alcance</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="flex items-center justify-between">
+                    <span className="text-2xl font-bold">208,353</span>
+                    <Users className="w-5 h-5 text-muted-foreground" />
+                  </div>
+                </CardContent>
+              </Card>
+              <Card>
+                <CardHeader className="pb-3">
+                  <CardTitle className="text-sm font-medium text-muted-foreground">Resultados</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="flex items-center justify-between">
+                    <span className="text-2xl font-bold">13,864</span>
+                    <MousePointerClick className="w-5 h-5 text-muted-foreground" />
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+
+            <Card>
+              <CardHeader>
+                <CardTitle>Campañas Activas</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  {[
+                    { name: 'Campaña de Lanzamiento', results: 32, cost: '$49,420', impressions: 46084, reach: 38446, status: 'Activo' },
+                    { name: 'Reels - Contenido Social', results: 57, cost: '$28,108', impressions: 27566, reach: 16873, status: 'Activo' },
+                    { name: 'Remarketing - Conversiones', results: 409, cost: '$225,498', impressions: 403622, reach: 160165, status: 'Activo' },
+                    { name: 'Awareness - Marca', results: 12226, cost: '$182,909', impressions: 489982, reach: 208353, status: 'Activo' },
+                  ].map((campaign, idx) => (
+                    <div key={idx} className="flex items-center gap-4 p-4 border rounded-lg">
+                      <div className="w-2 h-2 rounded-full bg-blue-500"></div>
+                      <div className="flex-1">
+                        <h4 className="font-semibold mb-1">{campaign.name}</h4>
+                        <div className="flex gap-4 text-sm text-muted-foreground">
+                          <span>{campaign.results} Resultados</span>
+                          <span>•</span>
+                          <span>{campaign.impressions.toLocaleString()} Impresiones</span>
+                          <span>•</span>
+                          <span>{campaign.reach.toLocaleString()} Alcance</span>
+                        </div>
+                      </div>
+                      <div className="text-right">
+                        <div className="font-semibold">{campaign.cost}</div>
+                        <Badge variant="outline" className="mt-1">{campaign.status}</Badge>
+                      </div>
                     </div>
                   ))}
                 </div>
               </CardContent>
             </Card>
-          ))}
-        </div>
+          </TabsContent>
+
+          {/* Reporting Tab */}
+          <TabsContent value="reporting" className="space-y-6">
+            <div className="mb-6">
+              <h2 className="text-2xl font-bold mb-2">Panel de Reporting</h2>
+              <p className="text-muted-foreground">
+                Analiza el rendimiento de tu contenido y campañas con métricas detalladas
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+              <Card>
+                <CardHeader className="pb-3">
+                  <CardTitle className="text-sm font-medium text-muted-foreground">Engagement Rate</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="flex items-center justify-between">
+                    <span className="text-2xl font-bold">8.4%</span>
+                    <TrendingUp className="w-5 h-5 text-green-500" />
+                  </div>
+                  <p className="text-xs text-green-500 mt-1">+2.3% vs mes anterior</p>
+                </CardContent>
+              </Card>
+              <Card>
+                <CardHeader className="pb-3">
+                  <CardTitle className="text-sm font-medium text-muted-foreground">Contenido Publicado</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="flex items-center justify-between">
+                    <span className="text-2xl font-bold">24</span>
+                    <BarChart3 className="w-5 h-5 text-muted-foreground" />
+                  </div>
+                  <p className="text-xs text-muted-foreground mt-1">En este mes</p>
+                </CardContent>
+              </Card>
+              <Card>
+                <CardHeader className="pb-3">
+                  <CardTitle className="text-sm font-medium text-muted-foreground">ROI Promedio</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="flex items-center justify-between">
+                    <span className="text-2xl font-bold">3.2x</span>
+                    <TrendingUp className="w-5 h-5 text-green-500" />
+                  </div>
+                  <p className="text-xs text-green-500 mt-1">+0.8x vs mes anterior</p>
+                </CardContent>
+              </Card>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-6">
+              <Card>
+                <CardHeader>
+                  <CardTitle>Rendimiento por Plataforma</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-4">
+                    {[
+                      { platform: 'Instagram', posts: 8, engagement: '12.4%', reach: 45200, icon: Instagram },
+                      { platform: 'Facebook', posts: 6, engagement: '6.8%', reach: 32100, icon: Facebook },
+                      { platform: 'LinkedIn', posts: 5, engagement: '5.2%', reach: 18900, icon: Linkedin },
+                      { platform: 'Twitter', posts: 5, engagement: '4.1%', reach: 15600, icon: Twitter },
+                    ].map((item, idx) => {
+                      const Icon = item.icon;
+                      return (
+                        <div key={idx} className="flex items-center gap-4">
+                          <Icon className="w-5 h-5 text-muted-foreground" />
+                          <div className="flex-1">
+                            <div className="flex justify-between mb-1">
+                              <span className="font-medium">{item.platform}</span>
+                              <span className="text-sm text-muted-foreground">{item.posts} posts</span>
+                            </div>
+                            <div className="flex gap-4 text-sm text-muted-foreground">
+                              <span>{item.engagement} engagement</span>
+                              <span>•</span>
+                              <span>{item.reach.toLocaleString()} alcance</span>
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardHeader>
+                  <CardTitle>Contenido Mejor Performante</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-4">
+                    {brand.examples.slice(0, 3).map((example: any, idx: number) => (
+                      <div key={idx} className="flex gap-3">
+                        <img 
+                          src={example.image} 
+                          alt={example.title}
+                          className="w-12 h-12 rounded object-cover"
+                        />
+                        <div className="flex-1 min-w-0">
+                          <h4 className="font-medium text-sm truncate">{example.title}</h4>
+                          <div className="flex gap-3 text-xs text-muted-foreground mt-1">
+                            <span>2.4k likes</span>
+                            <span>•</span>
+                            <span>180 comments</span>
+                            <span>•</span>
+                            <span>45 shares</span>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </TabsContent>
+        </Tabs>
       </div>
     </div>
   );
