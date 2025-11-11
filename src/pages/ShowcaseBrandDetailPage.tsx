@@ -17,7 +17,12 @@ import {
   MousePointerClick,
   DollarSign,
   Users,
-  Play
+  Play,
+  CheckCircle2,
+  Clock,
+  MessageSquare,
+  Bot,
+  Zap
 } from 'lucide-react';
 import demoTechstartImage from '@/assets/demo-techstart.jpg';
 import demoEcogreenImage from '@/assets/demo-ecogreen.jpg';
@@ -81,7 +86,7 @@ const ShowcaseBrandDetailPage = () => {
     );
   }
 
-  // Calendar data for November 2024 with icons for each day
+  // Calendar data for November 2024
   const calendarData = [
     { day: 3, icon: <Video className="w-3 h-3" />, type: "video", promoted: true },
     { day: 5, icon: <ImageIcon className="w-3 h-3" />, type: "image", promoted: false },
@@ -97,128 +102,20 @@ const ShowcaseBrandDetailPage = () => {
     { day: 28, icon: <Layers className="w-3 h-3" />, type: "carousel", promoted: false },
   ];
 
-  // Content pieces grid (12 pieces)
+  // Content pieces
   const contentPieces = [
-    { 
-      id: 1, 
-      title: "Campaña de Verano 2024", 
-      copy: "☀️ ¡El verano está aquí! Descubre nuestras ofertas exclusivas...", 
-      format: "video", 
-      promoted: true, 
-      platforms: ["facebook", "instagram"], 
-      status: "Publicado",
-      image: demoTechProduct1
-    },
-    { 
-      id: 2, 
-      title: "Lanzamiento de Producto", 
-      copy: "🚀 Presentamos nuestra última innovación. Únete al futuro hoy...", 
-      format: "image", 
-      promoted: false, 
-      platforms: ["linkedin"], 
-      status: "Programado",
-      image: demoTechProduct2
-    },
-    { 
-      id: 3, 
-      title: "Historia de Cliente", 
-      copy: "💼 Cómo ayudamos a duplicar las ventas en 3 meses...", 
-      format: "carousel", 
-      promoted: true, 
-      platforms: ["facebook", "instagram", "linkedin"], 
-      status: "Publicado",
-      image: demoEcoProduct1
-    },
-    { 
-      id: 4, 
-      title: "Tutorial de Uso", 
-      copy: "📚 Aprende a sacarle el máximo provecho en 5 minutos...", 
-      format: "video", 
-      promoted: false, 
-      platforms: ["instagram"], 
-      status: "Publicado",
-      image: demoEcoProduct2
-    },
-    { 
-      id: 5, 
-      title: "Oferta Especial", 
-      copy: "🎁 Solo por 48 horas: 40% OFF en toda la tienda...", 
-      format: "image", 
-      promoted: true, 
-      platforms: ["facebook"], 
-      status: "Programado",
-      image: demoFitness1
-    },
-    { 
-      id: 6, 
-      title: "Testimonios", 
-      copy: "⭐ Escucha lo que nuestros clientes tienen para decir...", 
-      format: "carousel", 
-      promoted: false, 
-      platforms: ["linkedin"], 
-      status: "Publicado",
-      image: demoFitness2
-    },
-    { 
-      id: 7, 
-      title: "Behind The Scenes", 
-      copy: "🎬 Descubre cómo creamos la magia detrás de cámaras...", 
-      format: "video", 
-      promoted: true, 
-      platforms: ["instagram"], 
-      status: "Publicado",
-      image: demoTechProduct1
-    },
-    { 
-      id: 8, 
-      title: "Infografía", 
-      copy: "📊 5 datos que debes saber sobre la industria en 2024...", 
-      format: "image", 
-      promoted: false, 
-      platforms: ["linkedin"], 
-      status: "Publicado",
-      image: demoTechProduct2
-    },
-    { 
-      id: 9, 
-      title: "Colección Nueva", 
-      copy: "✨ Presentamos nuestra colección de primavera exclusiva...", 
-      format: "carousel", 
-      promoted: true, 
-      platforms: ["facebook", "instagram"], 
-      status: "Programado",
-      image: demoEcoProduct1
-    },
-    { 
-      id: 10, 
-      title: "Demo de Producto", 
-      copy: "🎥 Mira cómo funciona en tiempo real con nuestro demo...", 
-      format: "video", 
-      promoted: false, 
-      platforms: ["facebook"], 
-      status: "Publicado",
-      image: demoEcoProduct2
-    },
-    { 
-      id: 11, 
-      title: "Promoción Flash", 
-      copy: "⚡ Flash Sale: Solo las próximas 3 horas. No te lo pierdas...", 
-      format: "image", 
-      promoted: true, 
-      platforms: ["facebook", "instagram"], 
-      status: "Programado",
-      image: demoFitness1
-    },
-    { 
-      id: 12, 
-      title: "Case Study", 
-      copy: "📈 Estudio de caso completo: De 0 a 100K en 6 meses...", 
-      format: "carousel", 
-      promoted: false, 
-      platforms: ["linkedin"], 
-      status: "Publicado",
-      image: demoFitness2
-    },
+    { id: 1, title: "Campaña de Verano 2024", copy: "☀️ ¡El verano está aquí! Descubre nuestras ofertas exclusivas...", format: "video", promoted: true, platforms: ["facebook", "instagram"], status: "Publicado", image: demoTechProduct1 },
+    { id: 2, title: "Lanzamiento de Producto", copy: "🚀 Presentamos nuestra última innovación. Únete al futuro hoy...", format: "image", promoted: false, platforms: ["linkedin"], status: "Programado", image: demoTechProduct2 },
+    { id: 3, title: "Historia de Cliente", copy: "💼 Cómo ayudamos a duplicar las ventas en 3 meses...", format: "carousel", promoted: true, platforms: ["facebook", "instagram", "linkedin"], status: "Publicado", image: demoEcoProduct1 },
+    { id: 4, title: "Tutorial de Uso", copy: "📚 Aprende a sacarle el máximo provecho en 5 minutos...", format: "video", promoted: false, platforms: ["instagram"], status: "Publicado", image: demoEcoProduct2 },
+    { id: 5, title: "Oferta Especial", copy: "🎁 Solo por 48 horas: 40% OFF en toda la tienda...", format: "image", promoted: true, platforms: ["facebook"], status: "Programado", image: demoFitness1 },
+    { id: 6, title: "Testimonios", copy: "⭐ Escucha lo que nuestros clientes tienen para decir...", format: "carousel", promoted: false, platforms: ["linkedin"], status: "Publicado", image: demoFitness2 },
+    { id: 7, title: "Behind The Scenes", copy: "🎬 Descubre cómo creamos la magia detrás de cámaras...", format: "video", promoted: true, platforms: ["instagram"], status: "Publicado", image: demoTechProduct1 },
+    { id: 8, title: "Infografía", copy: "📊 5 datos que debes saber sobre la industria en 2024...", format: "image", promoted: false, platforms: ["linkedin"], status: "Publicado", image: demoTechProduct2 },
+    { id: 9, title: "Colección Nueva", copy: "✨ Presentamos nuestra colección de primavera exclusiva...", format: "carousel", promoted: true, platforms: ["facebook", "instagram"], status: "Programado", image: demoEcoProduct1 },
+    { id: 10, title: "Demo de Producto", copy: "🎥 Mira cómo funciona en tiempo real con nuestro demo...", format: "video", promoted: false, platforms: ["facebook"], status: "Publicado", image: demoEcoProduct2 },
+    { id: 11, title: "Promoción Flash", copy: "⚡ Flash Sale: Solo las próximas 3 horas. No te lo pierdas...", format: "image", promoted: true, platforms: ["facebook", "instagram"], status: "Programado", image: demoFitness1 },
+    { id: 12, title: "Case Study", copy: "📈 Estudio de caso completo: De 0 a 100K en 6 meses...", format: "carousel", promoted: false, platforms: ["linkedin"], status: "Publicado", image: demoFitness2 },
   ];
 
   const getFormatIcon = (format: string) => {
@@ -235,59 +132,33 @@ const ShowcaseBrandDetailPage = () => {
     return Icon ? <Icon className="w-3 h-3" /> : null;
   };
 
-  // Media Ads data
+  // Ads data
   const adsChannels = [
-    { name: "Meta Ads", icon: <Facebook className="w-4 h-4" />, active: true, color: "bg-blue-600" },
-    { name: "LinkedIn Ads", icon: <Linkedin className="w-4 h-4" />, active: true, color: "bg-blue-700" },
-    { name: "Google Ads", icon: <Target className="w-4 h-4" />, active: false, color: "bg-gray-400" },
+    { name: "Meta Ads", icon: <Facebook className="w-4 h-4" />, active: true },
+    { name: "LinkedIn Ads", icon: <Linkedin className="w-4 h-4" />, active: true },
+    { name: "Google Ads", icon: <Target className="w-4 h-4" />, active: false },
   ];
 
   const adsCampaigns = [
-    {
-      name: "Campaña Verano Premium 2024",
-      status: "Activa",
-      budget: "$1,500",
-      spent: "$1,247",
-      impressions: "45.2K",
-      reach: "32.1K",
-      clicks: "3,421",
-      ctr: "7.56%",
-      conversions: "287",
-      cpc: "$0.36",
-      roas: "4.2x",
-      channel: "Meta Ads",
-      channelIcon: <Facebook className="w-4 h-4 text-blue-600" />
-    },
-    {
-      name: "Lanzamiento Producto Q4",
-      status: "Activa",
-      budget: "$2,000",
-      spent: "$1,856",
-      impressions: "67.8K",
-      reach: "51.2K",
-      clicks: "5,234",
-      ctr: "7.72%",
-      conversions: "412",
-      cpc: "$0.35",
-      roas: "5.1x",
-      channel: "Meta Ads",
-      channelIcon: <Facebook className="w-4 h-4 text-blue-600" />
-    },
-    {
-      name: "Retargeting Profesional B2B",
-      status: "Activa",
-      budget: "$800",
-      spent: "$654",
-      impressions: "28.3K",
-      reach: "19.7K",
-      clicks: "2,145",
-      ctr: "7.58%",
-      conversions: "156",
-      cpc: "$0.30",
-      roas: "3.8x",
-      channel: "LinkedIn Ads",
-      channelIcon: <Linkedin className="w-4 h-4 text-blue-700" />
-    },
+    { name: "Campaña Verano Premium 2024", status: "Activa", budget: "$1,500", spent: "$1,247", impressions: "45.2K", reach: "32.1K", clicks: "3,421", ctr: "7.56%", conversions: "287", cpc: "$0.36", roas: "4.2x", channel: "Meta Ads", channelIcon: <Facebook className="w-4 h-4 text-blue-600" /> },
+    { name: "Lanzamiento Producto Q4", status: "Activa", budget: "$2,000", spent: "$1,856", impressions: "67.8K", reach: "51.2K", clicks: "5,234", ctr: "7.72%", conversions: "412", cpc: "$0.35", roas: "5.1x", channel: "Meta Ads", channelIcon: <Facebook className="w-4 h-4 text-blue-600" /> },
+    { name: "Retargeting Profesional B2B", status: "Activa", budget: "$800", spent: "$654", impressions: "28.3K", reach: "19.7K", clicks: "2,145", ctr: "7.58%", conversions: "156", cpc: "$0.30", roas: "3.8x", channel: "LinkedIn Ads", channelIcon: <Linkedin className="w-4 h-4 text-blue-700" /> },
+  ];
+
+  // Monday tasks
+  const mondayTasks = [
+    { id: 1, title: "Diseño de campaña Q1", assignee: "María G.", status: "En progreso", priority: "Alta", dueDate: "15 Nov" },
+    { id: 2, title: "Revisión de copy publicitario", assignee: "Carlos R.", status: "Completada", priority: "Media", dueDate: "12 Nov" },
+    { id: 3, title: "Producción de video reels", assignee: "Ana M.", status: "Por hacer", priority: "Alta", dueDate: "18 Nov" },
+    { id: 4, title: "Análisis de métricas mensuales", assignee: "Pedro L.", status: "En progreso", priority: "Media", dueDate: "20 Nov" },
+  ];
+
+  // Manychat responses
+  const chatResponses = [
+    { id: 1, platform: "Facebook Messenger", user: "Juan Pérez", message: "¿Tienen envío gratis?", response: "¡Sí! Envío gratis en compras mayores a $50", time: "Hace 2 min", status: "Respondido" },
+    { id: 2, platform: "Instagram DM", user: "María López", message: "Horarios de atención", response: "Estamos disponibles de lunes a viernes, 9am-6pm", time: "Hace 5 min", status: "Respondido" },
+    { id: 3, platform: "Facebook Messenger", user: "Carlos Ruiz", message: "Precio del producto X", response: "Buscando información...", time: "Hace 1 min", status: "Procesando" },
+    { id: 4, platform: "Instagram DM", user: "Laura Torres", message: "¿Hacen descuentos?", response: "¡Sí! Actualmente tenemos 20% OFF en toda la tienda", time: "Hace 8 min", status: "Respondido" },
   ];
 
   const statusColors: Record<string, string> = {
@@ -301,15 +172,19 @@ const ShowcaseBrandDetailPage = () => {
       {/* Header */}
       <div className="border-b bg-card">
         <div className="container mx-auto px-4 py-6">
-          <Button 
-            variant="ghost" 
-            size="sm" 
-            onClick={() => navigate('/showcase/brands')}
-            className="mb-4"
-          >
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            Volver al Demo
-          </Button>
+          <div className="flex items-center gap-4 mb-4">
+            <Button 
+              variant="ghost" 
+              size="sm" 
+              onClick={() => navigate(`/showcase/brands/${slug}/setup`)}
+            >
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Volver a Setup
+            </Button>
+            <div className="text-sm text-muted-foreground">
+              Setup → <span className="text-foreground font-medium">Workflow</span>
+            </div>
+          </div>
           
           <div className="flex items-start gap-6">
             <img 
@@ -332,31 +207,78 @@ const ShowcaseBrandDetailPage = () => {
 
       {/* Content */}
       <div className="container mx-auto px-4 py-12 space-y-12">
-        {/* Calendario Mensual */}
+        {/* Monday - Gestión de Tareas */}
         <section>
           <div className="mb-6">
-            <h2 className="text-2xl font-bold mb-2">Calendario de Publicaciones - Noviembre 2024</h2>
-            <p className="text-muted-foreground">
-              Vista mensual completa con todas las piezas programadas, publicadas y en borrador
-            </p>
+            <div className="flex items-center gap-3 mb-2">
+              <div className="w-10 h-10 bg-gradient-to-br from-purple-500 to-pink-500 rounded-lg flex items-center justify-center text-white font-bold text-sm">
+                M
+              </div>
+              <div>
+                <h2 className="text-2xl font-bold">Gestión de Proyectos (Monday.com)</h2>
+                <p className="text-muted-foreground">
+                  Tareas, asignaciones y seguimiento de equipo en tiempo real
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <Card>
+            <CardContent className="p-6">
+              <div className="space-y-3">
+                {mondayTasks.map((task) => (
+                  <div key={task.id} className="flex items-center gap-4 p-4 border rounded-lg hover:shadow-sm transition-shadow">
+                    <div className={`w-2 h-2 rounded-full ${
+                      task.status === "Completada" ? "bg-green-500" :
+                      task.status === "En progreso" ? "bg-blue-500" : "bg-gray-400"
+                    }`} />
+                    <div className="flex-1">
+                      <h4 className="font-semibold text-sm">{task.title}</h4>
+                      <div className="flex items-center gap-4 mt-1 text-xs text-muted-foreground">
+                        <span>👤 {task.assignee}</span>
+                        <span>📅 {task.dueDate}</span>
+                      </div>
+                    </div>
+                    <Badge variant={task.priority === "Alta" ? "destructive" : "secondary"} className="text-xs">
+                      {task.priority}
+                    </Badge>
+                    <Badge variant="outline" className="text-xs">
+                      {task.status}
+                    </Badge>
+                  </div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+        </section>
+
+        {/* Calendario Mensual (Metricool) */}
+        <section>
+          <div className="mb-6">
+            <div className="flex items-center gap-3 mb-2">
+              <div className="w-10 h-10 bg-gradient-to-br from-orange-500 to-red-500 rounded-lg flex items-center justify-center">
+                <TrendingUp className="w-5 h-5 text-white" />
+              </div>
+              <div>
+                <h2 className="text-2xl font-bold">Calendario de Publicaciones (Metricool)</h2>
+                <p className="text-muted-foreground">
+                  Vista mensual completa con todas las piezas programadas
+                </p>
+              </div>
+            </div>
           </div>
 
           <Card>
             <CardContent className="p-6">
               <div className="grid grid-cols-7 gap-2">
-                {/* Day headers */}
                 {['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'].map((day) => (
                   <div key={day} className="text-center text-sm font-semibold text-muted-foreground py-3">
                     {day}
                   </div>
                 ))}
-                
-                {/* Empty cells for first week offset (November 2024 starts on Friday) */}
                 {[...Array(5)].map((_, i) => (
                   <div key={`empty-${i}`} className="min-h-[100px]"></div>
                 ))}
-                
-                {/* November days */}
                 {[...Array(30)].map((_, i) => {
                   const day = i + 1;
                   const contentForDay = calendarData.find(c => c.day === day);
@@ -385,7 +307,6 @@ const ShowcaseBrandDetailPage = () => {
                 })}
               </div>
 
-              {/* Legend */}
               <div className="flex items-center gap-6 mt-6 pt-6 border-t">
                 <div className="flex items-center gap-2 text-sm">
                   <Video className="w-4 h-4 text-primary" />
@@ -408,12 +329,12 @@ const ShowcaseBrandDetailPage = () => {
           </Card>
         </section>
 
-        {/* Grilla de Piezas de Contenido */}
+        {/* Grilla de Contenido */}
         <section>
           <div className="mb-6">
             <h2 className="text-2xl font-bold mb-2">Biblioteca de Contenido del Mes</h2>
             <p className="text-muted-foreground">
-              12 piezas creadas y programadas para diversas plataformas sociales
+              12 piezas creadas y programadas para diversas plataformas
             </p>
           </div>
 
@@ -464,15 +385,100 @@ const ShowcaseBrandDetailPage = () => {
           </div>
         </section>
 
+        {/* Manychat - Respuestas Automáticas */}
+        <section>
+          <div className="mb-6">
+            <div className="flex items-center gap-3 mb-2">
+              <div className="w-10 h-10 bg-gradient-to-br from-green-500 to-emerald-600 rounded-lg flex items-center justify-center">
+                <Bot className="w-5 h-5 text-white" />
+              </div>
+              <div>
+                <h2 className="text-2xl font-bold">Chat de Respuestas Automáticas (Manychat)</h2>
+                <p className="text-muted-foreground">
+                  Monitoreo en tiempo real de mensajes y respuestas automatizadas
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Zap className="w-5 h-5 text-yellow-500" />
+                  Estadísticas de Respuesta
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between p-3 bg-muted/30 rounded-lg">
+                    <span className="text-sm font-medium">Tasa de Respuesta</span>
+                    <span className="text-2xl font-bold text-green-600">94%</span>
+                  </div>
+                  <div className="flex items-center justify-between p-3 bg-muted/30 rounded-lg">
+                    <span className="text-sm font-medium">Tiempo Promedio</span>
+                    <span className="text-2xl font-bold">1.8 min</span>
+                  </div>
+                  <div className="flex items-center justify-between p-3 bg-muted/30 rounded-lg">
+                    <span className="text-sm font-medium">Mensajes Hoy</span>
+                    <span className="text-2xl font-bold">127</span>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <MessageSquare className="w-5 h-5 text-blue-500" />
+                  Actividad Reciente
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-3">
+                  {chatResponses.map((chat) => (
+                    <div key={chat.id} className="p-3 border rounded-lg space-y-2">
+                      <div className="flex items-start justify-between">
+                        <div className="flex items-center gap-2">
+                          <div className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center text-xs font-semibold">
+                            {chat.user.split(' ').map(n => n[0]).join('')}
+                          </div>
+                          <div>
+                            <p className="text-sm font-semibold">{chat.user}</p>
+                            <p className="text-xs text-muted-foreground">{chat.platform}</p>
+                          </div>
+                        </div>
+                        <Badge variant={chat.status === "Respondido" ? "default" : "secondary"} className="text-xs">
+                          {chat.status}
+                        </Badge>
+                      </div>
+                      <div className="pl-10 space-y-1">
+                        <p className="text-xs bg-muted/50 p-2 rounded">💬 {chat.message}</p>
+                        <p className="text-xs bg-primary/10 p-2 rounded">🤖 {chat.response}</p>
+                        <p className="text-xs text-muted-foreground">{chat.time}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </section>
+
         {/* Panel de Media Ads */}
         <section>
           <div className="mb-6">
             <div className="flex items-center justify-between flex-wrap gap-4">
-              <div>
-                <h2 className="text-2xl font-bold mb-2">Panel de Inversión Publicitaria</h2>
-                <p className="text-muted-foreground">
-                  Monitoreo en tiempo real de campañas en múltiples canales
-                </p>
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-lg flex items-center justify-center">
+                  <Target className="w-5 h-5 text-white" />
+                </div>
+                <div>
+                  <h2 className="text-2xl font-bold">Panel de Inversión Publicitaria</h2>
+                  <p className="text-muted-foreground">
+                    Monitoreo en tiempo real de campañas
+                  </p>
+                </div>
               </div>
               <div className="flex gap-2">
                 {adsChannels.map((channel, index) => (
@@ -489,7 +495,6 @@ const ShowcaseBrandDetailPage = () => {
             </div>
           </div>
 
-          {/* Métricas Generales */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
             <Card>
               <CardHeader className="pb-3">
@@ -554,7 +559,6 @@ const ShowcaseBrandDetailPage = () => {
             </Card>
           </div>
 
-          {/* Campañas Detalladas */}
           <Card>
             <CardHeader>
               <CardTitle>Campañas Activas en Tiempo Real</CardTitle>
@@ -643,6 +647,152 @@ const ShowcaseBrandDetailPage = () => {
               </div>
             </CardContent>
           </Card>
+        </section>
+
+        {/* Reporting en Tiempo Real */}
+        <section>
+          <div className="mb-6">
+            <div className="flex items-center gap-3 mb-2">
+              <div className="w-10 h-10 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-lg flex items-center justify-center">
+                <TrendingUp className="w-5 h-5 text-white" />
+              </div>
+              <div>
+                <h2 className="text-2xl font-bold">Reporting en Tiempo Real</h2>
+                <p className="text-muted-foreground">
+                  KPIs actualizados al instante con métricas de rendimiento
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+            <Card className="border-primary/20">
+              <CardHeader className="pb-3">
+                <CardTitle className="text-sm font-medium text-muted-foreground">Engagement Rate</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-3xl font-bold">8.4%</span>
+                  <TrendingUp className="w-6 h-6 text-green-500" />
+                </div>
+                <p className="text-xs text-green-600 flex items-center gap-1">
+                  <CheckCircle2 className="w-3 h-3" />
+                  +2.3% vs mes anterior
+                </p>
+                <div className="mt-3 h-2 bg-muted rounded-full overflow-hidden">
+                  <div className="h-full bg-green-500" style={{ width: '84%' }} />
+                </div>
+              </CardContent>
+            </Card>
+            
+            <Card className="border-primary/20">
+              <CardHeader className="pb-3">
+                <CardTitle className="text-sm font-medium text-muted-foreground">Contenido Publicado</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-3xl font-bold">24</span>
+                  <Clock className="w-6 h-6 text-blue-500" />
+                </div>
+                <p className="text-xs text-muted-foreground">
+                  En este mes
+                </p>
+                <div className="mt-3 h-2 bg-muted rounded-full overflow-hidden">
+                  <div className="h-full bg-blue-500" style={{ width: '80%' }} />
+                </div>
+              </CardContent>
+            </Card>
+            
+            <Card className="border-primary/20">
+              <CardHeader className="pb-3">
+                <CardTitle className="text-sm font-medium text-muted-foreground">ROI Promedio</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-3xl font-bold">3.2x</span>
+                  <TrendingUp className="w-6 h-6 text-green-500" />
+                </div>
+                <p className="text-xs text-green-600 flex items-center gap-1">
+                  <CheckCircle2 className="w-3 h-3" />
+                  +0.8x vs mes anterior
+                </p>
+                <div className="mt-3 h-2 bg-muted rounded-full overflow-hidden">
+                  <div className="h-full bg-green-500" style={{ width: '90%' }} />
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-6">
+            <Card>
+              <CardHeader>
+                <CardTitle>Rendimiento por Plataforma</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  {[
+                    { platform: 'Instagram', posts: 8, engagement: '12.4%', reach: 45200, icon: Instagram, color: 'text-pink-500' },
+                    { platform: 'Facebook', posts: 6, engagement: '6.8%', reach: 32100, icon: Facebook, color: 'text-blue-600' },
+                    { platform: 'LinkedIn', posts: 5, engagement: '5.2%', reach: 18900, icon: Linkedin, color: 'text-blue-700' },
+                  ].map((item, idx) => {
+                    const Icon = item.icon;
+                    return (
+                      <div key={idx} className="flex items-center gap-4 p-3 border rounded-lg">
+                        <Icon className={`w-6 h-6 ${item.color}`} />
+                        <div className="flex-1">
+                          <div className="flex justify-between mb-1">
+                            <span className="font-medium">{item.platform}</span>
+                            <span className="text-sm text-muted-foreground">{item.posts} posts</span>
+                          </div>
+                          <div className="flex gap-4 text-sm text-muted-foreground">
+                            <span>{item.engagement} engagement</span>
+                            <span>•</span>
+                            <span>{item.reach.toLocaleString()} alcance</span>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <CardTitle>Contenido Mejor Performante</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-3">
+                  {contentPieces.slice(0, 3).map((piece, idx) => (
+                    <div key={idx} className="flex gap-3 p-3 border rounded-lg">
+                      <img 
+                        src={piece.image} 
+                        alt={piece.title}
+                        className="w-16 h-16 rounded object-cover"
+                      />
+                      <div className="flex-1 min-w-0">
+                        <h4 className="font-medium text-sm truncate">{piece.title}</h4>
+                        <div className="flex gap-3 text-xs text-muted-foreground mt-1">
+                          <span>2.4k likes</span>
+                          <span>•</span>
+                          <span>180 comments</span>
+                          <span>•</span>
+                          <span>45 shares</span>
+                        </div>
+                        <div className="mt-2 flex gap-1">
+                          {piece.platforms.map((platform) => (
+                            <div key={platform} className="w-5 h-5 rounded-full bg-muted flex items-center justify-center">
+                              {getPlatformIcon(platform)}
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          </div>
         </section>
       </div>
     </div>

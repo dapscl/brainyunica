@@ -38,6 +38,7 @@ const DemoPage = lazy(() => import("./pages/DemoPage"));
 const GalleryPage = lazy(() => import("./pages/GalleryPage"));
 const ShowcasePage = lazy(() => import("./pages/ShowcasePage"));
 const ShowcaseBrandsPage = lazy(() => import("./pages/ShowcaseBrandsPage"));
+const ShowcaseBrandSetupPage = lazy(() => import("./pages/ShowcaseBrandSetupPage"));
 const ShowcaseBrandDetailPage = lazy(() => import("./pages/ShowcaseBrandDetailPage"));
 
 const LoadingFallback = () => (
@@ -58,6 +59,7 @@ const App = () => {
           <Route path="/auth" element={<AuthPage />} />
           <Route path="/showcase" element={<ShowcasePage />} />
           <Route path="/showcase/brands" element={<ShowcaseBrandsPage />} />
+          <Route path="/showcase/brands/:slug/setup" element={<ShowcaseBrandSetupPage />} />
           <Route path="/showcase/brands/:slug" element={<ShowcaseBrandDetailPage />} />
           <Route path="/demo" element={<ProtectedRoute><DemoPage /></ProtectedRoute>} />
           <Route path="/dashboard" element={<ProtectedRoute><DashboardPage /></ProtectedRoute>} />

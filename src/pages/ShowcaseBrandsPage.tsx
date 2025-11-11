@@ -134,9 +134,9 @@ const ShowcaseBrandsPage = () => {
                 <div className="flex gap-2 pt-2">
                   <Button 
                     className="flex-1 gap-2" 
-                    onClick={() => navigate(`/showcase/brands/${brand.slug}`)}
+                    onClick={() => navigate(`/showcase/brands/${brand.slug}/setup`)}
                   >
-                    Ver Funcionalidades
+                    Ver Brand Setup
                     <ArrowRight className="w-4 h-4" />
                   </Button>
                   <Button 
