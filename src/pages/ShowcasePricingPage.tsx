@@ -1,17 +1,51 @@
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { ArrowLeft, Check, TrendingUp, Zap, Crown, Sparkles } from 'lucide-react';
+import { ArrowLeft, Check, TrendingUp, Zap, Crown, Sparkles, ChevronDown, ChevronUp } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { ShowcaseHeader } from '@/components/showcase/ShowcaseHeader';
 import { ShowcaseBreadcrumbs } from '@/components/showcase/ShowcaseBreadcrumbs';
 import { ShowcaseSEO } from '@/components/showcase/ShowcaseSEO';
+import { PricingComparison } from '@/components/showcase/PricingComparison';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
+import { useState } from 'react';
 
 const ShowcasePricingPage = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const [expandedTiers, setExpandedTiers] = useState<{ [key: number]: boolean }>({});
+
+  const toggleExpanded = (index: number) => {
+    setExpandedTiers(prev => ({ ...prev, [index]: !prev[index] }));
+  };
+
+  // Get all features from Starter tier
+  const getStarterFeatures = () => [
+    t('showcase.pricing.tiers.starter.features.users'),
+    t('showcase.pricing.tiers.starter.features.whatsapp'),
+    t('showcase.pricing.tiers.starter.features.brainies'),
+    t('showcase.pricing.tiers.starter.features.brands'),
+    t('showcase.pricing.tiers.starter.features.ai'),
+    t('showcase.pricing.tiers.starter.features.editor'),
+    t('showcase.pricing.tiers.starter.features.posts'),
+    t('showcase.pricing.tiers.starter.features.integrations'),
+    t('showcase.pricing.tiers.starter.features.dashboard'),
+    t('showcase.pricing.tiers.starter.features.storage')
+  ];
+
+  // Get all features from Small Agencies tier (including Starter)
+  const getSmallAgenciesFeatures = () => [
+    ...getStarterFeatures(),
+    t('showcase.pricing.tiers.smallAgencies.features.users'),
+    t('showcase.pricing.tiers.smallAgencies.features.brands'),
+    t('showcase.pricing.tiers.smallAgencies.features.ai'),
+    t('showcase.pricing.tiers.smallAgencies.features.workflows'),
+    t('showcase.pricing.tiers.smallAgencies.features.posts'),
+    t('showcase.pricing.tiers.smallAgencies.features.integrations'),
+    t('showcase.pricing.tiers.smallAgencies.features.dashboard'),
+    t('showcase.pricing.tiers.smallAgencies.features.storage')
+  ];
 
   const pricingTiers = [
     {
@@ -285,7 +319,43 @@ const ShowcasePricingPage = () => {
                   ) : (
                     <div className="space-y-2 flex-1">
                       {tier.prefix && (
-                        <p className="text-sm font-semibold text-electric-cyan mb-3">{tier.prefix}</p>
+                        <>
+                          <div className="flex items-center justify-between mb-3">
+                            <p className="text-sm font-semibold text-electric-cyan">{tier.prefix}</p>
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => toggleExpanded(idx)}
+                              className="text-xs h-auto py-1 px-2 text-electric-cyan hover:text-electric-cyan hover:bg-electric-cyan/10"
+                            >
+                              {expandedTiers[idx] ? (
+                                <>
+                                  <ChevronUp className="w-3 h-3 mr-1" />
+                                  {t('showcase.pricing.inherited.hideAll')}
+                                </>
+                              ) : (
+                                <>
+                                  <ChevronDown className="w-3 h-3 mr-1" />
+                                  {t('showcase.pricing.inherited.showAll')}
+                                </>
+                              )}
+                            </Button>
+                          </div>
+                          
+                          {expandedTiers[idx] && (
+                            <div className="mb-4 pb-4 border-b border-border/30">
+                              <p className="text-xs text-muted-foreground mb-2 italic">
+                                {t('showcase.pricing.inherited.includes')} {idx === 1 ? t('showcase.pricing.tiers.starter.name') : t('showcase.pricing.tiers.smallAgencies.name')}:
+                              </p>
+                              {(idx === 1 ? getStarterFeatures() : getSmallAgenciesFeatures()).map((feature, i) => (
+                                <div key={`inherited-${i}`} className="flex items-start gap-2 opacity-60 mb-1">
+                                  <Check className="w-3 h-3 text-electric-cyan mt-0.5 flex-shrink-0" />
+                                  <span className="text-xs leading-tight">{feature}</span>
+                                </div>
+                              ))}
+                            </div>
+                          )}
+                        </>
                       )}
                       {tier.features.map((feature, i) => (
                         <div key={i} className="flex items-start gap-2">
@@ -460,6 +530,17 @@ const ShowcasePricingPage = () => {
             </div>
           </CardContent>
         </Card>
+        </motion.div>
+
+        {/* Interactive Comparison */}
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+          className="mt-16"
+        >
+          <PricingComparison tiers={pricingTiers} />
         </motion.div>
 
         {/* CTA */}

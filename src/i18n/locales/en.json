@@ -453,6 +453,23 @@
             "cost": "Special discounts"
           }
         }
+      },
+      "comparison": {
+        "title": "Compare Plans",
+        "subtitle": "Select up to 3 plans to compare their features",
+        "selected": "plans selected",
+        "details": "Detailed Comparison",
+        "feature": "Feature",
+        "basePrice": "Base Price",
+        "mediaPercentage": "Media %",
+        "selectMore": "Select at least 2 plans to compare",
+        "selectPlans": "Select plans above to start comparison"
+      },
+      "inherited": {
+        "showAll": "Show all included",
+        "hideAll": "Hide details",
+        "includes": "Includes everything from",
+        "plus": "plus:"
       }
     }
   }

@@ -454,6 +454,23 @@
             "cost": "Descuentos especiales"
           }
         }
+      },
+      "comparison": {
+        "title": "Comparar Planes",
+        "subtitle": "Selecciona hasta 3 planes para comparar sus características",
+        "selected": "planes seleccionados",
+        "details": "Comparación Detallada",
+        "feature": "Característica",
+        "basePrice": "Precio Base",
+        "mediaPercentage": "% de Medios",
+        "selectMore": "Selecciona al menos 2 planes para comparar",
+        "selectPlans": "Selecciona planes arriba para comenzar la comparación"
+      },
+      "inherited": {
+        "showAll": "Ver todo incluido",
+        "hideAll": "Ocultar detalles",
+        "includes": "Incluye todo de",
+        "plus": "más:"
       }
     }
   }
