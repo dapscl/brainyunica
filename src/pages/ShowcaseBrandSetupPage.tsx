@@ -71,12 +71,30 @@ const ShowcaseBrandSetupPage = () => {
     {
       icon: <Upload className="w-6 h-6" />,
       title: "Información de Marca",
-      description: "Logo, colores corporativos y guía de estilo visual",
+      description: "Microbrief: Identidad, objetivos y estrategia digital completa",
       status: "completed",
       details: [
+        { label: "Descripción", value: `${brand.name} es ${brand.description}` },
+        { label: "Objetivo Principal", value: "Aumentar conversiones digitales en un 40% durante Q1 2025" },
+        { label: "Estrategia Digital", value: "Content Marketing + Paid Media + Automatización + Community Management" },
+        { label: "Target Audience", value: "Empresas B2B 25-45 años, decisores tecnológicos" },
+        { label: "KPIs Principales", value: "Engagement Rate >5%, ROAS >3.5x, Conversiones 500+/mes" },
         { label: "Logo Principal", value: "Subido (PNG, 2000x2000px)" },
-        { label: "Colores", value: "#2563EB, #1E40AF, #FFFFFF" },
-        { label: "Tipografía", value: "Inter, SF Pro" }
+        { label: "Colores Corporativos", value: "#2563EB, #1E40AF, #FFFFFF" },
+        { label: "Tipografía", value: "Inter, SF Pro Display" }
+      ]
+    },
+    {
+      icon: <BarChart3 className="w-6 h-6" />,
+      title: "Métricas Clave",
+      description: "KPIs y objetivos de seguimiento definidos",
+      status: "completed",
+      details: [
+        { label: "Engagement Rate", value: "Meta: >5% mensual" },
+        { label: "Reach Mensual", value: "Meta: 100K+ usuarios únicos" },
+        { label: "Conversiones", value: "Meta: 500+ leads cualificados/mes" },
+        { label: "ROI Publicitario", value: "Meta: 3.5x ROAS mínimo" },
+        { label: "Response Rate", value: "Meta: >90% en primeras 24hrs" }
       ]
     },
     {
@@ -88,8 +106,10 @@ const ShowcaseBrandSetupPage = () => {
         { label: "Facebook", value: "Conectado - @techstartsolutions", connected: true },
         { label: "Instagram", value: "Conectado - @techstart", connected: true },
         { label: "LinkedIn", value: "Conectado - TechStart Solutions", connected: true },
-        { label: "Twitter", value: "Conectado - @techstart", connected: true },
-        { label: "YouTube", value: "No conectado", connected: false }
+        { label: "X (Twitter)", value: "Conectado - @techstart", connected: true },
+        { label: "TikTok", value: "Conectado - @techstart_official", connected: true },
+        { label: "Threads", value: "Conectado - @techstart", connected: true },
+        { label: "YouTube", value: "Conectar", connected: false }
       ]
     },
     {
@@ -107,37 +127,29 @@ const ShowcaseBrandSetupPage = () => {
     {
       icon: <CreditCard className="w-6 h-6" />,
       title: "Integración de Pagos",
-      description: "Tarjeta de crédito para campañas publicitarias",
+      description: "Métodos de pago para campañas publicitarias y facturación",
       status: "completed",
       details: [
-        { label: "Método de Pago", value: "Visa •••• 4242" },
+        { label: "Método Principal", value: "Visa •••• 4242" },
+        { label: "Método Secundario", value: "Mastercard •••• 8888" },
         { label: "Presupuesto Mensual", value: "$5,000 USD" },
-        { label: "Límite de Gastos", value: "$500 por campaña" },
-        { label: "Facturación", value: "Automática al final del mes" }
-      ]
-    },
-    {
-      icon: <BarChart3 className="w-6 h-6" />,
-      title: "Métricas Clave",
-      description: "KPIs y objetivos de seguimiento",
-      status: "completed",
-      details: [
-        { label: "Engagement Rate", value: "Meta: >5%" },
-        { label: "Reach Mensual", value: "Meta: 100K+" },
-        { label: "Conversiones", value: "Meta: 500+ leads/mes" },
-        { label: "ROI Publicitario", value: "Meta: 3.5x ROAS" }
+        { label: "Límite por Campaña", value: "$500 máximo" },
+        { label: "Facturación", value: "Automática fin de mes" },
+        { label: "Boletas Descargadas", value: "18 facturas este año" }
       ]
     },
     {
       icon: <FileText className="w-6 h-6" />,
       title: "Documentos y Guidelines",
-      description: "Manual de marca, lineamientos y documentación",
+      description: "Manual de marca, lineamientos, documentación y recursos",
       status: "completed",
       details: [
         { label: "Brand Guidelines.pdf", value: "2.4 MB - Subido" },
         { label: "Tone of Voice.docx", value: "890 KB - Subido" },
         { label: "Content Calendar Q1.xlsx", value: "1.2 MB - Subido" },
-        { label: "Social Media Policy.pdf", value: "650 KB - Subido" }
+        { label: "Social Media Policy.pdf", value: "650 KB - Subido" },
+        { label: "Pricings & Promociones.xlsx", value: "1.8 MB - Subido" },
+        { label: "Competitive Analysis.pdf", value: "3.2 MB - Subido" }
       ]
     }
   ];
@@ -219,7 +231,7 @@ const ShowcaseBrandSetupPage = () => {
                       </div>
                       {'connected' in detail && (
                         <Badge variant={detail.connected ? "default" : "outline"} className="text-xs">
-                          {detail.connected ? "Activo" : "Inactivo"}
+                          {detail.connected ? "Conectado" : "Conectar"}
                         </Badge>
                       )}
                     </div>
@@ -242,43 +254,61 @@ const ShowcaseBrandSetupPage = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
               <div className="p-4 bg-background rounded-lg border">
                 <div className="flex items-center gap-2 mb-2">
-                  <div className="w-8 h-8 bg-blue-500 rounded flex items-center justify-center text-white text-xs font-bold">
-                    M
+                  <div className="w-8 h-8 bg-gradient-to-br from-green-400 to-emerald-600 rounded flex items-center justify-center text-white text-xs font-bold">
+                    AI
                   </div>
-                  <span className="font-semibold">Monday.com</span>
+                  <span className="font-semibold">OpenAI</span>
                 </div>
                 <p className="text-xs text-muted-foreground">
-                  Gestión de proyectos y tareas del equipo
+                  Generación de contenido con IA
                 </p>
               </div>
 
               <div className="p-4 bg-background rounded-lg border">
                 <div className="flex items-center gap-2 mb-2">
-                  <BarChart3 className="w-8 h-8 text-orange-500" />
-                  <span className="font-semibold">Metricool</span>
+                  <div className="w-8 h-8 bg-gradient-to-br from-red-600 to-red-800 rounded flex items-center justify-center text-white text-xs font-bold">
+                    Ae
+                  </div>
+                  <span className="font-semibold">Adobe Creative Cloud</span>
                 </div>
                 <p className="text-xs text-muted-foreground">
-                  Analytics y calendario de contenido
+                  Diseño profesional y edición multimedia
                 </p>
               </div>
 
               <div className="p-4 bg-background rounded-lg border">
                 <div className="flex items-center gap-2 mb-2">
-                  <MessageSquare className="w-8 h-8 text-green-500" />
-                  <span className="font-semibold">Manychat</span>
+                  <div className="w-8 h-8 bg-gradient-to-br from-purple-500 to-blue-500 rounded flex items-center justify-center text-white text-xs font-bold">
+                    C
+                  </div>
+                  <span className="font-semibold">Canva Pro</span>
                 </div>
                 <p className="text-xs text-muted-foreground">
-                  Chatbot y respuestas automáticas
+                  Diseño rápido y templates de marca
                 </p>
               </div>
 
               <div className="p-4 bg-background rounded-lg border">
                 <div className="flex items-center gap-2 mb-2">
-                  <Facebook className="w-8 h-8 text-blue-600" />
-                  <span className="font-semibold">Meta Ads</span>
+                  <div className="w-8 h-8 bg-gradient-to-br from-pink-500 to-orange-500 rounded flex items-center justify-center text-white text-xs font-bold">
+                    F
+                  </div>
+                  <span className="font-semibold">Figma</span>
                 </div>
                 <p className="text-xs text-muted-foreground">
-                  Plataforma de publicidad pagada
+                  Diseño colaborativo y prototipos
+                </p>
+              </div>
+
+              <div className="p-4 bg-background rounded-lg border">
+                <div className="flex items-center gap-2 mb-2">
+                  <div className="w-8 h-8 bg-gradient-to-br from-blue-400 to-cyan-600 rounded flex items-center justify-center text-white text-xs font-bold">
+                    S
+                  </div>
+                  <span className="font-semibold">Salesforce</span>
+                </div>
+                <p className="text-xs text-muted-foreground">
+                  CRM y gestión de clientes integrado
                 </p>
               </div>
             </div>

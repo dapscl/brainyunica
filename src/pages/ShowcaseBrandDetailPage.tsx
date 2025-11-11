@@ -260,7 +260,7 @@ const ShowcaseBrandDetailPage = () => {
                 <TrendingUp className="w-5 h-5 text-white" />
               </div>
               <div>
-                <h2 className="text-2xl font-bold">Calendario de Publicaciones (Metricool)</h2>
+                <h2 className="text-2xl font-bold">Calendario de Publicaciones</h2>
                 <p className="text-muted-foreground">
                   Vista mensual completa con todas las piezas programadas
                 </p>
@@ -331,11 +331,16 @@ const ShowcaseBrandDetailPage = () => {
 
         {/* Grilla de Contenido */}
         <section>
-          <div className="mb-6">
-            <h2 className="text-2xl font-bold mb-2">Biblioteca de Contenido del Mes</h2>
-            <p className="text-muted-foreground">
-              12 piezas creadas y programadas para diversas plataformas
-            </p>
+          <div className="mb-6 flex items-center justify-between">
+            <div>
+              <h2 className="text-2xl font-bold mb-2">Biblioteca de Contenido del Mes</h2>
+              <p className="text-muted-foreground">
+                12 piezas creadas y programadas para diversas plataformas
+              </p>
+            </div>
+            <Button size="lg" onClick={() => navigate(`/showcase/brands/${slug}/create-content`)}>
+              Crear Nuevo Contenido
+            </Button>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
@@ -393,7 +398,7 @@ const ShowcaseBrandDetailPage = () => {
                 <Bot className="w-5 h-5 text-white" />
               </div>
               <div>
-                <h2 className="text-2xl font-bold">Chat de Respuestas Automáticas (Manychat)</h2>
+                <h2 className="text-2xl font-bold">Chat de Respuestas Automáticas</h2>
                 <p className="text-muted-foreground">
                   Monitoreo en tiempo real de mensajes y respuestas automatizadas
                 </p>
@@ -480,7 +485,7 @@ const ShowcaseBrandDetailPage = () => {
                   </p>
                 </div>
               </div>
-              <div className="flex gap-2">
+              <div className="flex gap-2 items-center">
                 {adsChannels.map((channel, index) => (
                   <Badge 
                     key={index} 
@@ -491,6 +496,9 @@ const ShowcaseBrandDetailPage = () => {
                     <span>{channel.name}</span>
                   </Badge>
                 ))}
+                <Button size="lg" onClick={() => navigate(`/showcase/brands/${slug}/create-campaign`)}>
+                  Crear Nueva Campaña
+                </Button>
               </div>
             </div>
           </div>
