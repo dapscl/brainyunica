@@ -403,7 +403,68 @@
         "subtitle": "Agenda una llamada con nuestro equipo para encontrar el plan perfecto para tu agencia.",
         "button": "Hablar con Ventas"
       },
-      "note": "Nota: El porcentaje de medios se aplica sobre tu inversión publicitaria mensual total. A mayor tier, menor porcentaje pagas (20% → 15% → 10%), optimizando tu costo conforme escalas."
+      "note": "Nota: El porcentaje de medios se aplica sobre tu inversión publicitaria mensual total. A mayor tier, menor porcentaje pagas (20% → 15% → 10%), optimizando tu costo conforme escalas.",
+      "adSpendExamples": {
+        "title": "Ejemplos de Pricing por Ad Spend",
+        "subtitle": "Calcula tu costo mensual aproximado según tu inversión publicitaria",
+        "mediaPercentage": "de medios",
+        "starter": {
+          "example1": {
+            "spend": "$1,000 USD",
+            "cost": "$500 USD + ($1,000 × 20%) = $700 USD/mes"
+          },
+          "example2": {
+            "spend": "$2,500 USD",
+            "cost": "$500 USD + ($2,500 × 20%) = $1,000 USD/mes"
+          },
+          "example3": {
+            "spend": "$5,000 USD",
+            "cost": "$500 USD + ($5,000 × 20%) = $1,500 USD/mes"
+          }
+        },
+        "smallAgencies": {
+          "example1": {
+            "spend": "$7,500 USD",
+            "cost": "$1,250 USD + ($7,500 × 15%) = $2,375 USD/mes"
+          },
+          "example2": {
+            "spend": "$10,000 USD",
+            "cost": "$1,250 USD + ($10,000 × 15%) = $2,750 USD/mes"
+          },
+          "example3": {
+            "spend": "$20,000 USD",
+            "cost": "$1,250 USD + ($20,000 × 15%) = $4,250 USD/mes"
+          }
+        },
+        "scaledAgencies": {
+          "example1": {
+            "spend": "$25,000 USD",
+            "cost": "$3,750 USD + ($25,000 × 10%) = $6,250 USD/mes"
+          },
+          "example2": {
+            "spend": "$50,000 USD",
+            "cost": "$3,750 USD + ($50,000 × 10%) = $8,750 USD/mes"
+          },
+          "example3": {
+            "spend": "$75,000 USD",
+            "cost": "$3,750 USD + ($75,000 × 10%) = $11,250 USD/mes"
+          }
+        },
+        "enterprise": {
+          "example1": {
+            "spend": "$100,000+ USD",
+            "cost": "Pricing personalizado"
+          },
+          "example2": {
+            "spend": "Múltiples marcas",
+            "cost": "Contactar ventas"
+          },
+          "example3": {
+            "spend": "Alto volumen",
+            "cost": "Descuentos especiales"
+          }
+        }
+      }
     }
   }
 }

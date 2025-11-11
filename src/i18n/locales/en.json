@@ -402,7 +402,68 @@
         "subtitle": "Schedule a call with our team to find the perfect plan for your agency.",
         "button": "Talk to Sales"
       },
-      "note": "Note: The media percentage is applied to your total monthly ad spend. The higher the tier, the lower the percentage you pay (20% → 15% → 10%), optimizing your cost as you scale."
+      "note": "Note: The media percentage is applied to your total monthly ad spend. The higher the tier, the lower the percentage you pay (20% → 15% → 10%), optimizing your cost as you scale.",
+      "adSpendExamples": {
+        "title": "Pricing Examples by Ad Spend",
+        "subtitle": "Calculate your approximate monthly cost based on your advertising investment",
+        "mediaPercentage": "media fee",
+        "starter": {
+          "example1": {
+            "spend": "$1,000 USD",
+            "cost": "$500 USD + ($1,000 × 20%) = $700 USD/mo"
+          },
+          "example2": {
+            "spend": "$2,500 USD",
+            "cost": "$500 USD + ($2,500 × 20%) = $1,000 USD/mo"
+          },
+          "example3": {
+            "spend": "$5,000 USD",
+            "cost": "$500 USD + ($5,000 × 20%) = $1,500 USD/mo"
+          }
+        },
+        "smallAgencies": {
+          "example1": {
+            "spend": "$7,500 USD",
+            "cost": "$1,250 USD + ($7,500 × 15%) = $2,375 USD/mo"
+          },
+          "example2": {
+            "spend": "$10,000 USD",
+            "cost": "$1,250 USD + ($10,000 × 15%) = $2,750 USD/mo"
+          },
+          "example3": {
+            "spend": "$20,000 USD",
+            "cost": "$1,250 USD + ($20,000 × 15%) = $4,250 USD/mo"
+          }
+        },
+        "scaledAgencies": {
+          "example1": {
+            "spend": "$25,000 USD",
+            "cost": "$3,750 USD + ($25,000 × 10%) = $6,250 USD/mo"
+          },
+          "example2": {
+            "spend": "$50,000 USD",
+            "cost": "$3,750 USD + ($50,000 × 10%) = $8,750 USD/mo"
+          },
+          "example3": {
+            "spend": "$75,000 USD",
+            "cost": "$3,750 USD + ($75,000 × 10%) = $11,250 USD/mo"
+          }
+        },
+        "enterprise": {
+          "example1": {
+            "spend": "$100,000+ USD",
+            "cost": "Custom pricing"
+          },
+          "example2": {
+            "spend": "Multiple brands",
+            "cost": "Contact sales"
+          },
+          "example3": {
+            "spend": "High volume",
+            "cost": "Special discounts"
+          }
+        }
+      }
     }
   }
 }

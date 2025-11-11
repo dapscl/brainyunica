@@ -115,24 +115,24 @@ const ShowcasePricingPage = () => {
 
   const adSpendExamplesByTier = {
     starter: [
-      { spend: '$1,000 USD', cost: '$500 USD + ($1,000 × 20%) = $700 USD/mes' },
-      { spend: '$2,500 USD', cost: '$500 USD + ($2,500 × 20%) = $1,000 USD/mes' },
-      { spend: '$5,000 USD', cost: '$500 USD + ($5,000 × 20%) = $1,500 USD/mes' },
+      { spend: t('showcase.pricing.adSpendExamples.starter.example1.spend'), cost: t('showcase.pricing.adSpendExamples.starter.example1.cost') },
+      { spend: t('showcase.pricing.adSpendExamples.starter.example2.spend'), cost: t('showcase.pricing.adSpendExamples.starter.example2.cost') },
+      { spend: t('showcase.pricing.adSpendExamples.starter.example3.spend'), cost: t('showcase.pricing.adSpendExamples.starter.example3.cost') },
     ],
     smallAgencies: [
-      { spend: '$7,500 USD', cost: '$1,250 USD + ($7,500 × 15%) = $2,375 USD/mes' },
-      { spend: '$10,000 USD', cost: '$1,250 USD + ($10,000 × 15%) = $2,750 USD/mes' },
-      { spend: '$20,000 USD', cost: '$1,250 USD + ($20,000 × 15%) = $4,250 USD/mes' },
+      { spend: t('showcase.pricing.adSpendExamples.smallAgencies.example1.spend'), cost: t('showcase.pricing.adSpendExamples.smallAgencies.example1.cost') },
+      { spend: t('showcase.pricing.adSpendExamples.smallAgencies.example2.spend'), cost: t('showcase.pricing.adSpendExamples.smallAgencies.example2.cost') },
+      { spend: t('showcase.pricing.adSpendExamples.smallAgencies.example3.spend'), cost: t('showcase.pricing.adSpendExamples.smallAgencies.example3.cost') },
     ],
     scaledAgencies: [
-      { spend: '$25,000 USD', cost: '$3,750 USD + ($25,000 × 10%) = $6,250 USD/mes' },
-      { spend: '$50,000 USD', cost: '$3,750 USD + ($50,000 × 10%) = $8,750 USD/mes' },
-      { spend: '$75,000 USD', cost: '$3,750 USD + ($75,000 × 10%) = $11,250 USD/mes' },
+      { spend: t('showcase.pricing.adSpendExamples.scaledAgencies.example1.spend'), cost: t('showcase.pricing.adSpendExamples.scaledAgencies.example1.cost') },
+      { spend: t('showcase.pricing.adSpendExamples.scaledAgencies.example2.spend'), cost: t('showcase.pricing.adSpendExamples.scaledAgencies.example2.cost') },
+      { spend: t('showcase.pricing.adSpendExamples.scaledAgencies.example3.spend'), cost: t('showcase.pricing.adSpendExamples.scaledAgencies.example3.cost') },
     ],
     enterprise: [
-      { spend: '$100,000+ USD', cost: 'Pricing personalizado' },
-      { spend: 'Múltiples marcas', cost: 'Contactar ventas' },
-      { spend: 'Alto volumen', cost: 'Descuentos especiales' },
+      { spend: t('showcase.pricing.adSpendExamples.enterprise.example1.spend'), cost: t('showcase.pricing.adSpendExamples.enterprise.example1.cost') },
+      { spend: t('showcase.pricing.adSpendExamples.enterprise.example2.spend'), cost: t('showcase.pricing.adSpendExamples.enterprise.example2.cost') },
+      { spend: t('showcase.pricing.adSpendExamples.enterprise.example3.spend'), cost: t('showcase.pricing.adSpendExamples.enterprise.example3.cost') },
     ]
   };
 
@@ -294,9 +294,9 @@ const ShowcasePricingPage = () => {
         {/* Ad Spend Examples */}
         <Card className="mb-12 border-electric-cyan/20 bg-card/30 backdrop-blur-sm">
           <CardHeader>
-            <CardTitle className="text-3xl md:text-4xl font-bold text-center uppercase tracking-tight">Ejemplos de Pricing por Ad Spend</CardTitle>
+            <CardTitle className="text-3xl md:text-4xl font-bold text-center uppercase tracking-tight">{t('showcase.pricing.adSpendExamples.title')}</CardTitle>
             <CardDescription className="text-center text-base mt-2">
-              Calcula tu costo mensual aproximado según tu inversión publicitaria
+              {t('showcase.pricing.adSpendExamples.subtitle')}
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -304,8 +304,8 @@ const ShowcasePricingPage = () => {
               {/* Starter Column */}
               <div className="space-y-4">
                 <div className="text-center pb-4 border-b border-border/50">
-                  <h3 className="text-xl font-bold text-electric-cyan mb-1">Starter</h3>
-                  <p className="text-sm text-muted-foreground">20% de medios</p>
+                  <h3 className="text-xl font-bold text-electric-cyan mb-1">{t('showcase.pricing.tiers.starter.name')}</h3>
+                  <p className="text-sm text-muted-foreground">{t('showcase.pricing.tiers.starter.percentage')} {t('showcase.pricing.adSpendExamples.mediaPercentage')}</p>
                 </div>
                 <div className="space-y-3">
                   {adSpendExamplesByTier.starter.map((example, idx) => (
@@ -323,8 +323,8 @@ const ShowcasePricingPage = () => {
               {/* Small Agencies Column */}
               <div className="space-y-4">
                 <div className="text-center pb-4 border-b border-border/50">
-                  <h3 className="text-xl font-bold text-purple-accent mb-1">Small Agencies</h3>
-                  <p className="text-sm text-muted-foreground">15% de medios</p>
+                  <h3 className="text-xl font-bold text-purple-accent mb-1">{t('showcase.pricing.tiers.smallAgencies.name')}</h3>
+                  <p className="text-sm text-muted-foreground">{t('showcase.pricing.tiers.smallAgencies.percentage')} {t('showcase.pricing.adSpendExamples.mediaPercentage')}</p>
                 </div>
                 <div className="space-y-3">
                   {adSpendExamplesByTier.smallAgencies.map((example, idx) => (
@@ -342,8 +342,8 @@ const ShowcasePricingPage = () => {
               {/* Scaled Agencies Column */}
               <div className="space-y-4">
                 <div className="text-center pb-4 border-b border-border/50">
-                  <h3 className="text-xl font-bold text-amber-500 mb-1">Scaled Agencies</h3>
-                  <p className="text-sm text-muted-foreground">10% de medios</p>
+                  <h3 className="text-xl font-bold text-amber-500 mb-1">{t('showcase.pricing.tiers.scaledAgencies.name')}</h3>
+                  <p className="text-sm text-muted-foreground">{t('showcase.pricing.tiers.scaledAgencies.percentage')} {t('showcase.pricing.adSpendExamples.mediaPercentage')}</p>
                 </div>
                 <div className="space-y-3">
                   {adSpendExamplesByTier.scaledAgencies.map((example, idx) => (
@@ -361,8 +361,8 @@ const ShowcasePricingPage = () => {
               {/* Enterprise Column */}
               <div className="space-y-4">
                 <div className="text-center pb-4 border-b border-border/50">
-                  <h3 className="text-xl font-bold text-red-500 mb-1">Enterprise</h3>
-                  <p className="text-sm text-muted-foreground">10% de medios</p>
+                  <h3 className="text-xl font-bold text-red-500 mb-1">{t('showcase.pricing.tiers.enterprise.name')}</h3>
+                  <p className="text-sm text-muted-foreground">{t('showcase.pricing.tiers.enterprise.percentage')} {t('showcase.pricing.adSpendExamples.mediaPercentage')}</p>
                 </div>
                 <div className="space-y-3">
                   {adSpendExamplesByTier.enterprise.map((example, idx) => (
