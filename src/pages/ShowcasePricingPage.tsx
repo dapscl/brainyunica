@@ -188,15 +188,15 @@ const ShowcasePricingPage = () => {
         </Card>
 
         {/* Pricing Tiers */}
-        <div className="grid md:grid-cols-3 gap-6 mb-12">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4 mb-12">
           {pricingTiers.map((tier, idx) => {
             const Icon = tier.icon;
             return (
               <Card 
                 key={idx} 
-                className={`relative overflow-hidden ${
+                className={`relative overflow-hidden flex flex-col ${
                   tier.recommended 
-                    ? 'border-primary shadow-lg scale-105 z-10' 
+                    ? 'border-primary shadow-lg lg:scale-105 z-10' 
                     : 'border-border'
                 }`}
               >
@@ -206,38 +206,38 @@ const ShowcasePricingPage = () => {
                   </div>
                 )}
                 
-                <CardHeader>
-                  <div className={`w-12 h-12 rounded-lg bg-gradient-to-br ${tier.color} flex items-center justify-center mb-4`}>
-                    <Icon className="w-6 h-6 text-white" />
+                <CardHeader className="pb-4">
+                  <div className={`w-10 h-10 rounded-lg bg-gradient-to-br ${tier.color} flex items-center justify-center mb-3`}>
+                    <Icon className="w-5 h-5 text-white" />
                   </div>
-                  <CardTitle className="text-2xl">{tier.name}</CardTitle>
-                  <CardDescription className="text-sm">{tier.description}</CardDescription>
+                  <CardTitle className="text-xl">{tier.name}</CardTitle>
+                  <CardDescription className="text-xs line-clamp-2">{tier.description}</CardDescription>
                   
-                  <div className="pt-4 space-y-2">
+                  <div className="pt-3 space-y-2">
                     <div>
-                      <p className="text-3xl font-bold">{tier.basePrice}<span className="text-lg text-muted-foreground">/mes</span></p>
-                      <p className="text-xs text-muted-foreground">+ {tier.percentage} de inversión en medios</p>
+                      <p className="text-2xl font-bold">{tier.basePrice}<span className="text-sm text-muted-foreground">/mes</span></p>
+                      <p className="text-xs text-muted-foreground">+ {tier.percentage} de medios</p>
                     </div>
                     <div className="text-xs text-muted-foreground pt-2 border-t">
-                      <p className="font-medium">Setup: {tier.integrationFee} (una sola vez)</p>
+                      <p className="font-medium">Setup: {tier.integrationFee}</p>
                     </div>
                   </div>
                 </CardHeader>
 
-                <CardContent className="space-y-4">
+                <CardContent className="space-y-3 flex-1 flex flex-col">
                   <Button 
                     className="w-full" 
                     variant={tier.recommended ? 'default' : 'outline'}
-                    size="lg"
+                    size="sm"
                   >
                     {tier.name === 'Enterprise' ? 'Contactar Ventas' : 'Comenzar Ahora'}
                   </Button>
 
-                  <div className="space-y-2">
+                  <div className="space-y-1.5 flex-1">
                     {tier.features.map((feature, i) => (
                       <div key={i} className="flex items-start gap-2">
-                        <Check className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
-                        <span className="text-sm">{feature}</span>
+                        <Check className="w-3.5 h-3.5 text-primary mt-0.5 flex-shrink-0" />
+                        <span className="text-xs leading-tight">{feature}</span>
                       </div>
                     ))}
                   </div>
