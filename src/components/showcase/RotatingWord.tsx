@@ -1,34 +1,55 @@
 import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 
 interface RotatingWordProps {
   words: string[];
   interval?: number;
+  typingSpeed?: number;
 }
 
-export const RotatingWord = ({ words, interval = 2000 }: RotatingWordProps) => {
+export const RotatingWord = ({ words, interval = 3000, typingSpeed = 100 }: RotatingWordProps) => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [displayedText, setDisplayedText] = useState('');
+  const [isTyping, setIsTyping] = useState(true);
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % words.length);
-    }, interval);
-
-    return () => clearInterval(timer);
-  }, [words.length, interval]);
+    const currentWord = words[currentIndex];
+    
+    if (isTyping) {
+      if (displayedText.length < currentWord.length) {
+        const timeout = setTimeout(() => {
+          setDisplayedText(currentWord.slice(0, displayedText.length + 1));
+        }, typingSpeed);
+        return () => clearTimeout(timeout);
+      } else {
+        const timeout = setTimeout(() => {
+          setIsTyping(false);
+        }, interval);
+        return () => clearTimeout(timeout);
+      }
+    } else {
+      if (displayedText.length > 0) {
+        const timeout = setTimeout(() => {
+          setDisplayedText(displayedText.slice(0, -1));
+        }, typingSpeed / 2);
+        return () => clearTimeout(timeout);
+      } else {
+        setCurrentIndex((prev) => (prev + 1) % words.length);
+        setIsTyping(true);
+      }
+    }
+  }, [displayedText, isTyping, currentIndex, words, interval, typingSpeed]);
 
   return (
-    <AnimatePresence mode="wait">
+    <span className="inline-block min-w-[200px]">
+      {displayedText}
       <motion.span
-        key={currentIndex}
-        initial={{ y: 20, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        exit={{ y: -20, opacity: 0 }}
-        transition={{ duration: 0.3 }}
-        className="inline-block"
+        animate={{ opacity: [1, 0] }}
+        transition={{ duration: 0.5, repeat: Infinity, repeatType: "reverse" }}
+        className="inline-block ml-1"
       >
-        {words[currentIndex]}
+        |
       </motion.span>
-    </AnimatePresence>
+    </span>
   );
 };

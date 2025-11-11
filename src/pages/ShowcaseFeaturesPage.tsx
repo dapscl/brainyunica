@@ -194,9 +194,9 @@ export default function ShowcaseFeaturesPage() {
         <section className="py-20 px-4 bg-gradient-to-b from-dark-surface to-background">
           <div className="container mx-auto max-w-6xl">
             <SectionTitle
-              title={t('showcase.features.whatsapp.sectionTitle', 'El diferenciador')}
-              highlight={t('showcase.features.whatsapp.sectionHighlight', 'clave')}
-              subtitle={t('showcase.features.whatsapp.sectionSubtitle', 'Gestiona todo tu marketing desde WhatsApp. Sin dashboards complicados. Solo conversación.')}
+              title={t('showcase.features.whatsapp.sectionTitle', 'Gestiona todo tu marketing')}
+              highlight={t('showcase.features.whatsapp.sectionHighlight', 'desde WhatsApp')}
+              subtitle={t('showcase.features.whatsapp.sectionSubtitle', 'Sin dashboards complicados. Sin procesos manuales. Solo conversación inteligente que ejecuta todo por ti.')}
             />
 
             <div className="mt-16">
