@@ -10,7 +10,7 @@ export const AnimatedHero = () => {
         <motion.div
           initial={{ opacity: 0, x: -50 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 1, repeat: Infinity, repeatDelay: 4 }}
+          transition={{ duration: 1, repeat: Infinity, repeatDelay: 8, repeatType: "reverse" }}
           className="absolute top-8 left-8 bg-card/80 backdrop-blur-sm rounded-lg p-4 max-w-xs border border-electric-cyan/30 shadow-glow-cyan"
         >
           <div className="flex items-start gap-3">
@@ -26,13 +26,13 @@ export const AnimatedHero = () => {
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1, delay: 1.5, repeat: Infinity, repeatDelay: 4 }}
+          transition={{ duration: 1, delay: 2, repeat: Infinity, repeatDelay: 8, repeatType: "reverse" }}
           className="absolute top-8 right-8 bg-card/80 backdrop-blur-sm rounded-lg p-4 border border-purple-500/30"
         >
           <div className="flex items-center gap-2">
             <Calendar className="w-5 h-5 text-purple-500" />
             <div>
-              <p className="text-xs font-semibold text-purple-500">CalendarBrain™</p>
+              <p className="text-xs font-semibold text-purple-500">CalendarBrainy™</p>
               <p className="text-xs text-muted-foreground mt-1">12 posts programados</p>
             </div>
           </div>
@@ -42,13 +42,13 @@ export const AnimatedHero = () => {
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 3, repeat: Infinity, repeatDelay: 4 }}
+          transition={{ duration: 1, delay: 4, repeat: Infinity, repeatDelay: 8, repeatType: "reverse" }}
           className="absolute bottom-8 left-8 bg-card/80 backdrop-blur-sm rounded-lg p-4 border border-green-500/30"
         >
           <div className="flex items-center gap-2">
             <TrendingUp className="w-5 h-5 text-green-500" />
             <div>
-              <p className="text-xs font-semibold text-green-500">AdBrain™</p>
+              <p className="text-xs font-semibold text-green-500">AdBrainy™</p>
               <p className="text-lg font-bold text-foreground mt-1">+47% ROAS</p>
             </div>
           </div>
@@ -58,13 +58,13 @@ export const AnimatedHero = () => {
         <motion.div
           initial={{ opacity: 0, rotate: -10 }}
           animate={{ opacity: 1, rotate: 0 }}
-          transition={{ duration: 1, delay: 4.5, repeat: Infinity, repeatDelay: 4 }}
+          transition={{ duration: 1, delay: 6, repeat: Infinity, repeatDelay: 8, repeatType: "reverse" }}
           className="absolute bottom-8 right-8 bg-card/80 backdrop-blur-sm rounded-lg p-4 border border-purple-500/30"
         >
           <div className="flex items-center gap-2">
-            <Bot className="w-5 h-5 text-purple-500 animate-pulse" />
+            <Bot className="w-5 h-5 text-purple-500" />
             <div>
-              <p className="text-xs font-semibold text-purple-500">ChatBrain™</p>
+              <p className="text-xs font-semibold text-purple-500">ChatBrainy™</p>
               <p className="text-xs text-muted-foreground mt-1">89 leads capturados</p>
             </div>
           </div>

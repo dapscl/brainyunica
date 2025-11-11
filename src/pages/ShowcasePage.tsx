@@ -135,7 +135,7 @@ const ShowcasePage = () => {
           <div className="grid md:grid-cols-2 gap-6">
             <BrainCard 
               icon={Palette}
-              title="CreatorBrain™"
+              title="CreatorBrainy™"
               description="Crea contenido y versiones automáticamente. Genera variantes, optimiza copy y adapta creatividades a cada plataforma sin intervención manual."
               color="purple"
               delay={0}
@@ -143,7 +143,7 @@ const ShowcasePage = () => {
             
             <BrainCard 
               icon={Calendar}
-              title="CalendarBrain™"
+              title="CalendarBrainy™"
               description="Agenda, coordina y publica sin intervención. Selecciona los mejores horarios, distribuye contenido estratégicamente y ejecuta publicaciones automáticas."
               color="purple"
               delay={0.1}
@@ -151,7 +151,7 @@ const ShowcasePage = () => {
             
             <BrainCard 
               icon={Target}
-              title="AdBrain™"
+              title="AdBrainy™"
               description="Ejecuta y optimiza tus campañas con precisión. Ajusta pujas en tiempo real, redistribuye presupuestos y maximiza ROAS automáticamente."
               color="cyan"
               delay={0.2}
@@ -159,7 +159,7 @@ const ShowcasePage = () => {
             
             <BrainCard 
               icon={MessageSquare}
-              title="ChatBrain™"
+              title="ChatBrainy™"
               description="Responde, conversa y convierte leads en tiempo real. Automatiza respuestas, califica intención de compra y captura oportunidades al instante."
               color="green"
               delay={0.3}
@@ -168,7 +168,7 @@ const ShowcasePage = () => {
             <div className="md:col-span-2">
               <BrainCard 
                 icon={TrendingUp}
-                title="TrendBrain™"
+                title="TrendBrainy™"
                 description="Detecta lo que está pasando y propone nuevas ideas. Analiza tendencias, monitorea competencia y sugiere contenido relevante automáticamente cada semana."
                 color="blue"
                 delay={0.4}
