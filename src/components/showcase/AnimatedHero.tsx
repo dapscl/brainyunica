@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { Calendar, MessageSquare, TrendingUp, Bot, Sparkles, Clock, DollarSign, Target, Zap, CheckCircle, Activity, BarChart3, Loader2 } from 'lucide-react';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 // Typing indicator component
 const TypingIndicator = () => (
@@ -48,6 +49,7 @@ interface CardZone {
 }
 
 export const AnimatedHero = () => {
+  const { t } = useTranslation();
   const [particles, setParticles] = useState<Particle[]>([]);
 
   // Define card zones (approximate positions in percentage)
@@ -233,10 +235,10 @@ export const AnimatedHero = () => {
           <div className="flex items-start gap-3">
             <MessageSquare className="w-5 h-5 text-electric-cyan" />
             <div className="flex-1">
-              <p className="text-xs font-semibold text-electric-cyan mb-1">Mr. Brainy</p>
-              <p className="text-xs text-muted-foreground mb-2">Contenido listo para aprobación ✅</p>
+              <p className="text-xs font-semibold text-electric-cyan mb-1">{t('showcase.animatedHero.mrBrainy')}</p>
+              <p className="text-xs text-muted-foreground mb-2">{t('showcase.animatedHero.contentReady')}</p>
               <div className="flex items-center gap-2 text-xs text-electric-cyan/60">
-                <span>Procesando respuesta</span>
+                <span>{t('showcase.animatedHero.processingResponse')}</span>
                 <TypingIndicator />
               </div>
             </div>
@@ -254,7 +256,7 @@ export const AnimatedHero = () => {
             <Calendar className="w-5 h-5 text-purple-500" />
             <div>
               <p className="text-xs font-semibold text-purple-500">CalendarBrainy™</p>
-              <p className="text-xs text-muted-foreground mt-1">12 posts programados</p>
+              <p className="text-xs text-muted-foreground mt-1">12 {t('showcase.animatedHero.postsScheduled')}</p>
             </div>
           </div>
         </motion.div>
@@ -275,7 +277,7 @@ export const AnimatedHero = () => {
               </div>
               <p className="text-lg font-bold text-foreground mb-2">+47% ROAS</p>
               <div className="space-y-1">
-                <p className="text-xs text-muted-foreground">Optimizando campaña...</p>
+                <p className="text-xs text-muted-foreground">{t('showcase.animatedHero.optimizingCampaign')}</p>
                 <div className="w-full bg-background/50 rounded-full h-1.5 overflow-hidden">
                   <motion.div
                     className="h-full bg-gradient-to-r from-green-500 to-green-400"
@@ -284,7 +286,7 @@ export const AnimatedHero = () => {
                     transition={{ duration: 2, ease: "easeOut", repeat: Infinity, repeatDelay: 8 }}
                   />
                 </div>
-                <p className="text-xs text-green-500">78% completado</p>
+                <p className="text-xs text-green-500">78% {t('showcase.animatedHero.percentComplete')}</p>
               </div>
             </div>
           </div>
@@ -301,9 +303,9 @@ export const AnimatedHero = () => {
             <Bot className="w-5 h-5 text-purple-500" />
             <div>
               <p className="text-xs font-semibold text-purple-500 mb-1">ChatBrainy™</p>
-              <p className="text-xs text-muted-foreground mb-2">89 leads capturados</p>
+              <p className="text-xs text-muted-foreground mb-2">89 {t('showcase.animatedHero.leadsCaptured')}</p>
               <div className="flex items-center gap-2 text-xs text-purple-500/60">
-                <span>Respondiendo</span>
+                <span>{t('showcase.animatedHero.responding')}</span>
                 <TypingIndicator />
               </div>
             </div>
@@ -322,7 +324,7 @@ export const AnimatedHero = () => {
             <p className="text-xs font-medium text-electric-cyan">CreatorBrainy™</p>
             <Loader2 className="w-3 h-3 text-electric-cyan animate-spin" />
           </div>
-          <p className="text-xs text-foreground mb-2">3 variantes creadas</p>
+          <p className="text-xs text-foreground mb-2">3 {t('showcase.animatedHero.variantsCreated')}</p>
           <div className="space-y-1">
             <div className="w-full bg-background/50 rounded-full h-1 overflow-hidden">
               <motion.div
@@ -332,7 +334,7 @@ export const AnimatedHero = () => {
                 transition={{ duration: 1.5, ease: "easeOut", repeat: Infinity, repeatDelay: 8 }}
               />
             </div>
-            <p className="text-xs text-electric-cyan/80">Generando variante 3/3</p>
+            <p className="text-xs text-electric-cyan/80">{t('showcase.animatedHero.generatingVariant')} 3/3</p>
           </div>
         </motion.div>
 
@@ -345,7 +347,7 @@ export const AnimatedHero = () => {
         >
           <div className="flex items-center gap-2">
             <Target className="w-4 h-4 text-purple-400" />
-            <p className="text-xs font-medium text-foreground">Nueva tendencia detectada</p>
+            <p className="text-xs font-medium text-foreground">{t('showcase.animatedHero.newTrendDetected')}</p>
             <Loader2 className="w-3 h-3 text-purple-400 animate-spin" />
           </div>
         </motion.div>
@@ -360,8 +362,8 @@ export const AnimatedHero = () => {
           <div className="flex items-center gap-2">
             <Loader2 className="w-4 h-4 text-green-500 animate-spin" />
             <div>
-              <p className="text-xs font-medium text-foreground">$2.5K optimizado</p>
-              <p className="text-xs text-green-500">Calculando ROI...</p>
+              <p className="text-xs font-medium text-foreground">$2.5K {t('showcase.animatedHero.budgetOptimized')}</p>
+              <p className="text-xs text-green-500">{t('showcase.animatedHero.calculatingRoi')}</p>
             </div>
           </div>
         </motion.div>
@@ -375,7 +377,7 @@ export const AnimatedHero = () => {
         >
           <div className="flex items-center gap-2">
             <CheckCircle className="w-4 h-4 text-green-500" />
-            <p className="text-xs font-medium text-foreground">Campaña activa</p>
+            <p className="text-xs font-medium text-foreground">{t('showcase.animatedHero.campaignActive')}</p>
           </div>
         </motion.div>
 
@@ -401,7 +403,7 @@ export const AnimatedHero = () => {
         >
           <div className="flex items-center gap-2">
             <Activity className="w-4 h-4 text-purple-400 animate-pulse" />
-            <p className="text-xs font-medium text-foreground">127 interacciones</p>
+            <p className="text-xs font-medium text-foreground">127 {t('showcase.animatedHero.interactions')}</p>
             <Loader2 className="w-3 h-3 text-purple-400 animate-spin" />
           </div>
         </motion.div>
@@ -415,7 +417,7 @@ export const AnimatedHero = () => {
         >
           <div className="flex items-center gap-2">
             <Clock className="w-4 h-4 text-electric-cyan" />
-            <p className="text-xs font-medium text-foreground">Publicando en 2h</p>
+            <p className="text-xs font-medium text-foreground">{t('showcase.animatedHero.publishingIn')} 2{t('showcase.animatedHero.hours')}</p>
           </div>
         </motion.div>
 

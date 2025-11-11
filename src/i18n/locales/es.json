@@ -111,7 +111,7 @@
       "onboarding": "Onboarding"
     },
     "seo": {
-      "defaultTitle": "Brainy by Unica - Plataforma de Marketing con IA",
+      "defaultTitle": "Brainy - Plataforma de Marketing con IA",
       "defaultDescription": "Mira cómo funciona una agencia cuando la IA la dirige. Brainy automatiza contenido, anuncios y conversaciones desde un solo lugar. Sin estrés. Sin procesos. Sin límites.",
       "keywords": "marketing IA, automatización de marketing, gestión redes sociales, optimización anuncios, creación contenido, automatización chat, plataforma marketing digital"
     },
@@ -126,6 +126,25 @@
       "subtitleBold": "Sin estrés. Sin procesos. Sin límites.",
       "ctaPrimary": "Ver Brainy en acción",
       "ctaSecondary": "Descubre las inteligencias"
+    },
+    "animatedHero": {
+      "mrBrainy": "Mr. Brainy",
+      "contentReady": "Contenido listo para aprobación ✅",
+      "processingResponse": "Procesando respuesta",
+      "postsScheduled": "posts programados",
+      "optimizingCampaign": "Optimizando campaña...",
+      "percentComplete": "completado",
+      "leadsCaptured": "leads capturados",
+      "responding": "Respondiendo",
+      "variantsCreated": "variantes creadas",
+      "generatingVariant": "Generando variante",
+      "newTrendDetected": "Nueva tendencia detectada",
+      "budgetOptimized": "optimizado",
+      "calculatingRoi": "Calculando ROI...",
+      "campaignActive": "Campaña activa",
+      "interactions": "interacciones",
+      "publishingIn": "Publicando en",
+      "hours": "h"
     },
     "brains": {
       "title": "Cómo trabaja",
