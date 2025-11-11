@@ -218,7 +218,7 @@ const ShowcaseBrandDetailPage = () => {
                 M
               </div>
               <div>
-                <h2 className="text-2xl font-bold">Gestión de Proyectos (Monday.com)</h2>
+                <h2 className="text-2xl font-bold">Gestión de Proyectos</h2>
                 <p className="text-muted-foreground">
                   Tareas, asignaciones y seguimiento de equipo en tiempo real
                 </p>
