@@ -60,8 +60,12 @@ const ShowcasePage = () => {
               {t('showcase.hero.title.line1')}
             </span>
             <br />
-            <span className="text-electric-cyan">
+            <span className="text-foreground">
               {t('showcase.hero.title.line2')}
+            </span>
+            <br />
+            <span className="text-electric-cyan">
+              {t('showcase.hero.title.line3')}
             </span>
           </motion.h1>
           
