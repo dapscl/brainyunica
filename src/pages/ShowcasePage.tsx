@@ -26,12 +26,12 @@ const ShowcasePage = () => {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
-            <Button size="lg" onClick={() => navigate('/showcase/brands')} className="gap-2">
-              Ver Demo Interactivo
+            <Button size="lg" onClick={() => navigate('/showcase/onboarding')} className="gap-2">
+              Comenzar Setup Guiado
               <ArrowRight className="w-4 h-4" />
             </Button>
-            <Button size="lg" variant="outline" onClick={() => navigate('/showcase/pricing')}>
-              Ver Pricing
+            <Button size="lg" variant="outline" onClick={() => navigate('/showcase/brands')}>
+              Ver Demo Completo
             </Button>
           </div>
         </div>
