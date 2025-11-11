@@ -1,11 +1,99 @@
 import { motion } from 'framer-motion';
 import { Calendar, MessageSquare, TrendingUp, Bot } from 'lucide-react';
+import { useEffect, useState } from 'react';
+
+interface Particle {
+  id: number;
+  x: number;
+  y: number;
+  vx: number;
+  vy: number;
+}
 
 export const AnimatedHero = () => {
+  const [particles, setParticles] = useState<Particle[]>([]);
+
+  useEffect(() => {
+    // Generate initial particles
+    const initialParticles: Particle[] = Array.from({ length: 20 }, (_, i) => ({
+      id: i,
+      x: Math.random() * 100,
+      y: Math.random() * 100,
+      vx: (Math.random() - 0.5) * 0.2,
+      vy: (Math.random() - 0.5) * 0.2,
+    }));
+    setParticles(initialParticles);
+
+    // Animate particles
+    const interval = setInterval(() => {
+      setParticles(prevParticles =>
+        prevParticles.map(p => {
+          let newX = p.x + p.vx;
+          let newY = p.y + p.vy;
+          let newVx = p.vx;
+          let newVy = p.vy;
+
+          // Bounce off edges
+          if (newX < 0 || newX > 100) {
+            newVx = -newVx;
+            newX = Math.max(0, Math.min(100, newX));
+          }
+          if (newY < 0 || newY > 100) {
+            newVy = -newVy;
+            newY = Math.max(0, Math.min(100, newY));
+          }
+
+          return { ...p, x: newX, y: newY, vx: newVx, vy: newVy };
+        })
+      );
+    }, 50);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  // Calculate connections between nearby particles
+  const connections = particles.flatMap((p1, i) =>
+    particles.slice(i + 1).map((p2, j) => {
+      const distance = Math.sqrt(
+        Math.pow(p2.x - p1.x, 2) + Math.pow(p2.y - p1.y, 2)
+      );
+      return distance < 15 ? { p1, p2, opacity: 1 - distance / 15 } : null;
+    }).filter(Boolean)
+  ).filter((conn): conn is { p1: Particle; p2: Particle; opacity: number } => conn !== null);
+
   return (
     <div className="relative w-full h-[400px] bg-gradient-to-br from-deep-blue to-background rounded-2xl overflow-hidden border border-electric-cyan/20 shadow-glow-blue">
+      {/* Particle Background */}
+      <svg className="absolute inset-0 w-full h-full">
+        {/* Connections */}
+        {connections.map((conn, i) => (
+          <line
+            key={`line-${i}`}
+            x1={`${conn.p1.x}%`}
+            y1={`${conn.p1.y}%`}
+            x2={`${conn.p2.x}%`}
+            y2={`${conn.p2.y}%`}
+            stroke="hsl(var(--electric-cyan))"
+            strokeWidth="1"
+            opacity={conn.opacity * 0.3}
+          />
+        ))}
+        
+        {/* Particles */}
+        {particles.map(p => (
+          <circle
+            key={`particle-${p.id}`}
+            cx={`${p.x}%`}
+            cy={`${p.y}%`}
+            r="2"
+            fill="hsl(var(--electric-cyan))"
+            opacity="0.6"
+          />
+        ))}
+      </svg>
+
       {/* Simulated Interface Elements */}
-      <div className="absolute inset-0 p-8">
+      <div className="absolute inset-0 p-8 z-10">
         {/* Chat Bubble Animation */}
         <motion.div
           initial={{ opacity: 0, x: -50 }}
