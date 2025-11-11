@@ -5,8 +5,9 @@ import { ShowcaseBreadcrumbs } from '@/components/showcase/ShowcaseBreadcrumbs';
 import { SectionTitle } from '@/components/showcase/SectionTitle';
 import { BrainCard } from '@/components/showcase/BrainCard';
 import { AnimatedButton } from '@/components/showcase/AnimatedButton';
+import { RotatingWord } from '@/components/showcase/RotatingWord';
 import { Link } from 'react-router-dom';
-import { 
+import {
   Sparkles, 
   Calendar, 
   Target, 
@@ -168,8 +169,17 @@ export default function ShowcaseFeaturesPage() {
               <h1 className="text-5xl md:text-6xl font-bold mb-6">
                 <span className="text-foreground">{t('showcase.features.hero.title1', 'Todo lo que necesitas')}</span>
                 <br />
+                <span className="text-foreground">{t('showcase.features.hero.title2prefix', 'para automatizar tu ')}</span>
                 <span className="bg-gradient-to-r from-electric-cyan via-purple-accent to-electric-cyan bg-clip-text text-transparent">
-                  {t('showcase.features.hero.title2', 'para automatizar tu marketing')}
+                  <RotatingWord 
+                    words={[
+                      t('showcase.features.hero.word1', 'agencia'),
+                      t('showcase.features.hero.word2', 'Pyme'),
+                      t('showcase.features.hero.word3', 'Startup'),
+                      t('showcase.features.hero.word4', 'empresa'),
+                      t('showcase.features.hero.word5', 'marca')
+                    ]}
+                  />
                 </span>
               </h1>
               

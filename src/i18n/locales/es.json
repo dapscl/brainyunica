@@ -485,6 +485,12 @@
       "hero": {
         "title1": "Todo lo que necesitas",
         "title2": "para automatizar tu marketing",
+        "title2prefix": "para automatizar tu ",
+        "word1": "agencia",
+        "word2": "Pyme",
+        "word3": "Startup",
+        "word4": "empresa",
+        "word5": "marca",
         "subtitle": "Cinco cerebros de IA colaborando entre sí para ejecutar tu estrategia completa sin intervención manual."
       },
       "brainies": {
