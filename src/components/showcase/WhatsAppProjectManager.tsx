@@ -227,8 +227,8 @@ const WhatsAppProjectManager = () => {
               </div>
 
               <div className="bg-accent/50 p-4 rounded-lg space-y-2">
-                <h4 className="font-semibold">Capacidades del Project Manager</h4>
-                <ul className="space-y-1 text-sm text-muted-foreground">
+                <h4 className="font-semibold text-foreground">Capacidades del Project Manager</h4>
+                <ul className="space-y-1 text-sm text-foreground">
                   <li>✅ Aprobación de contenido por WhatsApp</li>
                   <li>📝 Edición y reescritura con GPT-5 en tiempo real</li>
                   <li>📈 Sugerencias semanales basadas en tendencias</li>

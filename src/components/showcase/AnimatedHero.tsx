@@ -268,13 +268,24 @@ export const AnimatedHero = () => {
         >
           <div className="flex items-center gap-2">
             <TrendingUp className="w-5 h-5 text-green-500" />
-            <div>
+            <div className="flex-1">
               <div className="flex items-center gap-2 mb-1">
                 <p className="text-xs font-semibold text-green-500">AdBrainy™</p>
                 <Loader2 className="w-3 h-3 text-green-500 animate-spin" />
               </div>
-              <p className="text-lg font-bold text-foreground">+47% ROAS</p>
-              <p className="text-xs text-muted-foreground">Optimizando...</p>
+              <p className="text-lg font-bold text-foreground mb-2">+47% ROAS</p>
+              <div className="space-y-1">
+                <p className="text-xs text-muted-foreground">Optimizando campaña...</p>
+                <div className="w-full bg-background/50 rounded-full h-1.5 overflow-hidden">
+                  <motion.div
+                    className="h-full bg-gradient-to-r from-green-500 to-green-400"
+                    initial={{ width: "0%" }}
+                    animate={{ width: "78%" }}
+                    transition={{ duration: 2, ease: "easeOut", repeat: Infinity, repeatDelay: 8 }}
+                  />
+                </div>
+                <p className="text-xs text-green-500">78% completado</p>
+              </div>
             </div>
           </div>
         </motion.div>
@@ -306,10 +317,22 @@ export const AnimatedHero = () => {
           transition={{ duration: 0.8, delay: 1, repeat: Infinity, repeatDelay: 8, repeatType: "reverse" }}
           className="absolute top-1/3 right-16 bg-card/90 backdrop-blur-sm rounded-lg p-3 border border-electric-cyan/40 shadow-lg"
         >
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 mb-2">
             <Sparkles className="w-4 h-4 text-electric-cyan animate-pulse" />
-            <p className="text-xs font-medium text-electric-cyan">3 variantes creadas</p>
+            <p className="text-xs font-medium text-electric-cyan">CreatorBrainy™</p>
             <Loader2 className="w-3 h-3 text-electric-cyan animate-spin" />
+          </div>
+          <p className="text-xs text-foreground mb-2">3 variantes creadas</p>
+          <div className="space-y-1">
+            <div className="w-full bg-background/50 rounded-full h-1 overflow-hidden">
+              <motion.div
+                className="h-full bg-gradient-to-r from-electric-cyan to-electric-cyan/80"
+                initial={{ width: "0%" }}
+                animate={{ width: "92%" }}
+                transition={{ duration: 1.5, ease: "easeOut", repeat: Infinity, repeatDelay: 8 }}
+              />
+            </div>
+            <p className="text-xs text-electric-cyan/80">Generando variante 3/3</p>
           </div>
         </motion.div>
 
