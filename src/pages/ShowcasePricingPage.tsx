@@ -232,9 +232,14 @@ const ShowcasePricingPage = () => {
             return (
               <motion.div
                 key={idx}
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.5 + idx * 0.1 }}
+                initial={{ opacity: 0, y: 50, scale: 0.9 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{ 
+                  duration: 0.6, 
+                  delay: idx * 0.15,
+                  ease: [0.22, 1, 0.36, 1]
+                }}
               >
               <Card 
                 className={`relative overflow-hidden flex flex-col bg-card/50 backdrop-blur-sm transition-all duration-500 ${
@@ -292,6 +297,12 @@ const ShowcasePricingPage = () => {
         </div>
 
         {/* Ad Spend Examples */}
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+        >
         <Card className="mb-12 border-electric-cyan/20 bg-card/30 backdrop-blur-sm">
           <CardHeader>
             <CardTitle className="text-3xl md:text-4xl font-bold text-center uppercase tracking-tight">{t('showcase.pricing.adSpendExamples.title')}</CardTitle>
@@ -386,8 +397,15 @@ const ShowcasePricingPage = () => {
             </div>
           </CardContent>
         </Card>
+        </motion.div>
 
         {/* Why Variable Pricing */}
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+        >
         <Card>
           <CardHeader>
             <CardTitle className="text-2xl">{t('showcase.pricing.whyVariable.title')}</CardTitle>
@@ -436,9 +454,16 @@ const ShowcasePricingPage = () => {
             </div>
           </CardContent>
         </Card>
+        </motion.div>
 
         {/* CTA */}
-        <div className="mt-12 text-center">
+        <motion.div 
+          className="mt-12 text-center"
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+        >
           <Card className="border-electric-cyan/20 bg-gradient-to-br from-electric-cyan/5 to-transparent backdrop-blur-sm">
             <CardContent className="py-12">
               <h2 className="text-3xl md:text-4xl font-bold mb-4 uppercase tracking-tight">{t('showcase.pricing.cta.title')}</h2>
@@ -457,7 +482,7 @@ const ShowcasePricingPage = () => {
               </div>
             </CardContent>
           </Card>
-        </div>
+        </motion.div>
       </div>
     </div>
   );
