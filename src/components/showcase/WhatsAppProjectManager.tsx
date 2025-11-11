@@ -1,367 +1,241 @@
-import { useState } from "react";
-import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Badge } from "@/components/ui/badge";
-import { Switch } from "@/components/ui/switch";
-import { useToast } from "@/hooks/use-toast";
-import { MessageSquare, Send, Settings, TrendingUp, CheckCircle2, Clock, Sparkles, Calendar } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { MessageSquare, CheckCircle, Clock, Sparkles, Zap } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 const WhatsAppProjectManager = () => {
-  const { toast } = useToast();
-  const [whatsappNumber, setWhatsappNumber] = useState("");
-  const [isEnabled, setIsEnabled] = useState(false);
-
-  const handleEnableWhatsApp = () => {
-    if (!whatsappNumber) {
-      toast({
-        title: "Error",
-        description: "Por favor ingresa un número de WhatsApp Business",
-        variant: "destructive",
-      });
-      return;
-    }
-
-    setIsEnabled(true);
-    toast({
-      title: "✅ WhatsApp Project Manager Activado",
-      description: "BrainybyUnica está listo para gestionar tu marca de forma conversacional",
-    });
-  };
-
-  const mockConversations = [
+  const conversations = [
     {
-      id: 1,
-      brand: "TechStart",
-      lastMessage: "Perfecto, publica a las 3 PM 🚀",
-      time: "Hace 2 min",
-      unread: 0,
-      status: "active",
-      lastAction: "approval",
+      time: "09:15",
+      from: "Brainy",
+      message: "Hola Carolina 👋 Hoy tenemos este contenido pre-aprobado para publicar a las 12:00:",
+      type: "incoming",
+      status: "pending"
     },
     {
-      id: 2,
-      brand: "EcoGreen",
-      lastMessage: "Sugiere versión 💡",
-      time: "Hace 15 min",
-      unread: 2,
-      status: "waiting",
-      lastAction: "content_edit",
-    },
-    {
-      id: 3,
-      brand: "FitLife",
-      lastMessage: "Tendencias de la semana 📈",
-      time: "Hace 1 hora",
-      unread: 0,
-      status: "active",
-      lastAction: "suggestions",
-    },
-  ];
-
-  const mockSuggestions = [
-    {
-      id: 1,
-      title: "IA en marketing 2026",
-      description: "El día que tu agencia dejó de dormir",
-      score: 95,
-      status: "pending",
-      source: "Google Trends + TechCrunch",
-    },
-    {
-      id: 2,
-      title: "Automatización creativa",
-      description: "Creatividad en piloto automático",
-      score: 88,
-      status: "approved",
-      source: "The Drum + RSS Feeds",
-    },
-    {
-      id: 3,
-      title: "WhatsApp como canal principal",
-      description: "Gestión completa desde tu móvil",
-      score: 82,
-      status: "pending",
-      source: "Marketing Directo",
-    },
-  ];
-
-  const conversationExample = [
-    {
-      sender: "brainy",
-      message: "Hola, Carolina. ☀️ Hoy tenemos este contenido pre-aprobado para publicar a las 12:00:",
-      time: "09:30",
-    },
-    {
-      sender: "brainy",
-      message: "🧩 'Los lunes son para planificar. Pero si BrainybyUnica lo hace solo, ¿qué haces tú?'",
-      time: "09:30",
-    },
-    {
-      sender: "brainy",
-      message: "¿Quieres revisarlo antes de que salga?\n✅ Sí / ❌ No",
-      time: "09:30",
-    },
-    {
-      sender: "user",
+      time: "09:17",
+      from: "Tú",
       message: "Sí, quiero hacer un cambio",
-      time: "09:35",
+      type: "outgoing"
     },
     {
-      sender: "brainy",
-      message: "Perfecto 💡\nAquí tienes el copy editable. Escríbeme el nuevo texto o dime 'sugiere versión'.",
-      time: "09:35",
-    },
-    {
-      sender: "user",
-      message: "Sugiere versión",
-      time: "09:36",
-    },
-    {
-      sender: "brainy",
-      message: "'Mientras otros planifican su lunes, tu contenido ya está al aire. Así de fácil con BrainybyUnica.'\n\n¿Publicamos este? ✅ Sí / 🔁 Probar otra / ❌ Cancelar",
-      time: "09:36",
-    },
+      time: "09:18",
+      from: "Brainy",
+      message: "Mientras otros planifican su lunes, tu contenido ya está al aire. Así de fácil con BrainybyUnica. 🚀",
+      type: "incoming",
+      status: "approved"
+    }
   ];
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h2 className="text-3xl font-bold flex items-center gap-2 text-electric-cyan">
-            <MessageSquare className="h-8 w-8 text-electric-cyan" />
-            WhatsApp Project Manager
-          </h2>
-          <p className="text-muted-foreground mt-2">
-            Cada marca tiene su gestor personal de contenido por WhatsApp
-          </p>
-        </div>
-        <Sparkles className="h-12 w-12 text-primary" />
-      </div>
-
-      {/* Key Features */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <Card className="p-4 border-primary/20 bg-gradient-to-br from-primary/5 to-transparent">
-          <div className="flex items-center gap-3 mb-2">
-            <CheckCircle2 className="h-5 w-5 text-primary" />
-            <h3 className="font-semibold">Aprobación Instantánea</h3>
+    <motion.div 
+      className="space-y-6"
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.6 }}
+    >
+      {/* Header */}
+      <Card className="border-green-500/20 bg-card/30 backdrop-blur-sm hover:border-green-500/40 transition-all duration-500">
+        <CardHeader>
+          <div className="flex items-center gap-3">
+            <div className="p-3 rounded-xl bg-green-500/10 backdrop-blur-sm">
+              <MessageSquare className="w-7 h-7 text-green-500" />
+            </div>
+            <div>
+              <CardTitle className="text-2xl font-bold tracking-tight text-foreground uppercase">
+                WhatsApp Project Manager
+              </CardTitle>
+              <p className="text-base text-muted-foreground font-light">
+                Tu asistente personal de marca coordinando todo desde WhatsApp
+              </p>
+            </div>
           </div>
-          <p className="text-sm text-muted-foreground">
-            Revisa y aprueba contenido directamente desde WhatsApp con respuestas simples
-          </p>
-        </Card>
-        
-        <Card className="p-4 border-primary/20 bg-gradient-to-br from-primary/5 to-transparent">
-          <div className="flex items-center gap-3 mb-2">
-            <Sparkles className="h-5 w-5 text-primary" />
-            <h3 className="font-semibold">Sugerencias con IA</h3>
-          </div>
-          <p className="text-sm text-muted-foreground">
-            BrainybyUnica te propone contenido basado en tendencias cada lunes automáticamente
-          </p>
-        </Card>
-        
-        <Card className="p-4 border-primary/20 bg-gradient-to-br from-primary/5 to-transparent">
-          <div className="flex items-center gap-3 mb-2">
-            <Calendar className="h-5 w-5 text-primary" />
-            <h3 className="font-semibold">Programación Simple</h3>
-          </div>
-          <p className="text-sm text-muted-foreground">
-            Calendariza publicaciones conversacionalmente: "Mañana a las 9 AM"
-          </p>
-        </Card>
-      </div>
+        </CardHeader>
+      </Card>
 
-      <Tabs defaultValue="setup" className="w-full">
-        <TabsList className="grid w-full grid-cols-4">
-          <TabsTrigger value="setup">Configuración</TabsTrigger>
-          <TabsTrigger value="conversations">Conversaciones</TabsTrigger>
-          <TabsTrigger value="suggestions">Sugerencias</TabsTrigger>
-          <TabsTrigger value="example">Ejemplo en Vivo</TabsTrigger>
-        </TabsList>
-
-        <TabsContent value="setup" className="space-y-4">
-          <Card className="p-6">
-            <div className="space-y-4">
-              <div className="flex items-center justify-between">
+      <div className="grid lg:grid-cols-2 gap-6">
+        {/* Chat Simulation */}
+        <motion.div
+          initial={{ opacity: 0, x: -20 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+        >
+          <Card className="h-full border-border/50 bg-card/30 backdrop-blur-sm hover:shadow-glow-cyan transition-all duration-500">
+            <CardHeader className="border-b border-border/50 bg-card/20">
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-green-500 to-emerald-500 flex items-center justify-center shadow-lg">
+                  <MessageSquare className="w-6 h-6 text-background" />
+                </div>
                 <div>
-                  <h3 className="text-xl font-semibold">WhatsApp Business API</h3>
-                  <p className="text-sm text-muted-foreground">
-                    Un número único por cada brand set
+                  <h3 className="font-bold text-foreground">BrainybyUnica Assistant</h3>
+                  <p className="text-xs text-green-500 flex items-center gap-1">
+                    <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+                    En línea
                   </p>
                 </div>
-                <Switch checked={isEnabled} onCheckedChange={setIsEnabled} />
               </div>
+            </CardHeader>
 
-              <div className="space-y-2">
-                <Label htmlFor="whatsapp">Número de WhatsApp Business</Label>
-                <div className="flex gap-2">
-                  <Input
-                    id="whatsapp"
-                    placeholder="+1 234 567 8900"
-                    value={whatsappNumber}
-                    onChange={(e) => setWhatsappNumber(e.target.value)}
-                    disabled={isEnabled}
-                  />
-                  <Button onClick={handleEnableWhatsApp} disabled={isEnabled}>
-                    <Settings className="h-4 w-4 mr-2" />
-                    Configurar
-                  </Button>
-                </div>
-              </div>
-
-              <div className="bg-primary/5 p-4 rounded-lg space-y-3">
-                <h4 className="font-semibold flex items-center gap-2">
-                  <MessageSquare className="h-4 w-4" />
-                  ¿Cómo funciona el flujo operativo?
-                </h4>
-                <div className="space-y-2 text-sm text-muted-foreground">
-                  <p>📱 <strong>WhatsApp</strong> → Interfaz conversacional</p>
-                  <p>🧠 <strong>BrainybyUnica Logic (Lovable)</strong> → Procesamiento inteligente</p>
-                  <p>💾 <strong>Supabase</strong> → Estado de proyectos y aprobaciones</p>
-                  <p>✨ <strong>OpenAI GPT-5</strong> → Generación y optimización de contenido</p>
-                  <p>📊 <strong>Google Trends + RSS</strong> → Captación de tendencias</p>
-                </div>
-              </div>
-
-              <div className="bg-accent/50 p-4 rounded-lg space-y-2">
-                <h4 className="font-semibold text-foreground">Capacidades del Project Manager</h4>
-                <ul className="space-y-1 text-sm text-foreground">
-                  <li>✅ Aprobación de contenido por WhatsApp</li>
-                  <li>📝 Edición y reescritura con GPT-5 en tiempo real</li>
-                  <li>📈 Sugerencias semanales basadas en tendencias</li>
-                  <li>📅 Programación conversacional de publicaciones</li>
-                  <li>🔔 Notificaciones y recordatorios inteligentes</li>
-                  <li>📊 Estados de campañas en tiempo real</li>
-                </ul>
-              </div>
-            </div>
-          </Card>
-        </TabsContent>
-
-        <TabsContent value="conversations" className="space-y-4">
-          <div className="grid gap-4">
-            {mockConversations.map((conv) => (
-              <Card key={conv.id} className="p-4 hover:shadow-md transition-shadow cursor-pointer">
-                <div className="flex items-center justify-between">
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2 mb-1">
-                      <h4 className="font-semibold">{conv.brand}</h4>
-                      {conv.status === "active" && (
-                        <Badge variant="outline" className="text-xs">
-                          <CheckCircle2 className="h-3 w-3 mr-1" />
-                          Activo
-                        </Badge>
-                      )}
-                      {conv.status === "waiting" && (
-                        <Badge variant="secondary" className="text-xs">
-                          <Clock className="h-3 w-3 mr-1" />
-                          Esperando respuesta
-                        </Badge>
-                      )}
-                    </div>
-                    <p className="text-sm text-muted-foreground">{conv.lastMessage}</p>
-                    <div className="flex items-center gap-2 mt-1">
-                      <span className="text-xs text-muted-foreground">{conv.time}</span>
-                      <Badge variant="outline" className="text-xs">
-                        {conv.lastAction === "approval" && "Aprobación"}
-                        {conv.lastAction === "content_edit" && "Edición"}
-                        {conv.lastAction === "suggestions" && "Tendencias"}
-                      </Badge>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    {conv.unread > 0 && (
-                      <Badge variant="default" className="rounded-full">
-                        {conv.unread}
-                      </Badge>
-                    )}
-                    <Button size="sm" variant="outline">
-                      <Send className="h-4 w-4" />
-                    </Button>
-                  </div>
-                </div>
-              </Card>
-            ))}
-          </div>
-        </TabsContent>
-
-        <TabsContent value="suggestions" className="space-y-4">
-          <Card className="p-4">
-            <div className="flex items-center justify-between mb-4">
-              <div>
-                <h3 className="text-lg font-semibold">Sugerencias de la Semana</h3>
-                <p className="text-sm text-muted-foreground">Basadas en Google Trends y RSS Feeds</p>
-              </div>
-              <Button size="sm" variant="outline">
-                <TrendingUp className="h-4 w-4 mr-2" />
-                Actualizar
-              </Button>
-            </div>
-            <div className="space-y-3">
-              {mockSuggestions.map((suggestion) => (
-                <div
-                  key={suggestion.id}
-                  className="p-4 border rounded-lg hover:bg-accent/50 transition-colors"
-                >
-                  <div className="flex items-start justify-between mb-2">
-                    <div className="flex-1">
-                      <h4 className="font-medium">{suggestion.title}</h4>
-                      <p className="text-sm text-muted-foreground mt-1">{suggestion.description}</p>
-                    </div>
-                    <Badge variant="outline" className="ml-2">
-                      Score: {suggestion.score}
-                    </Badge>
-                  </div>
-                  <div className="flex items-center gap-2 mt-2">
-                    <Badge variant="secondary" className="text-xs">
-                      {suggestion.source}
-                    </Badge>
-                    {suggestion.status === "approved" && (
-                      <Badge variant="default" className="text-xs">
-                        ✅ Aprobado
-                      </Badge>
-                    )}
-                    {suggestion.status === "pending" && (
-                      <Badge variant="outline" className="text-xs">
-                        ⏳ Pendiente
-                      </Badge>
-                    )}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </Card>
-        </TabsContent>
-
-        <TabsContent value="example" className="space-y-4">
-          <Card className="p-6">
-            <h3 className="text-lg font-semibold mb-4">Conversación Real con BrainybyUnica</h3>
-            <div className="space-y-4 max-h-[500px] overflow-y-auto">
-              {conversationExample.map((msg, idx) => (
-                <div
+            <CardContent className="p-4 space-y-3 min-h-[400px] bg-gradient-to-b from-background/50 to-background/80">
+              {conversations.map((msg, idx) => (
+                <motion.div
                   key={idx}
-                  className={`flex ${msg.sender === "user" ? "justify-end" : "justify-start"}`}
+                  initial={{ opacity: 0, y: 10 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.3, delay: idx * 0.1 }}
+                  className={`flex ${msg.type === 'outgoing' ? 'justify-end' : 'justify-start'}`}
                 >
-                  <div
-                    className={`max-w-[80%] p-3 rounded-lg ${
-                      msg.sender === "user"
-                        ? "bg-primary text-primary-foreground"
-                        : "bg-accent"
-                    }`}
-                  >
-                    <p className="text-sm whitespace-pre-line">{msg.message}</p>
-                    <span className="text-xs opacity-70 mt-1 block">{msg.time}</span>
+                  <div className={`max-w-[85%] rounded-2xl p-4 ${
+                    msg.type === 'outgoing' 
+                      ? 'bg-electric-cyan text-background shadow-lg' 
+                      : 'bg-card/80 backdrop-blur-sm text-foreground border border-border/50'
+                  }`}>
+                    <div className="flex items-center gap-2 mb-1">
+                      <span className="text-xs font-medium opacity-70">{msg.from}</span>
+                      {msg.status === 'approved' && (
+                        <CheckCircle className="w-3 h-3 text-green-500" />
+                      )}
+                      {msg.status === 'pending' && (
+                        <Clock className="w-3 h-3 text-yellow-500" />
+                      )}
+                    </div>
+                    <p className="text-sm leading-relaxed whitespace-pre-line">{msg.message}</p>
+                    <p className="text-xs opacity-60 mt-2">{msg.time}</p>
                   </div>
-                </div>
+                </motion.div>
               ))}
-            </div>
+            </CardContent>
           </Card>
-        </TabsContent>
-      </Tabs>
-    </div>
+        </motion.div>
+
+        {/* Features & Capabilities */}
+        <motion.div
+          initial={{ opacity: 0, x: 20 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.4 }}
+          className="space-y-4"
+        >
+          <Card className="border-purple-accent/20 bg-card/30 backdrop-blur-sm hover:border-purple-accent/40 hover:shadow-[0_0_40px_hsl(280_70%_60%_/_0.3)] transition-all duration-500">
+            <CardContent className="p-6 space-y-4">
+              <div className="flex items-center gap-3 mb-4">
+                <Sparkles className="w-6 h-6 text-purple-accent" />
+                <h3 className="text-lg font-bold text-foreground uppercase tracking-tight">
+                  Aprobación Conversacional
+                </h3>
+              </div>
+              <ul className="space-y-3 text-sm text-muted-foreground">
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
+                  <span>Brainy envía contenido pre-aprobado por WhatsApp</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
+                  <span>Apruebas con ✅ o solicitas cambios en lenguaje natural</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
+                  <span>GPT-5 genera versiones alternativas en segundos</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
+                  <span>Publicación automática cuando apruebas</span>
+                </li>
+              </ul>
+            </CardContent>
+          </Card>
+
+          <Card className="border-electric-cyan/20 bg-card/30 backdrop-blur-sm hover:border-electric-cyan/40 hover:shadow-glow-cyan transition-all duration-500">
+            <CardContent className="p-6 space-y-4">
+              <div className="flex items-center gap-3 mb-4">
+                <Zap className="w-6 h-6 text-electric-cyan" />
+                <h3 className="text-lg font-bold text-foreground uppercase tracking-tight">
+                  Sugerencias Automáticas
+                </h3>
+              </div>
+              <ul className="space-y-3 text-sm text-muted-foreground">
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="w-4 h-4 text-electric-cyan mt-0.5 flex-shrink-0" />
+                  <span>Análisis semanal de Google Trends + RSS feeds</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="w-4 h-4 text-electric-cyan mt-0.5 flex-shrink-0" />
+                  <span>3 tendencias más relevantes para tu sector</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="w-4 h-4 text-electric-cyan mt-0.5 flex-shrink-0" />
+                  <span>Propuestas de contenido listas para aprobar</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="w-4 h-4 text-electric-cyan mt-0.5 flex-shrink-0" />
+                  <span>Copy + arte + calendario generados automáticamente</span>
+                </li>
+              </ul>
+            </CardContent>
+          </Card>
+
+          <Card className="border-border/50 bg-gradient-to-br from-accent/20 to-accent/5 backdrop-blur-sm">
+            <CardContent className="p-6">
+              <h4 className="font-bold text-foreground mb-3 uppercase tracking-tight">
+                Capacidades del Project Manager
+              </h4>
+              <ul className="space-y-2 text-sm text-foreground">
+                <li className="flex items-center gap-2">
+                  <span className="text-green-500">✅</span>
+                  Aprobación de contenido por WhatsApp
+                </li>
+                <li className="flex items-center gap-2">
+                  <span className="text-electric-cyan">📝</span>
+                  Edición y reescritura con GPT-5 en tiempo real
+                </li>
+                <li className="flex items-center gap-2">
+                  <span className="text-purple-accent">📈</span>
+                  Sugerencias semanales basadas en tendencias
+                </li>
+                <li className="flex items-center gap-2">
+                  <span className="text-green-500">⚡</span>
+                  Publicación automática vía API Meta
+                </li>
+                <li className="flex items-center gap-2">
+                  <span className="text-electric-cyan">📊</span>
+                  Notificaciones push con métricas en tiempo real
+                </li>
+              </ul>
+            </CardContent>
+          </Card>
+        </motion.div>
+      </div>
+
+      {/* Bottom Stats */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6, delay: 0.6 }}
+      >
+        <Card className="border-green-500/20 bg-gradient-to-br from-green-500/10 to-emerald-500/5 backdrop-blur-sm">
+          <CardContent className="p-6">
+            <div className="grid md:grid-cols-3 gap-6 text-center">
+              <div>
+                <p className="text-4xl font-bold text-green-500 mb-2">5x</p>
+                <p className="text-sm text-muted-foreground font-light">Más rápido en aprobaciones</p>
+              </div>
+              <div>
+                <p className="text-4xl font-bold text-electric-cyan mb-2">24/7</p>
+                <p className="text-sm text-muted-foreground font-light">Asistente siempre activo</p>
+              </div>
+              <div>
+                <p className="text-4xl font-bold text-purple-accent mb-2">100%</p>
+                <p className="text-sm text-muted-foreground font-light">Automatización conversacional</p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </motion.div>
+    </motion.div>
   );
 };
 

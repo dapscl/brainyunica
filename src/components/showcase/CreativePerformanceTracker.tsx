@@ -1,7 +1,8 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { TrendingUp, TrendingDown, Eye, MousePointer, DollarSign, Users, AlertTriangle, BarChart3 } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 const CreativePerformanceTracker = () => {
   const creatives = [
@@ -83,32 +84,54 @@ const CreativePerformanceTracker = () => {
   };
 
   return (
-    <div className="space-y-6">
+    <motion.div
+      className="space-y-6"
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.6 }}
+    >
       {/* Header */}
-      <Card>
+      <Card className="border-electric-cyan/20 bg-card/30 backdrop-blur-sm hover:border-electric-cyan/40 transition-all duration-500">
         <CardHeader>
-          <CardTitle className="text-2xl">Creative Performance Tracker</CardTitle>
-          <CardDescription className="text-base">
-            Seguimiento detallado del rendimiento de cada creatividad publicitaria
-          </CardDescription>
+          <div className="flex items-center gap-3">
+            <div className="p-3 rounded-xl bg-electric-cyan/10">
+              <BarChart3 className="w-7 h-7 text-electric-cyan" />
+            </div>
+            <div>
+              <CardTitle className="text-2xl font-bold tracking-tight text-foreground uppercase">
+                Creative Performance Tracker
+              </CardTitle>
+              <p className="text-base text-muted-foreground font-light">
+                Seguimiento detallado del rendimiento de cada creatividad publicitaria
+              </p>
+            </div>
+          </div>
         </CardHeader>
       </Card>
 
       {/* Performance Overview */}
-      <Card>
+      <Card className="border-border/50 bg-card/30 backdrop-blur-sm">
         <CardHeader>
-          <CardTitle>Rendimiento por Creatividad</CardTitle>
-          <CardDescription>Análisis comparativo de todas las creatividades activas</CardDescription>
+          <CardTitle className="text-xl font-bold uppercase tracking-tight">Rendimiento por Creatividad</CardTitle>
+          <p className="text-sm text-muted-foreground font-light">Análisis comparativo de todas las creatividades activas</p>
         </CardHeader>
         <CardContent className="space-y-6">
-          {creatives.map((creative) => (
-            <div key={creative.id} className="border rounded-lg p-6 hover:shadow-lg transition-shadow">
+          {creatives.map((creative, idx) => (
+            <motion.div
+              key={creative.id}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.3, delay: idx * 0.1 }}
+              className="border border-border/50 rounded-lg p-6 bg-card/20 backdrop-blur-sm hover:shadow-lg hover:border-electric-cyan/30 transition-all duration-300"
+            >
               {/* Header */}
               <div className="flex items-start justify-between mb-4">
                 <div className="flex-1">
                   <div className="flex items-center gap-3 mb-2">
                     <div className={`w-3 h-3 rounded-full ${getStatusColor(creative.status)}`} />
-                    <h3 className="font-semibold text-lg">{creative.name}</h3>
+                    <h3 className="font-bold text-lg text-foreground">{creative.name}</h3>
                     <Badge variant="outline" className="text-xs">
                       {creative.type}
                     </Badge>
@@ -129,7 +152,7 @@ const CreativePerformanceTracker = () => {
                     <Eye className="w-3 h-3" />
                     <span>Impresiones</span>
                   </div>
-                  <p className="text-lg font-semibold">{creative.impressions.toLocaleString()}</p>
+                  <p className="text-lg font-bold text-foreground">{creative.impressions.toLocaleString()}</p>
                 </div>
 
                 <div className="space-y-1">
@@ -137,7 +160,7 @@ const CreativePerformanceTracker = () => {
                     <MousePointer className="w-3 h-3" />
                     <span>Clicks</span>
                   </div>
-                  <p className="text-lg font-semibold">{creative.clicks.toLocaleString()}</p>
+                  <p className="text-lg font-bold text-foreground">{creative.clicks.toLocaleString()}</p>
                 </div>
 
                 <div className="space-y-1">
@@ -145,7 +168,7 @@ const CreativePerformanceTracker = () => {
                     <DollarSign className="w-3 h-3" />
                     <span>Gasto</span>
                   </div>
-                  <p className="text-lg font-semibold">€{creative.spend.toLocaleString()}</p>
+                  <p className="text-lg font-bold text-foreground">€{creative.spend.toLocaleString()}</p>
                 </div>
 
                 <div className="space-y-1">
@@ -153,15 +176,15 @@ const CreativePerformanceTracker = () => {
                     <Users className="w-3 h-3" />
                     <span>Conversiones</span>
                   </div>
-                  <p className="text-lg font-semibold">{creative.conversions}</p>
+                  <p className="text-lg font-bold text-foreground">{creative.conversions}</p>
                 </div>
               </div>
 
               {/* Performance Indicators */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-4 border-t">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-4 border-t border-border/50">
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
-                    <span className="text-sm font-medium">CTR</span>
+                    <span className="text-sm font-medium text-foreground">CTR</span>
                     <div className="flex items-center gap-1">
                       {creative.ctrTrend === 'up' ? (
                         <TrendingUp className="w-3 h-3 text-green-500" />
@@ -174,31 +197,31 @@ const CreativePerformanceTracker = () => {
                     </div>
                   </div>
                   <div className="flex items-baseline gap-1">
-                    <span className="text-2xl font-bold">{creative.ctr}%</span>
+                    <span className="text-2xl font-bold text-foreground">{creative.ctr}%</span>
                   </div>
                 </div>
 
                 <div className="space-y-2">
-                  <span className="text-sm font-medium">CPA</span>
+                  <span className="text-sm font-medium text-foreground">CPA</span>
                   <div className="flex items-baseline gap-1">
-                    <span className="text-2xl font-bold">€{creative.cpa}</span>
+                    <span className="text-2xl font-bold text-foreground">€{creative.cpa}</span>
                   </div>
                 </div>
 
                 <div className="space-y-2">
-                  <span className="text-sm font-medium">ROAS</span>
+                  <span className="text-sm font-medium text-foreground">ROAS</span>
                   <div className="flex items-baseline gap-1">
-                    <span className="text-2xl font-bold">{creative.roas}x</span>
+                    <span className="text-2xl font-bold text-foreground">{creative.roas}x</span>
                   </div>
                 </div>
               </div>
 
               {/* Fatigue Indicator */}
-              <div className="mt-4 pt-4 border-t">
+              <div className="mt-4 pt-4 border-t border-border/50">
                 <div className="flex items-center justify-between mb-2">
                   <div className="flex items-center gap-2">
                     <AlertTriangle className="w-4 h-4 text-muted-foreground" />
-                    <span className="text-sm font-medium">Índice de Fatiga Creativa</span>
+                    <span className="text-sm font-medium text-foreground">Índice de Fatiga Creativa</span>
                   </div>
                   <span className={`text-sm font-bold ${getFatigueColor(creative.fatigue)}`}>
                     {creative.fatigue}%
@@ -219,75 +242,22 @@ const CreativePerformanceTracker = () => {
 
               {/* Actions */}
               <div className="flex gap-2 mt-4">
-                <Button size="sm" variant="outline" className="flex-1">
+                <Button size="sm" variant="outline" className="flex-1 border-electric-cyan/30 hover:bg-electric-cyan/10">
                   <BarChart3 className="w-3 h-3 mr-2" />
                   Ver Detalles
                 </Button>
-                <Button size="sm" variant="outline">
+                <Button size="sm" variant="outline" className="border-border/50">
                   Duplicar
                 </Button>
-                <Button size="sm" variant="outline">
+                <Button size="sm" variant="outline" className="border-border/50">
                   Editar
                 </Button>
               </div>
-            </div>
+            </motion.div>
           ))}
         </CardContent>
       </Card>
-
-      {/* Performance Comparison */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Comparación de Rendimiento</CardTitle>
-          <CardDescription>Métricas clave comparadas entre creatividades</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
-            <div>
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-sm font-medium">CTR Promedio</span>
-                <span className="text-sm font-bold">2.32%</span>
-              </div>
-              {creatives.map((creative) => (
-                <div key={creative.id} className="mb-3">
-                  <div className="flex items-center justify-between text-xs mb-1">
-                    <span className="text-muted-foreground">{creative.name}</span>
-                    <span>{creative.ctr}%</span>
-                  </div>
-                  <div className="w-full h-2 bg-muted rounded-full overflow-hidden">
-                    <div 
-                      className="h-full bg-primary"
-                      style={{ width: `${(creative.ctr / 4) * 100}%` }}
-                    />
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            <div className="pt-4 border-t">
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-sm font-medium">ROAS Promedio</span>
-                <span className="text-sm font-bold">5.03x</span>
-              </div>
-              {creatives.map((creative) => (
-                <div key={creative.id} className="mb-3">
-                  <div className="flex items-center justify-between text-xs mb-1">
-                    <span className="text-muted-foreground">{creative.name}</span>
-                    <span>{creative.roas}x</span>
-                  </div>
-                  <div className="w-full h-2 bg-muted rounded-full overflow-hidden">
-                    <div 
-                      className="h-full bg-green-500"
-                      style={{ width: `${(creative.roas / 10) * 100}%` }}
-                    />
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-    </div>
+    </motion.div>
   );
 };
 
