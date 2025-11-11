@@ -168,9 +168,9 @@ const ShowcaseOnboardingPage = () => {
   const progress = ((currentStep + 1) / steps.length) * 100;
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background dark">
       {/* Header */}
-      <div className="border-b bg-card sticky top-0 z-10">
+      <div className="border-b border-border/50 bg-card/50 backdrop-blur-sm sticky top-0 z-10">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between mb-4">
             <Button 
@@ -182,8 +182,8 @@ const ShowcaseOnboardingPage = () => {
               Salir del Onboarding
             </Button>
             
-            <div className="flex items-center gap-2 text-sm text-muted-foreground">
-              <Sparkles className="w-4 h-4 text-primary" />
+            <div className="flex items-center gap-2 text-sm text-muted-foreground font-medium">
+              <Sparkles className="w-4 h-4 text-electric-cyan" />
               Paso {currentStep + 1} de {steps.length}
             </div>
           </div>
@@ -205,9 +205,9 @@ const ShowcaseOnboardingPage = () => {
                     className={`
                       w-10 h-10 rounded-full flex items-center justify-center mb-2 transition-all
                       ${index < currentStep 
-                        ? 'bg-primary text-primary-foreground' 
+                        ? 'bg-electric-cyan text-background shadow-glow-cyan' 
                         : index === currentStep
-                        ? 'bg-primary text-primary-foreground ring-4 ring-primary/20'
+                        ? 'bg-electric-cyan text-background ring-4 ring-electric-cyan/20 shadow-glow-cyan'
                         : 'bg-muted text-muted-foreground'
                       }
                     `}
@@ -236,7 +236,7 @@ const ShowcaseOnboardingPage = () => {
                   <div 
                     className={`
                       hidden md:block absolute top-5 left-1/2 w-full h-0.5
-                      ${index < currentStep ? 'bg-primary' : 'bg-border'}
+                      ${index < currentStep ? 'bg-electric-cyan shadow-glow-cyan' : 'bg-border'}
                     `}
                     style={{ transform: 'translateY(-50%)' }}
                   />
@@ -248,9 +248,9 @@ const ShowcaseOnboardingPage = () => {
       </div>
 
       {/* Content */}
-      <div className="container mx-auto px-4 py-8 max-w-4xl">
-        <Card className="mb-6">
-          <CardContent className="pt-8">
+      <div className="container mx-auto px-4 py-12 max-w-4xl">
+        <Card className="mb-8 bg-card/30 backdrop-blur-sm border-electric-cyan/20">
+          <CardContent className="pt-10">
             <CurrentStepComponent 
               data={formData} 
               onUpdate={updateFormData}
@@ -274,7 +274,7 @@ const ShowcaseOnboardingPage = () => {
             <Button
               onClick={handleNext}
               size="lg"
-              className="gap-2"
+              className="gap-2 bg-gradient-to-r from-electric-cyan to-electric-cyan/90 hover:opacity-90 text-background font-bold uppercase tracking-wide shadow-glow-cyan transition-all duration-300"
             >
               Siguiente
               <ArrowRight className="w-4 h-4" />
@@ -283,7 +283,7 @@ const ShowcaseOnboardingPage = () => {
             <Button
               onClick={handleComplete}
               size="lg"
-              className="gap-2 bg-green-600 hover:bg-green-700"
+              className="gap-2 bg-gradient-to-r from-green-500 to-green-600 hover:opacity-90 text-background font-bold uppercase tracking-wide shadow-glow transition-all duration-300"
             >
               <Check className="w-4 h-4" />
               Completar Configuración

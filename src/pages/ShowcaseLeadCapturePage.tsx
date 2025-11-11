@@ -155,69 +155,76 @@ const ShowcaseLeadCapturePage = () => {
     const PlanIcon = plan.icon;
 
     return (
-      <div className="min-h-screen bg-gradient-to-b from-deep-blue via-background to-background dark">
-        <div className="container mx-auto px-4 py-20">
+      <div className="min-h-screen bg-background dark">
+        <div className="container mx-auto px-4 py-32">
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5 }}
             className="max-w-3xl mx-auto"
           >
-            <Card className={`bg-gradient-to-br ${plan.color} backdrop-blur-sm border`}>
-              <CardHeader className="text-center pb-8">
-                <div className="flex justify-center mb-6">
-                  <div className="bg-green-500 p-4 rounded-full">
-                    <CheckCircle2 className="w-12 h-12 text-background" />
+            <Card className={`bg-card/30 backdrop-blur-sm border ${plan.color} shadow-glow-cyan`}>
+              <CardHeader className="text-center pb-10">
+                <div className="flex justify-center mb-8">
+                  <div className="bg-green-500 p-5 rounded-2xl shadow-glow">
+                    <CheckCircle2 className="w-16 h-16 text-background" />
                   </div>
                 </div>
-                <CardTitle className="text-4xl font-bold mb-4 text-foreground">
+                <CardTitle className="text-5xl md:text-6xl font-bold uppercase tracking-tight mb-6 text-foreground">
                   ¡Gracias, {formData.fullName.split(' ')[0]}!
                 </CardTitle>
-                <CardDescription className="text-lg text-muted-foreground">
+                <CardDescription className="text-xl text-muted-foreground font-light">
                   Basado en tu perfil, te recomendamos el plan:
                 </CardDescription>
               </CardHeader>
 
-              <CardContent className="space-y-8">
-                <div className="text-center space-y-4">
-                  <div className="flex justify-center mb-4">
-                    <PlanIcon className="w-16 h-16 text-electric-cyan" />
+              <CardContent className="space-y-10">
+                <div className="text-center space-y-6">
+                  <div className="flex justify-center mb-6">
+                    <div className="relative">
+                      <PlanIcon className="w-20 h-20 text-electric-cyan animate-pulse" />
+                      <motion.div
+                        animate={{ rotate: 360 }}
+                        transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                        className="absolute inset-0 border-4 border-electric-cyan/20 border-t-electric-cyan rounded-full"
+                      />
+                    </div>
                   </div>
-                  <h3 className="text-5xl font-bold text-foreground">{plan.name}</h3>
-                  <div className="space-y-2">
-                    <p className="text-3xl font-bold text-electric-cyan">{plan.price}</p>
-                    <p className="text-xl text-purple-accent font-semibold">{plan.adSpend}</p>
-                    <Badge variant="outline" className="text-sm">
+                  <h3 className="text-6xl md:text-7xl font-bold uppercase tracking-tight text-foreground">{plan.name}</h3>
+                  <div className="space-y-3">
+                    <p className="text-4xl font-bold text-electric-cyan">{plan.price}</p>
+                    <p className="text-2xl text-purple-accent font-bold">{plan.adSpend}</p>
+                    <Badge variant="outline" className="text-base px-4 py-2 border-electric-cyan/30 text-electric-cyan bg-electric-cyan/10">
                       + Integración única del 50%
                     </Badge>
                   </div>
                 </div>
 
-                <div className="space-y-3 pt-6">
-                  <h4 className="text-xl font-bold text-foreground mb-4">Incluye:</h4>
+                <div className="space-y-4 pt-8">
+                  <h4 className="text-2xl font-bold uppercase tracking-tight text-foreground mb-6">Incluye:</h4>
                   {plan.features.map((feature, index) => (
                     <motion.div
                       key={index}
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ duration: 0.3, delay: index * 0.1 }}
-                      className="flex items-start gap-3"
+                      className="flex items-start gap-4"
                     >
-                      <CheckCircle2 className="w-5 h-5 text-electric-cyan mt-1 flex-shrink-0" />
-                      <span className="text-foreground">{feature}</span>
+                      <CheckCircle2 className="w-6 h-6 text-electric-cyan mt-0.5 flex-shrink-0" />
+                      <span className="text-foreground text-lg font-light">{feature}</span>
                     </motion.div>
                   ))}
                 </div>
 
-                <div className="pt-8 space-y-4">
+                <div className="pt-10 space-y-6">
                   <Button
                     size="lg"
-                    className="w-full text-lg py-6 bg-gradient-to-r from-electric-cyan to-purple-accent hover:opacity-90 text-background font-bold"
+                    className="w-full text-xl py-8 bg-gradient-to-r from-electric-cyan to-electric-cyan/90 hover:opacity-90 text-background font-bold uppercase tracking-wide shadow-glow-cyan transition-all duration-300"
                     onClick={() => navigate('/')}
                   >
                     Volver al Showcase
                   </Button>
-                  <p className="text-center text-sm text-muted-foreground">
+                  <p className="text-center text-base text-muted-foreground font-light">
                     Nuestro equipo se pondrá en contacto contigo en las próximas 24 horas
                   </p>
                 </div>
@@ -232,15 +239,15 @@ const ShowcaseLeadCapturePage = () => {
   const { t } = useTranslation();
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-deep-blue via-background to-background dark">
-      <ShowcaseSEO 
+    <div className="min-h-screen bg-background dark">
+      <ShowcaseSEO
         title={t('showcase.leadCapture.title', 'Request Early Access')}
         description={t('showcase.leadCapture.description', 'Join the agencies automating their future with AI-powered marketing')}
         path="/lead-capture"
       />
       <ShowcaseHeader />
       
-      <div className="container mx-auto px-4 py-6">
+      <div className="container mx-auto px-4 py-20">
         <ShowcaseBreadcrumbs />
 
         <motion.div
@@ -249,21 +256,21 @@ const ShowcaseLeadCapturePage = () => {
           transition={{ duration: 0.5 }}
           className="max-w-3xl mx-auto"
         >
-          <div className="text-center mb-12">
-            <Badge variant="outline" className="mb-6 px-6 py-3 text-electric-cyan border-electric-cyan/30 bg-electric-cyan/5">
+          <div className="text-center mb-16">
+            <Badge variant="outline" className="mb-6 px-6 py-3 text-electric-cyan border-electric-cyan/30 bg-electric-cyan/5 backdrop-blur-sm">
               <Sparkles className="w-4 h-4 mr-2" />
               Acceso Anticipado
             </Badge>
-            <h1 className="text-5xl md:text-6xl font-bold mb-6 text-foreground">
+            <h1 className="text-5xl md:text-7xl font-bold uppercase tracking-tight mb-6 text-foreground">
               Únete al futuro del <span className="text-electric-cyan">marketing automatizado</span>
             </h1>
-            <p className="text-xl text-muted-foreground">
+            <p className="text-xl text-muted-foreground font-light leading-relaxed">
               Cuéntanos sobre tu negocio y te recomendaremos el plan perfecto
             </p>
           </div>
 
-          <Card className="bg-card/50 backdrop-blur-sm border-electric-cyan/20">
-            <CardContent className="pt-8">
+          <Card className="bg-card/30 backdrop-blur-sm border border-electric-cyan/20 shadow-glow-cyan">
+            <CardContent className="pt-10">
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid md:grid-cols-2 gap-6">
                   <div className="space-y-2">
@@ -413,12 +420,13 @@ const ShowcaseLeadCapturePage = () => {
                 <Button
                   type="submit"
                   size="lg"
-                  className="w-full text-lg py-6 bg-gradient-to-r from-electric-cyan to-purple-accent hover:opacity-90 text-background font-bold uppercase tracking-wide"
+                  className="w-full text-lg py-7 gap-2 bg-gradient-to-r from-electric-cyan to-electric-cyan/90 hover:opacity-90 text-background font-bold uppercase tracking-wide shadow-glow-cyan transition-all duration-300"
                 >
+                  <Sparkles className="w-5 h-5" />
                   Solicitar Acceso Anticipado
                 </Button>
 
-                <p className="text-sm text-center text-muted-foreground">
+                <p className="text-sm text-center text-muted-foreground font-light">
                   Al enviar este formulario, aceptas que nos pongamos en contacto contigo
                 </p>
               </form>

@@ -176,8 +176,8 @@ const ShowcaseBrandDetailPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
-      <ShowcaseSEO 
+    <div className="min-h-screen bg-background dark">
+      <ShowcaseSEO
         title={`${brand.name} - ${t('showcase.brandDetail.title', 'Brand Detail')}`}
         description={brand.description}
         path={`/brands/${slug}`}
@@ -189,8 +189,8 @@ const ShowcaseBrandDetailPage = () => {
       </div>
 
       {/* Brand Header */}
-      <div className="border-b bg-card">
-        <div className="container mx-auto px-4 py-6">
+      <div className="border-b border-border/50 bg-card/50 backdrop-blur-sm">
+        <div className="container mx-auto px-4 py-8">
           <div className="flex items-center gap-4 mb-4">
             <Button 
               variant="ghost" 
@@ -205,18 +205,18 @@ const ShowcaseBrandDetailPage = () => {
             </div>
           </div>
           
-          <div className="flex items-start gap-6">
+          <div className="flex items-start gap-8">
             <img 
               src={brand.logo} 
               alt={brand.name}
-              className="w-24 h-24 rounded-lg object-cover border"
+              className="w-32 h-32 rounded-2xl object-cover border-2 border-electric-cyan/30 shadow-glow-cyan"
             />
             <div className="flex-1">
-              <div className="flex items-center gap-3 mb-2">
-                <h1 className="text-3xl font-bold">{brand.name}</h1>
-                <Badge variant="secondary">{brand.industry}</Badge>
+              <div className="flex items-center gap-4 mb-3">
+                <h1 className="text-4xl md:text-5xl font-bold uppercase tracking-tight">{brand.name}</h1>
+                <Badge variant="outline" className="border-electric-cyan/30 text-electric-cyan bg-electric-cyan/10 text-base px-4 py-1">{brand.industry}</Badge>
               </div>
-              <p className="text-muted-foreground max-w-2xl">
+              <p className="text-muted-foreground text-lg font-light max-w-3xl leading-relaxed">
                 {brand.description}
               </p>
             </div>
@@ -225,25 +225,25 @@ const ShowcaseBrandDetailPage = () => {
       </div>
 
       {/* Content */}
-      <div className="container mx-auto px-4 py-12 space-y-12">
+      <div className="container mx-auto px-4 py-20 space-y-20">
         {/* Monday - Gestión de Tareas */}
         <section>
-          <div className="mb-6">
-            <div className="flex items-center gap-3 mb-2">
-              <div className="w-10 h-10 bg-gradient-to-br from-purple-500 to-pink-500 rounded-lg flex items-center justify-center text-white font-bold text-sm">
+          <div className="mb-8">
+            <div className="flex items-center gap-4 mb-3">
+              <div className="w-14 h-14 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center text-white font-bold text-xl shadow-glow">
                 M
               </div>
               <div>
-                <h2 className="text-2xl font-bold">Gestión de Proyectos</h2>
-                <p className="text-muted-foreground">
+                <h2 className="text-3xl md:text-4xl font-bold uppercase tracking-tight">Gestión de Proyectos</h2>
+                <p className="text-muted-foreground font-light text-lg">
                   Tareas, asignaciones y seguimiento de equipo en tiempo real
                 </p>
               </div>
             </div>
           </div>
 
-          <Card>
-            <CardContent className="p-6">
+          <Card className="bg-card/30 backdrop-blur-sm border-purple-accent/20">
+            <CardContent className="p-8">
               <div className="space-y-3">
                 {mondayTasks.map((task) => (
                   <div key={task.id} className="flex items-center gap-4 p-4 border rounded-lg hover:shadow-sm transition-shadow">
@@ -273,22 +273,22 @@ const ShowcaseBrandDetailPage = () => {
 
         {/* Calendario Mensual */}
         <section>
-          <div className="mb-6">
-            <div className="flex items-center gap-3 mb-2">
-              <div className="w-10 h-10 bg-gradient-to-br from-orange-500 to-red-500 rounded-lg flex items-center justify-center">
-                <TrendingUp className="w-5 h-5 text-white" />
+          <div className="mb-8">
+            <div className="flex items-center gap-4 mb-3">
+              <div className="w-14 h-14 bg-gradient-to-br from-orange-500 to-red-500 rounded-xl flex items-center justify-center shadow-glow">
+                <TrendingUp className="w-7 h-7 text-white" />
               </div>
               <div>
-                <h2 className="text-2xl font-bold">Calendario de Publicaciones</h2>
-                <p className="text-muted-foreground">
+                <h2 className="text-3xl md:text-4xl font-bold uppercase tracking-tight">Calendario de Publicaciones</h2>
+                <p className="text-muted-foreground font-light text-lg">
                   Vista mensual completa con todas las piezas programadas
                 </p>
               </div>
             </div>
           </div>
 
-          <Card>
-            <CardContent className="p-6">
+          <Card className="bg-card/30 backdrop-blur-sm border-electric-cyan/20">
+            <CardContent className="p-8">
               <div className="grid grid-cols-7 gap-2">
                 {['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'].map((day) => (
                   <div key={day} className="text-center text-sm font-semibold text-muted-foreground py-3">
