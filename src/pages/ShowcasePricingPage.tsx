@@ -25,13 +25,15 @@ const ShowcasePricingPage = () => {
       maxMonthly: 'Variable',
       description: 'Empieza a operar con inteligencia',
       features: [
-        '1 marca completa con acceso total',
-        'IA para copys e imágenes',
-        'Editor visual + calendarización',
+        '3 usuarios con acceso completo a toda la plataforma',
+        'WhatsApp Project Manager incluido para cada usuario',
+        '5 Brainies: Creator, Calendar, Ad, Chat y Trend',
+        '1 marca completa con todas las funcionalidades',
+        'IA para copys, imágenes y variaciones',
+        'Editor visual + calendarización automática',
         'Hasta 100 publicaciones/mes',
         'Integración Meta y Google Ads',
         'Dashboard de métricas esenciales',
-        '3 usuarios incluidos',
         '100 GB de almacenamiento'
       ],
       recommended: false
@@ -47,13 +49,15 @@ const ShowcasePricingPage = () => {
       maxMonthly: 'Variable',
       description: 'Escala sin perder el control',
       features: [
+        '10 usuarios con acceso completo a toda la plataforma',
+        'WhatsApp Project Manager incluido para cada usuario',
+        '5 Brainies: Creator, Calendar, Ad, Chat y Trend',
         'Hasta 5 marcas activas completas',
         'IA avanzada: copys, imágenes y variaciones',
         'Flujos de aprobación internos + cliente',
         'Hasta 500 publicaciones/mes',
         'Meta, Google, TikTok y LinkedIn',
         'Dashboards en tiempo real',
-        '10 usuarios incluidos',
         '500 GB de almacenamiento'
       ],
       recommended: true
@@ -69,13 +73,15 @@ const ShowcasePricingPage = () => {
       maxMonthly: 'Variable',
       description: 'Optimiza con datos y automatización',
       features: [
+        '25 usuarios con acceso completo a toda la plataforma',
+        'WhatsApp Project Manager incluido para cada usuario',
+        '5 Brainies: Creator, Calendar, Ad, Chat y Trend',
         'Hasta 15 marcas operando en paralelo',
         'Automatización total (n8n / Zapier)',
         'IA ilimitada (texto + imagen)',
         'Hasta 2,000 publicaciones/mes',
         'Meta, Google, TikTok y LinkedIn completo',
         'Analítica avanzada y dashboards cruzados',
-        '25 usuarios incluidos',
         '1 TB de almacenamiento',
         'Soporte prioritario con manager'
       ],
@@ -92,7 +98,10 @@ const ShowcasePricingPage = () => {
       maxMonthly: 'Variable',
       description: 'Marcas y usuarios ilimitados',
       features: [
-        'Marcas y usuarios ilimitados',
+        'Usuarios ilimitados con acceso completo a toda la plataforma',
+        'WhatsApp Project Manager incluido para cada usuario',
+        '5 Brainies: Creator, Calendar, Ad, Chat y Trend',
+        'Marcas ilimitadas',
         'API abierta + CRM, ERP, Data Lakes',
         'Dashboards personalizados (Mix™)',
         'IA multimodal (texto, imagen, voz, video)',
