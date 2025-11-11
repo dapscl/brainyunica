@@ -14,8 +14,9 @@ export const ShowcaseHeader = () => {
 
   const navLinks = [
     { path: '/', label: t('showcase.nav.home', '¿Qué es Brainy?') },
-    { path: '/pricing', label: t('showcase.nav.pricing', 'Precios') },
     { path: '/features', label: t('showcase.nav.features', 'Funcionalidades') },
+    { path: '/industries', label: t('showcase.nav.industries', 'Industrias') },
+    { path: '/pricing', label: t('showcase.nav.pricing', 'Precio') },
   ];
 
   return (
@@ -66,7 +67,7 @@ export const ShowcaseHeader = () => {
                 size="sm"
                 className="bg-gradient-to-r from-electric-cyan to-purple-accent hover:opacity-90 text-background font-semibold shadow-glow-cyan transition-all duration-300"
               >
-                {t('showcase.nav.getStarted', 'Get Started')}
+                {t('showcase.nav.requestDemo', 'Solicitar Demo')}
               </Button>
             </Link>
           </div>
@@ -104,7 +105,7 @@ export const ShowcaseHeader = () => {
                 <Button
                   className="w-full bg-gradient-to-r from-electric-cyan to-purple-accent hover:opacity-90 text-background font-semibold"
                 >
-                  {t('showcase.nav.getStarted', 'Get Started')}
+                  {t('showcase.nav.requestDemo', 'Solicitar Demo')}
                 </Button>
               </Link>
             </div>

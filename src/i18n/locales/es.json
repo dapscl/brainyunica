@@ -89,10 +89,12 @@
     "nav": {
       "home": "¿Qué es Brainy?",
       "features": "Funcionalidades",
+      "industries": "Industrias",
       "brands": "Marcas",
-      "pricing": "Precios",
+      "pricing": "Precio",
       "onboarding": "Onboarding",
       "getStarted": "Comenzar",
+      "requestDemo": "Solicitar Demo",
       "tagline": "Marketing que se dirige solo"
     },
     "breadcrumbs": {
@@ -472,6 +474,104 @@
         "hideAll": "Ocultar detalles",
         "includes": "Incluye todo de",
         "plus": "más:"
+      }
+    },
+    "features": {
+      "seo": {
+        "title": "Funcionalidades - Brainy by Unica",
+        "description": "Descubre las 5 inteligencias de Brainy: CreatorBrainy, CalendarBrainy, AdBrainy, ChatBrainy y TrendBrainy. Todo lo que necesitas para automatizar tu marketing digital."
+      },
+      "badge": "5 Inteligencias. 1 Plataforma.",
+      "hero": {
+        "title1": "Todo lo que necesitas",
+        "title2": "para automatizar tu marketing",
+        "subtitle": "Cinco cerebros de IA colaborando entre sí para ejecutar tu estrategia completa sin intervención manual."
+      },
+      "brainies": {
+        "title": "Conoce a los",
+        "highlight": "Brainies",
+        "subtitle": "Cada Brainy se especializa en una función clave de tu marketing, trabajando en sincronía perfecta."
+      },
+      "creator": {
+        "feature1": "Generación automática de copys optimizados por IA",
+        "feature2": "Creación de imágenes y videos adaptados a cada plataforma",
+        "feature3": "Variantes A/B testing para maximizar engagement",
+        "feature4": "Adaptación automática de formato según canal social",
+        "feature5": "Biblioteca de templates personalizables por marca"
+      },
+      "calendar": {
+        "feature1": "Calendarización inteligente en horarios óptimos",
+        "feature2": "Distribución estratégica de contenido multicanal",
+        "feature3": "Publicación automática sin intervención manual",
+        "feature4": "Coordinación de campañas cross-platform",
+        "feature5": "Vista mensual/semanal con insights de performance"
+      },
+      "ad": {
+        "feature1": "Optimización automática de pujas en tiempo real",
+        "feature2": "Redistribución inteligente de presupuestos",
+        "feature3": "Maximización de ROAS con machine learning",
+        "feature4": "Detección de fatiga creativa y sugerencias",
+        "feature5": "Integración con Meta, Google, LinkedIn y TikTok Ads"
+      },
+      "chat": {
+        "feature1": "Respuestas automáticas contextuales 24/7",
+        "feature2": "Calificación de intención de compra en tiempo real",
+        "feature3": "Captura y segmentación automática de leads",
+        "feature4": "Flujos conversacionales personalizados por marca",
+        "feature5": "Integración WhatsApp, Instagram DM y Facebook Messenger"
+      },
+      "trend": {
+        "feature1": "Análisis semanal automático de Google Trends",
+        "feature2": "Monitoreo de competencia y benchmarking",
+        "feature3": "Sugerencias de contenido basadas en tendencias",
+        "feature4": "Alertas de oportunidades virales en tu industria",
+        "feature5": "Biblioteca de inspiración con ads ganadores"
+      },
+      "whoItsFor": {
+        "title": "¿A quién",
+        "highlight": "le sirve Brainy?",
+        "subtitle": "Desde startups hasta corporaciones, Brainy se adapta a las necesidades específicas de cada industria."
+      },
+      "industries": {
+        "agencies": {
+          "title": "Agencias",
+          "description": "Gestiona múltiples clientes desde una sola plataforma",
+          "benefit1": "Hasta 15 marcas operando en paralelo",
+          "benefit2": "Flujos de aprobación cliente-agencia",
+          "benefit3": "Dashboard consolidado de todos los clientes",
+          "benefit4": "Facturación transparente por ad spend"
+        },
+        "enterprises": {
+          "title": "Empresas",
+          "description": "Centraliza todo el marketing de tu organización",
+          "benefit1": "Múltiples marcas y sub-marcas",
+          "benefit2": "Control de permisos por equipos",
+          "benefit3": "Integraciones con CRM y herramientas internas",
+          "benefit4": "Reportes ejecutivos automáticos"
+        },
+        "startups": {
+          "title": "Startups",
+          "description": "Escala tu marketing sin aumentar el equipo",
+          "benefit1": "Operación ágil con 1-3 personas",
+          "benefit2": "Pricing accesible que crece contigo",
+          "benefit3": "Setup rápido en menos de 24 horas",
+          "benefit4": "Automatización desde el día uno"
+        },
+        "smes": {
+          "title": "PYMEs",
+          "description": "Marketing profesional sin complicaciones",
+          "benefit1": "Interfaz simple y fácil de usar",
+          "benefit2": "Sin necesidad de expertos en marketing",
+          "benefit3": "Resultados medibles desde el primer mes",
+          "benefit4": "Soporte en español y onboarding guiado"
+        }
+      },
+      "cta": {
+        "title1": "¿Listo para ver",
+        "title2": "Brainy en acción?",
+        "subtitle": "Agenda una demo personalizada y descubre cómo los 5 Brainies pueden transformar tu marketing.",
+        "demo": "Solicitar Demo",
+        "pricing": "Ver Precios"
       }
     }
   }

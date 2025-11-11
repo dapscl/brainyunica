@@ -49,6 +49,7 @@ const ShowcaseInspirationLibraryPage = lazy(() => import("./pages/ShowcaseInspir
 const ShowcasePricingPage = lazy(() => import("./pages/ShowcasePricingPage"));
 const ShowcaseOnboardingPage = lazy(() => import("./pages/ShowcaseOnboardingPage"));
 const ShowcaseDemoMenuPage = lazy(() => import("./pages/ShowcaseDemoMenuPage"));
+const ShowcaseFeaturesPage = lazy(() => import("./pages/ShowcaseFeaturesPage"));
 
 const LoadingFallback = () => (
   <div className="min-h-screen bg-background p-8">
@@ -66,6 +67,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<ShowcasePage />} />
           <Route path="/auth" element={<AuthPage />} />
+          <Route path="/features" element={<ShowcaseFeaturesPage />} />
           <Route path="/lead-capture" element={<ShowcaseLeadCapturePage />} />
           <Route path="/onboarding" element={<ProtectedRoute><ShowcaseOnboardingPage /></ProtectedRoute>} />
           <Route path="/pricing" element={<ShowcasePricingPage />} />
