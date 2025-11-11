@@ -3,9 +3,10 @@ import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Building2, Package, LogOut, Briefcase, BarChart3, Shield } from "lucide-react";
+import { Building2, Package, LogOut, Briefcase, BarChart3, Shield, TrendingUp } from "lucide-react";
 import { robustSignOut } from "@/utils/auth";
 import { usePermissions } from "@/hooks/usePermissions";
+import { AdSpendTracker } from "@/components/dashboard/AdSpendTracker";
 
 interface Profile {
   full_name: string | null;
@@ -60,6 +61,20 @@ const DashboardPage = () => {
           <p className="text-muted-foreground">
             Tu centro de gestión integral para marketing, creatividad y análisis
           </p>
+        </div>
+
+        {/* Ad Spend Tracker Dashboard */}
+        <div className="mb-8">
+          <div className="flex items-center gap-3 mb-6">
+            <TrendingUp className="h-6 w-6 text-primary" />
+            <div>
+              <h3 className="text-xl font-semibold">Ad Spend Tracking</h3>
+              <p className="text-sm text-muted-foreground">
+                Monitoreo en tiempo real de tu inversión publicitaria
+              </p>
+            </div>
+          </div>
+          <AdSpendTracker />
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
