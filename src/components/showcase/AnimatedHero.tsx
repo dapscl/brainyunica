@@ -10,8 +10,34 @@ interface Particle {
   vy: number;
 }
 
+interface CardZone {
+  name: string;
+  x: number;
+  y: number;
+  color: string;
+}
+
 export const AnimatedHero = () => {
   const [particles, setParticles] = useState<Particle[]>([]);
+
+  // Define card zones (approximate positions in percentage)
+  const cardZones: CardZone[] = [
+    { name: 'whatsapp', x: 15, y: 15, color: 'hsl(var(--electric-cyan))' },
+    { name: 'calendar', x: 85, y: 15, color: 'hsl(280 70% 60%)' },
+    { name: 'adbrain', x: 15, y: 85, color: 'hsl(140 70% 50%)' },
+    { name: 'chatbrain', x: 85, y: 85, color: 'hsl(280 70% 60%)' },
+  ];
+
+  // Check if particle is near any card
+  const getNearbyCard = (p: Particle): CardZone | null => {
+    for (const card of cardZones) {
+      const distance = Math.sqrt(
+        Math.pow(p.x - card.x, 2) + Math.pow(p.y - card.y, 2)
+      );
+      if (distance < 20) return card;
+    }
+    return null;
+  };
 
   useEffect(() => {
     // Generate initial particles
@@ -79,15 +105,88 @@ export const AnimatedHero = () => {
           />
         ))}
         
+        {/* Card Zone Connections */}
+        {particles.map(p => {
+          const nearbyCard = getNearbyCard(p);
+          if (!nearbyCard) return null;
+          
+          const distance = Math.sqrt(
+            Math.pow(p.x - nearbyCard.x, 2) + Math.pow(p.y - nearbyCard.y, 2)
+          );
+          const opacity = 1 - distance / 20;
+          
+          return (
+            <line
+              key={`card-line-${p.id}`}
+              x1={`${p.x}%`}
+              y1={`${p.y}%`}
+              x2={`${nearbyCard.x}%`}
+              y2={`${nearbyCard.y}%`}
+              stroke={nearbyCard.color}
+              strokeWidth="2"
+              opacity={opacity * 0.6}
+              className="animate-pulse"
+            />
+          );
+        })}
+        
         {/* Particles */}
-        {particles.map(p => (
+        {particles.map(p => {
+          const nearbyCard = getNearbyCard(p);
+          const isNearCard = nearbyCard !== null;
+          
+          return (
+            <g key={`particle-${p.id}`}>
+              {isNearCard && (
+                <>
+                  {/* Outer glow ring */}
+                  <circle
+                    cx={`${p.x}%`}
+                    cy={`${p.y}%`}
+                    r="6"
+                    fill="none"
+                    stroke={nearbyCard.color}
+                    strokeWidth="1"
+                    opacity="0.4"
+                    className="animate-pulse"
+                  />
+                  {/* Middle glow ring */}
+                  <circle
+                    cx={`${p.x}%`}
+                    cy={`${p.y}%`}
+                    r="4"
+                    fill="none"
+                    stroke={nearbyCard.color}
+                    strokeWidth="1"
+                    opacity="0.6"
+                    className="animate-pulse"
+                    style={{ animationDelay: '0.15s' }}
+                  />
+                </>
+              )}
+              {/* Main particle */}
+              <circle
+                cx={`${p.x}%`}
+                cy={`${p.y}%`}
+                r={isNearCard ? "3" : "2"}
+                fill={isNearCard ? nearbyCard.color : "hsl(var(--electric-cyan))"}
+                opacity={isNearCard ? "0.9" : "0.6"}
+                className={isNearCard ? "animate-pulse" : ""}
+              />
+            </g>
+          );
+        })}
+        
+        {/* Card Zone Markers */}
+        {cardZones.map(zone => (
           <circle
-            key={`particle-${p.id}`}
-            cx={`${p.x}%`}
-            cy={`${p.y}%`}
-            r="2"
-            fill="hsl(var(--electric-cyan))"
-            opacity="0.6"
+            key={`zone-${zone.name}`}
+            cx={`${zone.x}%`}
+            cy={`${zone.y}%`}
+            r="3"
+            fill={zone.color}
+            opacity="0.3"
+            className="animate-pulse"
           />
         ))}
       </svg>
