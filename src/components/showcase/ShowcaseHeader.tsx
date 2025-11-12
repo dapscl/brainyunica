@@ -62,6 +62,15 @@ export const ShowcaseHeader = () => {
           {/* Right side - Language Selector + CTA */}
           <div className="hidden md:flex items-center space-x-4">
             <LanguageSelector />
+            <Link to="/auth">
+              <Button
+                variant="outline"
+                size="sm"
+                className="border-electric-cyan/30 text-electric-cyan hover:bg-electric-cyan/10 transition-all duration-300"
+              >
+                {t('showcase.nav.login', 'Acceso')}
+              </Button>
+            </Link>
             <Link to="/lead-capture">
               <Button
                 size="sm"
@@ -101,6 +110,14 @@ export const ShowcaseHeader = () => {
             ))}
             <div className="pt-4 space-y-3">
               <LanguageSelector />
+              <Link to="/auth" onClick={() => setMobileMenuOpen(false)}>
+                <Button
+                  variant="outline"
+                  className="w-full border-electric-cyan/30 text-electric-cyan hover:bg-electric-cyan/10"
+                >
+                  {t('showcase.nav.login', 'Acceso')}
+                </Button>
+              </Link>
               <Link to="/lead-capture" onClick={() => setMobileMenuOpen(false)}>
                 <Button
                   className="w-full bg-gradient-to-r from-electric-cyan to-purple-accent hover:opacity-90 text-background font-semibold"
