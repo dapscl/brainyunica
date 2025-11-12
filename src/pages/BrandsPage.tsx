@@ -99,16 +99,19 @@ const BrandsPage = () => {
   return (
     <>
       <AppHeader />
-      <div className="min-h-screen bg-background">
+      <div className="min-h-screen bg-dark-surface">
       <div className="container mx-auto px-4 py-8">
         <DynamicBreadcrumb />
         <div className="flex flex-col gap-6 mb-8">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-4xl font-bold mb-2">Marcas</h1>
-              <p className="text-muted-foreground">Gestiona las marcas de tu organización</p>
+              <h1 className="text-4xl font-bold mb-2 bg-gradient-to-r from-electric-cyan to-purple-accent bg-clip-text text-transparent">Marcas</h1>
+              <p className="text-foreground/80">Gestiona las marcas de tu organización</p>
             </div>
-            <Button onClick={() => navigate(`/organizations/${orgId}/brands/new`)}>
+            <Button 
+              onClick={() => navigate(`/organizations/${orgId}/brands/new`)}
+              className="bg-gradient-to-r from-electric-cyan to-purple-accent hover:opacity-90 text-background font-semibold shadow-glow-cyan transition-all duration-300"
+            >
               <Plus className="h-4 w-4 mr-2" />
               Nueva Marca
             </Button>
@@ -123,14 +126,17 @@ const BrandsPage = () => {
         </div>
 
         {brands.length === 0 ? (
-          <Card className="text-center py-12">
+          <Card className="text-center py-12 bg-card/30 backdrop-blur-sm border-electric-cyan/20">
             <CardContent>
-              <Palette className="h-16 w-16 mx-auto mb-4 text-muted-foreground" />
-              <h3 className="text-xl font-semibold mb-2">No tienes marcas</h3>
-              <p className="text-muted-foreground mb-6">
+              <Palette className="h-16 w-16 mx-auto mb-4 text-electric-cyan" />
+              <h3 className="text-xl font-semibold mb-2 text-foreground">No tienes marcas</h3>
+              <p className="text-foreground/70 mb-6">
                 Crea tu primera marca para comenzar
               </p>
-              <Button onClick={() => navigate(`/organizations/${orgId}/brands/new`)}>
+              <Button 
+                onClick={() => navigate(`/organizations/${orgId}/brands/new`)}
+                className="bg-gradient-to-r from-electric-cyan to-purple-accent hover:opacity-90 text-background font-semibold shadow-glow-cyan transition-all duration-300"
+              >
                 <Plus className="h-4 w-4 mr-2" />
                 Crear Marca
               </Button>
@@ -139,11 +145,11 @@ const BrandsPage = () => {
         ) : (
           <>
             {filteredBrands.length === 0 ? (
-              <Card className="text-center py-12">
+              <Card className="text-center py-12 bg-card/30 backdrop-blur-sm border-electric-cyan/20">
                 <CardContent>
-                  <Palette className="h-16 w-16 mx-auto mb-4 text-muted-foreground" />
-                  <h3 className="text-xl font-semibold mb-2">No se encontraron marcas</h3>
-                  <p className="text-muted-foreground">
+                  <Palette className="h-16 w-16 mx-auto mb-4 text-electric-cyan" />
+                  <h3 className="text-xl font-semibold mb-2 text-foreground">No se encontraron marcas</h3>
+                  <p className="text-foreground/70">
                     Intenta con otros términos de búsqueda
                   </p>
                 </CardContent>
@@ -153,7 +159,7 @@ const BrandsPage = () => {
             {filteredBrands.map((brand) => (
               <Card
                 key={brand.id}
-                className="hover:shadow-glow transition-smooth"
+                className="bg-card/30 backdrop-blur-sm border-electric-cyan/20 hover:border-electric-cyan/40 hover:shadow-glow-cyan transition-all duration-300"
               >
                 <CardHeader>
                   <div className="flex items-start justify-between mb-2">

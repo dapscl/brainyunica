@@ -155,9 +155,9 @@ const ShowcaseBrandSetupPage = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-dark-surface">
       {/* Header */}
-      <div className="border-b bg-card">
+      <div className="border-b border-border/40 bg-card/30 backdrop-blur-sm">
         <div className="container mx-auto px-4 py-6">
           <Button 
             variant="ghost" 
@@ -177,7 +177,7 @@ const ShowcaseBrandSetupPage = () => {
             />
             <div className="flex-1">
               <div className="flex items-center gap-3 mb-2">
-                <h1 className="text-3xl font-bold">{brand.name}</h1>
+                <h1 className="text-3xl font-bold bg-gradient-to-r from-electric-cyan to-purple-accent bg-clip-text text-transparent">{brand.name}</h1>
                 <Badge variant="secondary">{brand.industry}</Badge>
                 <Badge className="bg-green-500">
                   <CheckCircle2 className="w-3 h-3 mr-1" />
@@ -195,15 +195,15 @@ const ShowcaseBrandSetupPage = () => {
       {/* Content */}
       <div className="container mx-auto px-4 py-12">
         <div className="mb-8">
-          <h2 className="text-2xl font-bold mb-2">Configuración de Marca</h2>
-          <p className="text-muted-foreground">
+          <h2 className="text-2xl font-bold mb-2 bg-gradient-to-r from-electric-cyan to-purple-accent bg-clip-text text-transparent">Configuración de Marca</h2>
+          <p className="text-foreground/80">
             Todos los elementos necesarios para gestionar esta marca en la plataforma
           </p>
         </div>
 
         <div className="space-y-6 mb-8">
           {setupSteps.map((step, index) => (
-            <Card key={index} className="overflow-hidden">
+            <Card key={index} className="overflow-hidden bg-card/30 backdrop-blur-sm border-electric-cyan/20 hover:border-electric-cyan/40 transition-all duration-300">
               <CardHeader className="bg-muted/30">
                 <div className="flex items-start justify-between">
                   <div className="flex items-start gap-4">
@@ -243,7 +243,7 @@ const ShowcaseBrandSetupPage = () => {
         </div>
 
         {/* Integration Summary */}
-        <Card className="bg-primary/5 border-primary/20">
+        <Card className="bg-card/30 backdrop-blur-sm border-electric-cyan/20">
           <CardHeader>
             <CardTitle>Integraciones de Plataforma</CardTitle>
             <CardDescription>
@@ -320,7 +320,7 @@ const ShowcaseBrandSetupPage = () => {
           <Button 
             size="lg" 
             onClick={() => navigate(`/brands/${slug}`)}
-            className="gap-2"
+            className="gap-2 bg-gradient-to-r from-electric-cyan to-purple-accent hover:opacity-90 text-background font-semibold shadow-glow-cyan transition-all duration-300"
           >
             Ver Workflow Completo
             <ArrowRight className="w-4 h-4" />

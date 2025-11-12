@@ -44,17 +44,22 @@ export const AppHeader = () => {
   };
 
   return (
-    <header className="border-b border-border bg-background sticky top-0 z-50">
+    <header className="border-b border-border/40 bg-dark-surface/95 backdrop-blur-md sticky top-0 z-50">
       <div className="container mx-auto px-4 py-4 flex items-center justify-between">
         <div className="flex items-center gap-6">
           <div 
-            className="flex items-center gap-2 cursor-pointer"
+            className="flex items-center gap-2 cursor-pointer group"
             onClick={() => navigate("/dashboard")}
           >
-            <Package className="h-8 w-8 text-primary" />
+            <div className="relative">
+              <div className="absolute inset-0 bg-gradient-to-r from-electric-cyan to-purple-accent rounded-lg blur-md opacity-50 group-hover:opacity-75 transition-opacity" />
+              <div className="relative bg-gradient-to-r from-electric-cyan to-purple-accent p-2 rounded-lg">
+                <span className="text-dark-surface font-bold text-xl">B</span>
+              </div>
+            </div>
             <div className="flex flex-col">
-              <span className="text-xl font-bold leading-none">Brainy</span>
-              <span className="text-xs text-muted-foreground leading-none">Command Center</span>
+              <span className="text-xl font-bold bg-gradient-to-r from-electric-cyan to-purple-accent bg-clip-text text-transparent leading-tight">Brainy</span>
+              <span className="text-xs text-foreground/60 font-medium leading-tight">Command Center</span>
             </div>
           </div>
           <nav className="hidden md:flex items-center gap-4">
