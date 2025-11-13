@@ -87,11 +87,21 @@ const ShowcaseLeadCapturePage = () => {
 
       if (insertError) {
         console.error('Error saving lead:', insertError);
-        toast({
-          title: "Error al guardar",
-          description: "Hubo un problema al enviar tu solicitud. Por favor intenta de nuevo.",
-          variant: "destructive",
-        });
+        
+        // Check for duplicate email error
+        if (insertError.code === '23505') {
+          toast({
+            title: t('leadCapture.form.duplicateEmailTitle') || "Email ya registrado",
+            description: t('leadCapture.form.duplicateEmailDescription') || "Este email ya está registrado. Nos pondremos en contacto contigo pronto.",
+            variant: "default",
+          });
+        } else {
+          toast({
+            title: "Error al guardar",
+            description: "Hubo un problema al enviar tu solicitud. Por favor intenta de nuevo.",
+            variant: "destructive",
+          });
+        }
         return;
       }
 
