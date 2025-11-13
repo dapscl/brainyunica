@@ -105,6 +105,31 @@ const ShowcaseLeadCapturePage = () => {
         return;
       }
 
+      // Send lead notification email
+      try {
+        const { error: emailError } = await supabase.functions.invoke('send-lead-notification', {
+          body: {
+            fullName: formData.fullName,
+            email: formData.email,
+            company: formData.company,
+            phone: formData.phone,
+            monthlyRevenue: formData.monthlyRevenue,
+            clientsCount: formData.clientsCount,
+            currentTools: formData.currentTools,
+            challenges: formData.challenges,
+            suggestedPlan: plan,
+          },
+        });
+
+        if (emailError) {
+          console.error('Error sending notification email:', emailError);
+          // Don't block the user flow if email fails
+        }
+      } catch (emailError) {
+        console.error('Error invoking email function:', emailError);
+        // Don't block the user flow if email fails
+      }
+
       setSuggestedPlan(plan);
       setIsSubmitted(true);
       
