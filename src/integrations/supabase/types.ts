@@ -459,6 +459,51 @@ export type Database = {
           },
         ]
       }
+      leads: {
+        Row: {
+          challenges: string | null
+          clients_count: string
+          company: string
+          created_at: string
+          current_tools: string | null
+          email: string
+          full_name: string
+          id: string
+          monthly_revenue: string
+          phone: string
+          suggested_plan: string
+          updated_at: string
+        }
+        Insert: {
+          challenges?: string | null
+          clients_count: string
+          company: string
+          created_at?: string
+          current_tools?: string | null
+          email: string
+          full_name: string
+          id?: string
+          monthly_revenue: string
+          phone: string
+          suggested_plan: string
+          updated_at?: string
+        }
+        Update: {
+          challenges?: string | null
+          clients_count?: string
+          company?: string
+          created_at?: string
+          current_tools?: string | null
+          email?: string
+          full_name?: string
+          id?: string
+          monthly_revenue?: string
+          phone?: string
+          suggested_plan?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       media_library: {
         Row: {
           category: string | null

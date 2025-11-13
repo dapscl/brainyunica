@@ -15,6 +15,7 @@ import { ShowcaseHeader } from '@/components/showcase/ShowcaseHeader';
 import { ShowcaseBreadcrumbs } from '@/components/showcase/ShowcaseBreadcrumbs';
 import { ShowcaseSEO } from '@/components/showcase/ShowcaseSEO';
 import { useTranslation } from 'react-i18next';
+import { supabase } from '@/integrations/supabase/client';
 
 const leadSchema = z.object({
   fullName: z.string().trim().min(2, { message: "El nombre debe tener al menos 2 caracteres" }).max(100),
@@ -60,7 +61,7 @@ const ShowcaseLeadCapturePage = () => {
     return 'starter';
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     try {
@@ -68,6 +69,32 @@ const ShowcaseLeadCapturePage = () => {
       setErrors({});
       
       const plan = calculateSuggestedPlan(formData.monthlyRevenue, formData.clientsCount);
+      
+      // Save to Supabase
+      const { error: insertError } = await supabase
+        .from('leads')
+        .insert({
+          full_name: formData.fullName,
+          email: formData.email,
+          company: formData.company,
+          phone: formData.phone,
+          monthly_revenue: formData.monthlyRevenue,
+          clients_count: formData.clientsCount,
+          current_tools: formData.currentTools || null,
+          challenges: formData.challenges || null,
+          suggested_plan: plan,
+        });
+
+      if (insertError) {
+        console.error('Error saving lead:', insertError);
+        toast({
+          title: "Error al guardar",
+          description: "Hubo un problema al enviar tu solicitud. Por favor intenta de nuevo.",
+          variant: "destructive",
+        });
+        return;
+      }
+
       setSuggestedPlan(plan);
       setIsSubmitted(true);
       
