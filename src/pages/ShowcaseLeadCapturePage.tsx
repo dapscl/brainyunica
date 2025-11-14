@@ -171,7 +171,7 @@ const ShowcaseLeadCapturePage = () => {
         price: '$500 USD base',
         adSpend: '+ 20% de inversión en medios',
         features: [
-          'Hasta 3 marcas',
+          '1 marca',
           'CalendarBrain™ - Publicación automatizada',
           'CreatorBrain™ - Generación básica de contenido',
           'ChatBrain™ - Respuestas automáticas',
@@ -186,7 +186,7 @@ const ShowcaseLeadCapturePage = () => {
         price: '€5K-€25K/mes base',
         adSpend: '+ 15% de inversión en medios',
         features: [
-          'Hasta 10 marcas',
+          '5 marcas',
           'Todo de Starter +',
           'AdBrain™ - Optimización de campañas',
           'TrendBrain™ - Análisis de tendencias',
@@ -203,7 +203,7 @@ const ShowcaseLeadCapturePage = () => {
         price: '€25K+/mes base',
         adSpend: '+ 10% de inversión en medios',
         features: [
-          'Marcas ilimitadas',
+          '15 marcas',
           'Todo de Professional +',
           'API personalizada',
           'Integraciones custom',
