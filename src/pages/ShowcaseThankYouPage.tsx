@@ -10,7 +10,7 @@ import { ShowcaseSEO } from '@/components/showcase/ShowcaseSEO';
 const ShowcaseThankYouPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { fullName, suggestedPlan } = location.state || { fullName: 'Cliente', suggestedPlan: 'starter' };
+  const { fullName, suggestedPlan } = location.state || { fullName: 'Usuario', suggestedPlan: 'starter' };
 
   const planDetails = {
     starter: {
