@@ -44,6 +44,7 @@ const ShowcaseContentCreatorPage = lazy(() => import("./pages/ShowcaseContentCre
 const ShowcaseCampaignCreatorPage = lazy(() => import("./pages/ShowcaseCampaignCreatorPage"));
 const ShowcaseChatAutomationPage = lazy(() => import("./pages/ShowcaseChatAutomationPage"));
 const ShowcaseLeadCapturePage = lazy(() => import("./pages/ShowcaseLeadCapturePage"));
+const ShowcaseThankYouPage = lazy(() => import("./pages/ShowcaseThankYouPage"));
 const ShowcaseVideoGeneratorPage = lazy(() => import("./pages/ShowcaseVideoGeneratorPage"));
 const ShowcaseInspirationLibraryPage = lazy(() => import("./pages/ShowcaseInspirationLibraryPage"));
 const ShowcasePricingPage = lazy(() => import("./pages/ShowcasePricingPage"));
@@ -71,6 +72,7 @@ const App = () => {
           <Route path="/features" element={<ShowcaseFeaturesPage />} />
           <Route path="/industries" element={<ShowcaseIndustriesPage />} />
           <Route path="/lead-capture" element={<ShowcaseLeadCapturePage />} />
+          <Route path="/thank-you" element={<ShowcaseThankYouPage />} />
           <Route path="/onboarding" element={<ProtectedRoute><ShowcaseOnboardingPage /></ProtectedRoute>} />
           <Route path="/pricing" element={<ShowcasePricingPage />} />
           <Route path="/brands" element={<ProtectedRoute><ShowcaseBrandsPage /></ProtectedRoute>} />
