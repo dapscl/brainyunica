@@ -73,50 +73,343 @@ const App = () => {
           <Route path="/industries" element={<ShowcaseIndustriesPage />} />
           <Route path="/lead-capture" element={<ShowcaseLeadCapturePage />} />
           <Route path="/thank-you" element={<ShowcaseThankYouPage />} />
-          <Route path="/onboarding" element={<ProtectedRoute><ShowcaseOnboardingPage /></ProtectedRoute>} />
+          <Route
+            path="/onboarding"
+            element={
+              <ProtectedRoute>
+                <ShowcaseOnboardingPage />
+              </ProtectedRoute>
+            }
+          />
           <Route path="/pricing" element={<ShowcasePricingPage />} />
-          <Route path="/brands" element={<ProtectedRoute><ShowcaseBrandsPage /></ProtectedRoute>} />
-          <Route path="/brands/:slug/setup" element={<ProtectedRoute><ShowcaseBrandSetupPage /></ProtectedRoute>} />
-          <Route path="/brands/:slug" element={<ProtectedRoute><ShowcaseBrandDetailPage /></ProtectedRoute>} />
-          <Route path="/brands/:slug/create-content" element={<ProtectedRoute><ShowcaseContentCreatorPage /></ProtectedRoute>} />
-          <Route path="/brands/:slug/create-campaign" element={<ProtectedRoute><ShowcaseCampaignCreatorPage /></ProtectedRoute>} />
-          <Route path="/brands/:slug/chat-automation" element={<ProtectedRoute><ShowcaseChatAutomationPage /></ProtectedRoute>} />
-          <Route path="/brands/:slug/lead-capture" element={<ProtectedRoute><ShowcaseLeadCapturePage /></ProtectedRoute>} />
-          <Route path="/brands/:slug/video-generator" element={<ProtectedRoute><ShowcaseVideoGeneratorPage /></ProtectedRoute>} />
-          <Route path="/brands/:slug/inspiration" element={<ProtectedRoute><ShowcaseInspirationLibraryPage /></ProtectedRoute>} />
+          <Route
+            path="/brands"
+            element={
+              <ProtectedRoute>
+                <ShowcaseBrandsPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/brands/:slug/setup"
+            element={
+              <ProtectedRoute>
+                <ShowcaseBrandSetupPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/brands/:slug"
+            element={
+              <ProtectedRoute>
+                <ShowcaseBrandDetailPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/brands/:slug/create-content"
+            element={
+              <ProtectedRoute>
+                <ShowcaseContentCreatorPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/brands/:slug/create-campaign"
+            element={
+              <ProtectedRoute>
+                <ShowcaseCampaignCreatorPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/brands/:slug/chat-automation"
+            element={
+              <ProtectedRoute>
+                <ShowcaseChatAutomationPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/brands/:slug/lead-capture"
+            element={
+              <ProtectedRoute>
+                <ShowcaseLeadCapturePage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/brands/:slug/video-generator"
+            element={
+              <ProtectedRoute>
+                <ShowcaseVideoGeneratorPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/brands/:slug/inspiration"
+            element={
+              <ProtectedRoute>
+                <ShowcaseInspirationLibraryPage />
+              </ProtectedRoute>
+            }
+          />
           <Route path="/landing" element={<LandingPage />} />
-          <Route path="/demo" element={<ProtectedRoute><ShowcaseDemoMenuPage /></ProtectedRoute>} />
-          <Route path="/demo-generator" element={<ProtectedRoute><DemoPage /></ProtectedRoute>} />
-          <Route path="/dashboard" element={<ProtectedRoute><DashboardPage /></ProtectedRoute>} />
-          <Route path="/organizations" element={<ProtectedRoute><OrganizationsPage /></ProtectedRoute>} />
-          <Route path="/organizations/new" element={<ProtectedRoute><CreateOrganizationPage /></ProtectedRoute>} />
-          <Route path="/organizations/:orgId/edit" element={<ProtectedRoute><EditOrganizationPage /></ProtectedRoute>} />
-          <Route path="/organizations/:id" element={<ProtectedRoute><OrganizationDetailPage /></ProtectedRoute>} />
-          <Route path="/audit-logs" element={<ProtectedRoute><AuditLogPage /></ProtectedRoute>} />
-          <Route path="/analytics" element={<ProtectedRoute><AnalyticsPage /></ProtectedRoute>} />
-          <Route path="/admin/users" element={<ProtectedRoute><UsersAdminPage /></ProtectedRoute>} />
-          <Route path="/organizations/:orgId/members" element={<ProtectedRoute><OrganizationMembersPage /></ProtectedRoute>} />
-          <Route path="/organizations/:orgId/projects" element={<ProtectedRoute><ProjectsPage /></ProtectedRoute>} />
-          <Route path="/organizations/:orgId/projects/new" element={<ProtectedRoute><CreateProjectPage /></ProtectedRoute>} />
-          <Route path="/projects/:projectId/edit" element={<ProtectedRoute><EditProjectPage /></ProtectedRoute>} />
-          <Route path="/projects/:projectId/content" element={<ProtectedRoute><ContentPage /></ProtectedRoute>} />
-          <Route path="/organizations/:orgId/brands" element={<ProtectedRoute><BrandsPage /></ProtectedRoute>} />
-          <Route path="/organizations/:orgId/brands/new" element={<ProtectedRoute><CreateBrandPage /></ProtectedRoute>} />
-          <Route path="/organizations/:orgId/media" element={<ProtectedRoute><MediaLibraryPage /></ProtectedRoute>} />
-          <Route path="/organizations/:orgId/gallery" element={<ProtectedRoute><GalleryPage /></ProtectedRoute>} />
-          <Route path="/organizations/:orgId/templates" element={<ProtectedRoute><TemplatesPage /></ProtectedRoute>} />
-          <Route path="/brands/:brandId" element={<ProtectedRoute><BrandsPage /></ProtectedRoute>} />
-          <Route path="/brands/:brandId/edit" element={<ProtectedRoute><EditBrandPage /></ProtectedRoute>} />
-          <Route path="/brands/:brandId/kit" element={<ProtectedRoute><BrandKitEditorPage /></ProtectedRoute>} />
-          <Route path="/projects/:projectId/content/new" element={<ProtectedRoute><ContentEditorPage /></ProtectedRoute>} />
-          <Route path="/projects/:projectId/content/:contentId" element={<ProtectedRoute><ContentEditorPage /></ProtectedRoute>} />
-          <Route path="/projects/:projectId/calendar" element={<ProtectedRoute><ContentCalendarPage /></ProtectedRoute>} />
-          <Route path="/projects/:projectId/queue" element={<ProtectedRoute><PublicationQueuePage /></ProtectedRoute>} />
+          <Route
+            path="/demo"
+            element={
+              <ProtectedRoute>
+                <ShowcaseDemoMenuPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/demo-generator"
+            element={
+              <ProtectedRoute>
+                <DemoPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute>
+                <DashboardPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/organizations"
+            element={
+              <ProtectedRoute>
+                <OrganizationsPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/organizations/new"
+            element={
+              <ProtectedRoute>
+                <CreateOrganizationPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/organizations/:orgId/edit"
+            element={
+              <ProtectedRoute>
+                <EditOrganizationPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/organizations/:id"
+            element={
+              <ProtectedRoute>
+                <OrganizationDetailPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/audit-logs"
+            element={
+              <ProtectedRoute>
+                <AuditLogPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/analytics"
+            element={
+              <ProtectedRoute>
+                <AnalyticsPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/users"
+            element={
+              <ProtectedRoute>
+                <UsersAdminPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/organizations/:orgId/members"
+            element={
+              <ProtectedRoute>
+                <OrganizationMembersPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/organizations/:orgId/projects"
+            element={
+              <ProtectedRoute>
+                <ProjectsPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/organizations/:orgId/projects/new"
+            element={
+              <ProtectedRoute>
+                <CreateProjectPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/projects/:projectId/edit"
+            element={
+              <ProtectedRoute>
+                <EditProjectPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/projects/:projectId/content"
+            element={
+              <ProtectedRoute>
+                <ContentPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/organizations/:orgId/brands"
+            element={
+              <ProtectedRoute>
+                <BrandsPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/organizations/:orgId/brands/new"
+            element={
+              <ProtectedRoute>
+                <CreateBrandPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/organizations/:orgId/media"
+            element={
+              <ProtectedRoute>
+                <MediaLibraryPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/organizations/:orgId/gallery"
+            element={
+              <ProtectedRoute>
+                <GalleryPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/organizations/:orgId/templates"
+            element={
+              <ProtectedRoute>
+                <TemplatesPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/brands/:brandId"
+            element={
+              <ProtectedRoute>
+                <BrandsPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/brands/:brandId/edit"
+            element={
+              <ProtectedRoute>
+                <EditBrandPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/brands/:brandId/kit"
+            element={
+              <ProtectedRoute>
+                <BrandKitEditorPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/projects/:projectId/content/new"
+            element={
+              <ProtectedRoute>
+                <ContentEditorPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/projects/:projectId/content/:contentId"
+            element={
+              <ProtectedRoute>
+                <ContentEditorPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/projects/:projectId/calendar"
+            element={
+              <ProtectedRoute>
+                <ContentCalendarPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/projects/:projectId/queue"
+            element={
+              <ProtectedRoute>
+                <PublicationQueuePage />
+              </ProtectedRoute>
+            }
+          />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>
     </TooltipProvider>
   );
 };
+// ----- TEST SUPABASE INLINE (no necesita nuevos archivos) -----
+
+import { useEffect, useState } from "react";
+import { supabase } from "@/lib/supabaseClient";
+
+function SupaTestInline() {
+  const [items, setItems] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function load() {
+      const { data, error } = await supabase.from("content_items").select("*").limit(10);
+
+      console.log("DATA:", data);
+      console.log("ERROR:", error);
+
+      setItems(data || []);
+      setLoading(false);
+    }
+    load();
+  }, []);
+
+  return (
+    <div style={{ padding: 24, background: "#111", marginTop: 40 }}>
+      <h2 style={{ marginBottom: 12 }}>Test Supabase (Inline)</h2>
+
+      {loading && <p>Cargando…</p>}
+
+      {!loading && items.length === 0 && <p>No hay registros.</p>}
+
+      {!loading && items.length > 0 && <pre style={{ fontSize: 12 }}>{JSON.stringify(items, null, 2)}</pre>}
+    </div>
+  );
+}
 
 export default App;
