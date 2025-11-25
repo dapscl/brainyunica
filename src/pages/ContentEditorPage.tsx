@@ -1,83 +1,116 @@
-import { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import { AppHeader } from '@/components/layout/AppHeader';
-import { ApprovalWorkflow } from '@/components/content/ApprovalWorkflow';
-import { DynamicBreadcrumb } from '@/components/navigation/DynamicBreadcrumb';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Button } from '@/components/ui/button';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Badge } from '@/components/ui/badge';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Textarea } from '@/components/ui/textarea';
-import { RichTextEditor } from '@/components/content/RichTextEditor';
-import { SocialMediaSelector } from '@/components/content/SocialMediaSelector';
-import { ContentPreview } from '@/components/content/ContentPreview';
-import { supabase } from '@/integrations/supabase/client';
-import { toast } from 'sonner';
-import { ArrowLeft, Save, X, Eye, Tag } from 'lucide-react';
+import { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { AppHeader } from "@/components/layout/AppHeader";
+import { ApprovalWorkflow } from "@/components/content/ApprovalWorkflow";
+import { DynamicBreadcrumb } from "@/components/navigation/DynamicBreadcrumb";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/button";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Badge } from "@/components/ui/badge";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Textarea } from "@/components/ui/textarea";
+import { RichTextEditor } from "@/components/content/RichTextEditor";
+import { SocialMediaSelector } from "@/components/content/SocialMediaSelector";
+import { ContentPreview } from "@/components/content/ContentPreview";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
+import { ArrowLeft, Save, X, Eye, Tag } from "lucide-react";
 
 export default function ContentEditorPage() {
   const { contentId, projectId } = useParams();
   const navigate = useNavigate();
+
   const [loading, setLoading] = useState(false);
   const [organizationId, setOrganizationId] = useState("");
+
   const [content, setContent] = useState<any>({
-    title: '',
-    content: '',
-    content_type: 'post',
-    status: 'draft',
+    title: "",
+    content: "",
+    content_type: "post",
+    status: "draft",
     tags: [],
-    post_text: '',
+    post_text: "",
     social_platforms: [],
     media_urls: [],
-    publish_status: 'draft',
+    publish_status: "draft",
   });
-  const [newTag, setNewTag] = useState('');
+
+  const [newTag, setNewTag] = useState("");
   const [showPreview, setShowPreview] = useState(false);
 
-  useEffect(() => {
-    if (contentId && contentId !== 'new') {
-      loadContent();
-    }
-  }, [contentId]);
+  // ---------------------------------------------------------
+  // 🔥 1. Cargar organización desde la tabla BRANDS
+  // ---------------------------------------------------------
+  const loadOrganization = async () => {
+    if (!projectId) return;
 
-  const loadContent = async () => {
     try {
-      const { data, error } = await supabase
-        .from('content_items')
-        .select('*')
-        .eq('id', contentId)
+      const { data: brandData, error: brandError } = await supabase
+        .from("brands")
+        .select("organization_id")
+        .eq("id", projectId)
         .single();
+
+      if (brandError) throw brandError;
+      if (brandData?.organization_id) {
+        setOrganizationId(brandData.organization_id);
+      }
+    } catch (err) {
+      console.error("Error loading organization:", err);
+    }
+  };
+
+  // ---------------------------------------------------------
+  // 🔥 2. Cargar el contenido si es edición
+  // ---------------------------------------------------------
+  const loadContent = async () => {
+    if (!contentId || contentId === "new") return;
+
+    try {
+      const { data, error } = await supabase.from("content_items").select("*").eq("id", contentId).single();
 
       if (error) throw error;
 
       if (data) {
         setContent({
-          title: data.title || '',
-          content: data.content || '',
-          content_type: data.content_type || 'post',
-          status: data.status || 'draft',
-          scheduled_date: data.scheduled_date || '',
+          title: data.title || "",
+          content: data.content || "",
+          content_type: data.content_type || "post",
+          status: data.status || "draft",
+          scheduled_date: data.scheduled_date || "",
           tags: data.tags || [],
-          post_text: data.post_text || '',
+          post_text: data.post_text || "",
           social_platforms: Array.isArray(data.social_platforms) ? data.social_platforms : [],
           media_urls: Array.isArray(data.media_urls) ? data.media_urls : [],
-          publish_status: data.publish_status || 'draft',
+          publish_status: data.publish_status || "draft",
         });
       }
     } catch (error) {
-      console.error('Error loading content:', error);
-      toast.error('Error al cargar el contenido');
+      console.error("Error loading content:", error);
+      toast.error("Error al cargar el contenido");
     }
   };
 
+  // ---------------------------------------------------------
+  // 🔥 3. useEffect principal
+  // ---------------------------------------------------------
+  useEffect(() => {
+    loadOrganization();
+    loadContent();
+  }, [contentId, projectId]);
+
+  // ---------------------------------------------------------
+  // 🔥 4. Guardar contenido
+  // ---------------------------------------------------------
   const handleSave = async () => {
     try {
       setLoading(true);
 
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) return;
 
       const contentData = {
@@ -90,42 +123,42 @@ export default function ContentEditorPage() {
         post_text: content.post_text,
         social_platforms: content.social_platforms,
         media_urls: content.media_urls,
-        publish_status: content.social_platforms.length > 0 && content.scheduled_date ? 'scheduled' : 'draft',
+        publish_status: content.social_platforms.length > 0 && content.scheduled_date ? "scheduled" : "draft",
         project_id: projectId,
         brand_id: projectId,
         created_by: user.id,
       };
 
-      if (contentId === 'new') {
-        const { error } = await supabase
-          .from('content_items')
-          .insert(contentData);
+      if (contentId === "new") {
+        const { error } = await supabase.from("content_items").insert(contentData);
         if (error) throw error;
-        toast.success('Contenido creado');
+
+        toast.success("Contenido creado");
         navigate(-1);
       } else {
-        const { error } = await supabase
-          .from('content_items')
-          .update(contentData)
-          .eq('id', contentId);
+        const { error } = await supabase.from("content_items").update(contentData).eq("id", contentId);
+
         if (error) throw error;
-        toast.success('Contenido actualizado');
+        toast.success("Contenido actualizado");
       }
     } catch (error) {
-      console.error('Error saving content:', error);
-      toast.error('Error al guardar');
+      console.error("Error saving content:", error);
+      toast.error("Error al guardar");
     } finally {
       setLoading(false);
     }
   };
 
+  // ---------------------------------------------------------
+  // 🔥 5. Etiquetas
+  // ---------------------------------------------------------
   const addTag = () => {
     if (newTag && !content.tags?.includes(newTag)) {
       setContent({
         ...content,
         tags: [...(content.tags || []), newTag],
       });
-      setNewTag('');
+      setNewTag("");
     }
   };
 
@@ -136,6 +169,9 @@ export default function ContentEditorPage() {
     });
   };
 
+  // ---------------------------------------------------------
+  // 🔥 6. Render
+  // ---------------------------------------------------------
   return (
     <>
       <AppHeader />
@@ -148,18 +184,17 @@ export default function ContentEditorPage() {
               <ArrowLeft className="h-4 w-4 mr-2" />
               Volver
             </Button>
-            <h1 className="text-3xl font-bold">
-              {contentId === 'new' ? 'Nuevo Contenido' : 'Editar Contenido'}
-            </h1>
+            <h1 className="text-3xl font-bold">{contentId === "new" ? "Nuevo Contenido" : "Editar Contenido"}</h1>
           </div>
+
           <Button onClick={handleSave} disabled={loading}>
             <Save className="h-4 w-4 mr-2" />
-            {loading ? 'Guardando...' : 'Guardar'}
+            {loading ? "Guardando..." : "Guardar"}
           </Button>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Main Content */}
+          {/* MAIN CONTENT */}
           <div className="lg:col-span-2 space-y-6">
             <Tabs defaultValue="content" className="w-full">
               <TabsList className="grid w-full grid-cols-2">
@@ -203,7 +238,12 @@ export default function ContentEditorPage() {
                   <CardContent className="space-y-4">
                     <SocialMediaSelector
                       selectedPlatforms={content.social_platforms}
-                      onChange={(platforms) => setContent({ ...content, social_platforms: platforms })}
+                      onChange={(platforms) =>
+                        setContent({
+                          ...content,
+                          social_platforms: platforms,
+                        })
+                      }
                     />
 
                     <div>
@@ -212,12 +252,10 @@ export default function ContentEditorPage() {
                         id="post_text"
                         value={content.post_text}
                         onChange={(e) => setContent({ ...content, post_text: e.target.value })}
-                        placeholder="Escribe el texto que se publicará en redes sociales..."
+                        placeholder="Escribe el texto que se publicará..."
                         rows={6}
                       />
-                      <p className="text-xs text-muted-foreground mt-1">
-                        {content.post_text.length} caracteres
-                      </p>
+                      <p className="text-xs text-muted-foreground mt-1">{content.post_text.length} caracteres</p>
                     </div>
 
                     <div>
@@ -226,21 +264,22 @@ export default function ContentEditorPage() {
                         id="media_url"
                         placeholder="https://ejemplo.com/imagen.jpg"
                         onKeyPress={(e) => {
-                          if (e.key === 'Enter') {
+                          if (e.key === "Enter") {
                             const input = e.target as HTMLInputElement;
                             if (input.value) {
                               setContent({
                                 ...content,
-                                media_urls: [...content.media_urls, input.value]
+                                media_urls: [...content.media_urls, input.value],
                               });
-                              input.value = '';
+                              input.value = "";
                             }
                           }
                         }}
                       />
+
                       {content.media_urls.length > 0 && (
                         <div className="flex flex-wrap gap-2 mt-2">
-                          {content.media_urls.map((url: string, idx: number) => (
+                          {content.media_urls.map((url, idx) => (
                             <Badge key={idx} variant="secondary" className="gap-1">
                               Media {idx + 1}
                               <X
@@ -248,7 +287,7 @@ export default function ContentEditorPage() {
                                 onClick={() => {
                                   setContent({
                                     ...content,
-                                    media_urls: content.media_urls.filter((_: any, i: number) => i !== idx)
+                                    media_urls: content.media_urls.filter((_, i) => i !== idx),
                                   });
                                 }}
                               />
@@ -258,18 +297,14 @@ export default function ContentEditorPage() {
                       )}
                     </div>
 
-                    <Button
-                      variant="outline"
-                      onClick={() => setShowPreview(!showPreview)}
-                      className="w-full"
-                    >
+                    <Button variant="outline" onClick={() => setShowPreview(!showPreview)} className="w-full">
                       <Eye className="h-4 w-4 mr-2" />
-                      {showPreview ? 'Ocultar' : 'Ver'} Vista Previa
+                      {showPreview ? "Ocultar" : "Ver"} Vista Previa
                     </Button>
 
                     {showPreview && content.social_platforms.length > 0 && (
                       <div className="grid gap-4 mt-4">
-                        {content.social_platforms.map((platform: string) => (
+                        {content.social_platforms.map((platform) => (
                           <ContentPreview
                             key={platform}
                             platform={platform}
@@ -285,7 +320,7 @@ export default function ContentEditorPage() {
             </Tabs>
           </div>
 
-          {/* Sidebar */}
+          {/* SIDEBAR */}
           <div className="space-y-6">
             <Card>
               <CardHeader>
@@ -296,9 +331,7 @@ export default function ContentEditorPage() {
                   <Label>Tipo</Label>
                   <Select
                     value={content.content_type}
-                    onValueChange={(value) =>
-                      setContent({ ...content, content_type: value })
-                    }
+                    onValueChange={(value) => setContent({ ...content, content_type: value })}
                   >
                     <SelectTrigger>
                       <SelectValue />
@@ -315,12 +348,7 @@ export default function ContentEditorPage() {
 
                 <div>
                   <Label>Estado</Label>
-                  <Select
-                    value={content.status}
-                    onValueChange={(value) =>
-                      setContent({ ...content, status: value })
-                    }
-                  >
+                  <Select value={content.status} onValueChange={(value) => setContent({ ...content, status: value })}>
                     <SelectTrigger>
                       <SelectValue />
                     </SelectTrigger>
@@ -338,10 +366,8 @@ export default function ContentEditorPage() {
                   <Label>Fecha Programada</Label>
                   <Input
                     type="datetime-local"
-                    value={content.scheduled_date || ''}
-                    onChange={(e) =>
-                      setContent({ ...content, scheduled_date: e.target.value })
-                    }
+                    value={content.scheduled_date || ""}
+                    onChange={(e) => setContent({ ...content, scheduled_date: e.target.value })}
                   />
                 </div>
               </CardContent>
@@ -360,20 +386,16 @@ export default function ContentEditorPage() {
                     value={newTag}
                     onChange={(e) => setNewTag(e.target.value)}
                     placeholder="Nueva etiqueta"
-                    onKeyPress={(e) => e.key === 'Enter' && addTag()}
+                    onKeyPress={(e) => e.key === "Enter" && addTag()}
                   />
                   <Button onClick={addTag} variant="outline">
                     Añadir
                   </Button>
                 </div>
+
                 <div className="flex flex-wrap gap-2">
-                  {content.tags?.map((tag: string) => (
-                    <Badge
-                      key={tag}
-                      variant="secondary"
-                      className="cursor-pointer"
-                      onClick={() => removeTag(tag)}
-                    >
+                  {content.tags?.map((tag) => (
+                    <Badge key={tag} variant="secondary" className="cursor-pointer" onClick={() => removeTag(tag)}>
                       {tag} ×
                     </Badge>
                   ))}
@@ -381,16 +403,13 @@ export default function ContentEditorPage() {
               </CardContent>
             </Card>
 
-            {contentId && contentId !== 'new' && organizationId && (
+            {contentId && contentId !== "new" && organizationId && (
               <Card>
                 <CardHeader>
                   <CardTitle>Aprobaciones</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <ApprovalWorkflow 
-                    contentId={contentId} 
-                    organizationId={organizationId}
-                  />
+                  <ApprovalWorkflow contentId={contentId} organizationId={organizationId} />
                 </CardContent>
               </Card>
             )}
