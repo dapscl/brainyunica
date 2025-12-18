@@ -118,9 +118,27 @@ const App = () => {
           <Route path="/industries" element={<ShowcaseIndustriesPage />} />
           <Route path="/lead-capture" element={<ShowcaseLeadCapturePage />} />
           <Route path="/thank-you" element={<ShowcaseThankYouPage />} />
+          <Route path="/pricing" element={<ShowcasePricingPage />} />
+          <Route path="/onboarding" element={<ShowcaseOnboardingPage />} />
+          <Route path="/demo" element={<ShowcaseDemoMenuPage />} />
           <Route path="/creator-brainy-test" element={<CreatorBrainyTestPage />} />
           <Route path="/trial" element={<TrialPage />} />
           <Route path="/supa-test" element={<SupaTestInline />} />
+
+          {/* Rutas protegidas - requieren autenticación */}
+          <Route path="/brands" element={<ProtectedRoute><ShowcaseBrandsPage /></ProtectedRoute>} />
+          <Route path="/brands/:slug" element={<ProtectedRoute><ShowcaseBrandDetailPage /></ProtectedRoute>} />
+          <Route path="/brands/:slug/setup" element={<ProtectedRoute><ShowcaseBrandSetupPage /></ProtectedRoute>} />
+          <Route path="/brands/:slug/content" element={<ProtectedRoute><ShowcaseContentCreatorPage /></ProtectedRoute>} />
+          <Route path="/brands/:slug/campaigns" element={<ProtectedRoute><ShowcaseCampaignCreatorPage /></ProtectedRoute>} />
+          <Route path="/brands/:slug/chat" element={<ProtectedRoute><ShowcaseChatAutomationPage /></ProtectedRoute>} />
+          <Route path="/brands/:slug/video" element={<ProtectedRoute><ShowcaseVideoGeneratorPage /></ProtectedRoute>} />
+          <Route path="/brands/:slug/inspiration" element={<ProtectedRoute><ShowcaseInspirationLibraryPage /></ProtectedRoute>} />
+
+          {/* Rutas internas de la plataforma */}
+          <Route path="/dashboard" element={<ProtectedRoute><DashboardPage /></ProtectedRoute>} />
+          <Route path="/organizations" element={<ProtectedRoute><OrganizationsPage /></ProtectedRoute>} />
+          <Route path="/projects" element={<ProtectedRoute><ProjectsPage /></ProtectedRoute>} />
 
           {/* Catch-all - debe ir al final */}
           <Route path="*" element={<NotFound />} />
