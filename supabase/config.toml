@@ -74,3 +74,6 @@ verify_jwt = false
 
 [functions.trend-collector]
 verify_jwt = false
+
+[functions.content-generator]
+verify_jwt = false
