@@ -211,6 +211,54 @@ export type Database = {
       }
       content_approvals: {
         Row: {
+          approved_at: string | null
+          approved_by_phone: string | null
+          content_item_id: string
+          conversation_id: string
+          created_at: string
+          id: string
+          note: string | null
+          status: Database["public"]["Enums"]["approval_status"]
+        }
+        Insert: {
+          approved_at?: string | null
+          approved_by_phone?: string | null
+          content_item_id: string
+          conversation_id: string
+          created_at?: string
+          id?: string
+          note?: string | null
+          status?: Database["public"]["Enums"]["approval_status"]
+        }
+        Update: {
+          approved_at?: string | null
+          approved_by_phone?: string | null
+          content_item_id?: string
+          conversation_id?: string
+          created_at?: string
+          id?: string
+          note?: string | null
+          status?: Database["public"]["Enums"]["approval_status"]
+        }
+        Relationships: [
+          {
+            foreignKeyName: "content_approvals_content_item_id_fkey"
+            columns: ["content_item_id"]
+            isOneToOne: false
+            referencedRelation: "content_items"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "content_approvals_conversation_id_fkey"
+            columns: ["conversation_id"]
+            isOneToOne: false
+            referencedRelation: "whatsapp_conversations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      content_approvals_legacy: {
+        Row: {
           assigned_by: string | null
           comments: string | null
           content_id: string
@@ -1048,6 +1096,8 @@ export type Database = {
     }
     Enums: {
       app_role: "admin" | "client" | "collaborator"
+      approval_status: "pending" | "approved" | "rejected"
+      whatsapp_direction: "incoming" | "outgoing" | "system"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -1176,6 +1226,8 @@ export const Constants = {
   public: {
     Enums: {
       app_role: ["admin", "client", "collaborator"],
+      approval_status: ["pending", "approved", "rejected"],
+      whatsapp_direction: ["incoming", "outgoing", "system"],
     },
   },
 } as const
