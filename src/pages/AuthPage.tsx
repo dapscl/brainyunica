@@ -67,7 +67,7 @@ const AuthPage: React.FC = () => {
   }, [isSignup]);
 
   useEffect(() => {
-    const from = (location.state as any)?.from?.pathname || '/brands';
+    const from = (location.state as any)?.from?.pathname || '/trial';
     const sub = supabase.auth.onAuthStateChange((event, session) => {
       if (session?.user) {
         navigate(from, { replace: true });
@@ -107,7 +107,7 @@ const AuthPage: React.FC = () => {
       } catch {}
 
       if (isSignup) {
-        const redirectUrl = `${window.location.origin}/brands`;
+        const redirectUrl = `${window.location.origin}/trial`;
         const { error } = await supabase.auth.signUp({
           email,
           password,
@@ -118,7 +118,7 @@ const AuthPage: React.FC = () => {
       } else {
         const { error } = await supabase.auth.signInWithPassword({ email, password });
         if (error) throw error;
-        const from = (location.state as any)?.from?.pathname || '/brands';
+        const from = (location.state as any)?.from?.pathname || '/trial';
         navigate(from, { replace: true });
       }
     } catch (err: any) {
