@@ -77,3 +77,12 @@ verify_jwt = false
 
 [functions.content-generator]
 verify_jwt = false
+
+[functions.brand-scanner]
+verify_jwt = false
+
+[functions.trial-signup-notification]
+verify_jwt = false
+
+[functions.send-lead-notification]
+verify_jwt = false
