@@ -196,9 +196,23 @@ const TrialPage = () => {
         toast.success('¡Cuenta creada exitosamente!');
       }
 
-      // Save brand profile to localStorage for the dashboard
+      // Save brand profile to Supabase
       if (scanResult) {
-        localStorage.setItem('trialBrandProfile', JSON.stringify(scanResult));
+        const { data: { user } } = await supabase.auth.getUser();
+        if (user) {
+          await supabase.from('trial_brand_profiles').upsert({
+            user_id: user.id,
+            brand_name: scanResult.brandName,
+            brand_handle: handle,
+            brand_type: inputType,
+            tone: scanResult.tone,
+            style: scanResult.style,
+            colors: scanResult.colors,
+            keywords: scanResult.keywords,
+            personality: scanResult.personality,
+            analysis: {}
+          }, { onConflict: 'user_id' });
+        }
       }
 
       // Redirect to trial dashboard

@@ -953,6 +953,81 @@ export type Database = {
           },
         ]
       }
+      trial_activity_logs: {
+        Row: {
+          activity_type: string
+          content_preview: string | null
+          created_at: string | null
+          id: string
+          metadata: Json | null
+          user_id: string
+        }
+        Insert: {
+          activity_type: string
+          content_preview?: string | null
+          created_at?: string | null
+          id?: string
+          metadata?: Json | null
+          user_id: string
+        }
+        Update: {
+          activity_type?: string
+          content_preview?: string | null
+          created_at?: string | null
+          id?: string
+          metadata?: Json | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      trial_brand_profiles: {
+        Row: {
+          analysis: Json | null
+          brand_handle: string | null
+          brand_name: string
+          brand_type: string | null
+          colors: Json | null
+          created_at: string | null
+          id: string
+          keywords: Json | null
+          personality: string | null
+          style: string | null
+          tone: string | null
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          analysis?: Json | null
+          brand_handle?: string | null
+          brand_name: string
+          brand_type?: string | null
+          colors?: Json | null
+          created_at?: string | null
+          id?: string
+          keywords?: Json | null
+          personality?: string | null
+          style?: string | null
+          tone?: string | null
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          analysis?: Json | null
+          brand_handle?: string | null
+          brand_name?: string
+          brand_type?: string | null
+          colors?: Json | null
+          created_at?: string | null
+          id?: string
+          keywords?: Json | null
+          personality?: string | null
+          style?: string | null
+          tone?: string | null
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           created_at: string | null

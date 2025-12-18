@@ -5,10 +5,14 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
+import { Skeleton } from '@/components/ui/skeleton';
 import { ShowcaseHeader } from '@/components/showcase/ShowcaseHeader';
 import { ShowcaseSEO } from '@/components/showcase/ShowcaseSEO';
+import { useTrialBrandProfile } from '@/hooks/useTrialBrandProfile';
+import { useTrialActivityMetrics } from '@/hooks/useTrialActivityMetrics';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
+import UpgradeModal from '@/components/trial/UpgradeModal';
 import {
   Sparkles,
   Calendar,
@@ -19,30 +23,18 @@ import {
   Lock,
   ArrowRight,
   Settings,
-  Palette,
   Clock,
   CheckCircle2,
   Star,
   Zap,
-  Target,
-  Users,
-  Eye,
-  Play,
-  Video,
-  Image as ImageIcon,
   FileText,
   Megaphone,
-  Crown
+  Crown,
+  Video,
+  Lightbulb,
+  RefreshCw,
+  Languages
 } from 'lucide-react';
-
-interface BrandProfile {
-  brandName: string;
-  tone: string;
-  style: string;
-  colors: string[];
-  keywords: string[];
-  personality: string;
-}
 
 interface BrainyModule {
   id: string;
@@ -59,38 +51,29 @@ interface BrainyModule {
 
 const TrialBrandDashboard = () => {
   const navigate = useNavigate();
-  const [brandProfile, setBrandProfile] = useState<BrandProfile | null>(null);
-  const [userEmail, setUserEmail] = useState<string>('');
+  const { brandProfile, loading: profileLoading } = useTrialBrandProfile();
+  const { metrics, loading: metricsLoading } = useTrialActivityMetrics();
   const [daysRemaining, setDaysRemaining] = useState(45);
+  const [showUpgradeModal, setShowUpgradeModal] = useState(false);
 
   useEffect(() => {
-    const loadUserData = async () => {
+    const checkAuth = async () => {
       const { data: { user } } = await supabase.auth.getUser();
-      if (user) {
-        setUserEmail(user.email || '');
-        // Load brand profile from user metadata
-        if (user.user_metadata?.brand_name) {
-          setBrandProfile({
-            brandName: user.user_metadata.brand_name,
-            tone: user.user_metadata.brand_tone || 'profesional',
-            style: user.user_metadata.brand_style || 'moderno',
-            colors: user.user_metadata.brand_colors || ['#00D4FF', '#8B5CF6'],
-            keywords: user.user_metadata.brand_keywords || [],
-            personality: user.user_metadata.brand_personality || 'Innovador'
-          });
-        }
-        
-        // Calculate trial days remaining
-        const createdAt = new Date(user.created_at);
-        const trialEnd = new Date(createdAt.getTime() + 45 * 24 * 60 * 60 * 1000);
-        const now = new Date();
-        const remaining = Math.max(0, Math.ceil((trialEnd.getTime() - now.getTime()) / (1000 * 60 * 60 * 24)));
-        setDaysRemaining(remaining);
+      if (!user) {
+        navigate('/trial');
+        return;
       }
+      
+      // Calculate trial days remaining
+      const createdAt = new Date(user.created_at);
+      const trialEnd = new Date(createdAt.getTime() + 45 * 24 * 60 * 60 * 1000);
+      const now = new Date();
+      const remaining = Math.max(0, Math.ceil((trialEnd.getTime() - now.getTime()) / (1000 * 60 * 60 * 24)));
+      setDaysRemaining(remaining);
     };
 
-    loadUserData();
-  }, []);
+    checkAuth();
+  }, [navigate]);
 
   const brainyModules: BrainyModule[] = [
     {
@@ -162,10 +145,30 @@ const TrialBrandDashboard = () => {
   ];
 
   const quickStats = [
-    { label: 'Contenidos generados', value: '0', icon: <FileText className="w-5 h-5" /> },
-    { label: 'Publicaciones programadas', value: '0', icon: <Calendar className="w-5 h-5" /> },
-    { label: 'Campañas activas', value: '0', icon: <Megaphone className="w-5 h-5" /> },
-    { label: 'Chats automatizados', value: '0', icon: <MessageSquare className="w-5 h-5" /> }
+    { 
+      label: 'Contenidos generados', 
+      value: metrics.totalContents.toString(), 
+      icon: <FileText className="w-5 h-5" />,
+      color: 'text-purple-400'
+    },
+    { 
+      label: 'Copys creados', 
+      value: metrics.copiesGenerated.toString(), 
+      icon: <Sparkles className="w-5 h-5" />,
+      color: 'text-pink-400'
+    },
+    { 
+      label: 'Ideas generadas', 
+      value: metrics.ideasGenerated.toString(), 
+      icon: <Lightbulb className="w-5 h-5" />,
+      color: 'text-yellow-400'
+    },
+    { 
+      label: 'Actividad hoy', 
+      value: metrics.todayActivity.toString(), 
+      icon: <TrendingUp className="w-5 h-5" />,
+      color: 'text-green-400'
+    }
   ];
 
   const handleModuleClick = (module: BrainyModule) => {
@@ -175,6 +178,29 @@ const TrialBrandDashboard = () => {
       toast.info(`${module.name} estará disponible pronto. ¡Estamos trabajando en ello!`);
     }
   };
+
+  const handleUpgradeClick = () => {
+    setShowUpgradeModal(true);
+  };
+
+  if (profileLoading) {
+    return (
+      <div className="min-h-screen bg-background">
+        <ShowcaseHeader />
+        <div className="container mx-auto px-4 pt-24 pb-16">
+          <div className="space-y-6">
+            <Skeleton className="h-20 w-full" />
+            <Skeleton className="h-32 w-full" />
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              {[...Array(4)].map((_, i) => (
+                <Skeleton key={i} className="h-24 w-full" />
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-background">
@@ -192,7 +218,7 @@ const TrialBrandDashboard = () => {
           className="mb-8"
         >
           <Card className="bg-gradient-to-r from-electric-cyan/10 via-purple-accent/10 to-electric-cyan/10 border-electric-cyan/30">
-            <CardContent className="p-4 flex items-center justify-between">
+            <CardContent className="p-4 flex flex-col sm:flex-row items-center justify-between gap-4">
               <div className="flex items-center gap-4">
                 <div className="w-12 h-12 rounded-full bg-gradient-to-r from-electric-cyan to-purple-accent flex items-center justify-center">
                   <Crown className="w-6 h-6 text-white" />
@@ -211,7 +237,7 @@ const TrialBrandDashboard = () => {
                 <Button 
                   variant="default"
                   className="bg-gradient-to-r from-electric-cyan to-purple-accent hover:opacity-90"
-                  onClick={() => navigate('/pricing')}
+                  onClick={handleUpgradeClick}
                 >
                   <Zap className="w-4 h-4 mr-2" />
                   Upgrade
@@ -231,11 +257,11 @@ const TrialBrandDashboard = () => {
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
             <div className="flex items-center gap-4">
               <div className="w-20 h-20 rounded-2xl bg-gradient-to-r from-electric-cyan to-purple-accent flex items-center justify-center text-white text-3xl font-bold shadow-glow-cyan">
-                {brandProfile?.brandName?.charAt(0) || 'B'}
+                {brandProfile?.brand_name?.charAt(0) || 'B'}
               </div>
               <div>
                 <h1 className="text-3xl md:text-4xl font-bold text-foreground">
-                  {brandProfile?.brandName || 'Tu Marca'}
+                  {brandProfile?.brand_name || 'Tu Marca'}
                 </h1>
                 <div className="flex items-center gap-2 mt-2">
                   <Badge className="bg-purple-accent/20 text-purple-accent border-purple-accent/30">
@@ -263,19 +289,60 @@ const TrialBrandDashboard = () => {
           className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10"
         >
           {quickStats.map((stat, idx) => (
-            <Card key={idx} className="bg-card/30 backdrop-blur-sm border-border/50">
+            <Card key={idx} className="bg-card/30 backdrop-blur-sm border-border/50 hover:border-electric-cyan/30 transition-colors">
               <CardContent className="p-4 flex items-center gap-3">
-                <div className="w-10 h-10 rounded-lg bg-muted/50 flex items-center justify-center text-muted-foreground">
+                <div className={`w-10 h-10 rounded-lg bg-muted/50 flex items-center justify-center ${stat.color}`}>
                   {stat.icon}
                 </div>
                 <div>
-                  <p className="text-2xl font-bold text-foreground">{stat.value}</p>
+                  <p className="text-2xl font-bold text-foreground">{metricsLoading ? '-' : stat.value}</p>
                   <p className="text-xs text-muted-foreground">{stat.label}</p>
                 </div>
               </CardContent>
             </Card>
           ))}
         </motion.div>
+
+        {/* Activity Summary */}
+        {metrics.totalContents > 0 && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.25 }}
+            className="mb-10"
+          >
+            <Card className="bg-gradient-to-br from-purple-accent/10 to-electric-cyan/10 border-purple-accent/30">
+              <CardContent className="p-6">
+                <h3 className="text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
+                  <TrendingUp className="w-5 h-5 text-electric-cyan" />
+                  Resumen de Actividad
+                </h3>
+                <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+                  <div className="text-center">
+                    <p className="text-2xl font-bold text-purple-400">{metrics.copiesGenerated}</p>
+                    <p className="text-xs text-muted-foreground">Copys</p>
+                  </div>
+                  <div className="text-center">
+                    <p className="text-2xl font-bold text-yellow-400">{metrics.ideasGenerated}</p>
+                    <p className="text-xs text-muted-foreground">Ideas</p>
+                  </div>
+                  <div className="text-center">
+                    <p className="text-2xl font-bold text-cyan-400">{metrics.variantsGenerated}</p>
+                    <p className="text-xs text-muted-foreground">Variantes</p>
+                  </div>
+                  <div className="text-center">
+                    <p className="text-2xl font-bold text-green-400">{metrics.improvements}</p>
+                    <p className="text-xs text-muted-foreground">Mejoras</p>
+                  </div>
+                  <div className="text-center">
+                    <p className="text-2xl font-bold text-blue-400">{metrics.translations}</p>
+                    <p className="text-xs text-muted-foreground">Traducciones</p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </motion.div>
+        )}
 
         {/* Brainy Modules Grid */}
         <div className="mb-8">
@@ -401,7 +468,7 @@ const TrialBrandDashboard = () => {
                 <Button 
                   size="lg"
                   className="bg-gradient-to-r from-electric-cyan to-purple-accent hover:opacity-90 text-background font-semibold"
-                  onClick={() => navigate('/pricing')}
+                  onClick={handleUpgradeClick}
                 >
                   <Crown className="w-5 h-5 mr-2" />
                   Ver planes premium
@@ -419,6 +486,9 @@ const TrialBrandDashboard = () => {
           </Card>
         </motion.div>
       </div>
+
+      {/* Upgrade Modal */}
+      <UpgradeModal open={showUpgradeModal} onClose={() => setShowUpgradeModal(false)} />
     </div>
   );
 };
