@@ -123,24 +123,24 @@ const CreatorBrainyTestPage = () => {
         </div>
 
         <Tabs defaultValue="copy" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-5 bg-card/50">
-            <TabsTrigger value="copy" className="data-[state=active]:bg-electric-cyan/20">
+          <TabsList className="grid w-full grid-cols-5 bg-card/80 border border-white/10">
+            <TabsTrigger value="copy" className="text-white/70 data-[state=active]:text-white data-[state=active]:bg-electric-cyan/30">
               <Sparkles className="w-4 h-4 mr-2" />
               Copy
             </TabsTrigger>
-            <TabsTrigger value="variants" className="data-[state=active]:bg-electric-cyan/20">
+            <TabsTrigger value="variants" className="text-white/70 data-[state=active]:text-white data-[state=active]:bg-electric-cyan/30">
               <Copy className="w-4 h-4 mr-2" />
               Variantes
             </TabsTrigger>
-            <TabsTrigger value="ideas" className="data-[state=active]:bg-electric-cyan/20">
+            <TabsTrigger value="ideas" className="text-white/70 data-[state=active]:text-white data-[state=active]:bg-electric-cyan/30">
               <Lightbulb className="w-4 h-4 mr-2" />
               Ideas
             </TabsTrigger>
-            <TabsTrigger value="improve" className="data-[state=active]:bg-electric-cyan/20">
+            <TabsTrigger value="improve" className="text-white/70 data-[state=active]:text-white data-[state=active]:bg-electric-cyan/30">
               <Wand2 className="w-4 h-4 mr-2" />
               Mejorar
             </TabsTrigger>
-            <TabsTrigger value="translate" className="data-[state=active]:bg-electric-cyan/20">
+            <TabsTrigger value="translate" className="text-white/70 data-[state=active]:text-white data-[state=active]:bg-electric-cyan/30">
               <Languages className="w-4 h-4 mr-2" />
               Traducir
             </TabsTrigger>
@@ -148,34 +148,34 @@ const CreatorBrainyTestPage = () => {
 
           {/* Copy Generator */}
           <TabsContent value="copy">
-            <Card className="bg-card/30 backdrop-blur-sm border-electric-cyan/20">
+            <Card className="bg-card/50 backdrop-blur-sm border-electric-cyan/30">
               <CardHeader>
-                <CardTitle className="flex items-center gap-2">
+                <CardTitle className="flex items-center gap-2 text-white">
                   <Sparkles className="w-5 h-5 text-electric-cyan" />
                   Generador de Copy
                 </CardTitle>
-                <CardDescription>
+                <CardDescription className="text-white/60">
                   Genera copies completos para redes sociales con hook, CTA y hashtags
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="grid md:grid-cols-3 gap-4">
                   <div className="md:col-span-3">
-                    <Label>Tema / Producto</Label>
+                    <Label className="text-white/80">Tema / Producto</Label>
                     <Input 
                       placeholder="Ej: Black Friday, nuevo producto, evento..."
                       value={copyTopic}
                       onChange={(e) => setCopyTopic(e.target.value)}
-                      className="bg-background/50"
+                      className="bg-background/80 border-white/20 text-white placeholder:text-white/40"
                     />
                   </div>
                   <div>
-                    <Label>Plataforma</Label>
+                    <Label className="text-white/80">Plataforma</Label>
                     <Select value={copyPlatform} onValueChange={setCopyPlatform}>
-                      <SelectTrigger className="bg-background/50">
+                      <SelectTrigger className="bg-background/80 border-white/20 text-white">
                         <SelectValue />
                       </SelectTrigger>
-                      <SelectContent>
+                      <SelectContent className="bg-card border-white/20">
                         <SelectItem value="instagram">Instagram</SelectItem>
                         <SelectItem value="facebook">Facebook</SelectItem>
                         <SelectItem value="linkedin">LinkedIn</SelectItem>
@@ -185,12 +185,12 @@ const CreatorBrainyTestPage = () => {
                     </Select>
                   </div>
                   <div>
-                    <Label>Tono</Label>
+                    <Label className="text-white/80">Tono</Label>
                     <Select value={copyTone} onValueChange={setCopyTone}>
-                      <SelectTrigger className="bg-background/50">
+                      <SelectTrigger className="bg-background/80 border-white/20 text-white">
                         <SelectValue />
                       </SelectTrigger>
-                      <SelectContent>
+                      <SelectContent className="bg-card border-white/20">
                         <SelectItem value="profesional">Profesional</SelectItem>
                         <SelectItem value="casual">Casual</SelectItem>
                         <SelectItem value="divertido">Divertido</SelectItem>
@@ -201,7 +201,7 @@ const CreatorBrainyTestPage = () => {
                   </div>
                   <div className="flex items-end">
                     <Button 
-                      onClick={handleGenerateCopy} 
+                      onClick={handleGenerateCopy}
                       disabled={isGenerating || !copyTopic}
                       className="w-full bg-gradient-to-r from-purple-500 to-cyan-500 hover:opacity-90"
                     >
@@ -216,33 +216,33 @@ const CreatorBrainyTestPage = () => {
                 </div>
 
                 {copyResult?.copy && (
-                  <div className="mt-6 p-4 rounded-lg bg-background/50 border border-electric-cyan/30 space-y-3">
+                  <div className="mt-6 p-4 rounded-lg bg-background/60 border border-electric-cyan/30 space-y-3">
                     <div>
                       <Label className="text-electric-cyan">Hook</Label>
-                      <p className="mt-1">{copyResult.copy.hook}</p>
+                      <p className="mt-1 text-white">{copyResult.copy.hook}</p>
                     </div>
                     <div>
                       <Label className="text-electric-cyan">Cuerpo</Label>
-                      <p className="mt-1">{copyResult.copy.body}</p>
+                      <p className="mt-1 text-white">{copyResult.copy.body}</p>
                     </div>
                     <div>
                       <Label className="text-electric-cyan">CTA</Label>
-                      <p className="mt-1">{copyResult.copy.cta}</p>
+                      <p className="mt-1 text-white">{copyResult.copy.cta}</p>
                     </div>
                     <div>
                       <Label className="text-electric-cyan">Copy Completo</Label>
-                      <div className="mt-1 p-3 bg-card rounded border">
+                      <div className="mt-1 p-3 bg-card/80 rounded border border-white/10 text-white">
                         {copyResult.copy.fullCopy}
                       </div>
                     </div>
                     <div className="flex flex-wrap gap-2">
                       {copyResult.copy.hashtags?.map((tag: string, i: number) => (
-                        <Badge key={i} variant="outline" className="border-purple-accent/50">
+                        <Badge key={i} variant="outline" className="border-purple-accent/50 text-purple-accent">
                           {tag}
                         </Badge>
                       ))}
                     </div>
-                    <p className="text-xs text-muted-foreground">
+                    <p className="text-xs text-white/50">
                       {copyResult.copy.characterCount} caracteres
                     </p>
                   </div>
@@ -253,25 +253,25 @@ const CreatorBrainyTestPage = () => {
 
           {/* Variants Generator */}
           <TabsContent value="variants">
-            <Card className="bg-card/30 backdrop-blur-sm border-electric-cyan/20">
+            <Card className="bg-card/50 backdrop-blur-sm border-electric-cyan/30">
               <CardHeader>
-                <CardTitle className="flex items-center gap-2">
+                <CardTitle className="flex items-center gap-2 text-white">
                   <Copy className="w-5 h-5 text-purple-accent" />
                   Generador de Variantes A/B
                 </CardTitle>
-                <CardDescription>
+                <CardDescription className="text-white/60">
                   Genera 3 variantes con enfoques diferentes para testing
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div>
-                  <Label>Contenido Original</Label>
+                  <Label className="text-white/80">Contenido Original</Label>
                   <Textarea 
                     placeholder="Pega tu copy original aquí..."
                     value={variantContent}
                     onChange={(e) => setVariantContent(e.target.value)}
                     rows={4}
-                    className="bg-background/50"
+                    className="bg-background/80 border-white/20 text-white placeholder:text-white/40"
                   />
                 </div>
                 <Button 
@@ -290,13 +290,13 @@ const CreatorBrainyTestPage = () => {
                 {variantsResult?.variants && (
                   <div className="mt-6 space-y-3">
                     {variantsResult.variants.map((variant: any, i: number) => (
-                      <div key={i} className="p-4 rounded-lg bg-background/50 border border-purple-accent/30">
+                      <div key={i} className="p-4 rounded-lg bg-background/60 border border-purple-accent/30">
                         <div className="flex items-center justify-between mb-2">
-                          <Badge className="bg-purple-accent/20">{variant.name}</Badge>
-                          <span className="text-xs text-muted-foreground">{variant.approach}</span>
+                          <Badge className="bg-purple-accent/20 text-purple-accent">{variant.name}</Badge>
+                          <span className="text-xs text-white/50">{variant.approach}</span>
                         </div>
-                        <p className="text-sm">{variant.content}</p>
-                        <p className="text-xs text-muted-foreground mt-2">
+                        <p className="text-sm text-white">{variant.content}</p>
+                        <p className="text-xs text-white/50 mt-2">
                           Rendimiento esperado: {variant.expectedPerformance}
                         </p>
                       </div>
@@ -309,28 +309,28 @@ const CreatorBrainyTestPage = () => {
 
           {/* Ideas Generator */}
           <TabsContent value="ideas">
-            <Card className="bg-card/30 backdrop-blur-sm border-electric-cyan/20">
+            <Card className="bg-card/50 backdrop-blur-sm border-electric-cyan/30">
               <CardHeader>
-                <CardTitle className="flex items-center gap-2">
+                <CardTitle className="flex items-center gap-2 text-white">
                   <Lightbulb className="w-5 h-5 text-yellow-500" />
                   Generador de Ideas
                 </CardTitle>
-                <CardDescription>
+                <CardDescription className="text-white/60">
                   Genera 5 ideas de contenido con formato, horario y potencial
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div>
-                  <Label>Tema General</Label>
+                  <Label className="text-white/80">Tema General</Label>
                   <Input 
                     placeholder="Ej: fitness, tecnología, moda, gastronomía..."
                     value={ideasTopic}
                     onChange={(e) => setIdeasTopic(e.target.value)}
-                    className="bg-background/50"
+                    className="bg-background/80 border-white/20 text-white placeholder:text-white/40"
                   />
                 </div>
                 <Button 
-                  onClick={handleGenerateIdeas} 
+                  onClick={handleGenerateIdeas}
                   disabled={isGenerating || !ideasTopic}
                   className="bg-gradient-to-r from-purple-500 to-cyan-500 hover:opacity-90"
                 >
@@ -345,23 +345,23 @@ const CreatorBrainyTestPage = () => {
                 {ideasResult?.ideas && (
                   <div className="mt-6 space-y-3">
                     {ideasResult.ideas.map((idea: any, i: number) => (
-                      <div key={i} className="p-4 rounded-lg bg-background/50 border border-yellow-500/30">
+                      <div key={i} className="p-4 rounded-lg bg-background/60 border border-yellow-500/30">
                         <div className="flex items-start justify-between mb-2">
-                          <h4 className="font-semibold">{idea.title}</h4>
+                          <h4 className="font-semibold text-white">{idea.title}</h4>
                           <Badge 
                             className={
                               idea.engagementPotential?.toLowerCase().includes('alto') 
                                 ? 'bg-green-500/20 text-green-400' 
                                 : idea.engagementPotential?.toLowerCase().includes('medio')
                                 ? 'bg-yellow-500/20 text-yellow-400'
-                                : 'bg-gray-500/20'
+                                : 'bg-gray-500/20 text-white/60'
                             }
                           >
                             {idea.engagementPotential}
                           </Badge>
                         </div>
-                        <p className="text-sm text-muted-foreground mb-2">{idea.description}</p>
-                        <div className="flex gap-4 text-xs text-muted-foreground">
+                        <p className="text-sm text-white/70 mb-2">{idea.description}</p>
+                        <div className="flex gap-4 text-xs text-white/50">
                           <span>📹 {idea.format}</span>
                           <span>🕐 {idea.bestTime}</span>
                         </div>
@@ -375,28 +375,28 @@ const CreatorBrainyTestPage = () => {
 
           {/* Improve Content */}
           <TabsContent value="improve">
-            <Card className="bg-card/30 backdrop-blur-sm border-electric-cyan/20">
+            <Card className="bg-card/50 backdrop-blur-sm border-electric-cyan/30">
               <CardHeader>
-                <CardTitle className="flex items-center gap-2">
+                <CardTitle className="flex items-center gap-2 text-white">
                   <Wand2 className="w-5 h-5 text-green-500" />
                   Mejorar Contenido
                 </CardTitle>
-                <CardDescription>
+                <CardDescription className="text-white/60">
                   Mejora tu contenido existente con sugerencias de IA
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div>
-                  <Label>Contenido a Mejorar</Label>
+                  <Label className="text-white/80">Contenido a Mejorar</Label>
                   <Textarea 
                     placeholder="Pega el contenido que quieres mejorar..."
                     value={improveContent_}
                     onChange={(e) => setImproveContent(e.target.value)}
                     rows={4}
-                    className="bg-background/50"
+                    className="bg-background/80 border-white/20 text-white placeholder:text-white/40"
                   />
                 </div>
-                <Button 
+                <Button
                   onClick={handleImprove} 
                   disabled={isGenerating || !improveContent_}
                   className="bg-gradient-to-r from-purple-500 to-cyan-500 hover:opacity-90"
@@ -410,16 +410,16 @@ const CreatorBrainyTestPage = () => {
                 </Button>
 
                 {improveResult?.improved && (
-                  <div className="mt-6 p-4 rounded-lg bg-background/50 border border-green-500/30 space-y-3">
+                  <div className="mt-6 p-4 rounded-lg bg-background/60 border border-green-500/30 space-y-3">
                     <div>
                       <Label className="text-green-400">Contenido Mejorado</Label>
-                      <div className="mt-1 p-3 bg-card rounded border">
+                      <div className="mt-1 p-3 bg-card/80 rounded border border-white/10 text-white">
                         {improveResult.improved.content}
                       </div>
                     </div>
                     <div>
                       <Label className="text-green-400">Cambios Realizados</Label>
-                      <ul className="mt-1 list-disc list-inside text-sm">
+                      <ul className="mt-1 list-disc list-inside text-sm text-white">
                         {improveResult.improved.changes?.map((change: string, i: number) => (
                           <li key={i}>{change}</li>
                         ))}
@@ -427,7 +427,7 @@ const CreatorBrainyTestPage = () => {
                     </div>
                     <div>
                       <Label className="text-green-400">Tips Adicionales</Label>
-                      <ul className="mt-1 list-disc list-inside text-sm text-muted-foreground">
+                      <ul className="mt-1 list-disc list-inside text-sm text-white/70">
                         {improveResult.improved.tips?.map((tip: string, i: number) => (
                           <li key={i}>{tip}</li>
                         ))}
@@ -444,34 +444,34 @@ const CreatorBrainyTestPage = () => {
 
           {/* Translate */}
           <TabsContent value="translate">
-            <Card className="bg-card/30 backdrop-blur-sm border-electric-cyan/20">
+            <Card className="bg-card/50 backdrop-blur-sm border-electric-cyan/30">
               <CardHeader>
-                <CardTitle className="flex items-center gap-2">
+                <CardTitle className="flex items-center gap-2 text-white">
                   <Languages className="w-5 h-5 text-blue-500" />
                   Traductor con Adaptación Cultural
                 </CardTitle>
-                <CardDescription>
+                <CardDescription className="text-white/60">
                   Traduce y adapta culturalmente tu contenido
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div>
-                  <Label>Contenido a Traducir</Label>
+                  <Label className="text-white/80">Contenido a Traducir</Label>
                   <Textarea 
                     placeholder="Pega el contenido a traducir..."
                     value={translateContent_}
                     onChange={(e) => setTranslateContent(e.target.value)}
                     rows={4}
-                    className="bg-background/50"
+                    className="bg-background/80 border-white/20 text-white placeholder:text-white/40"
                   />
                 </div>
                 <div>
-                  <Label>Idioma Destino</Label>
+                  <Label className="text-white/80">Idioma Destino</Label>
                   <Select value={translateLang} onValueChange={setTranslateLang}>
-                    <SelectTrigger className="bg-background/50">
+                    <SelectTrigger className="bg-background/80 border-white/20 text-white">
                       <SelectValue />
                     </SelectTrigger>
-                    <SelectContent>
+                    <SelectContent className="bg-card border-white/20">
                       <SelectItem value="inglés">Inglés</SelectItem>
                       <SelectItem value="español">Español</SelectItem>
                       <SelectItem value="portugués">Portugués</SelectItem>
@@ -494,16 +494,16 @@ const CreatorBrainyTestPage = () => {
                 </Button>
 
                 {translateResult?.translation && (
-                  <div className="mt-6 p-4 rounded-lg bg-background/50 border border-blue-500/30 space-y-3">
+                  <div className="mt-6 p-4 rounded-lg bg-background/60 border border-blue-500/30 space-y-3">
                     <div>
                       <Label className="text-blue-400">Traducción</Label>
-                      <div className="mt-1 p-3 bg-card rounded border">
+                      <div className="mt-1 p-3 bg-card/80 rounded border border-white/10 text-white">
                         {translateResult.translation.content}
                       </div>
                     </div>
                     <div>
                       <Label className="text-blue-400">Adaptaciones Culturales</Label>
-                      <ul className="mt-1 list-disc list-inside text-sm">
+                      <ul className="mt-1 list-disc list-inside text-sm text-white">
                         {translateResult.translation.adaptations?.map((adapt: string, i: number) => (
                           <li key={i}>{adapt}</li>
                         ))}
@@ -511,7 +511,7 @@ const CreatorBrainyTestPage = () => {
                     </div>
                     <div>
                       <Label className="text-blue-400">Notas Culturales</Label>
-                      <ul className="mt-1 list-disc list-inside text-sm text-muted-foreground">
+                      <ul className="mt-1 list-disc list-inside text-sm text-white/70">
                         {translateResult.translation.culturalNotes?.map((note: string, i: number) => (
                           <li key={i}>{note}</li>
                         ))}
