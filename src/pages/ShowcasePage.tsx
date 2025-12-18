@@ -96,6 +96,14 @@ const ShowcasePage = () => {
             </Button>
             <Button 
               size="lg" 
+              onClick={() => navigate('/trial')}
+              className="gap-2 text-lg px-10 py-7 bg-gradient-to-r from-purple-accent to-purple-accent/90 hover:opacity-90 text-background font-bold uppercase tracking-wide shadow-[0_0_30px_hsl(270_70%_60%_/_0.4)] transition-all duration-300"
+            >
+              ✨ {t('showcase.hero.ctaTrial', 'Probar')}
+              <Sparkles className="w-5 h-5" />
+            </Button>
+            <Button 
+              size="lg" 
               variant="outline" 
               onClick={() => document.getElementById('brains')?.scrollIntoView({ behavior: 'smooth' })}
               className="text-lg px-10 py-7 gap-2 border-electric-cyan/30 bg-background/50 backdrop-blur-sm text-electric-cyan hover:bg-electric-cyan/10 uppercase tracking-wide transition-all duration-300"
