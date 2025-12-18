@@ -22,12 +22,14 @@ import {
   Lightbulb,
   Mail,
   Eye,
-  EyeOff
+  EyeOff,
+  Brain
 } from 'lucide-react';
 import { ShowcaseHeader } from '@/components/showcase/ShowcaseHeader';
 import { ShowcaseSEO } from '@/components/showcase/ShowcaseSEO';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
+import TrialCreatorPanel from '@/components/trial/TrialCreatorPanel';
 
 interface BrandScanResult {
   brandName: string;
@@ -669,112 +671,41 @@ const TrialPage = () => {
             </motion.div>
           )}
 
-          {/* Step 5: Complete - Ideas de Contenido */}
-          {step === 'complete' && (
+          {/* Step 5: Complete - CreatorBrainy Panel */}
+          {step === 'complete' && scanResult && (
             <motion.div
               key="complete"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0 }}
-              className="max-w-4xl mx-auto"
+              className="max-w-5xl mx-auto"
             >
-              {/* Header */}
+              {/* Welcome Header */}
               <div className="text-center mb-10">
                 <motion.div
                   initial={{ scale: 0 }}
                   animate={{ scale: 1 }}
                   transition={{ type: 'spring', duration: 0.5 }}
-                  className="w-20 h-20 mx-auto mb-6 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center"
+                  className="w-20 h-20 mx-auto mb-6 rounded-full bg-gradient-to-r from-purple-500 to-electric-cyan flex items-center justify-center"
                 >
-                  <Sparkles className="w-10 h-10 text-white" />
+                  <Brain className="w-10 h-10 text-white" />
                 </motion.div>
 
                 <h1 className="text-3xl md:text-4xl font-bold mb-4">
                   <span className="bg-gradient-to-r from-electric-cyan to-purple-accent bg-clip-text text-transparent">
-                    ¡Bienvenido a Brainy, {scanResult?.brandName || 'tu marca'}!
+                    ¡Bienvenido a CreatorBrainy, {scanResult.brandName}!
                   </span>
                 </h1>
-                <p className="text-xl text-muted-foreground">
-                  CreatorBrainy ya aprendió tu tono de voz. Aquí están tus primeras ideas de contenido:
+                <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+                  Tu perfil de marca está cargado. Prueba todas las funcionalidades de generación de contenido con tu tono de voz único.
                 </p>
               </div>
 
-              {/* Brand Profile Summary */}
-              {scanResult && (
-                <Card className="bg-card/30 backdrop-blur-sm border-electric-cyan/20 p-6 mb-8">
-                  <div className="flex items-center gap-4 mb-4">
-                    <div className="w-14 h-14 rounded-xl bg-gradient-to-r from-electric-cyan to-purple-accent flex items-center justify-center text-white text-2xl font-bold">
-                      {scanResult.brandName.charAt(0)}
-                    </div>
-                    <div>
-                      <h3 className="text-xl font-bold text-foreground">{scanResult.brandName}</h3>
-                      <p className="text-muted-foreground">{scanResult.tone} • {scanResult.style}</p>
-                    </div>
-                  </div>
-                  <div className="flex flex-wrap gap-2">
-                    {scanResult.keywords.slice(0, 5).map((keyword, idx) => (
-                      <span key={idx} className="px-3 py-1 rounded-full bg-electric-cyan/10 text-electric-cyan text-sm">
-                        #{keyword}
-                      </span>
-                    ))}
-                  </div>
-                </Card>
-              )}
-
-              {/* Generated Ideas */}
-              <Card className="bg-card/30 backdrop-blur-sm border-purple-accent/30 p-8 mb-8">
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center">
-                    <Lightbulb className="w-6 h-6 text-white" />
-                  </div>
-                  <div>
-                    <h2 className="text-xl font-bold text-foreground">Ideas de Contenido Personalizadas</h2>
-                    <p className="text-sm text-muted-foreground">Generadas por CreatorBrainy™ con tu tono de voz</p>
-                  </div>
-                </div>
-
-                {isGeneratingIdeas ? (
-                  <div className="flex flex-col items-center py-12">
-                    <Loader2 className="w-12 h-12 text-purple-accent animate-spin mb-4" />
-                    <p className="text-muted-foreground">Generando ideas personalizadas...</p>
-                  </div>
-                ) : (
-                  <div className="space-y-4">
-                    {generatedIdeas.map((idea, idx) => (
-                      <motion.div
-                        key={idx}
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: idx * 0.1 }}
-                        className="p-4 rounded-lg bg-background/50 border border-purple-accent/20 hover:border-purple-accent/40 transition-all"
-                      >
-                        <div className="flex items-start gap-3">
-                          <div className="w-8 h-8 rounded-lg bg-purple-accent/20 flex items-center justify-center text-purple-accent font-bold text-sm shrink-0">
-                            {idx + 1}
-                          </div>
-                          <p className="text-foreground">{idea}</p>
-                        </div>
-                      </motion.div>
-                    ))}
-                  </div>
-                )}
-              </Card>
-
-              {/* CTA */}
-              <div className="text-center space-y-4">
-                <Button
-                  onClick={() => navigate('/brands')}
-                  className="h-14 px-8 text-lg bg-gradient-to-r from-electric-cyan to-purple-accent hover:opacity-90 text-background font-semibold shadow-glow-cyan"
-                >
-                  <Sparkles className="w-5 h-5 mr-2" />
-                  Ir a mi Dashboard
-                  <ArrowRight className="w-5 h-5 ml-2" />
-                </Button>
-
-                <p className="text-sm text-muted-foreground">
-                  Tu trial de 45 días comienza ahora • Acceso completo a los 5 Brainies
-                </p>
-              </div>
+              {/* Full CreatorBrainy Panel */}
+              <TrialCreatorPanel 
+                brandProfile={scanResult}
+                onGoToDashboard={() => navigate('/brands')}
+              />
             </motion.div>
           )}
         </AnimatePresence>
