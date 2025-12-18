@@ -100,20 +100,19 @@ const TrialPage = () => {
     try {
       const response = await supabase.functions.invoke('content-generator', {
         body: {
-          action: 'generate_ideas',
-          context: {
-            brandName: scanResult.brandName,
-            tone: scanResult.tone,
-            style: scanResult.style,
-            keywords: scanResult.keywords,
-            personality: scanResult.personality
-          },
-          count: 5
+          type: 'ideas',
+          topic: `contenido para ${scanResult.brandName}`,
+          tone: scanResult.tone,
+          context: `Marca: ${scanResult.brandName}. Estilo: ${scanResult.style}. Palabras clave: ${scanResult.keywords.join(', ')}. Personalidad: ${scanResult.personality}`,
+          platform: 'redes sociales'
         }
       });
 
-      if (response.data?.ideas) {
-        setGeneratedIdeas(response.data.ideas);
+      if (response.data?.success && response.data?.result?.ideas) {
+        const ideas = response.data.result.ideas.map((idea: any) => 
+          `${idea.format || 'Post'}: ${idea.title} - ${idea.description}`
+        );
+        setGeneratedIdeas(ideas);
       } else {
         // Fallback ideas based on scan result
         setGeneratedIdeas([
