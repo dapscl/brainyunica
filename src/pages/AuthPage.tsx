@@ -4,13 +4,23 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
-import { useNavigate, Link, useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { cleanupAuthState } from "@/utils/auth";
 import { toast } from "sonner";
 import { motion } from 'framer-motion';
-import { Lock, Mail, ArrowLeft } from 'lucide-react';
+import { Lock, Mail, ArrowLeft, Check, X } from 'lucide-react';
 import { ShowcaseHeader } from '@/components/showcase/ShowcaseHeader';
+import { z } from 'zod';
+
+// Password validation schema
+const passwordSchema = z
+  .string()
+  .min(8, { message: "Mínimo 8 caracteres" })
+  .regex(/[A-Z]/, { message: "Al menos una mayúscula" })
+  .regex(/[a-z]/, { message: "Al menos una minúscula" })
+  .regex(/[0-9]/, { message: "Al menos un número" });
+
+const emailSchema = z.string().email({ message: "Email inválido" }).trim().toLowerCase();
 
 const AuthPage: React.FC = () => {
   const navigate = useNavigate();
@@ -20,11 +30,33 @@ const AuthPage: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [isSignup, setIsSignup] = useState(false);
 
+  // Password strength checks
+  const passwordChecks = useMemo(() => ({
+    minLength: password.length >= 8,
+    hasUppercase: /[A-Z]/.test(password),
+    hasLowercase: /[a-z]/.test(password),
+    hasNumber: /[0-9]/.test(password),
+  }), [password]);
+
+  const isPasswordValid = useMemo(() => 
+    Object.values(passwordChecks).every(Boolean), 
+    [passwordChecks]
+  );
+
+  const isEmailValid = useMemo(() => {
+    try {
+      emailSchema.parse(email);
+      return true;
+    } catch {
+      return false;
+    }
+  }, [email]);
+
   useEffect(() => {
-    document.title = isSignup ? "Crear cuenta - ÚNICA" : "Iniciar sesión - ÚNICA";
+    document.title = isSignup ? "Crear cuenta - Brainy" : "Iniciar sesión - Brainy";
     const desc = isSignup
-      ? "Crea tu cuenta en ÚNICA Command Center y centraliza tu agencia creativa"
-      : "Accede a ÚNICA Command Center - La plataforma integral para agencias";
+      ? "Crea tu cuenta en Brainy y automatiza tu marketing con IA"
+      : "Accede a Brainy - Marketing que se dirige solo";
     let meta = document.querySelector('meta[name="description"]');
     if (!meta) {
       meta = document.createElement("meta");
@@ -35,7 +67,6 @@ const AuthPage: React.FC = () => {
   }, [isSignup]);
 
   useEffect(() => {
-    // Redirect if already logged in
     const from = (location.state as any)?.from?.pathname || '/brands';
     const sub = supabase.auth.onAuthStateChange((event, session) => {
       if (session?.user) {
@@ -54,7 +85,15 @@ const AuthPage: React.FC = () => {
     };
   }, [navigate, location]);
 
-  const canSubmit = useMemo(() => email.length > 3 && password.length >= 6 && !loading, [email, password, loading]);
+  // For signup: require strong password. For login: just check non-empty
+  const canSubmit = useMemo(() => {
+    if (loading) return false;
+    if (!isEmailValid) return false;
+    if (isSignup) {
+      return isPasswordValid;
+    }
+    return password.length >= 6; // Login accepts existing passwords
+  }, [email, password, loading, isSignup, isEmailValid, isPasswordValid]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -164,6 +203,31 @@ const AuthPage: React.FC = () => {
                 className="bg-background/50"
                 placeholder="••••••••"
               />
+              
+              {/* Password strength indicator - only show during signup */}
+              {isSignup && password.length > 0 && (
+                <div className="mt-3 space-y-2 p-3 rounded-lg bg-card/50 border border-border/50">
+                  <p className="text-xs text-muted-foreground font-medium mb-2">Requisitos de contraseña:</p>
+                  <div className="grid grid-cols-2 gap-2 text-xs">
+                    <div className={`flex items-center gap-1 ${passwordChecks.minLength ? 'text-green-400' : 'text-muted-foreground'}`}>
+                      {passwordChecks.minLength ? <Check className="w-3 h-3" /> : <X className="w-3 h-3" />}
+                      8+ caracteres
+                    </div>
+                    <div className={`flex items-center gap-1 ${passwordChecks.hasUppercase ? 'text-green-400' : 'text-muted-foreground'}`}>
+                      {passwordChecks.hasUppercase ? <Check className="w-3 h-3" /> : <X className="w-3 h-3" />}
+                      Una mayúscula
+                    </div>
+                    <div className={`flex items-center gap-1 ${passwordChecks.hasLowercase ? 'text-green-400' : 'text-muted-foreground'}`}>
+                      {passwordChecks.hasLowercase ? <Check className="w-3 h-3" /> : <X className="w-3 h-3" />}
+                      Una minúscula
+                    </div>
+                    <div className={`flex items-center gap-1 ${passwordChecks.hasNumber ? 'text-green-400' : 'text-muted-foreground'}`}>
+                      {passwordChecks.hasNumber ? <Check className="w-3 h-3" /> : <X className="w-3 h-3" />}
+                      Un número
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
             <Button 
               type="submit" 
