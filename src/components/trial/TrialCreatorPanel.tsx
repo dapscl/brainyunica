@@ -124,6 +124,44 @@ const TrialCreatorPanel = ({ brandProfile, onGoToDashboard }: TrialCreatorPanelP
     { value: 'elegante', label: 'Elegante' },
   ];
 
+  // Generate brand analysis summary
+  const getBrandAnalysisSummary = () => {
+    const categoryDescriptions: Record<string, string> = {
+      'tecnología': 'tecnología e innovación digital',
+      'moda': 'moda y estilo de vida',
+      'salud': 'salud y bienestar',
+      'gastronomía': 'gastronomía y experiencias culinarias',
+      'fitness': 'fitness y vida activa',
+      'educación': 'educación y desarrollo',
+      'negocios': 'negocios y emprendimiento',
+      'creatividad': 'creatividad y diseño',
+    };
+
+    const toneDescriptions: Record<string, string> = {
+      'profesional': 'comunicación profesional y estructurada',
+      'casual': 'estilo casual y cercano',
+      'divertido': 'tono divertido y entretenido',
+      'inspirador': 'mensajes inspiradores y motivacionales',
+      'elegante': 'comunicación elegante y sofisticada',
+      'educativo': 'enfoque educativo e informativo',
+    };
+
+    const styleDescriptions: Record<string, string> = {
+      'moderno': 'estética moderna y contemporánea',
+      'minimalista': 'diseño minimalista y limpio',
+      'vibrante': 'estilo vibrante y lleno de energía',
+      'corporativo': 'imagen corporativa y seria',
+      'creativo': 'enfoque creativo y original',
+      'tradicional': 'valores tradicionales y atemporales',
+    };
+
+    const keywords = brandProfile.keywords.slice(0, 3).join(', ');
+    const tone = toneDescriptions[brandProfile.tone.toLowerCase()] || `tono ${brandProfile.tone}`;
+    const style = styleDescriptions[brandProfile.style.toLowerCase()] || `estilo ${brandProfile.style}`;
+    
+    return `Al analizar el contenido de **${brandProfile.brandName}**, identificamos una marca con una identidad clara y distintiva. Su comunicación se caracteriza por una ${tone}, combinada con una ${style}. Los pilares de contenido giran en torno a: ${keywords}. La personalidad de marca transmite ${brandProfile.personality.toLowerCase()}, lo que permite conectar de manera auténtica con su audiencia y diferenciarse en su categoría.`;
+  };
+
   return (
     <div className="space-y-8">
       {/* Brand Profile Header */}
@@ -152,6 +190,30 @@ const TrialCreatorPanel = ({ brandProfile, onGoToDashboard }: TrialCreatorPanelP
                   #{keyword}
                 </span>
               ))}
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Brand Analysis Summary */}
+      <Card className="bg-gradient-to-br from-purple-accent/10 to-electric-cyan/10 backdrop-blur-sm border-purple-accent/30">
+        <CardContent className="p-6">
+          <div className="flex items-start gap-4">
+            <div className="w-10 h-10 rounded-lg bg-gradient-to-r from-purple-accent to-electric-cyan flex items-center justify-center flex-shrink-0">
+              <Brain className="w-5 h-5 text-white" />
+            </div>
+            <div className="space-y-2">
+              <h3 className="text-lg font-semibold text-foreground flex items-center gap-2">
+                Análisis de Tono y Estilo
+                <Badge className="bg-green-500/20 text-green-400 border-green-500/30 text-xs">
+                  IA Completado
+                </Badge>
+              </h3>
+              <p className="text-muted-foreground leading-relaxed">
+                {getBrandAnalysisSummary().split('**').map((part, i) => 
+                  i % 2 === 1 ? <strong key={i} className="text-electric-cyan">{part}</strong> : part
+                )}
+              </p>
             </div>
           </div>
         </CardContent>
