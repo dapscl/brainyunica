@@ -25,14 +25,27 @@ interface BrandScanResult {
     recommendations: string[];
     contentIdeas: string[];
   };
+  firecrawlData?: {
+    branding?: any;
+    metadata?: any;
+  };
 }
 
-// Prompts para análisis real
-const getWebsitePrompt = (url: string, content: string) => `
+// Prompts para análisis real con contenido de Firecrawl
+const getWebsitePrompt = (url: string, content: string, branding?: any) => `
 Actuá como un analista de marca y hacé un brand audit de este sitio web: ${url}
 
-Contenido del sitio:
-${content.substring(0, 8000)}
+Contenido del sitio extraído con AI:
+${content.substring(0, 12000)}
+
+${branding ? `
+Información de Branding extraída automáticamente:
+- Esquema de color: ${branding.colorScheme || 'No detectado'}
+- Logo: ${branding.logo || 'No detectado'}
+- Colores principales: ${JSON.stringify(branding.colors || {})}
+- Tipografías: ${JSON.stringify(branding.fonts || [])}
+- Tipografía detallada: ${JSON.stringify(branding.typography || {})}
+` : ''}
 
 Quiero que analices:
 1. La propuesta de valor: ¿Es clara y diferenciadora?
@@ -91,8 +104,59 @@ IMPORTANTE: Responde en formato JSON con esta estructura exacta:
 Solo responde con el JSON, sin texto adicional.
 `;
 
-// Fetch website content (basic)
-async function fetchWebsiteContent(url: string): Promise<string> {
+// Fetch website content using Firecrawl
+async function fetchWithFirecrawl(url: string): Promise<{ markdown: string; branding?: any; metadata?: any }> {
+  const FIRECRAWL_API_KEY = Deno.env.get("FIRECRAWL_API_KEY");
+  
+  if (!FIRECRAWL_API_KEY) {
+    console.log("FIRECRAWL_API_KEY not configured, using basic fetch");
+    return { markdown: await fetchWebsiteBasic(url) };
+  }
+
+  try {
+    let formattedUrl = url.trim();
+    if (!formattedUrl.startsWith('http://') && !formattedUrl.startsWith('https://')) {
+      formattedUrl = `https://${formattedUrl}`;
+    }
+    
+    console.log('Fetching with Firecrawl:', formattedUrl);
+
+    const response = await fetch('https://api.firecrawl.dev/v1/scrape', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${FIRECRAWL_API_KEY}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        url: formattedUrl,
+        formats: ['markdown', 'branding'],
+        onlyMainContent: true,
+        waitFor: 2000,
+      }),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      console.error('Firecrawl API error:', data);
+      return { markdown: await fetchWebsiteBasic(url) };
+    }
+
+    console.log('Firecrawl scrape successful');
+    
+    return {
+      markdown: data.data?.markdown || data.markdown || '',
+      branding: data.data?.branding || data.branding,
+      metadata: data.data?.metadata || data.metadata
+    };
+  } catch (error) {
+    console.error('Error with Firecrawl:', error);
+    return { markdown: await fetchWebsiteBasic(url) };
+  }
+}
+
+// Basic fallback fetch if Firecrawl fails
+async function fetchWebsiteBasic(url: string): Promise<string> {
   try {
     let formattedUrl = url.trim();
     if (!formattedUrl.startsWith('http://') && !formattedUrl.startsWith('https://')) {
@@ -244,12 +308,30 @@ serve(async (req) => {
     let result: BrandScanResult | null = null;
     
     if (type === 'website') {
-      // Fetch website content and analyze
-      const content = await fetchWebsiteContent(handle);
+      // Fetch website content with Firecrawl
+      const { markdown, branding, metadata } = await fetchWithFirecrawl(handle);
       
-      if (content && content.length > 100) {
-        const prompt = getWebsitePrompt(handle, content);
+      if (markdown && markdown.length > 100) {
+        const prompt = getWebsitePrompt(handle, markdown, branding);
         result = await analyzeWithAI(prompt);
+        
+        // Add Firecrawl data to result
+        if (result) {
+          result.firecrawlData = { branding, metadata };
+          
+          // Use extracted colors if available
+          if (branding?.colors) {
+            const extractedColors = [];
+            if (branding.colors.primary) extractedColors.push(branding.colors.primary);
+            if (branding.colors.secondary) extractedColors.push(branding.colors.secondary);
+            if (branding.colors.accent) extractedColors.push(branding.colors.accent);
+            if (branding.colors.background) extractedColors.push(branding.colors.background);
+            
+            if (extractedColors.length >= 3) {
+              result.colors = extractedColors.slice(0, 4);
+            }
+          }
+        }
       }
     } else {
       // Instagram analysis
