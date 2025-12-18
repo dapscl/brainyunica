@@ -2,80 +2,59 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
+import { Skeleton } from '@/components/ui/skeleton';
 import { ShowcaseHeader } from '@/components/showcase/ShowcaseHeader';
 import { ShowcaseSEO } from '@/components/showcase/ShowcaseSEO';
+import { useTrialBrandProfile } from '@/hooks/useTrialBrandProfile';
+import { useTrialActivityMetrics } from '@/hooks/useTrialActivityMetrics';
 import { supabase } from '@/integrations/supabase/client';
 import TrialCreatorPanel from '@/components/trial/TrialCreatorPanel';
 import { ArrowLeft, Brain } from 'lucide-react';
 
-interface BrandProfile {
-  brandName: string;
-  tone: string;
-  style: string;
-  colors: string[];
-  keywords: string[];
-  personality: string;
-}
-
 const TrialCreatorPage = () => {
   const navigate = useNavigate();
-  const [brandProfile, setBrandProfile] = useState<BrandProfile | null>(null);
-  const [loading, setLoading] = useState(true);
+  const { brandProfile, loading: profileLoading } = useTrialBrandProfile();
+  const { logActivity } = useTrialActivityMetrics();
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
-    const loadUserData = async () => {
+    const checkAuth = async () => {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) {
         navigate('/trial');
         return;
       }
-
-      // Load brand profile from user metadata or localStorage
-      const storedProfile = localStorage.getItem('trialBrandProfile');
-      if (storedProfile) {
-        setBrandProfile(JSON.parse(storedProfile));
-      } else if (user.user_metadata?.brand_name) {
-        setBrandProfile({
-          brandName: user.user_metadata.brand_name,
-          tone: user.user_metadata.brand_tone || 'profesional',
-          style: user.user_metadata.brand_style || 'moderno',
-          colors: user.user_metadata.brand_colors || ['#00D4FF', '#8B5CF6'],
-          keywords: user.user_metadata.brand_keywords || ['marketing', 'contenido'],
-          personality: user.user_metadata.brand_personality || 'Innovador y profesional'
-        });
-      } else {
-        // Default brand profile for testing
-        setBrandProfile({
-          brandName: 'Mi Marca',
-          tone: 'profesional',
-          style: 'moderno',
-          colors: ['#00D4FF', '#8B5CF6'],
-          keywords: ['marketing', 'contenido', 'digital'],
-          personality: 'Innovador y profesional'
-        });
-      }
-      setLoading(false);
+      setIsAuthenticated(true);
     };
 
-    loadUserData();
+    checkAuth();
   }, [navigate]);
 
-  if (loading) {
+  if (!isAuthenticated || profileLoading) {
     return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
-        <div className="text-center">
-          <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-r from-purple-500 to-electric-cyan flex items-center justify-center animate-pulse">
-            <Brain className="w-8 h-8 text-white" />
+      <div className="min-h-screen bg-background">
+        <ShowcaseHeader />
+        <div className="container mx-auto px-4 pt-24 pb-16">
+          <div className="text-center">
+            <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-r from-purple-500 to-electric-cyan flex items-center justify-center animate-pulse">
+              <Brain className="w-8 h-8 text-white" />
+            </div>
+            <p className="text-muted-foreground">Cargando CreatorBrainy...</p>
           </div>
-          <p className="text-muted-foreground">Cargando CreatorBrainy...</p>
         </div>
       </div>
     );
   }
 
-  if (!brandProfile) {
-    return null;
-  }
+  // Create brand profile object for the panel
+  const panelBrandProfile = {
+    brandName: brandProfile?.brand_name || 'Mi Marca',
+    tone: brandProfile?.tone || 'profesional',
+    style: brandProfile?.style || 'moderno',
+    colors: brandProfile?.colors || ['#00D4FF', '#8B5CF6'],
+    keywords: brandProfile?.keywords || ['marketing', 'contenido'],
+    personality: brandProfile?.personality || 'Innovador y profesional'
+  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -118,14 +97,15 @@ const TrialCreatorPage = () => {
             </span>
           </h1>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Genera contenido único para <span className="text-electric-cyan font-semibold">{brandProfile.brandName}</span> con tu tono de voz personalizado.
+            Genera contenido único para <span className="text-electric-cyan font-semibold">{panelBrandProfile.brandName}</span> con tu tono de voz personalizado.
           </p>
         </motion.div>
 
         {/* Full CreatorBrainy Panel */}
         <TrialCreatorPanel 
-          brandProfile={brandProfile}
+          brandProfile={panelBrandProfile}
           onGoToDashboard={() => navigate('/trial/dashboard')}
+          onActivityLog={logActivity}
         />
       </div>
     </div>

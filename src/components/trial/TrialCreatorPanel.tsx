@@ -63,6 +63,7 @@ interface BrandProfile {
 interface TrialCreatorPanelProps {
   brandProfile: BrandProfile;
   onGoToDashboard: () => void;
+  onActivityLog?: (activityType: string, contentPreview?: string, metadata?: any) => void;
 }
 
 interface AcceptedContent {
@@ -71,7 +72,7 @@ interface AcceptedContent {
   acceptedAt: Date;
 }
 
-const TrialCreatorPanel = ({ brandProfile, onGoToDashboard }: TrialCreatorPanelProps) => {
+const TrialCreatorPanel = ({ brandProfile, onGoToDashboard, onActivityLog }: TrialCreatorPanelProps) => {
   const { 
     generateCopy, 
     generateVariants, 
@@ -296,7 +297,10 @@ const TrialCreatorPanel = ({ brandProfile, onGoToDashboard }: TrialCreatorPanelP
       tone: selectedTone,
       context: brandContext + additionalContext
     });
-    if (result) setCopyResult(result);
+    if (result) {
+      setCopyResult(result);
+      onActivityLog?.('copy_generated', result.copy?.fullCopy?.substring(0, 100), { topic: copyTopic, platform: selectedPlatform });
+    }
   };
 
   // Scrape URL for Ideas
@@ -369,7 +373,10 @@ const TrialCreatorPanel = ({ brandProfile, onGoToDashboard }: TrialCreatorPanelP
       tone: selectedTone,
       context: brandContext + additionalContext
     });
-    if (result) setVariantsResult(result);
+    if (result) {
+      setVariantsResult(result);
+      onActivityLog?.('variants_generated', variantContent.substring(0, 100), { platform: selectedPlatform });
+    }
   };
 
   const handleGenerateIdeas = async () => {
@@ -389,7 +396,10 @@ const TrialCreatorPanel = ({ brandProfile, onGoToDashboard }: TrialCreatorPanelP
       platform: selectedPlatform,
       context: brandContext + additionalContext
     });
-    if (result) setIdeasResult(result);
+    if (result) {
+      setIdeasResult(result);
+      onActivityLog?.('ideas_generated', ideasTopic, { platform: selectedPlatform });
+    }
   };
 
   const handleImprove = async () => {
@@ -398,12 +408,18 @@ const TrialCreatorPanel = ({ brandProfile, onGoToDashboard }: TrialCreatorPanelP
       tone: selectedTone,
       context: brandContext
     });
-    if (result) setImproveResult(result);
+    if (result) {
+      setImproveResult(result);
+      onActivityLog?.('improved', improveContent_.substring(0, 100), { platform: selectedPlatform });
+    }
   };
 
   const handleTranslate = async () => {
     const result = await translateContent(translateContent_, translateLang);
-    if (result) setTranslateResult(result);
+    if (result) {
+      setTranslateResult(result);
+      onActivityLog?.('translated', translateContent_.substring(0, 100), { targetLang: translateLang });
+    }
   };
 
   const toneOptions = [
