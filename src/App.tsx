@@ -120,16 +120,10 @@ const App = () => {
           <Route path="/thank-you" element={<ShowcaseThankYouPage />} />
           <Route path="/creator-brainy-test" element={<CreatorBrainyTestPage />} />
           <Route path="/trial" element={<TrialPage />} />
-
-          {/* Muchísimas rutas más… */}
-          {/* (Todo este bloque se mantiene igual, no lo modificamos) */}
-
-          <Route path="*" element={<NotFound />} />
-
-          {/* -------------------------------------------------------- */}
-          {/* 🔥 RUTA DE TEST SUPABASE (accedes en: /supa-test) */}
-          {/* -------------------------------------------------------- */}
           <Route path="/supa-test" element={<SupaTestInline />} />
+
+          {/* Catch-all - debe ir al final */}
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>
     </TooltipProvider>
