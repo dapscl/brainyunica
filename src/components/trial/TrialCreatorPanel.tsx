@@ -26,7 +26,9 @@ import {
   X,
   Search,
   TrendingUp,
-  Target
+  Target,
+  Link,
+  FileText
 } from 'lucide-react';
 import { useContentGenerator } from '@/hooks/useContentGenerator';
 import { supabase } from '@/integrations/supabase/client';
@@ -87,6 +89,9 @@ const TrialCreatorPanel = ({ brandProfile, onGoToDashboard }: TrialCreatorPanelP
 
   // Copy Generator State
   const [copyTopic, setCopyTopic] = useState('');
+  const [copyReferenceUrl, setCopyReferenceUrl] = useState('');
+  const [copyReferenceFile, setCopyReferenceFile] = useState<File | null>(null);
+  const [copyReferenceText, setCopyReferenceText] = useState('');
   const [copyResult, setCopyResult] = useState<any>(null);
   const [copyAccepted, setCopyAccepted] = useState(false);
   const [copyEditing, setCopyEditing] = useState(false);
@@ -204,12 +209,44 @@ const TrialCreatorPanel = ({ brandProfile, onGoToDashboard }: TrialCreatorPanelP
 
   const brandContext = `Marca: ${brandProfile.brandName}. Estilo: ${brandProfile.style}. Personalidad: ${brandProfile.personality}. Keywords: ${brandProfile.keywords.join(', ')}`;
 
+  // Handle reference file upload for copy generator
+  const handleReferenceFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    
+    setCopyReferenceFile(file);
+    
+    // Read text content if it's a text file
+    if (file.type === 'text/plain' || file.name.endsWith('.txt')) {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        if (event.target?.result) {
+          setCopyReferenceText(event.target.result as string);
+        }
+      };
+      reader.readAsText(file);
+    } else {
+      // For PDF or other files, just note that it's uploaded
+      setCopyReferenceText(`[Archivo adjunto: ${file.name}]`);
+    }
+    toast.success(`Archivo "${file.name}" cargado como referencia`);
+  };
+
   const handleGenerateCopy = async () => {
+    // Build additional context from reference URL and file
+    let additionalContext = '';
+    if (copyReferenceUrl) {
+      additionalContext += `\n\nURL de referencia del producto/servicio: ${copyReferenceUrl}`;
+    }
+    if (copyReferenceText) {
+      additionalContext += `\n\nInformación adicional del producto/ficha técnica:\n${copyReferenceText.substring(0, 2000)}`;
+    }
+
     const result = await generateCopy({
       topic: copyTopic,
       platform: selectedPlatform,
       tone: selectedTone,
-      context: brandContext
+      context: brandContext + additionalContext
     });
     if (result) setCopyResult(result);
   };
@@ -566,6 +603,62 @@ const TrialCreatorPanel = ({ brandProfile, onGoToDashboard }: TrialCreatorPanelP
                   className="bg-card/30 border-electric-cyan/20 text-foreground placeholder:text-muted-foreground"
                 />
               </div>
+
+              {/* Reference URL */}
+              <div>
+                <Label className="text-foreground flex items-center gap-2">
+                  <Link className="w-4 h-4 text-electric-cyan" />
+                  URL de Referencia (opcional)
+                </Label>
+                <Input 
+                  placeholder="https://ejemplo.com/producto o ficha-tecnica"
+                  value={copyReferenceUrl}
+                  onChange={(e) => setCopyReferenceUrl(e.target.value)}
+                  className="bg-card/30 border-electric-cyan/20 text-foreground placeholder:text-muted-foreground"
+                />
+                <p className="text-xs text-muted-foreground mt-1">
+                  Agrega un link a la página del producto o ficha técnica para un copy más preciso
+                </p>
+              </div>
+
+              {/* Reference File Upload */}
+              <div>
+                <Label className="text-foreground flex items-center gap-2">
+                  <FileText className="w-4 h-4 text-purple-accent" />
+                  Ficha Técnica / PDF (opcional)
+                </Label>
+                <div className="flex gap-2 mt-1">
+                  <Input
+                    type="file"
+                    accept=".pdf,.txt,.doc,.docx"
+                    onChange={handleReferenceFileUpload}
+                    className="bg-card/30 border-electric-cyan/20 text-foreground file:bg-purple-accent/20 file:text-purple-accent file:border-0 file:rounded file:px-3 file:py-1 file:mr-3 file:cursor-pointer"
+                  />
+                  {copyReferenceFile && (
+                    <Button 
+                      variant="ghost" 
+                      size="icon"
+                      onClick={() => {
+                        setCopyReferenceFile(null);
+                        setCopyReferenceText('');
+                      }}
+                      className="text-muted-foreground hover:text-red-400"
+                    >
+                      <X className="w-4 h-4" />
+                    </Button>
+                  )}
+                </div>
+                {copyReferenceFile && (
+                  <p className="text-xs text-green-400 mt-1 flex items-center gap-1">
+                    <FileText className="w-3 h-3" />
+                    {copyReferenceFile.name} cargado
+                  </p>
+                )}
+                <p className="text-xs text-muted-foreground mt-1">
+                  Sube un PDF, ficha técnica o documento con información del producto
+                </p>
+              </div>
+
               <Button 
                 onClick={handleGenerateCopy}
                 disabled={isGenerating || !copyTopic}
