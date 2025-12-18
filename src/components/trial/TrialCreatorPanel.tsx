@@ -29,6 +29,14 @@ import { useContentGenerator } from '@/hooks/useContentGenerator';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 
+interface BrandAnalysis {
+  summary: string;
+  strengths: string[];
+  weaknesses: string[];
+  recommendations: string[];
+  contentIdeas: string[];
+}
+
 interface BrandProfile {
   brandName: string;
   tone: string;
@@ -36,6 +44,7 @@ interface BrandProfile {
   colors: string[];
   keywords: string[];
   personality: string;
+  analysis?: BrandAnalysis;
 }
 
 interface TrialCreatorPanelProps {
@@ -308,12 +317,12 @@ const TrialCreatorPanel = ({ brandProfile, onGoToDashboard }: TrialCreatorPanelP
 
       {/* Brand Analysis Summary */}
       <Card className="bg-gradient-to-br from-purple-accent/10 to-electric-cyan/10 backdrop-blur-sm border-purple-accent/30">
-        <CardContent className="p-6">
+        <CardContent className="p-6 space-y-6">
           <div className="flex items-start gap-4">
             <div className="w-10 h-10 rounded-lg bg-gradient-to-r from-purple-accent to-electric-cyan flex items-center justify-center flex-shrink-0">
               <Brain className="w-5 h-5 text-white" />
             </div>
-            <div className="space-y-2">
+            <div className="space-y-2 flex-1">
               <h3 className="text-lg font-semibold text-foreground flex items-center gap-2">
                 Análisis de Tono y Estilo
                 <Badge className="bg-green-500/20 text-green-400 border-green-500/30 text-xs">
@@ -321,12 +330,65 @@ const TrialCreatorPanel = ({ brandProfile, onGoToDashboard }: TrialCreatorPanelP
                 </Badge>
               </h3>
               <p className="text-muted-foreground leading-relaxed">
-                {getBrandAnalysisSummary().split('**').map((part, i) => 
+                {brandProfile.analysis?.summary || getBrandAnalysisSummary().split('**').map((part, i) => 
                   i % 2 === 1 ? <strong key={i} className="text-electric-cyan">{part}</strong> : part
                 )}
               </p>
             </div>
           </div>
+
+          {/* Detailed Analysis Table */}
+          {brandProfile.analysis && (
+            <div className="grid md:grid-cols-3 gap-4 pt-4 border-t border-purple-accent/20">
+              {/* Strengths */}
+              <div className="space-y-2">
+                <h4 className="text-sm font-semibold text-green-400 flex items-center gap-2">
+                  <CheckCircle2 className="w-4 h-4" />
+                  Fortalezas
+                </h4>
+                <ul className="space-y-1">
+                  {brandProfile.analysis.strengths.map((strength, idx) => (
+                    <li key={idx} className="text-sm text-muted-foreground flex items-start gap-2">
+                      <span className="text-green-400 mt-1">•</span>
+                      {strength}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* Weaknesses */}
+              <div className="space-y-2">
+                <h4 className="text-sm font-semibold text-yellow-400 flex items-center gap-2">
+                  <Lightbulb className="w-4 h-4" />
+                  Áreas de Mejora
+                </h4>
+                <ul className="space-y-1">
+                  {brandProfile.analysis.weaknesses.map((weakness, idx) => (
+                    <li key={idx} className="text-sm text-muted-foreground flex items-start gap-2">
+                      <span className="text-yellow-400 mt-1">•</span>
+                      {weakness}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* Recommendations */}
+              <div className="space-y-2">
+                <h4 className="text-sm font-semibold text-electric-cyan flex items-center gap-2">
+                  <Sparkles className="w-4 h-4" />
+                  Recomendaciones
+                </h4>
+                <ul className="space-y-1">
+                  {brandProfile.analysis.recommendations.map((rec, idx) => (
+                    <li key={idx} className="text-sm text-muted-foreground flex items-start gap-2">
+                      <span className="text-electric-cyan mt-1">•</span>
+                      {rec}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          )}
         </CardContent>
       </Card>
 
