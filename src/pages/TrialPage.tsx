@@ -51,6 +51,9 @@ const TrialPage = () => {
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [isLoginMode, setIsLoginMode] = useState(false);
+  const [generatedIdeas, setGeneratedIdeas] = useState<string[]>([]);
+  const [isGeneratingIdeas, setIsGeneratingIdeas] = useState(false);
 
   const handleScan = async () => {
     if (!handle.trim()) {
@@ -89,7 +92,52 @@ const TrialPage = () => {
     setStep('signup');
   };
 
-  const handleSignup = async (e: React.FormEvent) => {
+  // Generate content ideas using CreatorBrainy
+  const generateContentIdeas = async () => {
+    if (!scanResult) return;
+    
+    setIsGeneratingIdeas(true);
+    try {
+      const response = await supabase.functions.invoke('content-generator', {
+        body: {
+          action: 'generate_ideas',
+          context: {
+            brandName: scanResult.brandName,
+            tone: scanResult.tone,
+            style: scanResult.style,
+            keywords: scanResult.keywords,
+            personality: scanResult.personality
+          },
+          count: 5
+        }
+      });
+
+      if (response.data?.ideas) {
+        setGeneratedIdeas(response.data.ideas);
+      } else {
+        // Fallback ideas based on scan result
+        setGeneratedIdeas([
+          `Post de Instagram: "${scanResult.brandName} presenta su nueva colección con un estilo ${scanResult.style.toLowerCase()}"`,
+          `Story interactiva: Encuesta sobre preferencias de tus seguidores usando tono ${scanResult.tone.toLowerCase()}`,
+          `Carousel educativo: "5 tips de ${scanResult.keywords[0] || 'tu industria'}" con diseño ${scanResult.style.toLowerCase()}`,
+          `Reel trending: Video corto mostrando behind-the-scenes de ${scanResult.brandName}`,
+          `Post de valor: Infografía sobre "${scanResult.keywords[1] || 'tendencias'}" para tu audiencia`
+        ]);
+      }
+    } catch (error) {
+      console.error('Error generating ideas:', error);
+      // Use scan result suggestions as fallback
+      setGeneratedIdeas(scanResult.contentSuggestions || [
+        `Contenido sobre ${scanResult.keywords[0] || 'tu marca'}`,
+        `Historia de tu marca ${scanResult.brandName}`,
+        `Tips relacionados con ${scanResult.tone.toLowerCase()}`
+      ]);
+    } finally {
+      setIsGeneratingIdeas(false);
+    }
+  };
+
+  const handleAuth = async (e: React.FormEvent) => {
     e.preventDefault();
     
     if (!email || !password) {
@@ -97,51 +145,62 @@ const TrialPage = () => {
       return;
     }
 
-    if (password.length < 6) {
-      toast.error('La contraseña debe tener al menos 6 caracteres');
-      return;
-    }
-
     setIsLoading(true);
 
     try {
-      // Create the user account
-      const { data: authData, error: authError } = await supabase.auth.signUp({
-        email,
-        password,
-        options: {
-          data: {
-            brand_handle: handle,
-            brand_type: inputType,
-            brand_name: scanResult?.brandName
+      if (isLoginMode) {
+        // Login existing user
+        const { error } = await supabase.auth.signInWithPassword({ email, password });
+        if (error) throw error;
+        toast.success('¡Bienvenido de vuelta!');
+      } else {
+        // Create new user
+        if (password.length < 6) {
+          toast.error('La contraseña debe tener al menos 6 caracteres');
+          setIsLoading(false);
+          return;
+        }
+
+        const { data: authData, error: authError } = await supabase.auth.signUp({
+          email,
+          password,
+          options: {
+            data: {
+              brand_handle: handle,
+              brand_type: inputType,
+              brand_name: scanResult?.brandName
+            }
           }
-        }
-      });
+        });
 
-      if (authError) throw authError;
+        if (authError) throw authError;
 
-      // Send notification to admin
-      await fetch(
-        `https://fynwkhlwdvezajlkodrs.supabase.co/functions/v1/trial-signup-notification`,
-        {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            email,
-            brandHandle: handle,
-            brandType: inputType,
-            brandName: scanResult?.brandName || 'No detectado',
-            detectedTone: scanResult?.tone || 'No detectado',
-            detectedStyle: scanResult?.style || 'No detectado'
-          })
-        }
-      );
+        // Send notification to admin
+        await fetch(
+          `https://fynwkhlwdvezajlkodrs.supabase.co/functions/v1/trial-signup-notification`,
+          {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              email,
+              brandHandle: handle,
+              brandType: inputType,
+              brandName: scanResult?.brandName || 'No detectado',
+              detectedTone: scanResult?.tone || 'No detectado',
+              detectedStyle: scanResult?.style || 'No detectado'
+            })
+          }
+        );
 
+        toast.success('¡Cuenta creada exitosamente!');
+      }
+
+      // Move to complete step and generate ideas
       setStep('complete');
-      toast.success('¡Cuenta creada exitosamente!');
+      generateContentIdeas();
     } catch (error: any) {
-      console.error('Signup error:', error);
-      toast.error(error.message || 'Error al crear la cuenta');
+      console.error('Auth error:', error);
+      toast.error(error.message || 'Error de autenticación');
     } finally {
       setIsLoading(false);
     }
@@ -478,7 +537,7 @@ const TrialPage = () => {
             </motion.div>
           )}
 
-          {/* Step 4: Signup */}
+          {/* Step 4: Signup/Login */}
           {step === 'signup' && (
             <motion.div
               key="signup"
@@ -490,16 +549,44 @@ const TrialPage = () => {
               <div className="text-center mb-8">
                 <h1 className="text-3xl font-bold mb-4">
                   <span className="bg-gradient-to-r from-electric-cyan to-purple-accent bg-clip-text text-transparent">
-                    Crea tu cuenta
+                    {isLoginMode ? 'Ingresa a tu cuenta' : 'Crea tu cuenta'}
                   </span>
                 </h1>
                 <p className="text-muted-foreground">
-                  Acceso completo por 45 días. Sin tarjeta de crédito.
+                  {isLoginMode 
+                    ? 'Ingresa para ver tus ideas de contenido personalizadas'
+                    : 'Acceso completo por 45 días. Sin tarjeta de crédito.'}
                 </p>
               </div>
 
               <Card className="bg-card/30 backdrop-blur-sm border-electric-cyan/20 p-8">
-                <form onSubmit={handleSignup} className="space-y-6">
+                {/* Toggle Login/Signup */}
+                <div className="flex gap-2 mb-6 p-1 bg-background/50 rounded-lg">
+                  <button
+                    type="button"
+                    onClick={() => setIsLoginMode(false)}
+                    className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-all ${
+                      !isLoginMode 
+                        ? 'bg-electric-cyan text-background' 
+                        : 'text-muted-foreground hover:text-foreground'
+                    }`}
+                  >
+                    Crear cuenta
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setIsLoginMode(true)}
+                    className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-all ${
+                      isLoginMode 
+                        ? 'bg-electric-cyan text-background' 
+                        : 'text-muted-foreground hover:text-foreground'
+                    }`}
+                  >
+                    Ya tengo cuenta
+                  </button>
+                </div>
+
+                <form onSubmit={handleAuth} className="space-y-6">
                   <div className="space-y-2">
                     <Label htmlFor="email" className="text-foreground">Email</Label>
                     <div className="relative">
@@ -522,12 +609,12 @@ const TrialPage = () => {
                       <Input
                         id="password"
                         type={showPassword ? 'text' : 'password'}
-                        placeholder="Mínimo 6 caracteres"
+                        placeholder={isLoginMode ? 'Tu contraseña' : 'Mínimo 6 caracteres'}
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         className="pr-10 bg-background/50 border-border/50 h-12"
                         required
-                        minLength={6}
+                        minLength={isLoginMode ? 1 : 6}
                       />
                       <button
                         type="button"
@@ -542,7 +629,7 @@ const TrialPage = () => {
                   {/* Brand summary */}
                   {scanResult && (
                     <div className="p-4 rounded-lg bg-background/50 border border-border/30">
-                      <p className="text-sm text-muted-foreground mb-2">Tu marca:</p>
+                      <p className="text-sm text-muted-foreground mb-2">Tu marca analizada:</p>
                       <div className="flex items-center gap-3">
                         <div className="w-10 h-10 rounded-lg bg-gradient-to-r from-electric-cyan to-purple-accent flex items-center justify-center text-white font-bold">
                           {scanResult.brandName.charAt(0)}
@@ -563,76 +650,130 @@ const TrialPage = () => {
                     {isLoading ? (
                       <>
                         <Loader2 className="w-5 h-5 mr-2 animate-spin" />
-                        Creando cuenta...
+                        {isLoginMode ? 'Ingresando...' : 'Creando cuenta...'}
                       </>
                     ) : (
                       <>
-                        Comenzar mi trial gratis
+                        {isLoginMode ? 'Ingresar y ver mis ideas' : 'Comenzar mi trial gratis'}
                         <ArrowRight className="w-5 h-5 ml-2" />
                       </>
                     )}
                   </Button>
 
-                  <p className="text-xs text-center text-muted-foreground">
-                    Al crear tu cuenta aceptas nuestros términos de servicio y política de privacidad
-                  </p>
-
-                  <div className="text-center pt-4 border-t border-border/30">
-                    <p className="text-sm text-muted-foreground">
-                      ¿Ya tienes una cuenta?{' '}
-                      <button
-                        type="button"
-                        onClick={() => navigate('/auth')}
-                        className="text-electric-cyan hover:underline font-medium"
-                      >
-                        Ingresar
-                      </button>
+                  {!isLoginMode && (
+                    <p className="text-xs text-center text-muted-foreground">
+                      Al crear tu cuenta aceptas nuestros términos de servicio y política de privacidad
                     </p>
-                  </div>
+                  )}
                 </form>
               </Card>
             </motion.div>
           )}
 
-          {/* Step 5: Complete */}
+          {/* Step 5: Complete - Ideas de Contenido */}
           {step === 'complete' && (
             <motion.div
               key="complete"
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0 }}
-              className="max-w-lg mx-auto text-center py-20"
+              className="max-w-4xl mx-auto"
             >
-              <motion.div
-                initial={{ scale: 0 }}
-                animate={{ scale: 1 }}
-                transition={{ type: 'spring', duration: 0.5 }}
-                className="w-24 h-24 mx-auto mb-8 rounded-full bg-gradient-to-r from-green-500 to-emerald-500 flex items-center justify-center"
-              >
-                <Check className="w-12 h-12 text-white" />
-              </motion.div>
+              {/* Header */}
+              <div className="text-center mb-10">
+                <motion.div
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  transition={{ type: 'spring', duration: 0.5 }}
+                  className="w-20 h-20 mx-auto mb-6 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center"
+                >
+                  <Sparkles className="w-10 h-10 text-white" />
+                </motion.div>
 
-              <h1 className="text-3xl font-bold mb-4">
-                <span className="bg-gradient-to-r from-electric-cyan to-purple-accent bg-clip-text text-transparent">
-                  ¡Bienvenido a Brainy!
-                </span>
-              </h1>
-              
-              <p className="text-xl text-muted-foreground mb-8">
-                Tu cuenta ha sido creada exitosamente. Revisa tu email para confirmar tu cuenta.
-              </p>
+                <h1 className="text-3xl md:text-4xl font-bold mb-4">
+                  <span className="bg-gradient-to-r from-electric-cyan to-purple-accent bg-clip-text text-transparent">
+                    ¡Bienvenido a Brainy, {scanResult?.brandName || 'tu marca'}!
+                  </span>
+                </h1>
+                <p className="text-xl text-muted-foreground">
+                  CreatorBrainy ya aprendió tu tono de voz. Aquí están tus primeras ideas de contenido:
+                </p>
+              </div>
 
-              <div className="space-y-4">
+              {/* Brand Profile Summary */}
+              {scanResult && (
+                <Card className="bg-card/30 backdrop-blur-sm border-electric-cyan/20 p-6 mb-8">
+                  <div className="flex items-center gap-4 mb-4">
+                    <div className="w-14 h-14 rounded-xl bg-gradient-to-r from-electric-cyan to-purple-accent flex items-center justify-center text-white text-2xl font-bold">
+                      {scanResult.brandName.charAt(0)}
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-bold text-foreground">{scanResult.brandName}</h3>
+                      <p className="text-muted-foreground">{scanResult.tone} • {scanResult.style}</p>
+                    </div>
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    {scanResult.keywords.slice(0, 5).map((keyword, idx) => (
+                      <span key={idx} className="px-3 py-1 rounded-full bg-electric-cyan/10 text-electric-cyan text-sm">
+                        #{keyword}
+                      </span>
+                    ))}
+                  </div>
+                </Card>
+              )}
+
+              {/* Generated Ideas */}
+              <Card className="bg-card/30 backdrop-blur-sm border-purple-accent/30 p-8 mb-8">
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center">
+                    <Lightbulb className="w-6 h-6 text-white" />
+                  </div>
+                  <div>
+                    <h2 className="text-xl font-bold text-foreground">Ideas de Contenido Personalizadas</h2>
+                    <p className="text-sm text-muted-foreground">Generadas por CreatorBrainy™ con tu tono de voz</p>
+                  </div>
+                </div>
+
+                {isGeneratingIdeas ? (
+                  <div className="flex flex-col items-center py-12">
+                    <Loader2 className="w-12 h-12 text-purple-accent animate-spin mb-4" />
+                    <p className="text-muted-foreground">Generando ideas personalizadas...</p>
+                  </div>
+                ) : (
+                  <div className="space-y-4">
+                    {generatedIdeas.map((idea, idx) => (
+                      <motion.div
+                        key={idx}
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: idx * 0.1 }}
+                        className="p-4 rounded-lg bg-background/50 border border-purple-accent/20 hover:border-purple-accent/40 transition-all"
+                      >
+                        <div className="flex items-start gap-3">
+                          <div className="w-8 h-8 rounded-lg bg-purple-accent/20 flex items-center justify-center text-purple-accent font-bold text-sm shrink-0">
+                            {idx + 1}
+                          </div>
+                          <p className="text-foreground">{idea}</p>
+                        </div>
+                      </motion.div>
+                    ))}
+                  </div>
+                )}
+              </Card>
+
+              {/* CTA */}
+              <div className="text-center space-y-4">
                 <Button
-                  onClick={() => navigate('/auth')}
+                  onClick={() => navigate('/brands')}
                   className="h-14 px-8 text-lg bg-gradient-to-r from-electric-cyan to-purple-accent hover:opacity-90 text-background font-semibold shadow-glow-cyan"
                 >
-                  Ir al Dashboard
+                  <Sparkles className="w-5 h-5 mr-2" />
+                  Ir a mi Dashboard
                   <ArrowRight className="w-5 h-5 ml-2" />
                 </Button>
 
                 <p className="text-sm text-muted-foreground">
-                  Tu trial de 45 días comienza ahora
+                  Tu trial de 45 días comienza ahora • Acceso completo a los 5 Brainies
                 </p>
               </div>
             </motion.div>
