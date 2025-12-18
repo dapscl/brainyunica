@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -51,6 +51,27 @@ const TrialPage = () => {
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [checkingAuth, setCheckingAuth] = useState(true);
+
+  // Check if user is already logged in - redirect to brands
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data }) => {
+      if (data.session?.user) {
+        navigate('/brands', { replace: true });
+      } else {
+        setCheckingAuth(false);
+      }
+    });
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      if (session?.user && step === 'complete') {
+        // Only redirect after signup is complete
+        navigate('/brands', { replace: true });
+      }
+    });
+
+    return () => subscription.unsubscribe();
+  }, [navigate, step]);
 
   const handleScan = async () => {
     if (!handle.trim()) {
@@ -167,6 +188,15 @@ const TrialPage = () => {
       return () => clearInterval(interval);
     }
   });
+
+  // Show loading while checking auth
+  if (checkingAuth) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <Loader2 className="w-8 h-8 text-electric-cyan animate-spin" />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-background">
