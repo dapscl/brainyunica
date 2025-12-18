@@ -89,9 +89,12 @@ const TrialCreatorPanel = ({ brandProfile, onGoToDashboard }: TrialCreatorPanelP
 
   // Copy Generator State
   const [copyTopic, setCopyTopic] = useState('');
+  const [copyBrief, setCopyBrief] = useState('');
   const [copyReferenceUrl, setCopyReferenceUrl] = useState('');
   const [copyReferenceFile, setCopyReferenceFile] = useState<File | null>(null);
   const [copyReferenceText, setCopyReferenceText] = useState('');
+  const [scrapedContent, setScrapedContent] = useState('');
+  const [isScrapingUrl, setIsScrapingUrl] = useState(false);
   const [copyResult, setCopyResult] = useState<any>(null);
   const [copyAccepted, setCopyAccepted] = useState(false);
   const [copyEditing, setCopyEditing] = useState(false);
@@ -232,12 +235,49 @@ const TrialCreatorPanel = ({ brandProfile, onGoToDashboard }: TrialCreatorPanelP
     toast.success(`Archivo "${file.name}" cargado como referencia`);
   };
 
+  // Scrape URL with Firecrawl
+  const handleScrapeUrl = async () => {
+    if (!copyReferenceUrl) return;
+    
+    setIsScrapingUrl(true);
+    try {
+      const { data, error } = await supabase.functions.invoke('scrape-reference', {
+        body: { url: copyReferenceUrl }
+      });
+
+      if (error) throw error;
+      
+      if (data?.success && data?.summary) {
+        setScrapedContent(data.summary);
+        toast.success('Contenido de URL extraído exitosamente');
+      } else {
+        toast.info('No se pudo extraer contenido de la URL');
+      }
+    } catch (error: any) {
+      console.error('Error scraping URL:', error);
+      toast.error('Error al extraer contenido de la URL');
+    } finally {
+      setIsScrapingUrl(false);
+    }
+  };
+
   const handleGenerateCopy = async () => {
-    // Build additional context from reference URL and file
+    // Build additional context from all sources
     let additionalContext = '';
-    if (copyReferenceUrl) {
+    
+    // Add brief if provided
+    if (copyBrief) {
+      additionalContext += `\n\nBrief/Objetivo del copy:\n${copyBrief}`;
+    }
+    
+    // Add scraped URL content if available
+    if (scrapedContent) {
+      additionalContext += `\n\nInformación extraída de la URL de referencia:\n${scrapedContent}`;
+    } else if (copyReferenceUrl) {
       additionalContext += `\n\nURL de referencia del producto/servicio: ${copyReferenceUrl}`;
     }
+    
+    // Add file content if available
     if (copyReferenceText) {
       additionalContext += `\n\nInformación adicional del producto/ficha técnica:\n${copyReferenceText.substring(0, 2000)}`;
     }
@@ -604,20 +644,66 @@ const TrialCreatorPanel = ({ brandProfile, onGoToDashboard }: TrialCreatorPanelP
                 />
               </div>
 
-              {/* Reference URL */}
+              {/* Brief / Description */}
+              <div>
+                <Label className="text-foreground flex items-center gap-2">
+                  <Lightbulb className="w-4 h-4 text-yellow-400" />
+                  Brief / Objetivo (opcional)
+                </Label>
+                <Textarea 
+                  placeholder="Describe el objetivo del copy: ¿qué quieres comunicar? ¿cuál es la promoción? ¿a quién va dirigido? ¿qué acción esperas del usuario?"
+                  value={copyBrief}
+                  onChange={(e) => setCopyBrief(e.target.value)}
+                  rows={3}
+                  className="bg-card/30 border-electric-cyan/20 text-foreground placeholder:text-muted-foreground"
+                />
+                <p className="text-xs text-muted-foreground mt-1">
+                  Agrega contexto sobre el objetivo, público o promoción para un copy más efectivo
+                </p>
+              </div>
+
+              {/* Reference URL with Scrape */}
               <div>
                 <Label className="text-foreground flex items-center gap-2">
                   <Link className="w-4 h-4 text-electric-cyan" />
                   URL de Referencia (opcional)
                 </Label>
-                <Input 
-                  placeholder="https://ejemplo.com/producto o ficha-tecnica"
-                  value={copyReferenceUrl}
-                  onChange={(e) => setCopyReferenceUrl(e.target.value)}
-                  className="bg-card/30 border-electric-cyan/20 text-foreground placeholder:text-muted-foreground"
-                />
+                <div className="flex gap-2">
+                  <Input 
+                    placeholder="https://ejemplo.com/producto o ficha-tecnica"
+                    value={copyReferenceUrl}
+                    onChange={(e) => {
+                      setCopyReferenceUrl(e.target.value);
+                      setScrapedContent(''); // Clear scraped content when URL changes
+                    }}
+                    className="bg-card/30 border-electric-cyan/20 text-foreground placeholder:text-muted-foreground flex-1"
+                  />
+                  <Button
+                    variant="outline"
+                    onClick={handleScrapeUrl}
+                    disabled={!copyReferenceUrl || isScrapingUrl}
+                    className="border-electric-cyan/30 text-electric-cyan hover:bg-electric-cyan/10"
+                  >
+                    {isScrapingUrl ? (
+                      <Loader2 className="w-4 h-4 animate-spin" />
+                    ) : (
+                      <Search className="w-4 h-4" />
+                    )}
+                  </Button>
+                </div>
+                {scrapedContent && (
+                  <div className="mt-2 p-2 rounded bg-green-500/10 border border-green-500/30">
+                    <p className="text-xs text-green-400 flex items-center gap-1">
+                      <CheckCircle2 className="w-3 h-3" />
+                      Contenido extraído de la URL
+                    </p>
+                    <p className="text-xs text-muted-foreground mt-1 line-clamp-2">
+                      {scrapedContent.substring(0, 150)}...
+                    </p>
+                  </div>
+                )}
                 <p className="text-xs text-muted-foreground mt-1">
-                  Agrega un link a la página del producto o ficha técnica para un copy más preciso
+                  Agrega un link a la página del producto. Click en el ícono para extraer contenido automáticamente.
                 </p>
               </div>
 
