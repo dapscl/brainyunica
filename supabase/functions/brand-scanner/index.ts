@@ -8,6 +8,7 @@ const corsHeaders = {
 interface BrandScanRequest {
   handle: string;
   type: 'instagram' | 'website';
+  instagramHandle?: string;
 }
 
 interface BrandScanResult {
@@ -19,13 +20,42 @@ interface BrandScanResult {
   personality: string;
   contentSuggestions: string[];
   analysis: {
-    summary: string;
-    strengths: string[];
-    weaknesses: string[];
-    recommendations: string[];
-    contentIdeas: string[];
+    brandIdentity: {
+      valueProposition: string;
+      communicationTone: string;
+      targetAudience: string;
+      visualCoherence: string;
+    };
+    websiteAnalysis: {
+      diagnosis: string;
+      uxAssessment: string;
+      foundKeywords: string[];
+      missingKeywords: string[];
+      keywordAlignment: string;
+    };
+    instagramAnalysis: {
+      feedAesthetic: string;
+      contentTypes: string[];
+      topHashtags: string[];
+      engagementLevel: string;
+      audienceAlignment: string;
+    };
+    performance: {
+      mobileScore: string;
+      desktopScore: string;
+      loadTime: string;
+      issues: string[];
+      recommendations: string[];
+    };
+    diagnosis: {
+      strengths: string[];
+      opportunities: string[];
+      recommendations: string[];
+      instagramIdeas: string[];
+      seoImprovements: string[];
+    };
   };
-  seo?: {
+  seo: {
     foundKeywords: string[];
     missingKeywords: string[];
     seoOpportunities: string[];
@@ -37,54 +67,120 @@ interface BrandScanResult {
   };
 }
 
-// Prompts para análisis real con contenido de Firecrawl
-const getWebsitePrompt = (url: string, content: string, branding?: any) => `
-Actuá como un analista estratégico y realizá un brand audit completo del sitio web: ${url}
+// Comprehensive brand audit prompt
+const getComprehensivePrompt = (url: string, content: string, instagramHandle: string, branding?: any, metadata?: any) => `
+Actuá como un planner estratégico senior y realizá un Brand Scanner completo de la siguiente marca, analizando su sitio web${instagramHandle ? ' y su cuenta de Instagram' : ''}.
 
-Contenido del sitio extraído:
-${content.substring(0, 12000)}
+Sitio: ${url}
+${instagramHandle ? `Instagram: @${instagramHandle}` : ''}
 
 ${branding ? `
-Información de Branding extraída automáticamente:
+DATOS DE BRANDING EXTRAÍDOS AUTOMÁTICAMENTE:
 - Esquema de color: ${branding.colorScheme || 'No detectado'}
 - Logo: ${branding.logo || 'No detectado'}
 - Colores principales: ${JSON.stringify(branding.colors || {})}
 - Tipografías: ${JSON.stringify(branding.fonts || [])}
+- Tipografía detallada: ${JSON.stringify(branding.typography || {})}
 ` : ''}
 
-Además del análisis visual y de tono, detectá e informá:
+${metadata ? `
+METADATA DEL SITIO:
+- Título: ${metadata.title || 'No detectado'}
+- Descripción: ${metadata.description || 'No detectada'}
+- Idioma: ${metadata.language || 'No detectado'}
+` : ''}
 
-1. ¿Qué palabras o conceptos clave se repiten en el sitio?
-2. ¿Coinciden esas palabras con las tendencias de búsqueda de los usuarios en Google en esta categoría?
-3. ¿Qué keywords relevantes faltan en el contenido del sitio?
+CONTENIDO DEL SITIO WEB:
+${content.substring(0, 15000)}
 
-Aspectos a evaluar:
-- Propuesta de valor: ¿Es clara y diferenciadora?
-- Tono de comunicación: ¿Cómo habla la marca y a quién le habla?
-- Identidad visual: ¿Qué transmite el diseño, colores, tipografías e imágenes?
-- UX básica: ¿Es fácil de navegar, clara y coherente?
-- Uso de palabras clave SEO-friendly vs. tendencias reales de búsqueda
+Tu análisis debe incluir las siguientes secciones:
 
-IMPORTANTE: Responde en formato JSON con esta estructura exacta:
+1. IDENTIDAD DE MARCA
+- ¿Cuál es la propuesta de valor de la marca? ¿Es clara y diferenciadora?
+- ¿Cómo es el tono de comunicación? ¿A quién le habla?
+- ¿La identidad visual es coherente? (colores, imágenes, tipografías, estilo)
+
+2. ANÁLISIS DEL SITIO WEB
+- Diagnóstico general del sitio: claridad, navegación, experiencia de usuario (UX).
+- Palabras clave que se repiten en el contenido del sitio.
+- ¿Estas keywords coinciden con las más buscadas en Google para su industria? (usa tu conocimiento de tendencias de búsqueda)
+- Keywords faltantes: ¿qué términos relevantes no aparecen y deberían estar?
+
+3. ANÁLISIS DE INSTAGRAM
+${instagramHandle ? `
+- Basándote en el perfil @${instagramHandle} y el tipo de marca:
+- Estética general esperada del feed: ¿es coherente y profesional?
+- Tipos de contenido que debería publicar (branding, ventas, comunidad, etc.).
+- Hashtags y palabras que deberían usar en los copys.
+- ¿Coinciden con las búsquedas populares de la audiencia en Google?
+- Nivel de engagement esperado y cómo mejorarlo.
+` : '- Proporciona recomendaciones generales para Instagram basándote en el análisis del sitio web.'}
+
+4. VELOCIDAD Y PERFORMANCE TÉCNICA
+- Basándote en el contenido y estructura del sitio, estima:
+  - Resultado mobile y desktop aproximado (bueno/regular/malo)
+  - Tiempo de carga estimado
+  - Problemas técnicos potenciales (imágenes pesadas, scripts, etc.)
+  - Recomendaciones para mejorar la velocidad y experiencia mobile
+
+5. DIAGNÓSTICO GENERAL Y RECOMENDACIONES
+- ¿Qué tan alineada está la marca con su audiencia digital?
+- Tabla con:
+  - Fortalezas
+  - Oportunidades de mejora
+  - Recomendaciones accionables
+- Proponé 2 ideas de contenido para Instagram y 2 mejoras SEO para el sitio.
+
+IMPORTANTE: Responde ÚNICAMENTE con un JSON válido con esta estructura exacta:
 {
   "brandName": "nombre de la marca detectado",
-  "tone": "una palabra que describe el tono (Profesional, Casual, Inspirador, Educativo, Divertido, Sofisticado, Elegante, Cercano)",
-  "style": "una palabra que describe el estilo visual (Minimalista, Colorido, Corporativo, Creativo, Elegante, Moderno)",
+  "tone": "descripción del tono (ej: profesional, cercano, innovador)",
+  "style": "descripción del estilo de comunicación",
   "colors": ["#color1", "#color2", "#color3"],
-  "keywords": ["palabra clave encontrada 1", "palabra clave 2", "palabra clave 3", "palabra clave 4"],
-  "personality": "descripción de la personalidad de marca en una oración",
+  "keywords": ["keyword1", "keyword2", "keyword3", "keyword4", "keyword5"],
+  "personality": "descripción de la personalidad de marca",
+  "contentSuggestions": ["sugerencia1", "sugerencia2", "sugerencia3"],
   "analysis": {
-    "summary": "diagnóstico breve de 3-5 líneas sobre la marca",
-    "strengths": ["fortaleza1", "fortaleza2", "fortaleza3"],
-    "weaknesses": ["debilidad1", "debilidad2"],
-    "recommendations": ["recomendación para alinear lenguaje con audiencia 1", "recomendación 2", "recomendación 3"],
-    "contentIdeas": ["oportunidad de contenido SEO 1", "oportunidad 2"]
+    "brandIdentity": {
+      "valueProposition": "propuesta de valor detectada",
+      "communicationTone": "tono de comunicación y a quién le habla",
+      "targetAudience": "audiencia objetivo identificada",
+      "visualCoherence": "evaluación de coherencia visual"
+    },
+    "websiteAnalysis": {
+      "diagnosis": "diagnóstico general del sitio",
+      "uxAssessment": "evaluación de UX",
+      "foundKeywords": ["keyword1", "keyword2", "keyword3"],
+      "missingKeywords": ["keyword faltante 1", "keyword faltante 2"],
+      "keywordAlignment": "evaluación de si coinciden con tendencias de búsqueda"
+    },
+    "instagramAnalysis": {
+      "feedAesthetic": "evaluación de estética del feed",
+      "contentTypes": ["tipo1", "tipo2", "tipo3"],
+      "topHashtags": ["#hashtag1", "#hashtag2", "#hashtag3"],
+      "engagementLevel": "evaluación de engagement",
+      "audienceAlignment": "alineación con búsquedas de audiencia"
+    },
+    "performance": {
+      "mobileScore": "estimación de score mobile",
+      "desktopScore": "estimación de score desktop",
+      "loadTime": "tiempo de carga estimado",
+      "issues": ["problema1", "problema2"],
+      "recommendations": ["recomendación técnica 1", "recomendación 2"]
+    },
+    "diagnosis": {
+      "strengths": ["fortaleza1", "fortaleza2", "fortaleza3"],
+      "opportunities": ["oportunidad1", "oportunidad2"],
+      "recommendations": ["recomendación accionable 1", "recomendación 2", "recomendación 3"],
+      "instagramIdeas": ["idea de contenido Instagram 1", "idea 2"],
+      "seoImprovements": ["mejora SEO 1", "mejora SEO 2"]
+    }
   },
   "seo": {
-    "foundKeywords": ["palabras clave encontradas en el sitio"],
-    "missingKeywords": ["keywords populares que NO están en el sitio pero deberían"],
+    "foundKeywords": ["keyword encontrada 1", "keyword 2", "keyword 3"],
+    "missingKeywords": ["keyword popular faltante 1", "keyword 2"],
     "seoOpportunities": ["oportunidad SEO específica 1", "oportunidad 2"],
-    "keywordAlignment": "evaluación de si el lenguaje del sitio coincide con cómo busca la audiencia"
+    "keywordAlignment": "evaluación de alineación entre lenguaje del sitio y cómo busca la audiencia"
   }
 }
 
@@ -94,29 +190,87 @@ Solo responde con el JSON, sin texto adicional.
 `;
 
 const getInstagramPrompt = (handle: string) => `
-Actuá como un estratega digital especializado en marcas y hacé un análisis de la cuenta de Instagram: ${handle}
+Actuá como un planner estratégico senior especializado en Instagram y redes sociales.
 
-Basándote en tu conocimiento general sobre cómo las marcas de este tipo suelen comunicarse en Instagram, analiza:
+Analizá la cuenta de Instagram @${handle} y proporciona un Brand Scanner completo.
 
-1. Identidad visual: ¿Qué estilo visual sería típico para una marca con este nombre?
-2. Tono y estilo de comunicación: ¿Cómo podría hablar esta marca? ¿A qué audiencia apuntaría?
-3. Contenido: ¿Qué tipo de contenido publicaría (branding, comunidad, ventas)?
-4. Diferenciación: ¿Cómo podría posicionarse frente a marcas similares?
+Tu análisis debe incluir:
 
-IMPORTANTE: Responde en formato JSON con esta estructura exacta:
+1. IDENTIDAD DE MARCA EN INSTAGRAM
+- Propuesta de valor percibida basándote en el nombre/handle
+- Tono de comunicación esperado
+- Audiencia objetivo aparente
+
+2. ANÁLISIS DE CONTENIDO
+- Estética general del feed esperada
+- Tipos de contenido recomendados (branding, ventas, comunidad, educativo, entretenimiento)
+- Frecuencia de publicación sugerida
+
+3. ESTRATEGIA DE HASHTAGS
+- Hashtags principales que debería usar
+- Hashtags de nicho recomendados
+- Hashtags de tendencia en su industria (basándote en tu conocimiento de búsquedas populares)
+
+4. ENGAGEMENT Y COMUNIDAD
+- Nivel de engagement esperado
+- Estrategias para mejorar interacción
+- Tipos de contenido que generan más engagement en esta industria
+
+5. RECOMENDACIONES
+- 3 ideas de contenido específicas
+- Mejoras de perfil sugeridas
+- Estrategia de crecimiento
+
+IMPORTANTE: Responde ÚNICAMENTE con un JSON válido con esta estructura:
 {
-  "brandName": "nombre de la marca basado en el handle",
-  "tone": "una palabra que describe el tono probable (ej: Profesional, Casual, Inspirador, Educativo, Divertido, Sofisticado, Elegante, Cercano)",
-  "style": "una palabra que describe el estilo visual probable (ej: Minimalista, Colorido, Corporativo, Creativo, Elegante, Moderno)",
-  "colors": ["#color1", "#color2", "#color3"],
-  "keywords": ["palabra1", "palabra2", "palabra3", "palabra4"],
-  "personality": "descripción de la personalidad de marca probable en una oración",
+  "brandName": "@${handle}",
+  "tone": "tono de comunicación sugerido",
+  "style": "estilo de comunicación",
+  "colors": ["#sugerencia1", "#sugerencia2", "#sugerencia3"],
+  "keywords": ["keyword1", "keyword2", "keyword3", "keyword4"],
+  "personality": "personalidad de marca sugerida",
+  "contentSuggestions": ["sugerencia1", "sugerencia2", "sugerencia3"],
   "analysis": {
-    "summary": "diagnóstico breve tipo 'esta marca comunica de forma...'",
-    "strengths": ["fortaleza potencial 1", "fortaleza potencial 2"],
-    "weaknesses": ["área de mejora 1", "área de mejora 2"],
-    "recommendations": ["recomendación 1", "recomendación 2", "recomendación 3"],
-    "contentIdeas": ["idea de contenido 1 que podría mejorar la estrategia", "idea de contenido 2"]
+    "brandIdentity": {
+      "valueProposition": "propuesta de valor sugerida",
+      "communicationTone": "tono de comunicación",
+      "targetAudience": "audiencia objetivo",
+      "visualCoherence": "coherencia visual sugerida"
+    },
+    "websiteAnalysis": {
+      "diagnosis": "N/A - Solo análisis de Instagram",
+      "uxAssessment": "N/A",
+      "foundKeywords": [],
+      "missingKeywords": [],
+      "keywordAlignment": "N/A"
+    },
+    "instagramAnalysis": {
+      "feedAesthetic": "estética del feed sugerida",
+      "contentTypes": ["tipo1", "tipo2", "tipo3"],
+      "topHashtags": ["#hashtag1", "#hashtag2", "#hashtag3"],
+      "engagementLevel": "nivel de engagement esperado",
+      "audienceAlignment": "alineación con audiencia"
+    },
+    "performance": {
+      "mobileScore": "N/A",
+      "desktopScore": "N/A",
+      "loadTime": "N/A",
+      "issues": [],
+      "recommendations": []
+    },
+    "diagnosis": {
+      "strengths": ["fortaleza potencial 1", "fortaleza 2"],
+      "opportunities": ["oportunidad 1", "oportunidad 2"],
+      "recommendations": ["recomendación 1", "recomendación 2", "recomendación 3"],
+      "instagramIdeas": ["idea de contenido 1", "idea 2", "idea 3"],
+      "seoImprovements": []
+    }
+  },
+  "seo": {
+    "foundKeywords": [],
+    "missingKeywords": [],
+    "seoOpportunities": [],
+    "keywordAlignment": "N/A - Análisis de Instagram"
   }
 }
 
@@ -219,7 +373,7 @@ async function analyzeWithAI(prompt: string): Promise<BrandScanResult | null> {
   }
 
   try {
-    console.log("Calling AI Gateway for brand analysis...");
+    console.log("Calling AI Gateway for comprehensive brand analysis...");
     
     const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
       method: "POST",
@@ -232,7 +386,7 @@ async function analyzeWithAI(prompt: string): Promise<BrandScanResult | null> {
         messages: [
           {
             role: "system",
-            content: "Eres un analista de marcas experto. Siempre respondes en formato JSON válido sin texto adicional."
+            content: "Eres un planner estratégico senior especializado en branding digital, SEO, y análisis de marcas. Tienes amplio conocimiento de tendencias de búsqueda en Google y comportamiento de usuarios. Siempre respondes en formato JSON válido sin texto adicional."
           },
           {
             role: "user",
@@ -267,13 +421,12 @@ async function analyzeWithAI(prompt: string): Promise<BrandScanResult | null> {
 
     const result = JSON.parse(jsonMatch[0]);
     
-    // Add default content suggestions if not present
+    // Ensure contentSuggestions exists
     if (!result.contentSuggestions) {
-      result.contentSuggestions = result.analysis?.contentIdeas || [
+      result.contentSuggestions = result.analysis?.diagnosis?.instagramIdeas || [
         'Tips educativos semanales',
         'Behind the scenes',
-        'Casos de éxito',
-        'User generated content'
+        'Casos de éxito'
       ];
     }
 
@@ -298,11 +451,46 @@ function getFallbackAnalysis(handle: string, type: string): BrandScanResult {
     personality: 'Marca confiable que busca conectar con su audiencia de manera auténtica',
     contentSuggestions: ['Tips educativos', 'Behind the scenes', 'Casos de éxito', 'Testimonios'],
     analysis: {
-      summary: `${brandName} presenta una identidad de marca que busca posicionarse de manera profesional en su sector. El análisis requiere acceso directo al contenido para mayor precisión.`,
-      strengths: ['Nombre de marca memorable', 'Potencial de diferenciación'],
-      weaknesses: ['Análisis limitado sin acceso al contenido real'],
-      recommendations: ['Conectar Instagram para análisis profundo', 'Proporcionar URL del sitio web'],
-      contentIdeas: ['Contenido educativo sobre el sector', 'Historias de clientes satisfechos']
+      brandIdentity: {
+        valueProposition: 'Análisis pendiente - Se requiere más información',
+        communicationTone: 'Por determinar con más datos',
+        targetAudience: 'Por identificar',
+        visualCoherence: 'Por evaluar'
+      },
+      websiteAnalysis: {
+        diagnosis: 'Análisis básico completado',
+        uxAssessment: 'Se recomienda auditoría completa de UX',
+        foundKeywords: [],
+        missingKeywords: [],
+        keywordAlignment: 'Por evaluar con análisis completo'
+      },
+      instagramAnalysis: {
+        feedAesthetic: 'Por evaluar',
+        contentTypes: ['branding', 'educativo', 'comunidad'],
+        topHashtags: [],
+        engagementLevel: 'Por medir',
+        audienceAlignment: 'Por evaluar'
+      },
+      performance: {
+        mobileScore: 'Por medir',
+        desktopScore: 'Por medir',
+        loadTime: 'Por medir',
+        issues: [],
+        recommendations: ['Realizar auditoría de performance']
+      },
+      diagnosis: {
+        strengths: ['Presencia digital establecida'],
+        opportunities: ['Optimización SEO', 'Mejora de contenido'],
+        recommendations: ['Realizar análisis completo', 'Definir estrategia de contenido'],
+        instagramIdeas: ['Serie de tips', 'Behind-the-scenes'],
+        seoImprovements: ['Optimizar meta descriptions', 'Agregar keywords relevantes']
+      }
+    },
+    seo: {
+      foundKeywords: [],
+      missingKeywords: [],
+      seoOpportunities: ['Realizar keyword research completo'],
+      keywordAlignment: 'Análisis pendiente'
     }
   };
 }
@@ -313,7 +501,7 @@ serve(async (req) => {
   }
 
   try {
-    const { handle, type }: BrandScanRequest = await req.json();
+    const { handle, type, instagramHandle }: BrandScanRequest = await req.json();
     
     if (!handle) {
       return new Response(
@@ -322,7 +510,7 @@ serve(async (req) => {
       );
     }
 
-    console.log(`Scanning brand: ${handle} (${type})`);
+    console.log(`Scanning brand: ${handle} (${type})${instagramHandle ? ` with Instagram: @${instagramHandle}` : ''}`);
     
     let result: BrandScanResult | null = null;
     
@@ -331,7 +519,7 @@ serve(async (req) => {
       const { markdown, branding, metadata } = await fetchWithFirecrawl(handle);
       
       if (markdown && markdown.length > 100) {
-        const prompt = getWebsitePrompt(handle, markdown, branding);
+        const prompt = getComprehensivePrompt(handle, markdown, instagramHandle || '', branding, metadata);
         result = await analyzeWithAI(prompt);
         
         // Add Firecrawl data to result
@@ -354,7 +542,7 @@ serve(async (req) => {
       }
     } else {
       // Instagram analysis
-      const prompt = getInstagramPrompt(handle);
+      const prompt = getInstagramPrompt(handle.replace('@', ''));
       result = await analyzeWithAI(prompt);
     }
     
