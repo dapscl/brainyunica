@@ -575,6 +575,19 @@ const TrialPage = () => {
                   <p className="text-xs text-center text-muted-foreground">
                     Al crear tu cuenta aceptas nuestros términos de servicio y política de privacidad
                   </p>
+
+                  <div className="text-center pt-4 border-t border-border/30">
+                    <p className="text-sm text-muted-foreground">
+                      ¿Ya tienes una cuenta?{' '}
+                      <button
+                        type="button"
+                        onClick={() => navigate('/auth')}
+                        className="text-electric-cyan hover:underline font-medium"
+                      >
+                        Ingresar
+                      </button>
+                    </p>
+                  </div>
                 </form>
               </Card>
             </motion.div>
