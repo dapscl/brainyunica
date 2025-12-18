@@ -100,12 +100,17 @@ export type Database = {
           brand_guidelines: string | null
           brand_id: string
           color_palette: Json | null
+          content_themes: string[] | null
           created_at: string | null
           dos_and_donts: Json | null
           font_source: string | null
           id: string
+          instagram_data: Json | null
+          instagram_handle: string | null
+          learned_keywords: string[] | null
           logo_url: string | null
           logo_variations: Json | null
+          posting_patterns: Json | null
           primary_color: string | null
           primary_font_name: string | null
           secondary_color: string | null
@@ -114,18 +119,24 @@ export type Database = {
           style_restrictions: Json | null
           typography: Json | null
           updated_at: string | null
+          voice_profile: Json | null
         }
         Insert: {
           accent_color?: string | null
           brand_guidelines?: string | null
           brand_id: string
           color_palette?: Json | null
+          content_themes?: string[] | null
           created_at?: string | null
           dos_and_donts?: Json | null
           font_source?: string | null
           id?: string
+          instagram_data?: Json | null
+          instagram_handle?: string | null
+          learned_keywords?: string[] | null
           logo_url?: string | null
           logo_variations?: Json | null
+          posting_patterns?: Json | null
           primary_color?: string | null
           primary_font_name?: string | null
           secondary_color?: string | null
@@ -134,18 +145,24 @@ export type Database = {
           style_restrictions?: Json | null
           typography?: Json | null
           updated_at?: string | null
+          voice_profile?: Json | null
         }
         Update: {
           accent_color?: string | null
           brand_guidelines?: string | null
           brand_id?: string
           color_palette?: Json | null
+          content_themes?: string[] | null
           created_at?: string | null
           dos_and_donts?: Json | null
           font_source?: string | null
           id?: string
+          instagram_data?: Json | null
+          instagram_handle?: string | null
+          learned_keywords?: string[] | null
           logo_url?: string | null
           logo_variations?: Json | null
+          posting_patterns?: Json | null
           primary_color?: string | null
           primary_font_name?: string | null
           secondary_color?: string | null
@@ -154,6 +171,7 @@ export type Database = {
           style_restrictions?: Json | null
           typography?: Json | null
           updated_at?: string | null
+          voice_profile?: Json | null
         }
         Relationships: [
           {
@@ -694,6 +712,8 @@ export type Database = {
           owner_id: string
           settings: Json | null
           slug: string
+          subscription_status: string | null
+          trial_ends_at: string | null
           updated_at: string | null
         }
         Insert: {
@@ -704,6 +724,8 @@ export type Database = {
           owner_id: string
           settings?: Json | null
           slug: string
+          subscription_status?: string | null
+          trial_ends_at?: string | null
           updated_at?: string | null
         }
         Update: {
@@ -714,6 +736,8 @@ export type Database = {
           owner_id?: string
           settings?: Json | null
           slug?: string
+          subscription_status?: string | null
+          trial_ends_at?: string | null
           updated_at?: string | null
         }
         Relationships: []
