@@ -18,66 +18,213 @@ interface BrandScanResult {
   keywords: string[];
   personality: string;
   contentSuggestions: string[];
+  analysis: {
+    summary: string;
+    strengths: string[];
+    weaknesses: string[];
+    recommendations: string[];
+    contentIdeas: string[];
+  };
 }
 
-// Simulated brand analysis - in production this would use AI to analyze real data
-const analyzeBrand = (handle: string, type: string): BrandScanResult => {
-  // Generate pseudo-random but consistent results based on handle
-  const hashCode = handle.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+// Prompts para análisis real
+const getWebsitePrompt = (url: string, content: string) => `
+Actuá como un analista de marca y hacé un brand audit de este sitio web: ${url}
+
+Contenido del sitio:
+${content.substring(0, 8000)}
+
+Quiero que analices:
+1. La propuesta de valor: ¿Es clara y diferenciadora?
+2. El tono de comunicación: ¿Cómo habla la marca y a quién le habla?
+3. La identidad visual: ¿Qué transmite el diseño, colores, tipografías e imágenes?
+4. UX básica: ¿Es fácil de navegar, clara y coherente?
+5. Insights estratégicos: ¿Qué oportunidades de mejora o fortalezas ves?
+
+IMPORTANTE: Responde en formato JSON con esta estructura exacta:
+{
+  "brandName": "nombre de la marca detectado",
+  "tone": "una palabra que describe el tono (ej: Profesional, Casual, Inspirador, Educativo, Divertido, Sofisticado, Elegante, Cercano)",
+  "style": "una palabra que describe el estilo visual (ej: Minimalista, Colorido, Corporativo, Creativo, Elegante, Moderno, Sofisticado)",
+  "colors": ["#color1", "#color2", "#color3"],
+  "keywords": ["palabra1", "palabra2", "palabra3", "palabra4"],
+  "personality": "descripción de la personalidad de marca en una oración",
+  "analysis": {
+    "summary": "resumen general de 3-5 líneas",
+    "strengths": ["fortaleza1", "fortaleza2", "fortaleza3"],
+    "weaknesses": ["debilidad1", "debilidad2"],
+    "recommendations": ["recomendación1", "recomendación2", "recomendación3"],
+    "contentIdeas": ["idea de contenido 1", "idea de contenido 2"]
+  }
+}
+
+Solo responde con el JSON, sin texto adicional.
+`;
+
+const getInstagramPrompt = (handle: string) => `
+Actuá como un estratega digital especializado en marcas y hacé un análisis de la cuenta de Instagram: ${handle}
+
+Basándote en tu conocimiento general sobre cómo las marcas de este tipo suelen comunicarse en Instagram, analiza:
+
+1. Identidad visual: ¿Qué estilo visual sería típico para una marca con este nombre?
+2. Tono y estilo de comunicación: ¿Cómo podría hablar esta marca? ¿A qué audiencia apuntaría?
+3. Contenido: ¿Qué tipo de contenido publicaría (branding, comunidad, ventas)?
+4. Diferenciación: ¿Cómo podría posicionarse frente a marcas similares?
+
+IMPORTANTE: Responde en formato JSON con esta estructura exacta:
+{
+  "brandName": "nombre de la marca basado en el handle",
+  "tone": "una palabra que describe el tono probable (ej: Profesional, Casual, Inspirador, Educativo, Divertido, Sofisticado, Elegante, Cercano)",
+  "style": "una palabra que describe el estilo visual probable (ej: Minimalista, Colorido, Corporativo, Creativo, Elegante, Moderno)",
+  "colors": ["#color1", "#color2", "#color3"],
+  "keywords": ["palabra1", "palabra2", "palabra3", "palabra4"],
+  "personality": "descripción de la personalidad de marca probable en una oración",
+  "analysis": {
+    "summary": "diagnóstico breve tipo 'esta marca comunica de forma...'",
+    "strengths": ["fortaleza potencial 1", "fortaleza potencial 2"],
+    "weaknesses": ["área de mejora 1", "área de mejora 2"],
+    "recommendations": ["recomendación 1", "recomendación 2", "recomendación 3"],
+    "contentIdeas": ["idea de contenido 1 que podría mejorar la estrategia", "idea de contenido 2"]
+  }
+}
+
+Solo responde con el JSON, sin texto adicional.
+`;
+
+// Fetch website content (basic)
+async function fetchWebsiteContent(url: string): Promise<string> {
+  try {
+    let formattedUrl = url.trim();
+    if (!formattedUrl.startsWith('http://') && !formattedUrl.startsWith('https://')) {
+      formattedUrl = `https://${formattedUrl}`;
+    }
+    
+    const response = await fetch(formattedUrl, {
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (compatible; BrandScanner/1.0)'
+      }
+    });
+    
+    if (!response.ok) {
+      throw new Error(`Failed to fetch: ${response.status}`);
+    }
+    
+    const html = await response.text();
+    
+    // Extract text content from HTML (basic extraction)
+    const textContent = html
+      .replace(/<script[^>]*>[\s\S]*?<\/script>/gi, '')
+      .replace(/<style[^>]*>[\s\S]*?<\/style>/gi, '')
+      .replace(/<[^>]+>/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim();
+    
+    return textContent;
+  } catch (error) {
+    console.error('Error fetching website:', error);
+    return '';
+  }
+}
+
+// Call AI for analysis
+async function analyzeWithAI(prompt: string): Promise<BrandScanResult | null> {
+  const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
   
-  const tones = ['Profesional', 'Casual', 'Inspirador', 'Educativo', 'Divertido', 'Sofisticado'];
-  const styles = ['Minimalista', 'Colorido', 'Corporativo', 'Creativo', 'Elegante', 'Moderno'];
-  const personalities = [
-    'Experto confiable que educa a su audiencia',
-    'Marca cercana que conecta emocionalmente',
-    'Líder innovador en su industria',
-    'Guía amigable que simplifica lo complejo',
-    'Visionario que inspira cambio'
-  ];
-  
-  const colorPalettes = [
-    ['#00D9FF', '#B026FF', '#1A1A2E'],
-    ['#FF6B6B', '#4ECDC4', '#2C3E50'],
-    ['#F39C12', '#27AE60', '#2980B9'],
-    ['#E74C3C', '#9B59B6', '#34495E'],
-    ['#1ABC9C', '#3498DB', '#2C3E50']
-  ];
-  
-  const keywordSets = [
-    ['innovación', 'calidad', 'confianza', 'resultados'],
-    ['creatividad', 'diseño', 'estilo', 'tendencia'],
-    ['crecimiento', 'éxito', 'estrategia', 'impacto'],
-    ['comunidad', 'conexión', 'valor', 'autenticidad'],
-    ['tecnología', 'futuro', 'eficiencia', 'soluciones']
-  ];
-  
-  const suggestionSets = [
-    ['Tips educativos semanales', 'Behind the scenes', 'Casos de éxito', 'Infografías'],
-    ['Reels con tendencias', 'Colaboraciones', 'User generated content', 'Lives'],
-    ['Tutoriales paso a paso', 'Comparativas', 'Testimonios', 'Q&A'],
-    ['Storytelling personal', 'Motivación diaria', 'Desafíos', 'Encuestas'],
-    ['Contenido viral', 'Memes de industria', 'Predicciones', 'Reviews']
-  ];
-  
-  const idx = hashCode % 5;
-  
-  // Extract brand name from handle
+  if (!LOVABLE_API_KEY) {
+    console.error("LOVABLE_API_KEY not configured");
+    return null;
+  }
+
+  try {
+    console.log("Calling AI Gateway for brand analysis...");
+    
+    const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${LOVABLE_API_KEY}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        model: "google/gemini-2.5-flash",
+        messages: [
+          {
+            role: "system",
+            content: "Eres un analista de marcas experto. Siempre respondes en formato JSON válido sin texto adicional."
+          },
+          {
+            role: "user",
+            content: prompt
+          }
+        ],
+      }),
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error("AI Gateway error:", response.status, errorText);
+      return null;
+    }
+
+    const data = await response.json();
+    const content = data.choices?.[0]?.message?.content;
+    
+    if (!content) {
+      console.error("No content in AI response");
+      return null;
+    }
+
+    console.log("AI Response received, parsing...");
+    
+    // Parse JSON from response
+    const jsonMatch = content.match(/\{[\s\S]*\}/);
+    if (!jsonMatch) {
+      console.error("No JSON found in response:", content);
+      return null;
+    }
+
+    const result = JSON.parse(jsonMatch[0]);
+    
+    // Add default content suggestions if not present
+    if (!result.contentSuggestions) {
+      result.contentSuggestions = result.analysis?.contentIdeas || [
+        'Tips educativos semanales',
+        'Behind the scenes',
+        'Casos de éxito',
+        'User generated content'
+      ];
+    }
+
+    return result;
+  } catch (error) {
+    console.error("Error in AI analysis:", error);
+    return null;
+  }
+}
+
+// Fallback analysis if AI fails
+function getFallbackAnalysis(handle: string, type: string): BrandScanResult {
   let brandName = handle.replace('@', '').replace('https://', '').replace('www.', '').split('/')[0].split('.')[0];
   brandName = brandName.charAt(0).toUpperCase() + brandName.slice(1);
   
   return {
     brandName,
-    tone: tones[hashCode % tones.length],
-    style: styles[(hashCode + 1) % styles.length],
-    colors: colorPalettes[idx],
-    keywords: keywordSets[idx],
-    personality: personalities[idx],
-    contentSuggestions: suggestionSets[idx]
+    tone: 'Profesional',
+    style: 'Moderno',
+    colors: ['#00D9FF', '#B026FF', '#1A1A2E'],
+    keywords: ['innovación', 'calidad', 'confianza', 'resultados'],
+    personality: 'Marca confiable que busca conectar con su audiencia de manera auténtica',
+    contentSuggestions: ['Tips educativos', 'Behind the scenes', 'Casos de éxito', 'Testimonios'],
+    analysis: {
+      summary: `${brandName} presenta una identidad de marca que busca posicionarse de manera profesional en su sector. El análisis requiere acceso directo al contenido para mayor precisión.`,
+      strengths: ['Nombre de marca memorable', 'Potencial de diferenciación'],
+      weaknesses: ['Análisis limitado sin acceso al contenido real'],
+      recommendations: ['Conectar Instagram para análisis profundo', 'Proporcionar URL del sitio web'],
+      contentIdeas: ['Contenido educativo sobre el sector', 'Historias de clientes satisfechos']
+    }
   };
-};
+}
 
 serve(async (req) => {
-  // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
@@ -94,12 +241,29 @@ serve(async (req) => {
 
     console.log(`Scanning brand: ${handle} (${type})`);
     
-    // Simulate processing time (2-4 seconds)
-    await new Promise(resolve => setTimeout(resolve, 2000 + Math.random() * 2000));
+    let result: BrandScanResult | null = null;
     
-    const result = analyzeBrand(handle, type);
+    if (type === 'website') {
+      // Fetch website content and analyze
+      const content = await fetchWebsiteContent(handle);
+      
+      if (content && content.length > 100) {
+        const prompt = getWebsitePrompt(handle, content);
+        result = await analyzeWithAI(prompt);
+      }
+    } else {
+      // Instagram analysis
+      const prompt = getInstagramPrompt(handle);
+      result = await analyzeWithAI(prompt);
+    }
     
-    console.log(`Brand scan complete for ${handle}:`, result);
+    // Use fallback if AI analysis failed
+    if (!result) {
+      console.log("Using fallback analysis");
+      result = getFallbackAnalysis(handle, type);
+    }
+    
+    console.log(`Brand scan complete for ${handle}`);
 
     return new Response(
       JSON.stringify({ success: true, data: result }),
