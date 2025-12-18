@@ -28,11 +28,14 @@ import {
   TrendingUp,
   Target,
   Link,
-  FileText
+  FileText,
+  History
 } from 'lucide-react';
 import { useContentGenerator } from '@/hooks/useContentGenerator';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
+import AnalysisDisplay from './AnalysisDisplay';
+import ContentHistoryPanel from './ContentHistoryPanel';
 
 interface BrandAnalysis {
   summary: string;
@@ -134,6 +137,9 @@ const TrialCreatorPanel = ({ brandProfile, onGoToDashboard, onActivityLog }: Tri
 
   // Accepted content library
   const [acceptedContents, setAcceptedContents] = useState<AcceptedContent[]>([]);
+
+  // History panel
+  const [showHistory, setShowHistory] = useState(false);
 
   // Handle image upload
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -299,7 +305,14 @@ const TrialCreatorPanel = ({ brandProfile, onGoToDashboard, onActivityLog }: Tri
     });
     if (result) {
       setCopyResult(result);
-      onActivityLog?.('copy_generated', result.copy?.fullCopy?.substring(0, 100), { topic: copyTopic, platform: selectedPlatform });
+      const resultAny = result as any;
+      onActivityLog?.('copy_generated', resultAny.copy?.fullCopy?.substring(0, 100), { 
+        topic: copyTopic, 
+        platform: selectedPlatform,
+        fullContent: resultAny.copy?.fullCopy,
+        julianKoenigVersion: resultAny.julianKoenigVersion,
+        analysis: resultAny.analysis
+      });
     }
   };
 
@@ -375,7 +388,13 @@ const TrialCreatorPanel = ({ brandProfile, onGoToDashboard, onActivityLog }: Tri
     });
     if (result) {
       setVariantsResult(result);
-      onActivityLog?.('variants_generated', variantContent.substring(0, 100), { platform: selectedPlatform });
+      const resultAny = result as any;
+      onActivityLog?.('variants_generated', variantContent.substring(0, 100), { 
+        platform: selectedPlatform,
+        fullContent: JSON.stringify(resultAny.variants),
+        julianKoenigVersion: resultAny.julianKoenigVersion,
+        analysis: resultAny.analysis
+      });
     }
   };
 
@@ -398,7 +417,13 @@ const TrialCreatorPanel = ({ brandProfile, onGoToDashboard, onActivityLog }: Tri
     });
     if (result) {
       setIdeasResult(result);
-      onActivityLog?.('ideas_generated', ideasTopic, { platform: selectedPlatform });
+      const resultAny = result as any;
+      onActivityLog?.('ideas_generated', ideasTopic, { 
+        platform: selectedPlatform,
+        fullContent: resultAny.ideas?.map((i: any) => i.title).join(', '),
+        julianKoenigVersion: resultAny.julianKoenigVersion,
+        analysis: resultAny.analysis
+      });
     }
   };
 
@@ -410,7 +435,13 @@ const TrialCreatorPanel = ({ brandProfile, onGoToDashboard, onActivityLog }: Tri
     });
     if (result) {
       setImproveResult(result);
-      onActivityLog?.('improved', improveContent_.substring(0, 100), { platform: selectedPlatform });
+      const resultAny = result as any;
+      onActivityLog?.('improved', improveContent_.substring(0, 100), { 
+        platform: selectedPlatform,
+        fullContent: resultAny.improved?.content,
+        julianKoenigVersion: resultAny.julianKoenigVersion,
+        analysis: resultAny.analysis
+      });
     }
   };
 
@@ -418,7 +449,13 @@ const TrialCreatorPanel = ({ brandProfile, onGoToDashboard, onActivityLog }: Tri
     const result = await translateContent(translateContent_, translateLang);
     if (result) {
       setTranslateResult(result);
-      onActivityLog?.('translated', translateContent_.substring(0, 100), { targetLang: translateLang });
+      const resultAny = result as any;
+      onActivityLog?.('translated', translateContent_.substring(0, 100), { 
+        targetLang: translateLang,
+        fullContent: resultAny.translation?.content,
+        julianKoenigVersion: resultAny.julianKoenigVersion,
+        analysis: resultAny.analysis
+      });
     }
   };
 
@@ -472,6 +509,17 @@ const TrialCreatorPanel = ({ brandProfile, onGoToDashboard, onActivityLog }: Tri
 
   return (
     <div className="space-y-8">
+      {/* History Panel */}
+      {showHistory && (
+        <ContentHistoryPanel 
+          onClose={() => setShowHistory(false)}
+          onSelectContent={(content) => {
+            setCopyTopic(content);
+            setShowHistory(false);
+          }}
+        />
+      )}
+
       {/* Brand Profile Header */}
       <Card className="bg-card/30 backdrop-blur-sm border-electric-cyan/20">
         <CardContent className="p-6">
@@ -908,6 +956,12 @@ const TrialCreatorPanel = ({ brandProfile, onGoToDashboard, onActivityLog }: Tri
                       </Badge>
                     ))}
                   </div>
+
+                  {/* Julian Koenig Version & Analysis */}
+                  <AnalysisDisplay 
+                    analysis={copyResult.analysis}
+                    julianKoenigVersion={copyResult.julianKoenigVersion}
+                  />
                   
                   {/* Accept / Edit Buttons */}
                   {!copyAccepted && !copyEditing && (

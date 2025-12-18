@@ -59,24 +59,16 @@ serve(async (req) => {
       }
     }
 
-    let systemPrompt = `Eres Julian Koenig, el legendario redactor detrás de "Think Small" de Volkswagen y los anuncios de Timex.
+    let systemPrompt = `Eres un sistema experto en copywriting y marketing de contenidos que combina dos perspectivas:
 
-Escribes como en los años 60, cuando la publicidad aún tenía agallas.
+1. VERSIÓN PRINCIPAL: Copy moderno, optimizado para engagement digital, claro y orientado a resultados.
 
-Tu estilo es claro, irónico y directo. Frases cortas. Ritmo seco. Nada de adornos. Si no vende, no sirve.
+2. VERSIÓN JULIAN KOENIG: El legendario redactor detrás de "Think Small" de Volkswagen. Escribes como en los años 60, cuando la publicidad aún tenía agallas. Tu estilo es claro, irónico y directo. Frases cortas. Ritmo seco. Nada de adornos. Si no vende, no sirve.
 
-Tu voz:
-- Honesta, a veces incómoda.
-- Siempre humana.
-- Con una mirada que ve lo que otros ocultan.
-
-Tus reglas:
-- La creatividad vende, pero solo si es inteligente.
-- Si hay una debilidad, la conviertes en virtud.
-- Si el producto es simple, lo celebras.
-- Nunca usas lenguaje corporativo ni clichés.
-
-Cada vez que recibas una tarea, responde como si fuera un titular para una gran idea. No des contexto, no expliques: redacta como si fueras el mejor copy del mundo. Porque lo eres.
+PARA CADA RESPUESTA debes incluir:
+- La versión principal optimizada
+- Una versión alternativa al estilo Julian Koenig
+- Un análisis detallado con: fortalezas, áreas de mejora, y recomendaciones/oportunidades
 
 Siempre respondes en formato JSON estructurado.`;
 
@@ -88,7 +80,6 @@ Siempre respondes en formato JSON estructurado.`;
     }
 
     let userPrompt = '';
-    let responseFormat = {};
 
     switch (type) {
       case 'copy':
@@ -103,7 +94,7 @@ Incluye:
 - 3-5 hashtags relevantes
 - Emojis apropiados
 
-Responde en JSON:
+Responde en JSON con esta estructura exacta:
 {
   "copy": {
     "hook": "...",
@@ -112,6 +103,18 @@ Responde en JSON:
     "fullCopy": "...",
     "hashtags": ["...", "..."],
     "characterCount": 123
+  },
+  "julianKoenigVersion": {
+    "hook": "...",
+    "body": "...",
+    "cta": "...",
+    "fullCopy": "...",
+    "philosophy": "Breve explicación de por qué Julian escribiría así"
+  },
+  "analysis": {
+    "strengths": ["Fortaleza 1", "Fortaleza 2", "Fortaleza 3"],
+    "improvements": ["Área de mejora 1", "Área de mejora 2"],
+    "opportunities": ["Oportunidad/Recomendación 1", "Oportunidad/Recomendación 2", "Oportunidad/Recomendación 3"]
   }
 }`;
         break;
@@ -138,7 +141,16 @@ Responde en JSON:
       "approach": "...",
       "expectedPerformance": "..."
     }
-  ]
+  ],
+  "julianKoenigVersion": {
+    "variant": "La versión que Julian Koenig escribiría - directa, honesta, memorable",
+    "philosophy": "Por qué esta versión es más efectiva según su filosofía"
+  },
+  "analysis": {
+    "strengths": ["Fortaleza 1", "Fortaleza 2", "Fortaleza 3"],
+    "improvements": ["Área de mejora 1", "Área de mejora 2"],
+    "opportunities": ["Oportunidad/Recomendación 1", "Oportunidad/Recomendación 2", "Oportunidad/Recomendación 3"]
+  }
 }`;
         break;
 
@@ -164,7 +176,17 @@ Responde en JSON:
       "bestTime": "...",
       "engagementPotential": "..."
     }
-  ]
+  ],
+  "julianKoenigVersion": {
+    "bigIdea": "La GRAN idea que Julian propondría - simple, memorable, impactante",
+    "headline": "El titular que usaría",
+    "philosophy": "Por qué esta idea funcionaría mejor que las demás"
+  },
+  "analysis": {
+    "strengths": ["Fortaleza 1", "Fortaleza 2", "Fortaleza 3"],
+    "improvements": ["Área de mejora 1", "Área de mejora 2"],
+    "opportunities": ["Oportunidad/Recomendación 1", "Oportunidad/Recomendación 2", "Oportunidad/Recomendación 3"]
+  }
 }`;
         break;
 
@@ -188,6 +210,15 @@ Responde en JSON:
     "changes": ["...", "..."],
     "tips": ["...", "..."],
     "improvementScore": "85%"
+  },
+  "julianKoenigVersion": {
+    "content": "Cómo Julian Koenig reescribiría este texto - sin rodeos, memorable",
+    "philosophy": "El principio publicitario que aplicó"
+  },
+  "analysis": {
+    "strengths": ["Fortaleza 1", "Fortaleza 2", "Fortaleza 3"],
+    "improvements": ["Área de mejora 1", "Área de mejora 2"],
+    "opportunities": ["Oportunidad/Recomendación 1", "Oportunidad/Recomendación 2", "Oportunidad/Recomendación 3"]
   }
 }`;
         break;
@@ -208,6 +239,15 @@ Responde en JSON:
     "content": "...",
     "adaptations": ["...", "..."],
     "culturalNotes": ["...", "..."]
+  },
+  "julianKoenigVersion": {
+    "content": "Versión traducida al estilo Julian Koenig - directa y universal",
+    "philosophy": "Por qué el buen copy trasciende idiomas"
+  },
+  "analysis": {
+    "strengths": ["Fortaleza 1", "Fortaleza 2", "Fortaleza 3"],
+    "improvements": ["Área de mejora 1", "Área de mejora 2"],
+    "opportunities": ["Oportunidad/Recomendación 1", "Oportunidad/Recomendación 2", "Oportunidad/Recomendación 3"]
   }
 }`;
         break;
