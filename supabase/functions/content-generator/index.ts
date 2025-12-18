@@ -1,21 +1,22 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+import { z } from "https://esm.sh/zod@3.23.8";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
-interface ContentRequest {
-  type: 'copy' | 'variants' | 'ideas' | 'improve' | 'translate';
-  brandId?: string;
-  platform?: string;
-  topic?: string;
-  tone?: string;
-  originalContent?: string;
-  targetLanguage?: string;
-  context?: string;
-}
+const ContentRequestSchema = z.object({
+  type: z.enum(['copy', 'variants', 'ideas', 'improve', 'translate']),
+  brandId: z.string().uuid().optional(),
+  platform: z.string().max(50).optional(),
+  topic: z.string().max(500).optional(),
+  tone: z.string().max(100).optional(),
+  originalContent: z.string().max(10000).optional(),
+  targetLanguage: z.string().max(50).optional(),
+  context: z.string().max(5000).optional(),
+});
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
@@ -32,8 +33,18 @@ serve(async (req) => {
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
     const supabase = createClient(supabaseUrl, supabaseKey);
 
-    const request: ContentRequest = await req.json();
-    const { type, brandId, platform, topic, tone, originalContent, targetLanguage, context } = request;
+    const rawBody = await req.json();
+    const parseResult = ContentRequestSchema.safeParse(rawBody);
+    
+    if (!parseResult.success) {
+      console.error('Validation error:', parseResult.error.errors);
+      return new Response(
+        JSON.stringify({ error: 'Invalid request', details: parseResult.error.errors }),
+        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+    
+    const { type, brandId, platform, topic, tone, originalContent, targetLanguage, context } = parseResult.data;
 
     console.log('Content generation request:', { type, brandId, platform, topic });
 

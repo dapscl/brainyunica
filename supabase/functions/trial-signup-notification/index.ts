@@ -1,5 +1,6 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { Resend } from "npm:resend@2.0.0";
+import { z } from "https://esm.sh/zod@3.23.8";
 
 const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
 
@@ -8,14 +9,14 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
-interface TrialSignupRequest {
-  email: string;
-  brandHandle: string;
-  brandType: 'instagram' | 'website';
-  brandName: string;
-  detectedTone: string;
-  detectedStyle: string;
-}
+const TrialSignupSchema = z.object({
+  email: z.string().email().max(255),
+  brandHandle: z.string().min(1).max(200),
+  brandType: z.enum(['instagram', 'website']),
+  brandName: z.string().min(1).max(200),
+  detectedTone: z.string().max(100),
+  detectedStyle: z.string().max(100),
+});
 
 const handler = async (req: Request): Promise<Response> => {
   if (req.method === "OPTIONS") {
@@ -23,7 +24,18 @@ const handler = async (req: Request): Promise<Response> => {
   }
 
   try {
-    const signupData: TrialSignupRequest = await req.json();
+    const rawBody = await req.json();
+    const parseResult = TrialSignupSchema.safeParse(rawBody);
+    
+    if (!parseResult.success) {
+      console.error('Validation error:', parseResult.error.errors);
+      return new Response(
+        JSON.stringify({ error: 'Invalid request', details: parseResult.error.errors }),
+        { status: 400, headers: { "Content-Type": "application/json", ...corsHeaders } }
+      );
+    }
+    
+    const signupData = parseResult.data;
 
     const emailHtml = `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
