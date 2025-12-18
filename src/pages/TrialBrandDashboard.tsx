@@ -6,8 +6,11 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { Skeleton } from '@/components/ui/skeleton';
+import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { ShowcaseHeader } from '@/components/showcase/ShowcaseHeader';
 import { ShowcaseSEO } from '@/components/showcase/ShowcaseSEO';
+import { BrandConfigPanel } from '@/components/trial/BrandConfigPanel';
 import { useTrialBrandProfile } from '@/hooks/useTrialBrandProfile';
 import { useTrialActivityMetrics } from '@/hooks/useTrialActivityMetrics';
 import { supabase } from '@/integrations/supabase/client';
@@ -51,10 +54,11 @@ interface BrainyModule {
 
 const TrialBrandDashboard = () => {
   const navigate = useNavigate();
-  const { brandProfile, loading: profileLoading } = useTrialBrandProfile();
+  const { brandProfile, loading: profileLoading, saveProfile, loadProfile } = useTrialBrandProfile();
   const { metrics, loading: metricsLoading } = useTrialActivityMetrics();
   const [daysRemaining, setDaysRemaining] = useState(45);
   const [showUpgradeModal, setShowUpgradeModal] = useState(false);
+  const [showConfigModal, setShowConfigModal] = useState(false);
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -183,6 +187,17 @@ const TrialBrandDashboard = () => {
     setShowUpgradeModal(true);
   };
 
+  const handleSaveBrandConfig = async (updates: Partial<typeof brandProfile>) => {
+    if (!brandProfile) return;
+    
+    await saveProfile({
+      ...brandProfile,
+      ...updates,
+    } as any);
+    
+    await loadProfile();
+  };
+
   if (profileLoading) {
     return (
       <div className="min-h-screen bg-background">
@@ -256,13 +271,23 @@ const TrialBrandDashboard = () => {
         >
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
             <div className="flex items-center gap-4">
-              <div className="w-20 h-20 rounded-2xl bg-gradient-to-r from-electric-cyan to-purple-accent flex items-center justify-center text-white text-3xl font-bold shadow-glow-cyan">
-                {brandProfile?.brand_name?.charAt(0) || 'B'}
-              </div>
+              <Avatar className="w-20 h-20 rounded-2xl shadow-glow-cyan">
+                {brandProfile?.logo_url ? (
+                  <AvatarImage src={brandProfile.logo_url} alt={brandProfile.brand_name} className="object-cover" />
+                ) : null}
+                <AvatarFallback className="rounded-2xl bg-gradient-to-r from-electric-cyan to-purple-accent text-white text-3xl font-bold">
+                  {brandProfile?.brand_name?.charAt(0) || 'B'}
+                </AvatarFallback>
+              </Avatar>
               <div>
                 <h1 className="text-3xl md:text-4xl font-bold text-foreground">
                   {brandProfile?.brand_name || 'Tu Marca'}
                 </h1>
+                {brandProfile?.description && (
+                  <p className="text-sm text-muted-foreground mt-1 max-w-md line-clamp-2">
+                    {brandProfile.description}
+                  </p>
+                )}
                 <div className="flex items-center gap-2 mt-2">
                   <Badge className="bg-purple-accent/20 text-purple-accent border-purple-accent/30">
                     {brandProfile?.tone || 'Profesional'}
@@ -270,11 +295,16 @@ const TrialBrandDashboard = () => {
                   <Badge className="bg-electric-cyan/20 text-electric-cyan border-electric-cyan/30">
                     {brandProfile?.style || 'Moderno'}
                   </Badge>
+                  {brandProfile?.connected_social && brandProfile.connected_social.length > 0 && (
+                    <Badge className="bg-green-500/20 text-green-400 border-green-500/30">
+                      {brandProfile.connected_social.length} RRSS
+                    </Badge>
+                  )}
                 </div>
               </div>
             </div>
 
-            <Button variant="outline" className="gap-2" onClick={() => navigate('/trial')}>
+            <Button variant="outline" className="gap-2" onClick={() => setShowConfigModal(true)}>
               <Settings className="w-4 h-4" />
               Configurar marca
             </Button>
@@ -489,6 +519,25 @@ const TrialBrandDashboard = () => {
 
       {/* Upgrade Modal */}
       <UpgradeModal open={showUpgradeModal} onClose={() => setShowUpgradeModal(false)} />
+
+      {/* Brand Config Modal */}
+      <Dialog open={showConfigModal} onOpenChange={setShowConfigModal}>
+        <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              <Settings className="w-5 h-5 text-electric-cyan" />
+              Configurar Marca
+            </DialogTitle>
+          </DialogHeader>
+          {brandProfile && (
+            <BrandConfigPanel 
+              brandProfile={brandProfile}
+              onSave={handleSaveBrandConfig}
+              onClose={() => setShowConfigModal(false)}
+            />
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };

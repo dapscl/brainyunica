@@ -987,9 +987,13 @@ export type Database = {
           brand_name: string
           brand_type: string | null
           colors: Json | null
+          connected_ads: Json | null
+          connected_social: Json | null
           created_at: string | null
+          description: string | null
           id: string
           keywords: Json | null
+          logo_url: string | null
           personality: string | null
           style: string | null
           tone: string | null
@@ -1002,9 +1006,13 @@ export type Database = {
           brand_name: string
           brand_type?: string | null
           colors?: Json | null
+          connected_ads?: Json | null
+          connected_social?: Json | null
           created_at?: string | null
+          description?: string | null
           id?: string
           keywords?: Json | null
+          logo_url?: string | null
           personality?: string | null
           style?: string | null
           tone?: string | null
@@ -1017,9 +1025,13 @@ export type Database = {
           brand_name?: string
           brand_type?: string | null
           colors?: Json | null
+          connected_ads?: Json | null
+          connected_social?: Json | null
           created_at?: string | null
+          description?: string | null
           id?: string
           keywords?: Json | null
+          logo_url?: string | null
           personality?: string | null
           style?: string | null
           tone?: string | null

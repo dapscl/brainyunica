@@ -13,6 +13,10 @@ export interface TrialBrandProfile {
   keywords: string[];
   personality: string;
   analysis?: any;
+  logo_url?: string;
+  description?: string;
+  connected_ads?: string[];
+  connected_social?: string[];
 }
 
 export const useTrialBrandProfile = () => {
@@ -49,7 +53,11 @@ export const useTrialBrandProfile = () => {
           colors: Array.isArray(data.colors) ? (data.colors as string[]) : [],
           keywords: Array.isArray(data.keywords) ? (data.keywords as string[]) : [],
           personality: data.personality || '',
-          analysis: data.analysis
+          analysis: data.analysis,
+          logo_url: data.logo_url || '',
+          description: data.description || '',
+          connected_ads: Array.isArray(data.connected_ads) ? (data.connected_ads as string[]) : [],
+          connected_social: Array.isArray(data.connected_social) ? (data.connected_social as string[]) : [],
         };
         setBrandProfile(profile);
         return profile;
@@ -83,7 +91,11 @@ export const useTrialBrandProfile = () => {
           colors: profile.colors,
           keywords: profile.keywords,
           personality: profile.personality,
-          analysis: profile.analysis || {}
+          analysis: profile.analysis || {},
+          logo_url: profile.logo_url,
+          description: profile.description,
+          connected_ads: profile.connected_ads || [],
+          connected_social: profile.connected_social || [],
         }, {
           onConflict: 'user_id'
         })
@@ -104,7 +116,11 @@ export const useTrialBrandProfile = () => {
           colors: Array.isArray(data.colors) ? (data.colors as string[]) : [],
           keywords: Array.isArray(data.keywords) ? (data.keywords as string[]) : [],
           personality: data.personality || '',
-          analysis: data.analysis
+          analysis: data.analysis,
+          logo_url: data.logo_url || '',
+          description: data.description || '',
+          connected_ads: Array.isArray(data.connected_ads) ? (data.connected_ads as string[]) : [],
+          connected_social: Array.isArray(data.connected_social) ? (data.connected_social as string[]) : [],
         };
         setBrandProfile(savedProfile);
         return savedProfile;
