@@ -90,6 +90,7 @@ const ShowcaseOnboardingPage = lazy(() => import("./pages/ShowcaseOnboardingPage
 const ShowcaseDemoMenuPage = lazy(() => import("./pages/ShowcaseDemoMenuPage"));
 const ShowcaseFeaturesPage = lazy(() => import("./pages/ShowcaseFeaturesPage"));
 const ShowcaseIndustriesPage = lazy(() => import("./pages/ShowcaseIndustriesPage"));
+const CreatorBrainyTestPage = lazy(() => import("./pages/CreatorBrainyTestPage"));
 
 const LoadingFallback = () => (
   <div className="min-h-screen bg-background p-8">
@@ -116,6 +117,7 @@ const App = () => {
           <Route path="/industries" element={<ShowcaseIndustriesPage />} />
           <Route path="/lead-capture" element={<ShowcaseLeadCapturePage />} />
           <Route path="/thank-you" element={<ShowcaseThankYouPage />} />
+          <Route path="/creator-brainy-test" element={<CreatorBrainyTestPage />} />
 
           {/* Muchísimas rutas más… */}
           {/* (Todo este bloque se mantiene igual, no lo modificamos) */}
