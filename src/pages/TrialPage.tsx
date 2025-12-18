@@ -196,9 +196,13 @@ const TrialPage = () => {
         toast.success('¡Cuenta creada exitosamente!');
       }
 
-      // Move to complete step and generate ideas
-      setStep('complete');
-      generateContentIdeas();
+      // Save brand profile to localStorage for the dashboard
+      if (scanResult) {
+        localStorage.setItem('trialBrandProfile', JSON.stringify(scanResult));
+      }
+
+      // Redirect to trial dashboard
+      navigate('/trial/dashboard');
     } catch (error: any) {
       console.error('Auth error:', error);
       toast.error(error.message || 'Error de autenticación');

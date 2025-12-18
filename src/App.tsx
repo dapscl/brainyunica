@@ -92,6 +92,8 @@ const ShowcaseFeaturesPage = lazy(() => import("./pages/ShowcaseFeaturesPage"));
 const ShowcaseIndustriesPage = lazy(() => import("./pages/ShowcaseIndustriesPage"));
 const CreatorBrainyTestPage = lazy(() => import("./pages/CreatorBrainyTestPage"));
 const TrialPage = lazy(() => import("./pages/TrialPage"));
+const TrialBrandDashboard = lazy(() => import("./pages/TrialBrandDashboard"));
+const TrialCreatorPage = lazy(() => import("./pages/TrialCreatorPage"));
 
 const LoadingFallback = () => (
   <div className="min-h-screen bg-background p-8">
@@ -123,6 +125,8 @@ const App = () => {
           <Route path="/demo" element={<ShowcaseDemoMenuPage />} />
           <Route path="/creator-brainy-test" element={<CreatorBrainyTestPage />} />
           <Route path="/trial" element={<TrialPage />} />
+          <Route path="/trial/dashboard" element={<TrialBrandDashboard />} />
+          <Route path="/trial/creator" element={<TrialCreatorPage />} />
           <Route path="/supa-test" element={<SupaTestInline />} />
 
           {/* Rutas protegidas - requieren autenticación */}
