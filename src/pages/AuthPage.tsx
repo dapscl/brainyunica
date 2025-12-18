@@ -66,24 +66,55 @@ const AuthPage: React.FC = () => {
     meta.setAttribute("content", desc);
   }, [isSignup]);
 
+  // Check if user has completed trial (has brands)
+  const checkTrialComplete = async (userId: string) => {
+    const { data: memberships } = await supabase
+      .from('organization_members')
+      .select('organization_id')
+      .eq('user_id', userId)
+      .limit(1);
+    
+    if (!memberships || memberships.length === 0) {
+      // No organizations = hasn't completed trial
+      return false;
+    }
+
+    const { data: brands } = await supabase
+      .from('brands')
+      .select('id')
+      .eq('organization_id', memberships[0].organization_id)
+      .limit(1);
+    
+    return brands && brands.length > 0;
+  };
+
   useEffect(() => {
-    const from = (location.state as any)?.from?.pathname || '/brands';
+    const handleRedirect = async (userId: string) => {
+      const hasCompletedTrial = await checkTrialComplete(userId);
+      if (hasCompletedTrial) {
+        navigate('/brands', { replace: true });
+      } else {
+        // Send to trial to complete onboarding
+        navigate('/trial', { replace: true });
+      }
+    };
+
     const sub = supabase.auth.onAuthStateChange((event, session) => {
       if (session?.user) {
-        navigate(from, { replace: true });
+        handleRedirect(session.user.id);
       }
     });
 
     supabase.auth.getSession().then(({ data }) => {
       if (data.session?.user) {
-        navigate(from, { replace: true });
+        handleRedirect(data.session.user.id);
       }
     });
 
     return () => {
       sub.data.subscription.unsubscribe();
     };
-  }, [navigate, location]);
+  }, [navigate]);
 
   // For signup: require strong password. For login: just check non-empty
   const canSubmit = useMemo(() => {
@@ -116,10 +147,9 @@ const AuthPage: React.FC = () => {
         if (error) throw error;
         toast.success("Revisa tu email para confirmar el registro");
       } else {
-        const { error } = await supabase.auth.signInWithPassword({ email, password });
+        const { data, error } = await supabase.auth.signInWithPassword({ email, password });
         if (error) throw error;
-        const from = (location.state as any)?.from?.pathname || '/brands';
-        navigate(from, { replace: true });
+        // Redirect handled by onAuthStateChange based on trial completion
       }
     } catch (err: any) {
       toast.error(err?.message || "Error de autenticación");
