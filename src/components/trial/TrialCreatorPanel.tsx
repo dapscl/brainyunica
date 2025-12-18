@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -18,9 +18,16 @@ import {
   Wand2,
   Brain,
   ArrowRight,
-  CheckCircle2
+  CheckCircle2,
+  Check,
+  Pencil,
+  Upload,
+  Image as ImageIcon,
+  X
 } from 'lucide-react';
 import { useContentGenerator } from '@/hooks/useContentGenerator';
+import { supabase } from '@/integrations/supabase/client';
+import { toast } from 'sonner';
 
 interface BrandProfile {
   brandName: string;
@@ -36,6 +43,12 @@ interface TrialCreatorPanelProps {
   onGoToDashboard: () => void;
 }
 
+interface AcceptedContent {
+  type: string;
+  content: any;
+  acceptedAt: Date;
+}
+
 const TrialCreatorPanel = ({ brandProfile, onGoToDashboard }: TrialCreatorPanelProps) => {
   const { 
     generateCopy, 
@@ -46,6 +59,8 @@ const TrialCreatorPanel = ({ brandProfile, onGoToDashboard }: TrialCreatorPanelP
     isGenerating 
   } = useContentGenerator();
 
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
   // Customizable tone/style from brand profile
   const [selectedTone, setSelectedTone] = useState(brandProfile.tone || 'profesional');
   const [selectedPlatform, setSelectedPlatform] = useState('instagram');
@@ -53,6 +68,9 @@ const TrialCreatorPanel = ({ brandProfile, onGoToDashboard }: TrialCreatorPanelP
   // Copy Generator State
   const [copyTopic, setCopyTopic] = useState('');
   const [copyResult, setCopyResult] = useState<any>(null);
+  const [copyAccepted, setCopyAccepted] = useState(false);
+  const [copyEditing, setCopyEditing] = useState(false);
+  const [editedCopy, setEditedCopy] = useState('');
 
   // Variants State
   const [variantContent, setVariantContent] = useState('');
@@ -70,6 +88,99 @@ const TrialCreatorPanel = ({ brandProfile, onGoToDashboard }: TrialCreatorPanelP
   const [translateContent_, setTranslateContent] = useState('');
   const [translateLang, setTranslateLang] = useState('inglés');
   const [translateResult, setTranslateResult] = useState<any>(null);
+
+  // Image States
+  const [uploadedImages, setUploadedImages] = useState<string[]>([]);
+  const [generatedImages, setGeneratedImages] = useState<string[]>([]);
+  const [imagePrompt, setImagePrompt] = useState('');
+  const [isGeneratingImage, setIsGeneratingImage] = useState(false);
+
+  // Accepted content library
+  const [acceptedContents, setAcceptedContents] = useState<AcceptedContent[]>([]);
+
+  // Handle image upload
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (!files) return;
+    
+    Array.from(files).forEach(file => {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        if (event.target?.result) {
+          setUploadedImages(prev => [...prev, event.target!.result as string]);
+          toast.success(`Imagen "${file.name}" cargada`);
+        }
+      };
+      reader.readAsDataURL(file);
+    });
+  };
+
+  // Generate reference image with AI
+  const handleGenerateImage = async () => {
+    if (!imagePrompt.trim()) {
+      toast.error('Ingresa una descripción para la imagen');
+      return;
+    }
+
+    setIsGeneratingImage(true);
+    try {
+      const brandContext = `Marca: ${brandProfile.brandName}. Estilo: ${brandProfile.style}. Colores: ${brandProfile.colors.join(', ')}. Personalidad: ${brandProfile.personality}`;
+      
+      const { data, error } = await supabase.functions.invoke('image-generator', {
+        body: { prompt: imagePrompt, brandContext }
+      });
+
+      if (error) throw error;
+      
+      if (data?.imageUrl) {
+        setGeneratedImages(prev => [...prev, data.imageUrl]);
+        toast.success('Imagen de referencia generada');
+      } else {
+        toast.error(data?.message || 'No se pudo generar la imagen');
+      }
+    } catch (error: any) {
+      console.error('Error generating image:', error);
+      toast.error(error.message || 'Error generando imagen');
+    } finally {
+      setIsGeneratingImage(false);
+    }
+  };
+
+  // Accept content
+  const handleAcceptContent = (type: string, content: any) => {
+    setAcceptedContents(prev => [...prev, { type, content, acceptedAt: new Date() }]);
+    if (type === 'copy') setCopyAccepted(true);
+    toast.success('Contenido aceptado y guardado');
+  };
+
+  // Start editing
+  const handleStartEdit = (type: string, content: string) => {
+    if (type === 'copy') {
+      setCopyEditing(true);
+      setEditedCopy(content);
+    }
+  };
+
+  // Save edit
+  const handleSaveEdit = (type: string) => {
+    if (type === 'copy' && copyResult) {
+      setCopyResult({ 
+        ...copyResult, 
+        copy: { ...copyResult.copy, fullCopy: editedCopy } 
+      });
+      setCopyEditing(false);
+      toast.success('Cambios guardados');
+    }
+  };
+
+  // Remove image
+  const handleRemoveImage = (index: number, type: 'uploaded' | 'generated') => {
+    if (type === 'uploaded') {
+      setUploadedImages(prev => prev.filter((_, i) => i !== index));
+    } else {
+      setGeneratedImages(prev => prev.filter((_, i) => i !== index));
+    }
+  };
 
   const brandContext = `Marca: ${brandProfile.brandName}. Estilo: ${brandProfile.style}. Personalidad: ${brandProfile.personality}. Keywords: ${brandProfile.keywords.join(', ')}`;
 
@@ -261,7 +372,7 @@ const TrialCreatorPanel = ({ brandProfile, onGoToDashboard }: TrialCreatorPanelP
 
       {/* Creator Tabs */}
       <Tabs defaultValue="copy" className="space-y-6">
-        <TabsList className="grid w-full grid-cols-5 bg-card/30 backdrop-blur-sm border border-electric-cyan/20 h-12">
+        <TabsList className="grid w-full grid-cols-6 bg-card/30 backdrop-blur-sm border border-electric-cyan/20 h-12">
           <TabsTrigger value="copy" className="text-foreground/70 data-[state=active]:text-electric-cyan data-[state=active]:bg-electric-cyan/20">
             <Sparkles className="w-4 h-4 mr-2" />
             Copy
@@ -273,6 +384,10 @@ const TrialCreatorPanel = ({ brandProfile, onGoToDashboard }: TrialCreatorPanelP
           <TabsTrigger value="ideas" className="text-foreground/70 data-[state=active]:text-yellow-400 data-[state=active]:bg-yellow-400/20">
             <Lightbulb className="w-4 h-4 mr-2" />
             Ideas
+          </TabsTrigger>
+          <TabsTrigger value="images" className="text-foreground/70 data-[state=active]:text-pink-400 data-[state=active]:bg-pink-400/20">
+            <ImageIcon className="w-4 h-4 mr-2" />
+            Imágenes
           </TabsTrigger>
           <TabsTrigger value="improve" className="text-foreground/70 data-[state=active]:text-green-400 data-[state=active]:bg-green-400/20">
             <Wand2 className="w-4 h-4 mr-2" />
@@ -339,9 +454,28 @@ const TrialCreatorPanel = ({ brandProfile, onGoToDashboard }: TrialCreatorPanelP
                   </div>
                   <div>
                     <Label className="text-electric-cyan">Copy Completo</Label>
-                    <div className="mt-1 p-3 bg-card/50 rounded border border-electric-cyan/10 text-foreground whitespace-pre-wrap">
-                      {copyResult.copy.fullCopy}
-                    </div>
+                    {copyEditing ? (
+                      <div className="mt-1 space-y-2">
+                        <Textarea
+                          value={editedCopy}
+                          onChange={(e) => setEditedCopy(e.target.value)}
+                          rows={6}
+                          className="bg-card/50 border-electric-cyan/30 text-foreground"
+                        />
+                        <div className="flex gap-2">
+                          <Button size="sm" onClick={() => handleSaveEdit('copy')} className="bg-green-500 hover:bg-green-600">
+                            <Check className="w-4 h-4 mr-1" /> Guardar
+                          </Button>
+                          <Button size="sm" variant="outline" onClick={() => setCopyEditing(false)} className="border-border/50">
+                            <X className="w-4 h-4 mr-1" /> Cancelar
+                          </Button>
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="mt-1 p-3 bg-card/50 rounded border border-electric-cyan/10 text-foreground whitespace-pre-wrap">
+                        {copyResult.copy.fullCopy}
+                      </div>
+                    )}
                   </div>
                   <div className="flex flex-wrap gap-2">
                     {copyResult.copy.hashtags?.map((tag: string, i: number) => (
@@ -350,6 +484,33 @@ const TrialCreatorPanel = ({ brandProfile, onGoToDashboard }: TrialCreatorPanelP
                       </Badge>
                     ))}
                   </div>
+                  
+                  {/* Accept / Edit Buttons */}
+                  {!copyAccepted && !copyEditing && (
+                    <div className="flex gap-3 pt-4 border-t border-electric-cyan/20">
+                      <Button 
+                        onClick={() => handleAcceptContent('copy', copyResult.copy)}
+                        className="bg-green-500 hover:bg-green-600 text-white"
+                      >
+                        <Check className="w-4 h-4 mr-2" />
+                        Aceptar
+                      </Button>
+                      <Button 
+                        variant="outline"
+                        onClick={() => handleStartEdit('copy', copyResult.copy.fullCopy)}
+                        className="border-electric-cyan/50 text-electric-cyan hover:bg-electric-cyan/10"
+                      >
+                        <Pencil className="w-4 h-4 mr-2" />
+                        Editar
+                      </Button>
+                    </div>
+                  )}
+                  {copyAccepted && (
+                    <div className="flex items-center gap-2 pt-4 border-t border-green-500/30">
+                      <CheckCircle2 className="w-5 h-5 text-green-500" />
+                      <span className="text-green-400 font-medium">Contenido aceptado</span>
+                    </div>
+                  )}
                 </motion.div>
               )}
             </CardContent>
@@ -486,7 +647,148 @@ const TrialCreatorPanel = ({ brandProfile, onGoToDashboard }: TrialCreatorPanelP
           </Card>
         </TabsContent>
 
-        {/* Improve Content */}
+        {/* Images - Upload and Generate */}
+        <TabsContent value="images">
+          <Card className="bg-card/30 backdrop-blur-sm border border-pink-400/20">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2 text-foreground">
+                <ImageIcon className="w-5 h-5 text-pink-400" />
+                Imágenes y Referencias
+              </CardTitle>
+              <CardDescription className="text-muted-foreground">
+                Carga tus imágenes o genera referencias visuales con IA para {brandProfile.brandName}
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              {/* Upload Section */}
+              <div className="space-y-3">
+                <Label className="text-foreground flex items-center gap-2">
+                  <Upload className="w-4 h-4" />
+                  Cargar Imágenes o Logos
+                </Label>
+                <input
+                  type="file"
+                  ref={fileInputRef}
+                  onChange={handleImageUpload}
+                  accept="image/*"
+                  multiple
+                  className="hidden"
+                />
+                <div 
+                  onClick={() => fileInputRef.current?.click()}
+                  className="border-2 border-dashed border-pink-400/30 rounded-lg p-6 text-center cursor-pointer hover:border-pink-400/50 hover:bg-pink-400/5 transition-colors"
+                >
+                  <Upload className="w-8 h-8 mx-auto text-pink-400/50 mb-2" />
+                  <p className="text-muted-foreground">Click para seleccionar imágenes</p>
+                  <p className="text-xs text-muted-foreground/70">PNG, JPG, WEBP hasta 10MB</p>
+                </div>
+                
+                {uploadedImages.length > 0 && (
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mt-4">
+                    {uploadedImages.map((img, idx) => (
+                      <div key={idx} className="relative group">
+                        <img 
+                          src={img} 
+                          alt={`Uploaded ${idx + 1}`}
+                          className="w-full h-24 object-cover rounded-lg border border-pink-400/30"
+                        />
+                        <button
+                          onClick={() => handleRemoveImage(idx, 'uploaded')}
+                          className="absolute top-1 right-1 bg-red-500/80 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity"
+                        >
+                          <X className="w-3 h-3" />
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              {/* AI Image Generation Section */}
+              <div className="space-y-3 pt-4 border-t border-pink-400/20">
+                <Label className="text-foreground flex items-center gap-2">
+                  <Sparkles className="w-4 h-4" />
+                  Generar Imágenes de Referencia con IA
+                </Label>
+                <div className="flex gap-2">
+                  <Input 
+                    placeholder="Ej: imagen de producto minimalista, banner promocional, foto lifestyle..."
+                    value={imagePrompt}
+                    onChange={(e) => setImagePrompt(e.target.value)}
+                    className="bg-card/30 border-pink-400/20 text-foreground placeholder:text-muted-foreground flex-1"
+                  />
+                  <Button 
+                    onClick={handleGenerateImage}
+                    disabled={isGeneratingImage || !imagePrompt.trim()}
+                    className="bg-gradient-to-r from-pink-500 to-purple-accent hover:opacity-90 text-white font-semibold"
+                  >
+                    {isGeneratingImage ? (
+                      <Loader2 className="w-4 h-4 animate-spin" />
+                    ) : (
+                      <Sparkles className="w-4 h-4" />
+                    )}
+                  </Button>
+                </div>
+                <p className="text-xs text-muted-foreground">
+                  La IA generará imágenes de referencia basadas en el estilo y colores de tu marca
+                </p>
+
+                {generatedImages.length > 0 && (
+                  <motion.div 
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="grid grid-cols-2 md:grid-cols-3 gap-3 mt-4"
+                  >
+                    {generatedImages.map((img, idx) => (
+                      <div key={idx} className="relative group">
+                        <img 
+                          src={img} 
+                          alt={`Generated ${idx + 1}`}
+                          className="w-full h-32 object-cover rounded-lg border border-purple-accent/30"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent rounded-lg opacity-0 group-hover:opacity-100 transition-opacity">
+                          <div className="absolute bottom-2 left-2 right-2 flex justify-between">
+                            <Badge className="bg-purple-accent/80 text-white text-xs">
+                              IA Generada
+                            </Badge>
+                            <button
+                              onClick={() => handleRemoveImage(idx, 'generated')}
+                              className="bg-red-500/80 text-white rounded-full p-1"
+                            >
+                              <X className="w-3 h-3" />
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </motion.div>
+                )}
+              </div>
+
+              {/* Quick suggestions */}
+              <div className="pt-4 border-t border-pink-400/20">
+                <Label className="text-muted-foreground text-sm mb-2 block">Sugerencias rápidas:</Label>
+                <div className="flex flex-wrap gap-2">
+                  {[
+                    `Foto de producto ${brandProfile.brandName}`,
+                    'Banner promocional moderno',
+                    'Imagen lifestyle para Instagram',
+                    'Gráfico para stories'
+                  ].map((suggestion, idx) => (
+                    <button
+                      key={idx}
+                      onClick={() => setImagePrompt(suggestion)}
+                      className="px-3 py-1 text-xs bg-pink-400/10 text-pink-400 rounded-full border border-pink-400/30 hover:bg-pink-400/20 transition-colors"
+                    >
+                      {suggestion}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
         <TabsContent value="improve">
           <Card className="bg-card/30 backdrop-blur-sm border border-green-400/20">
             <CardHeader>
