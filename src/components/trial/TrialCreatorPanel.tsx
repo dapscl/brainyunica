@@ -102,10 +102,18 @@ const TrialCreatorPanel = ({ brandProfile, onGoToDashboard }: TrialCreatorPanelP
 
   // Variants State
   const [variantContent, setVariantContent] = useState('');
+  const [variantBrief, setVariantBrief] = useState('');
+  const [variantReferenceUrl, setVariantReferenceUrl] = useState('');
+  const [variantScrapedContent, setVariantScrapedContent] = useState('');
+  const [isScrapingVariantUrl, setIsScrapingVariantUrl] = useState(false);
   const [variantsResult, setVariantsResult] = useState<any>(null);
 
   // Ideas State
-  const [ideasTopic, setIdeasTopic] = useState(brandProfile.keywords[0] || '');
+  const [ideasTopic, setIdeasTopic] = useState((brandProfile.keywords || [])[0] || '');
+  const [ideasBrief, setIdeasBrief] = useState('');
+  const [ideasReferenceUrl, setIdeasReferenceUrl] = useState('');
+  const [ideasScrapedContent, setIdeasScrapedContent] = useState('');
+  const [isScrapingIdeasUrl, setIsScrapingIdeasUrl] = useState(false);
   const [ideasResult, setIdeasResult] = useState<any>(null);
 
   // Improve State
@@ -291,19 +299,95 @@ const TrialCreatorPanel = ({ brandProfile, onGoToDashboard }: TrialCreatorPanelP
     if (result) setCopyResult(result);
   };
 
+  // Scrape URL for Ideas
+  const handleScrapeIdeasUrl = async () => {
+    if (!ideasReferenceUrl) return;
+    
+    setIsScrapingIdeasUrl(true);
+    try {
+      const { data, error } = await supabase.functions.invoke('scrape-reference', {
+        body: { url: ideasReferenceUrl }
+      });
+
+      if (error) throw error;
+      
+      if (data?.success && data?.summary) {
+        setIdeasScrapedContent(data.summary);
+        toast.success('Contenido de URL extraído exitosamente');
+      } else {
+        toast.info('No se pudo extraer contenido de la URL');
+      }
+    } catch (error: any) {
+      console.error('Error scraping URL:', error);
+      toast.error('Error al extraer contenido de la URL');
+    } finally {
+      setIsScrapingIdeasUrl(false);
+    }
+  };
+
+  // Scrape URL for Variants
+  const handleScrapeVariantUrl = async () => {
+    if (!variantReferenceUrl) return;
+    
+    setIsScrapingVariantUrl(true);
+    try {
+      const { data, error } = await supabase.functions.invoke('scrape-reference', {
+        body: { url: variantReferenceUrl }
+      });
+
+      if (error) throw error;
+      
+      if (data?.success && data?.summary) {
+        setVariantScrapedContent(data.summary);
+        toast.success('Contenido de URL extraído exitosamente');
+      } else {
+        toast.info('No se pudo extraer contenido de la URL');
+      }
+    } catch (error: any) {
+      console.error('Error scraping URL:', error);
+      toast.error('Error al extraer contenido de la URL');
+    } finally {
+      setIsScrapingVariantUrl(false);
+    }
+  };
+
   const handleGenerateVariants = async () => {
+    let additionalContext = '';
+    
+    if (variantBrief) {
+      additionalContext += `\n\nBrief/Objetivo:\n${variantBrief}`;
+    }
+    
+    if (variantScrapedContent) {
+      additionalContext += `\n\nInformación extraída de URL:\n${variantScrapedContent}`;
+    } else if (variantReferenceUrl) {
+      additionalContext += `\n\nURL de referencia: ${variantReferenceUrl}`;
+    }
+
     const result = await generateVariants(variantContent, { 
       platform: selectedPlatform,
       tone: selectedTone,
-      context: brandContext
+      context: brandContext + additionalContext
     });
     if (result) setVariantsResult(result);
   };
 
   const handleGenerateIdeas = async () => {
+    let additionalContext = '';
+    
+    if (ideasBrief) {
+      additionalContext += `\n\nBrief/Objetivo:\n${ideasBrief}`;
+    }
+    
+    if (ideasScrapedContent) {
+      additionalContext += `\n\nInformación extraída de URL:\n${ideasScrapedContent}`;
+    } else if (ideasReferenceUrl) {
+      additionalContext += `\n\nURL de referencia: ${ideasReferenceUrl}`;
+    }
+
     const result = await generateIdeas(ideasTopic, { 
       platform: selectedPlatform,
-      context: brandContext
+      context: brandContext + additionalContext
     });
     if (result) setIdeasResult(result);
   };
@@ -864,6 +948,63 @@ const TrialCreatorPanel = ({ brandProfile, onGoToDashboard }: TrialCreatorPanelP
                   className="bg-card/30 border-purple-accent/20 text-foreground placeholder:text-muted-foreground"
                 />
               </div>
+
+              {/* Brief */}
+              <div>
+                <Label className="text-foreground flex items-center gap-2">
+                  <Pencil className="w-4 h-4 text-purple-accent" />
+                  Brief / Objetivo (opcional)
+                </Label>
+                <Textarea
+                  placeholder="¿Cuál es el objetivo de las variantes? ¿Qué quieres lograr? ¿Hay algún enfoque específico?"
+                  value={variantBrief}
+                  onChange={(e) => setVariantBrief(e.target.value)}
+                  rows={2}
+                  className="bg-card/30 border-purple-accent/20 text-foreground placeholder:text-muted-foreground mt-1"
+                />
+              </div>
+
+              {/* URL Reference */}
+              <div>
+                <Label className="text-foreground flex items-center gap-2">
+                  <Link className="w-4 h-4 text-purple-accent" />
+                  URL de Referencia (opcional)
+                </Label>
+                <div className="flex gap-2 mt-1">
+                  <Input
+                    type="url"
+                    placeholder="https://ejemplo.com/producto"
+                    value={variantReferenceUrl}
+                    onChange={(e) => setVariantReferenceUrl(e.target.value)}
+                    className="bg-card/30 border-purple-accent/20 text-foreground placeholder:text-muted-foreground flex-1"
+                  />
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    onClick={handleScrapeVariantUrl}
+                    disabled={!variantReferenceUrl || isScrapingVariantUrl}
+                    className="border-purple-accent/30 hover:bg-purple-accent/20"
+                    title="Extraer contenido de la URL"
+                  >
+                    {isScrapingVariantUrl ? (
+                      <Loader2 className="w-4 h-4 animate-spin" />
+                    ) : variantScrapedContent ? (
+                      <CheckCircle2 className="w-4 h-4 text-green-400" />
+                    ) : (
+                      <Search className="w-4 h-4" />
+                    )}
+                  </Button>
+                </div>
+                {variantScrapedContent && (
+                  <div className="mt-2 p-2 rounded bg-green-500/10 border border-green-500/20">
+                    <p className="text-xs text-green-400 font-medium">✓ Contenido extraído de la URL</p>
+                    <p className="text-xs text-muted-foreground mt-1 line-clamp-2">
+                      {variantScrapedContent.substring(0, 150)}...
+                    </p>
+                  </div>
+                )}
+              </div>
+
               <Button 
                 onClick={handleGenerateVariants} 
                 disabled={isGenerating || !variantContent}
@@ -917,12 +1058,69 @@ const TrialCreatorPanel = ({ brandProfile, onGoToDashboard }: TrialCreatorPanelP
               <div>
                 <Label className="text-foreground">Tema General</Label>
                 <Input 
-                  placeholder={`Ej: ${brandProfile.keywords.join(', ')}...`}
+                  placeholder={`Ej: ${(brandProfile.keywords || []).join(', ')}...`}
                   value={ideasTopic}
                   onChange={(e) => setIdeasTopic(e.target.value)}
                   className="bg-card/30 border-yellow-400/20 text-foreground placeholder:text-muted-foreground"
                 />
               </div>
+
+              {/* Brief */}
+              <div>
+                <Label className="text-foreground flex items-center gap-2">
+                  <Pencil className="w-4 h-4 text-yellow-400" />
+                  Brief / Objetivo (opcional)
+                </Label>
+                <Textarea
+                  placeholder="¿Cuál es el objetivo del contenido? ¿Qué quieres comunicar? ¿Hay algún enfoque o promoción específica?"
+                  value={ideasBrief}
+                  onChange={(e) => setIdeasBrief(e.target.value)}
+                  rows={2}
+                  className="bg-card/30 border-yellow-400/20 text-foreground placeholder:text-muted-foreground mt-1"
+                />
+              </div>
+
+              {/* URL Reference */}
+              <div>
+                <Label className="text-foreground flex items-center gap-2">
+                  <Link className="w-4 h-4 text-yellow-400" />
+                  URL de Referencia (opcional)
+                </Label>
+                <div className="flex gap-2 mt-1">
+                  <Input
+                    type="url"
+                    placeholder="https://ejemplo.com/producto"
+                    value={ideasReferenceUrl}
+                    onChange={(e) => setIdeasReferenceUrl(e.target.value)}
+                    className="bg-card/30 border-yellow-400/20 text-foreground placeholder:text-muted-foreground flex-1"
+                  />
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    onClick={handleScrapeIdeasUrl}
+                    disabled={!ideasReferenceUrl || isScrapingIdeasUrl}
+                    className="border-yellow-400/30 hover:bg-yellow-400/20"
+                    title="Extraer contenido de la URL"
+                  >
+                    {isScrapingIdeasUrl ? (
+                      <Loader2 className="w-4 h-4 animate-spin" />
+                    ) : ideasScrapedContent ? (
+                      <CheckCircle2 className="w-4 h-4 text-green-400" />
+                    ) : (
+                      <Search className="w-4 h-4" />
+                    )}
+                  </Button>
+                </div>
+                {ideasScrapedContent && (
+                  <div className="mt-2 p-2 rounded bg-green-500/10 border border-green-500/20">
+                    <p className="text-xs text-green-400 font-medium">✓ Contenido extraído de la URL</p>
+                    <p className="text-xs text-muted-foreground mt-1 line-clamp-2">
+                      {ideasScrapedContent.substring(0, 150)}...
+                    </p>
+                  </div>
+                )}
+              </div>
+
               <Button 
                 onClick={handleGenerateIdeas}
                 disabled={isGenerating || !ideasTopic}
