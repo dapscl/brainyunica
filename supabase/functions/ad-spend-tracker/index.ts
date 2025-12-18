@@ -1,25 +1,26 @@
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.56.0';
+import { z } from "https://esm.sh/zod@3.23.8";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
-interface AdSpendLog {
-  organization_id: string;
-  channel: string;
-  amount: number;
-  date?: string;
-  campaign_id?: string;
-  campaign_name?: string;
-  metadata?: Record<string, any>;
-}
+const AdSpendLogSchema = z.object({
+  organization_id: z.string().uuid(),
+  channel: z.string().min(1).max(100),
+  amount: z.number().min(0),
+  date: z.string().optional(),
+  campaign_id: z.string().max(200).optional(),
+  campaign_name: z.string().max(200).optional(),
+  metadata: z.record(z.any()).optional(),
+});
 
-interface GetMetricsRequest {
-  organization_id: string;
-  start_date?: string;
-  end_date?: string;
-}
+const GetMetricsSchema = z.object({
+  organization_id: z.string().uuid(),
+  start_date: z.string().optional(),
+  end_date: z.string().optional(),
+});
 
 Deno.serve(async (req) => {
   // Handle CORS preflight requests
@@ -61,7 +62,18 @@ Deno.serve(async (req) => {
     switch (action) {
       case 'add': {
         // Add new ad spend log
-        const body: AdSpendLog = await req.json();
+        const rawBody = await req.json();
+        const parseResult = AdSpendLogSchema.safeParse(rawBody);
+        
+        if (!parseResult.success) {
+          console.error('Validation error:', parseResult.error.errors);
+          return new Response(
+            JSON.stringify({ error: 'Invalid request', details: parseResult.error.errors }),
+            { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+          );
+        }
+        
+        const body = parseResult.data;
         
         console.log('Adding ad spend log:', body);
 
@@ -110,16 +122,20 @@ Deno.serve(async (req) => {
 
       case 'bulk-add': {
         // Add multiple ad spend logs at once
-        const body: { logs: AdSpendLog[] } = await req.json();
+        const rawBody = await req.json();
+        const BulkSchema = z.object({ logs: z.array(AdSpendLogSchema).min(1).max(100) });
+        const parseResult = BulkSchema.safeParse(rawBody);
         
-        console.log('Adding bulk ad spend logs:', body.logs?.length);
-
-        if (!body.logs || !Array.isArray(body.logs) || body.logs.length === 0) {
+        if (!parseResult.success) {
+          console.error('Validation error:', parseResult.error.errors);
           return new Response(
-            JSON.stringify({ error: 'Invalid or empty logs array' }),
+            JSON.stringify({ error: 'Invalid request', details: parseResult.error.errors }),
             { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
           );
         }
+        
+        const body = parseResult.data;
+        console.log('Adding bulk ad spend logs:', body.logs.length);
 
         // Validate and prepare logs
         const logsToInsert = body.logs.map(log => ({
@@ -161,16 +177,19 @@ Deno.serve(async (req) => {
 
       case 'metrics': {
         // Get metrics for an organization
-        const body: GetMetricsRequest = await req.json();
+        const rawBody = await req.json();
+        const parseResult = GetMetricsSchema.safeParse(rawBody);
         
-        console.log('Getting metrics for organization:', body.organization_id);
-
-        if (!body.organization_id) {
+        if (!parseResult.success) {
+          console.error('Validation error:', parseResult.error.errors);
           return new Response(
-            JSON.stringify({ error: 'Missing required field: organization_id' }),
+            JSON.stringify({ error: 'Invalid request', details: parseResult.error.errors }),
             { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
           );
         }
+        
+        const body = parseResult.data;
+        console.log('Getting metrics for organization:', body.organization_id);
 
         // Call the database function to get metrics
         const { data: metricsData, error: metricsError } = await supabaseClient

@@ -1,5 +1,6 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { Resend } from "npm:resend@2.0.0";
+import { z } from "https://esm.sh/zod@3.23.8";
 
 const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
 
@@ -8,17 +9,17 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
-interface LeadNotificationRequest {
-  fullName: string;
-  email: string;
-  company: string;
-  phone: string;
-  monthlyRevenue: string;
-  clientsCount: string;
-  currentTools?: string;
-  challenges?: string;
-  suggestedPlan: string;
-}
+const LeadNotificationSchema = z.object({
+  fullName: z.string().min(1).max(200),
+  email: z.string().email().max(255),
+  company: z.string().min(1).max(200),
+  phone: z.string().min(1).max(50),
+  monthlyRevenue: z.string().max(100),
+  clientsCount: z.string().max(100),
+  currentTools: z.string().max(500).optional(),
+  challenges: z.string().max(1000).optional(),
+  suggestedPlan: z.string().max(100),
+});
 
 const handler = async (req: Request): Promise<Response> => {
   if (req.method === "OPTIONS") {
@@ -26,7 +27,18 @@ const handler = async (req: Request): Promise<Response> => {
   }
 
   try {
-    const leadData: LeadNotificationRequest = await req.json();
+    const rawBody = await req.json();
+    const parseResult = LeadNotificationSchema.safeParse(rawBody);
+    
+    if (!parseResult.success) {
+      console.error('Validation error:', parseResult.error.errors);
+      return new Response(
+        JSON.stringify({ error: 'Invalid request', details: parseResult.error.errors }),
+        { status: 400, headers: { "Content-Type": "application/json", ...corsHeaders } }
+      );
+    }
+    
+    const leadData = parseResult.data;
 
     const emailHtml = `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
