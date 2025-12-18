@@ -25,6 +25,12 @@ interface BrandScanResult {
     recommendations: string[];
     contentIdeas: string[];
   };
+  seo?: {
+    foundKeywords: string[];
+    missingKeywords: string[];
+    seoOpportunities: string[];
+    keywordAlignment: string;
+  };
   firecrawlData?: {
     branding?: any;
     metadata?: any;
@@ -33,9 +39,9 @@ interface BrandScanResult {
 
 // Prompts para análisis real con contenido de Firecrawl
 const getWebsitePrompt = (url: string, content: string, branding?: any) => `
-Actuá como un analista de marca y hacé un brand audit de este sitio web: ${url}
+Actuá como un analista estratégico y realizá un brand audit completo del sitio web: ${url}
 
-Contenido del sitio extraído con AI:
+Contenido del sitio extraído:
 ${content.substring(0, 12000)}
 
 ${branding ? `
@@ -44,32 +50,45 @@ Información de Branding extraída automáticamente:
 - Logo: ${branding.logo || 'No detectado'}
 - Colores principales: ${JSON.stringify(branding.colors || {})}
 - Tipografías: ${JSON.stringify(branding.fonts || [])}
-- Tipografía detallada: ${JSON.stringify(branding.typography || {})}
 ` : ''}
 
-Quiero que analices:
-1. La propuesta de valor: ¿Es clara y diferenciadora?
-2. El tono de comunicación: ¿Cómo habla la marca y a quién le habla?
-3. La identidad visual: ¿Qué transmite el diseño, colores, tipografías e imágenes?
-4. UX básica: ¿Es fácil de navegar, clara y coherente?
-5. Insights estratégicos: ¿Qué oportunidades de mejora o fortalezas ves?
+Además del análisis visual y de tono, detectá e informá:
+
+1. ¿Qué palabras o conceptos clave se repiten en el sitio?
+2. ¿Coinciden esas palabras con las tendencias de búsqueda de los usuarios en Google en esta categoría?
+3. ¿Qué keywords relevantes faltan en el contenido del sitio?
+
+Aspectos a evaluar:
+- Propuesta de valor: ¿Es clara y diferenciadora?
+- Tono de comunicación: ¿Cómo habla la marca y a quién le habla?
+- Identidad visual: ¿Qué transmite el diseño, colores, tipografías e imágenes?
+- UX básica: ¿Es fácil de navegar, clara y coherente?
+- Uso de palabras clave SEO-friendly vs. tendencias reales de búsqueda
 
 IMPORTANTE: Responde en formato JSON con esta estructura exacta:
 {
   "brandName": "nombre de la marca detectado",
-  "tone": "una palabra que describe el tono (ej: Profesional, Casual, Inspirador, Educativo, Divertido, Sofisticado, Elegante, Cercano)",
-  "style": "una palabra que describe el estilo visual (ej: Minimalista, Colorido, Corporativo, Creativo, Elegante, Moderno, Sofisticado)",
+  "tone": "una palabra que describe el tono (Profesional, Casual, Inspirador, Educativo, Divertido, Sofisticado, Elegante, Cercano)",
+  "style": "una palabra que describe el estilo visual (Minimalista, Colorido, Corporativo, Creativo, Elegante, Moderno)",
   "colors": ["#color1", "#color2", "#color3"],
-  "keywords": ["palabra1", "palabra2", "palabra3", "palabra4"],
+  "keywords": ["palabra clave encontrada 1", "palabra clave 2", "palabra clave 3", "palabra clave 4"],
   "personality": "descripción de la personalidad de marca en una oración",
   "analysis": {
-    "summary": "resumen general de 3-5 líneas",
+    "summary": "diagnóstico breve de 3-5 líneas sobre la marca",
     "strengths": ["fortaleza1", "fortaleza2", "fortaleza3"],
     "weaknesses": ["debilidad1", "debilidad2"],
-    "recommendations": ["recomendación1", "recomendación2", "recomendación3"],
-    "contentIdeas": ["idea de contenido 1", "idea de contenido 2"]
+    "recommendations": ["recomendación para alinear lenguaje con audiencia 1", "recomendación 2", "recomendación 3"],
+    "contentIdeas": ["oportunidad de contenido SEO 1", "oportunidad 2"]
+  },
+  "seo": {
+    "foundKeywords": ["palabras clave encontradas en el sitio"],
+    "missingKeywords": ["keywords populares que NO están en el sitio pero deberían"],
+    "seoOpportunities": ["oportunidad SEO específica 1", "oportunidad 2"],
+    "keywordAlignment": "evaluación de si el lenguaje del sitio coincide con cómo busca la audiencia"
   }
 }
+
+Ejemplo de oportunidad SEO: si el sitio vende skincare pero no menciona "piel sensible" y esa es una keyword top en Google, eso es una oportunidad.
 
 Solo responde con el JSON, sin texto adicional.
 `;

@@ -23,7 +23,10 @@ import {
   Pencil,
   Upload,
   Image as ImageIcon,
-  X
+  X,
+  Search,
+  TrendingUp,
+  Target
 } from 'lucide-react';
 import { useContentGenerator } from '@/hooks/useContentGenerator';
 import { supabase } from '@/integrations/supabase/client';
@@ -37,6 +40,13 @@ interface BrandAnalysis {
   contentIdeas: string[];
 }
 
+interface SeoAnalysis {
+  foundKeywords: string[];
+  missingKeywords: string[];
+  seoOpportunities: string[];
+  keywordAlignment: string;
+}
+
 interface BrandProfile {
   brandName: string;
   tone: string;
@@ -45,6 +55,7 @@ interface BrandProfile {
   keywords: string[];
   personality: string;
   analysis?: BrandAnalysis;
+  seo?: SeoAnalysis;
 }
 
 interface TrialCreatorPanelProps {
@@ -391,6 +402,78 @@ const TrialCreatorPanel = ({ brandProfile, onGoToDashboard }: TrialCreatorPanelP
           )}
         </CardContent>
       </Card>
+
+      {/* SEO Analysis Section */}
+      {brandProfile.seo && (
+        <Card className="bg-gradient-to-br from-green-500/10 to-electric-cyan/10 backdrop-blur-sm border-green-500/30">
+          <CardContent className="p-6 space-y-6">
+            <div className="flex items-start gap-4">
+              <div className="w-10 h-10 rounded-lg bg-gradient-to-r from-green-500 to-electric-cyan flex items-center justify-center flex-shrink-0">
+                <Search className="w-5 h-5 text-white" />
+              </div>
+              <div className="space-y-2 flex-1">
+                <h3 className="text-lg font-semibold text-foreground flex items-center gap-2">
+                  Análisis SEO & Keywords
+                  <Badge className="bg-green-500/20 text-green-400 border-green-500/30 text-xs">
+                    IA Completado
+                  </Badge>
+                </h3>
+                <p className="text-muted-foreground leading-relaxed">
+                  {brandProfile.seo.keywordAlignment}
+                </p>
+              </div>
+            </div>
+
+            <div className="grid md:grid-cols-3 gap-4 pt-4 border-t border-green-500/20">
+              {/* Found Keywords */}
+              <div className="space-y-2">
+                <h4 className="text-sm font-semibold text-green-400 flex items-center gap-2">
+                  <CheckCircle2 className="w-4 h-4" />
+                  Keywords Encontradas
+                </h4>
+                <div className="flex flex-wrap gap-1">
+                  {brandProfile.seo.foundKeywords.slice(0, 6).map((keyword, idx) => (
+                    <span key={idx} className="px-2 py-0.5 rounded-full bg-green-500/20 text-green-400 text-xs border border-green-500/30">
+                      {keyword}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              {/* Missing Keywords */}
+              <div className="space-y-2">
+                <h4 className="text-sm font-semibold text-yellow-400 flex items-center gap-2">
+                  <Target className="w-4 h-4" />
+                  Keywords Faltantes
+                </h4>
+                <div className="flex flex-wrap gap-1">
+                  {brandProfile.seo.missingKeywords.slice(0, 6).map((keyword, idx) => (
+                    <span key={idx} className="px-2 py-0.5 rounded-full bg-yellow-500/20 text-yellow-400 text-xs border border-yellow-500/30">
+                      {keyword}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              {/* SEO Opportunities */}
+              <div className="space-y-2">
+                <h4 className="text-sm font-semibold text-electric-cyan flex items-center gap-2">
+                  <TrendingUp className="w-4 h-4" />
+                  Oportunidades SEO
+                </h4>
+                <ul className="space-y-1">
+                  {brandProfile.seo.seoOpportunities.map((opp, idx) => (
+                    <li key={idx} className="text-sm text-muted-foreground flex items-start gap-2">
+                      <span className="text-electric-cyan mt-1">•</span>
+                      {opp}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      )}
 
       {/* Global Settings */}
       <Card className="bg-card/20 backdrop-blur-sm border-border/30">
