@@ -393,7 +393,7 @@ const TrialCreatorPanel = ({ brandProfile, onGoToDashboard }: TrialCreatorPanelP
               </div>
             </div>
             <div className="flex flex-wrap gap-2">
-              {brandProfile.keywords.slice(0, 4).map((keyword, idx) => (
+              {(brandProfile.keywords || []).slice(0, 4).map((keyword, idx) => (
                 <span key={idx} className="px-3 py-1 rounded-full bg-background/50 text-muted-foreground text-sm border border-border/50">
                   #{keyword}
                 </span>
@@ -435,7 +435,7 @@ const TrialCreatorPanel = ({ brandProfile, onGoToDashboard }: TrialCreatorPanelP
                   Fortalezas
                 </h4>
                 <ul className="space-y-1">
-                  {brandProfile.analysis.strengths.map((strength, idx) => (
+                  {(brandProfile.analysis?.strengths || []).map((strength, idx) => (
                     <li key={idx} className="text-sm text-muted-foreground flex items-start gap-2">
                       <span className="text-green-400 mt-1">•</span>
                       {strength}
@@ -451,7 +451,7 @@ const TrialCreatorPanel = ({ brandProfile, onGoToDashboard }: TrialCreatorPanelP
                   Áreas de Mejora
                 </h4>
                 <ul className="space-y-1">
-                  {brandProfile.analysis.weaknesses.map((weakness, idx) => (
+                  {(brandProfile.analysis?.weaknesses || []).map((weakness, idx) => (
                     <li key={idx} className="text-sm text-muted-foreground flex items-start gap-2">
                       <span className="text-yellow-400 mt-1">•</span>
                       {weakness}
@@ -467,7 +467,7 @@ const TrialCreatorPanel = ({ brandProfile, onGoToDashboard }: TrialCreatorPanelP
                   Recomendaciones
                 </h4>
                 <ul className="space-y-1">
-                  {brandProfile.analysis.recommendations.map((rec, idx) => (
+                  {(brandProfile.analysis?.recommendations || []).map((rec, idx) => (
                     <li key={idx} className="text-sm text-muted-foreground flex items-start gap-2">
                       <span className="text-electric-cyan mt-1">•</span>
                       {rec}
@@ -509,7 +509,7 @@ const TrialCreatorPanel = ({ brandProfile, onGoToDashboard }: TrialCreatorPanelP
                   Keywords Encontradas
                 </h4>
                 <div className="flex flex-wrap gap-1">
-                  {brandProfile.seo.foundKeywords.slice(0, 6).map((keyword, idx) => (
+                  {(brandProfile.seo?.foundKeywords || []).slice(0, 6).map((keyword, idx) => (
                     <span key={idx} className="px-2 py-0.5 rounded-full bg-green-500/20 text-green-400 text-xs border border-green-500/30">
                       {keyword}
                     </span>
@@ -524,7 +524,7 @@ const TrialCreatorPanel = ({ brandProfile, onGoToDashboard }: TrialCreatorPanelP
                   Keywords Faltantes
                 </h4>
                 <div className="flex flex-wrap gap-1">
-                  {brandProfile.seo.missingKeywords.slice(0, 6).map((keyword, idx) => (
+                  {(brandProfile.seo?.missingKeywords || []).slice(0, 6).map((keyword, idx) => (
                     <span key={idx} className="px-2 py-0.5 rounded-full bg-yellow-500/20 text-yellow-400 text-xs border border-yellow-500/30">
                       {keyword}
                     </span>
@@ -539,7 +539,7 @@ const TrialCreatorPanel = ({ brandProfile, onGoToDashboard }: TrialCreatorPanelP
                   Oportunidades SEO
                 </h4>
                 <ul className="space-y-1">
-                  {brandProfile.seo.seoOpportunities.map((opp, idx) => (
+                  {(brandProfile.seo?.seoOpportunities || []).map((opp, idx) => (
                     <li key={idx} className="text-sm text-muted-foreground flex items-start gap-2">
                       <span className="text-electric-cyan mt-1">•</span>
                       {opp}
