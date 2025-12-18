@@ -29,7 +29,8 @@ import {
   Target,
   Link,
   FileText,
-  History
+  History,
+  Plus
 } from 'lucide-react';
 import { useContentGenerator } from '@/hooks/useContentGenerator';
 import { supabase } from '@/integrations/supabase/client';
@@ -194,6 +195,59 @@ const TrialCreatorPanel = ({ brandProfile, onGoToDashboard, onActivityLog }: Tri
     setAcceptedContents(prev => [...prev, { type, content, acceptedAt: new Date() }]);
     if (type === 'copy') setCopyAccepted(true);
     toast.success('Contenido aceptado y guardado');
+  };
+
+  // Add to brand profile
+  const handleAddToBrand = async (type: string, data: any) => {
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) {
+        toast.error('Debes iniciar sesión para guardar en tu marca');
+        return;
+      }
+
+      // Get current brand profile
+      const { data: currentProfile } = await supabase
+        .from('trial_brand_profiles')
+        .select('keywords, analysis')
+        .eq('user_id', user.id)
+        .single();
+
+      let updates: any = {};
+
+      if (type === 'keywords' && data.hashtags) {
+        // Add new hashtags/keywords to the brand
+        const existingKeywords = Array.isArray(currentProfile?.keywords) ? currentProfile.keywords : [];
+        const newKeywords = data.hashtags.map((tag: string) => tag.replace('#', ''));
+        const mergedKeywords = [...new Set([...existingKeywords, ...newKeywords])];
+        updates.keywords = mergedKeywords;
+      }
+
+      if (type === 'ideas' && data.ideas) {
+        // Store ideas in analysis for future reference
+        const existingAnalysis = (typeof currentProfile?.analysis === 'object' && currentProfile.analysis !== null && !Array.isArray(currentProfile.analysis)) 
+          ? currentProfile.analysis as Record<string, any>
+          : {};
+        const savedIdeas = Array.isArray(existingAnalysis.savedIdeas) ? existingAnalysis.savedIdeas : [];
+        updates.analysis = {
+          ...existingAnalysis,
+          savedIdeas: [...savedIdeas, ...data.ideas.map((i: any) => i.idea || i.title)]
+        };
+      }
+
+      if (Object.keys(updates).length > 0) {
+        const { error } = await supabase
+          .from('trial_brand_profiles')
+          .update(updates)
+          .eq('user_id', user.id);
+
+        if (error) throw error;
+        toast.success('¡Agregado a tu perfil de marca!');
+      }
+    } catch (error) {
+      console.error('Error adding to brand:', error);
+      toast.error('Error al agregar a la marca');
+    }
   };
 
   // Start editing
@@ -963,9 +1017,9 @@ const TrialCreatorPanel = ({ brandProfile, onGoToDashboard, onActivityLog }: Tri
                     julianKoenigVersion={copyResult.julianKoenigVersion}
                   />
                   
-                  {/* Accept / Edit Buttons */}
+                  {/* Accept / Edit / Add to Brand Buttons */}
                   {!copyAccepted && !copyEditing && (
-                    <div className="flex gap-3 pt-4 border-t border-electric-cyan/20">
+                    <div className="flex flex-wrap gap-3 pt-4 border-t border-electric-cyan/20">
                       <Button 
                         onClick={() => handleAcceptContent('copy', copyResult.copy)}
                         className="bg-green-500 hover:bg-green-600 text-white"
@@ -981,6 +1035,16 @@ const TrialCreatorPanel = ({ brandProfile, onGoToDashboard, onActivityLog }: Tri
                         <Pencil className="w-4 h-4 mr-2" />
                         Editar
                       </Button>
+                      {copyResult.copy?.hashtags?.length > 0 && (
+                        <Button 
+                          variant="outline"
+                          onClick={() => handleAddToBrand('keywords', { hashtags: copyResult.copy.hashtags })}
+                          className="border-purple-accent/50 text-purple-accent hover:bg-purple-accent/10"
+                        >
+                          <Plus className="w-4 h-4 mr-2" />
+                          Agregar a la marca
+                        </Button>
+                      )}
                     </div>
                   )}
                   {copyAccepted && (
@@ -1106,6 +1170,12 @@ const TrialCreatorPanel = ({ brandProfile, onGoToDashboard, onActivityLog }: Tri
                       </p>
                     </div>
                   ))}
+                  
+                  {/* Julian Koenig & Analysis for Variants */}
+                  <AnalysisDisplay 
+                    analysis={variantsResult.analysis}
+                    julianKoenigVersion={variantsResult.julianKoenigVersion}
+                  />
                 </motion.div>
               )}
             </CardContent>
@@ -1233,6 +1303,24 @@ const TrialCreatorPanel = ({ brandProfile, onGoToDashboard, onActivityLog }: Tri
                       </div>
                     </div>
                   ))}
+                  
+                  {/* Julian Koenig & Analysis for Ideas */}
+                  <AnalysisDisplay 
+                    analysis={ideasResult.analysis}
+                    julianKoenigVersion={ideasResult.julianKoenigVersion}
+                  />
+                  
+                  {/* Add to brand button */}
+                  <div className="pt-4 border-t border-yellow-400/20">
+                    <Button 
+                      variant="outline"
+                      onClick={() => handleAddToBrand('ideas', { ideas: ideasResult.ideas })}
+                      className="border-purple-accent/50 text-purple-accent hover:bg-purple-accent/10"
+                    >
+                      <Plus className="w-4 h-4 mr-2" />
+                      Agregar a la marca
+                    </Button>
+                  </div>
                 </motion.div>
               )}
             </CardContent>
@@ -1442,6 +1530,12 @@ const TrialCreatorPanel = ({ brandProfile, onGoToDashboard, onActivityLog }: Tri
                   <Badge className="bg-green-500/20 text-green-400">
                     Score: {improveResult.improved.improvementScore}
                   </Badge>
+                  
+                  {/* Julian Koenig & Analysis for Improve */}
+                  <AnalysisDisplay 
+                    analysis={improveResult.analysis}
+                    julianKoenigVersion={improveResult.julianKoenigVersion}
+                  />
                 </motion.div>
               )}
             </CardContent>
@@ -1525,6 +1619,12 @@ const TrialCreatorPanel = ({ brandProfile, onGoToDashboard, onActivityLog }: Tri
                       </ul>
                     </div>
                   )}
+                  
+                  {/* Julian Koenig & Analysis for Translate */}
+                  <AnalysisDisplay 
+                    analysis={translateResult.analysis}
+                    julianKoenigVersion={translateResult.julianKoenigVersion}
+                  />
                 </motion.div>
               )}
             </CardContent>

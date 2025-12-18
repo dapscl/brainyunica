@@ -53,7 +53,9 @@ const TrialCreatorPage = () => {
     style: brandProfile?.style || 'moderno',
     colors: brandProfile?.colors || ['#00D4FF', '#8B5CF6'],
     keywords: brandProfile?.keywords || ['marketing', 'contenido'],
-    personality: brandProfile?.personality || 'Innovador y profesional'
+    personality: brandProfile?.personality || 'Innovador y profesional',
+    analysis: brandProfile?.analysis as any,
+    seo: (brandProfile?.analysis as any)?.seo
   };
 
   return (
