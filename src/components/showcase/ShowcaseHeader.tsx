@@ -59,16 +59,25 @@ export const ShowcaseHeader = () => {
             ))}
           </nav>
 
-          {/* Right side - Language Selector + CTA */}
-          <div className="hidden md:flex items-center space-x-4">
+          {/* Right side - Language Selector + CTAs */}
+          <div className="hidden md:flex items-center space-x-3">
             <LanguageSelector />
             <Link to="/auth">
               <Button
-                variant="outline"
+                variant="ghost"
                 size="sm"
-                className="border-electric-cyan/30 text-electric-cyan hover:bg-electric-cyan/10 transition-all duration-300"
+                className="text-white/80 hover:text-electric-cyan hover:bg-electric-cyan/5 transition-all duration-300"
               >
                 {t('showcase.nav.login', 'Acceso')}
+              </Button>
+            </Link>
+            <Link to="/trial">
+              <Button
+                variant="outline"
+                size="sm"
+                className="border-green-500/50 text-green-400 hover:bg-green-500/10 hover:border-green-500/70 transition-all duration-300"
+              >
+                {t('showcase.nav.freeTrial', 'Prueba Gratis')}
               </Button>
             </Link>
             <Link to="/lead-capture">
@@ -112,10 +121,18 @@ export const ShowcaseHeader = () => {
               <LanguageSelector />
               <Link to="/auth" onClick={() => setMobileMenuOpen(false)}>
                 <Button
-                  variant="outline"
-                  className="w-full border-electric-cyan/30 text-electric-cyan hover:bg-electric-cyan/10"
+                  variant="ghost"
+                  className="w-full text-white/80 hover:text-electric-cyan hover:bg-electric-cyan/5"
                 >
                   {t('showcase.nav.login', 'Acceso')}
+                </Button>
+              </Link>
+              <Link to="/trial" onClick={() => setMobileMenuOpen(false)}>
+                <Button
+                  variant="outline"
+                  className="w-full border-green-500/50 text-green-400 hover:bg-green-500/10"
+                >
+                  {t('showcase.nav.freeTrial', 'Prueba Gratis')}
                 </Button>
               </Link>
               <Link to="/lead-capture" onClick={() => setMobileMenuOpen(false)}>
