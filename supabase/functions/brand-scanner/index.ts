@@ -54,6 +54,13 @@ interface BrandScanResult {
       instagramIdeas: string[];
       seoImprovements: string[];
     };
+    koenigAnalysis: {
+      accountType: string;
+      diagnosis: string;
+      problems: string[];
+      koenigSuggestion: string;
+      rewriteExample: string;
+    };
   };
   seo: {
     foundKeywords: string[];
@@ -95,18 +102,24 @@ ${content.substring(0, 15000)}
 
 Tu análisis debe incluir las siguientes secciones:
 
-1. IDENTIDAD DE MARCA
+---
+
+### 1. IDENTIDAD DE MARCA
 - ¿Cuál es la propuesta de valor de la marca? ¿Es clara y diferenciadora?
 - ¿Cómo es el tono de comunicación? ¿A quién le habla?
 - ¿La identidad visual es coherente? (colores, imágenes, tipografías, estilo)
 
-2. ANÁLISIS DEL SITIO WEB
+---
+
+### 2. ANÁLISIS DEL SITIO WEB
 - Diagnóstico general del sitio: claridad, navegación, experiencia de usuario (UX).
 - Palabras clave que se repiten en el contenido del sitio.
-- ¿Estas keywords coinciden con las más buscadas en Google para su industria? (usa tu conocimiento de tendencias de búsqueda)
+- ¿Estas keywords coinciden con las más buscadas en Google para su industria?
 - Keywords faltantes: ¿qué términos relevantes no aparecen y deberían estar?
 
-3. ANÁLISIS DE INSTAGRAM
+---
+
+### 3. ANÁLISIS DE INSTAGRAM
 ${instagramHandle ? `
 - Basándote en el perfil @${instagramHandle} y el tipo de marca:
 - Estética general esperada del feed: ¿es coherente y profesional?
@@ -116,20 +129,52 @@ ${instagramHandle ? `
 - Nivel de engagement esperado y cómo mejorarlo.
 ` : '- Proporciona recomendaciones generales para Instagram basándote en el análisis del sitio web.'}
 
-4. VELOCIDAD Y PERFORMANCE TÉCNICA
+---
+
+### 4. VELOCIDAD Y PERFORMANCE TÉCNICA
 - Basándote en el contenido y estructura del sitio, estima:
   - Resultado mobile y desktop aproximado (bueno/regular/malo)
   - Tiempo de carga estimado
   - Problemas técnicos potenciales (imágenes pesadas, scripts, etc.)
   - Recomendaciones para mejorar la velocidad y experiencia mobile
 
-5. DIAGNÓSTICO GENERAL Y RECOMENDACIONES
+---
+
+### 5. DIAGNÓSTICO GENERAL Y RECOMENDACIONES
 - ¿Qué tan alineada está la marca con su audiencia digital?
 - Tabla con:
   - Fortalezas
   - Oportunidades de mejora
   - Recomendaciones accionables
 - Proponé 2 ideas de contenido para Instagram y 2 mejoras SEO para el sitio.
+
+---
+
+### 6. 🔥 ANÁLISIS DE REDACCIÓN: JULIAN KOENIG STYLE
+
+Actuá como Julian Koenig, redactor publicitario legendario.
+
+Tu trabajo:
+- Detectar si su redacción es clara, valiente o simplemente un vómito corporativo.
+- Dar sugerencias categorizadas (según tipo de negocio).
+
+Tu estilo:
+- Frases cortas.
+- Juicio directo.
+- Humor seco.
+- Brutal honestidad.
+
+Analiza:
+- 🟠 Tipo de cuenta: [Producto / Servicio / App / Restaurante / Marca personal, etc.]
+- 🔍 Diagnóstico: [¿Suena genérico? ¿Inspira confianza? ¿Te dan ganas de comprar algo?]
+- 📉 Lo que está mal: [Detecta clichés, tono blando, falta de idea o sobreexplicación]
+- 💡 Sugerencia Koenig: [Un ángulo nuevo, más honesto, más potente]
+- ✍️ Ejemplo de reescritura: [Copy alternativo que tú escribirías en su lugar]
+
+Si la redacción es buena, decilo. Pero con fundamentos.
+Si es mala, explica la razón y reconstruye. Como buen redactor.
+
+---
 
 IMPORTANTE: Responde ÚNICAMENTE con un JSON válido con esta estructura exacta:
 {
@@ -174,6 +219,13 @@ IMPORTANTE: Responde ÚNICAMENTE con un JSON válido con esta estructura exacta:
       "recommendations": ["recomendación accionable 1", "recomendación 2", "recomendación 3"],
       "instagramIdeas": ["idea de contenido Instagram 1", "idea 2"],
       "seoImprovements": ["mejora SEO 1", "mejora SEO 2"]
+    },
+    "koenigAnalysis": {
+      "accountType": "Producto / Servicio / App / Restaurante / Marca personal / etc.",
+      "diagnosis": "Diagnóstico Koenig de la redacción: ¿suena genérico? ¿inspira confianza?",
+      "problems": ["cliché 1", "tono blando", "sobreexplicación"],
+      "koenigSuggestion": "Un ángulo nuevo, más honesto, más potente para contar lo mismo",
+      "rewriteExample": "Copy alternativo que escribirías como Koenig"
     }
   },
   "seo": {
@@ -183,8 +235,6 @@ IMPORTANTE: Responde ÚNICAMENTE con un JSON válido con esta estructura exacta:
     "keywordAlignment": "evaluación de alineación entre lenguaje del sitio y cómo busca la audiencia"
   }
 }
-
-Ejemplo de oportunidad SEO: si el sitio vende skincare pero no menciona "piel sensible" y esa es una keyword top en Google, eso es una oportunidad.
 
 Solo responde con el JSON, sin texto adicional.
 `;
