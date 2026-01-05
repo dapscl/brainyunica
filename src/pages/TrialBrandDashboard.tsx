@@ -94,13 +94,13 @@ const TrialBrandDashboard = () => {
     {
       id: 'calendar',
       name: 'CalendarBrainy',
-      description: 'Planifica y programa tu contenido. Vista mensual con todas tus publicaciones.',
+      description: 'Planifica y programa tu contenido. Vista mensual con drag & drop y programación inteligente.',
       icon: <Calendar className="w-8 h-8" />,
       color: 'text-blue-400',
       gradient: 'from-blue-500 to-cyan-500',
-      isActive: false,
-      comingSoon: true,
-      features: ['Calendario visual', 'Programación automática', 'Mejores horarios', 'Multi-plataforma']
+      isActive: true,
+      route: '/trial/calendar',
+      features: ['Calendario visual', 'Drag & drop', 'Vista semana/mes', 'Programación automática', 'Cola de publicación']
     },
     {
       id: 'ads',
