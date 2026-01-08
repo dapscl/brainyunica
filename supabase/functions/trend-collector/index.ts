@@ -98,6 +98,83 @@ function calculateTrendScore(title: string, brandKeywords: string[] = []): numbe
   return Math.min(score, 100);
 }
 
+// Generate AI-powered personalized trends for the brand
+async function generatePersonalizedTrends(
+  brandName: string, 
+  brandKeywords: string[], 
+  brandIndustry: string,
+  lovableApiKey: string
+): Promise<Array<{ keyword: string; source: string; score: number; category: string; isRelevant: boolean }>> {
+  
+  const prompt = `Eres un experto en tendencias de marketing y contenido digital. 
+  
+Analiza las tendencias ACTUALES (enero 2026) para una marca con estas características:
+- Nombre: ${brandName}
+- Industria: ${brandIndustry}
+- Keywords relevantes: ${brandKeywords.slice(0, 10).join(', ')}
+
+Genera 10 tendencias ESPECÍFICAS y RELEVANTES para esta industria que la marca podría aprovechar para crear contenido.
+
+Las tendencias deben ser:
+1. Específicas de la industria (${brandIndustry})
+2. Actuales y relevantes para 2026
+3. Accionables para contenido de redes sociales
+4. Mezcla de tendencias de producto, estilo de vida y marketing
+
+Responde SOLO en JSON válido:
+{
+  "trends": [
+    {
+      "title": "Tendencia específica para la industria",
+      "category": "producto | lifestyle | marketing | tecnología | social",
+      "score": 75,
+      "reason": "Por qué es relevante para ${brandName}"
+    }
+  ]
+}`;
+
+  try {
+    const aiResponse = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${lovableApiKey}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        model: 'google/gemini-2.5-flash',
+        messages: [
+          { role: 'system', content: 'Eres un experto en tendencias de marketing. Responde solo en JSON válido.' },
+          { role: 'user', content: prompt }
+        ],
+      }),
+    });
+
+    if (!aiResponse.ok) {
+      console.error('AI Gateway error:', aiResponse.status);
+      return [];
+    }
+
+    const aiData = await aiResponse.json();
+    const responseText = aiData.choices[0]?.message?.content || '';
+    
+    const jsonMatch = responseText.match(/\{[\s\S]*\}/);
+    if (jsonMatch) {
+      const parsed = JSON.parse(jsonMatch[0]);
+      return (parsed.trends || []).map((t: any) => ({
+        keyword: t.title,
+        source: `IA: ${t.reason?.substring(0, 50) || 'Tendencia personalizada'}`,
+        score: t.score || 70,
+        category: t.category || 'marketing',
+        isRelevant: true, // AI trends are always relevant
+      }));
+    }
+  } catch (error) {
+    console.error('Error generating AI trends:', error);
+  }
+  
+  return [];
+}
+
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
@@ -116,9 +193,28 @@ serve(async (req) => {
     const brandIndustry = brandContext?.industry || '';
     const brandName = brandContext?.name || '';
     
-    // Add industry-related keywords for better matching
+    console.log('TrendBrainy: Collecting trends for:', { 
+      organizationId, 
+      brandId, 
+      categories,
+      brandName,
+      brandIndustry,
+      brandKeywords: brandKeywords.slice(0, 10)
+    });
+
+    // STEP 1: Generate AI-powered personalized trends for the brand
+    console.log('TrendBrainy: Generating AI personalized trends...');
+    const aiTrends = await generatePersonalizedTrends(
+      brandName, 
+      brandKeywords, 
+      brandIndustry,
+      lovableApiKey
+    );
+    console.log(`TrendBrainy: Generated ${aiTrends.length} AI personalized trends`);
+
+    // Add industry-related keywords for RSS matching
     const industryKeywords: Record<string, string[]> = {
-      'motos': ['motos', 'motorcycles', 'motocicletas', 'scooter', 'naked', 'adventure', 'enduro', 'honda', 'yamaha', 'suzuki', 'kawasaki'],
+      'motos': ['motos', 'motorcycles', 'motocicletas', 'scooter', 'naked', 'adventure', 'enduro', 'honda', 'yamaha', 'suzuki', 'kawasaki', 'motor'],
       'camping': ['camping', 'outdoor', 'naturaleza', 'aventura', 'viajes', 'trekking', 'senderismo'],
       'ecommerce': ['ecommerce', 'tienda online', 'ventas', 'shopify', 'woocommerce'],
       'restaurante': ['gastronomía', 'food', 'restaurante', 'comida', 'delivery'],
@@ -134,14 +230,6 @@ serve(async (req) => {
         allBrandKeywords.push(...keywords);
       }
     }
-
-    console.log('TrendBrainy: Collecting trends for:', { 
-      organizationId, 
-      brandId, 
-      categories,
-      brandName,
-      brandKeywords: allBrandKeywords.slice(0, 10)
-    });
 
     const trends: Array<{ keyword: string; source: string; score: number; category: string; isRelevant: boolean }> = [];
     const feedsToCheck: Array<{ url: string; name: string; category: string }> = [];
@@ -208,14 +296,18 @@ serve(async (req) => {
     const relevantTrends = trends.filter(t => t.isRelevant);
     const generalTrends = trends.filter(t => !t.isRelevant);
     
-    console.log(`TrendBrainy: ${relevantTrends.length} brand-relevant trends found`);
+    console.log(`TrendBrainy: ${relevantTrends.length} RSS relevant + ${aiTrends.length} AI personalized trends`);
 
-    // Sort by score and prioritize relevant trends
+    // Sort by score
     relevantTrends.sort((a, b) => b.score - a.score);
     generalTrends.sort((a, b) => b.score - a.score);
     
-    // Combine: first relevant, then general (up to 20 total)
-    const topTrends = [...relevantTrends.slice(0, 10), ...generalTrends.slice(0, 10)].slice(0, 20);
+    // Combine: AI trends first (most relevant), then RSS relevant, then general
+    const topTrends = [
+      ...aiTrends.slice(0, 10),           // Up to 10 AI personalized trends
+      ...relevantTrends.slice(0, 5),       // Up to 5 RSS relevant trends  
+      ...generalTrends.slice(0, 5)         // Up to 5 general trends
+    ].slice(0, 20);
 
     // Store trends in database
     if (topTrends.length > 0 && organizationId) {
