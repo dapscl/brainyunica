@@ -62,6 +62,14 @@ const categoryColors: Record<string, string> = {
   default: 'bg-muted/50 text-muted-foreground border-border/50',
 };
 
+interface BrandProfile {
+  id: string;
+  brand_name: string;
+  brand_type: string | null;
+  keywords: string[] | null;
+  analysis: Record<string, unknown> | null;
+}
+
 const TrendBrainyPage = () => {
   const navigate = useNavigate();
   const [trends, setTrends] = useState<Trend[]>([]);
@@ -70,6 +78,7 @@ const TrendBrainyPage = () => {
   const [refreshing, setRefreshing] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [copiedId, setCopiedId] = useState<string | null>(null);
+  const [brandProfile, setBrandProfile] = useState<BrandProfile | null>(null);
 
   const handleCreateFromTrend = (trendKeyword: string) => {
     // Store the trend in sessionStorage to pass to CreatorBrainy
@@ -86,6 +95,17 @@ const TrendBrainyPage = () => {
     try {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) return;
+
+      // Load brand profile first
+      const { data: profile } = await supabase
+        .from('trial_brand_profiles')
+        .select('id, brand_name, brand_type, keywords, analysis')
+        .eq('user_id', user.id)
+        .single();
+
+      if (profile) {
+        setBrandProfile(profile as BrandProfile);
+      }
 
       // Load trends from last 7 days
       const weekAgo = new Date();
@@ -123,8 +143,27 @@ const TrendBrainyPage = () => {
   const refreshTrends = async () => {
     setRefreshing(true);
     try {
+      // Extract brand context for personalized trends
+      const brandKeywords = Array.isArray(brandProfile?.keywords) 
+        ? brandProfile.keywords 
+        : [];
+      
+      // Get industry from analysis if available
+      const analysis = brandProfile?.analysis as Record<string, any> || {};
+      const brandIndustry = analysis?.brandIdentity?.industry || 
+                           analysis?.industry || 
+                           'marketing';
+
       const response = await supabase.functions.invoke('trend-collector', {
-        body: { categories: ['marketing', 'technology', 'social', 'advertising', 'latam'] }
+        body: { 
+          categories: ['marketing', 'technology', 'social', 'advertising', 'latam'],
+          brandContext: {
+            name: brandProfile?.brand_name || '',
+            keywords: brandKeywords,
+            industry: brandIndustry,
+            type: brandProfile?.brand_type || 'website'
+          }
+        }
       });
 
       if (response.error) throw response.error;
@@ -153,7 +192,7 @@ const TrendBrainyPage = () => {
         });
       }
 
-      toast.success(`Se recolectaron ${response.data.trendsCollected} tendencias en tiempo real`);
+      toast.success(`Se recolectaron ${response.data.trendsCollected} tendencias personalizadas para ${brandProfile?.brand_name || 'tu marca'}`);
     } catch (error) {
       console.error('Error refreshing trends:', error);
       toast.error('Error al actualizar tendencias');
