@@ -37,7 +37,8 @@ import {
   Video,
   Lightbulb,
   RefreshCw,
-  Languages
+  Languages,
+  LayoutTemplate
 } from 'lucide-react';
 
 interface BrainyModule {
@@ -93,6 +94,17 @@ const TrialBrandDashboard = () => {
       features: ['Generación de copys', 'Ideas de contenido', 'Variantes A/B', 'Mejora de textos', 'Traducciones']
     },
     {
+      id: 'templates',
+      name: 'TemplatesBrainy',
+      description: 'Plantillas reutilizables para diferentes formatos de contenido.',
+      icon: <LayoutTemplate className="w-8 h-8" />,
+      color: 'text-indigo-400',
+      gradient: 'from-indigo-500 to-purple-500',
+      isActive: true,
+      route: '/trial/templates',
+      features: ['Posts', 'Stories', 'Reels', 'Carruseles', 'Hilos']
+    },
+    {
       id: 'calendar',
       name: 'CalendarBrainy',
       description: 'Planifica y programa tu contenido. Vista mensual con drag & drop y programación inteligente.',
@@ -102,6 +114,17 @@ const TrialBrandDashboard = () => {
       isActive: true,
       route: '/trial/calendar',
       features: ['Calendario visual', 'Drag & drop', 'Vista semana/mes', 'Programación automática', 'Cola de publicación']
+    },
+    {
+      id: 'trends',
+      name: 'TrendBrainy',
+      description: 'Detecta tendencias relevantes para tu marca y genera contenido viral.',
+      icon: <TrendingUp className="w-8 h-8" />,
+      color: 'text-orange-400',
+      gradient: 'from-orange-500 to-red-500',
+      isActive: true,
+      route: '/trial/trends',
+      features: ['Trending topics', 'Análisis de competencia', 'Sugerencias virales', 'Alertas de tendencias']
     },
     {
       id: 'ads',
@@ -124,17 +147,6 @@ const TrialBrandDashboard = () => {
       isActive: false,
       comingSoon: true,
       features: ['WhatsApp Business', 'Instagram DM', 'Facebook Messenger', 'Respuestas con IA']
-    },
-    {
-      id: 'trends',
-      name: 'TrendBrainy',
-      description: 'Detecta tendencias relevantes para tu marca y genera contenido viral.',
-      icon: <TrendingUp className="w-8 h-8" />,
-      color: 'text-orange-400',
-      gradient: 'from-orange-500 to-red-500',
-      isActive: true,
-      route: '/trial/trends',
-      features: ['Trending topics', 'Análisis de competencia', 'Sugerencias virales', 'Alertas de tendencias']
     },
     {
       id: 'video',

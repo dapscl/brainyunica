@@ -37,6 +37,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import AnalysisDisplay from './AnalysisDisplay';
 import ContentHistoryPanel from './ContentHistoryPanel';
+import ContentExporter from '@/components/content/ContentExporter';
 
 interface BrandAnalysis {
   summary: string;
@@ -1019,7 +1020,7 @@ const TrialCreatorPanel = ({ brandProfile, onGoToDashboard, onActivityLog, initi
                     julianKoenigVersion={copyResult.julianKoenigVersion}
                   />
                   
-                  {/* Accept / Edit / Add to Brand Buttons */}
+                  {/* Accept / Edit / Add to Brand / Export Buttons */}
                   {!copyAccepted && !copyEditing && (
                     <div className="flex flex-wrap gap-3 pt-4 border-t border-electric-cyan/20">
                       <Button 
@@ -1037,6 +1038,12 @@ const TrialCreatorPanel = ({ brandProfile, onGoToDashboard, onActivityLog, initi
                         <Pencil className="w-4 h-4 mr-2" />
                         Editar
                       </Button>
+                      <ContentExporter 
+                        content={copyResult.copy.fullCopy}
+                        title={copyTopic}
+                        brandName={brandProfile.brandName}
+                        hashtags={copyResult.copy.hashtags}
+                      />
                       {copyResult.copy?.hashtags?.length > 0 && (
                         <Button 
                           variant="outline"
