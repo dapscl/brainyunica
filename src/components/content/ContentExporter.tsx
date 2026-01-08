@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -12,8 +12,12 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
+  DropdownMenuSub,
+  DropdownMenuSubTrigger,
+  DropdownMenuSubContent,
 } from '@/components/ui/dropdown-menu';
-import { Download, FileText, Image, Loader2, Share2, Eye, Square, RectangleVertical, Copy as CopyIcon } from 'lucide-react';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { Download, FileText, Image, Loader2, Share2, Eye, Square, RectangleVertical, Copy as CopyIcon, History, Trash2, MessageCircle, Twitter, Facebook } from 'lucide-react';
 import { toast } from 'sonner';
 
 interface ContentExporterProps {
@@ -26,18 +30,69 @@ interface ContentExporterProps {
 
 type ImageFormat = 'story' | 'square';
 
+interface ExportHistoryItem {
+  id: string;
+  content: string;
+  title?: string;
+  brandName?: string;
+  hashtags?: string[];
+  exportedAt: string;
+  format: string;
+}
+
+const HISTORY_KEY = 'brainy-export-history';
+const MAX_HISTORY_ITEMS = 20;
+
+const getExportHistory = (): ExportHistoryItem[] => {
+  try {
+    const stored = localStorage.getItem(HISTORY_KEY);
+    return stored ? JSON.parse(stored) : [];
+  } catch {
+    return [];
+  }
+};
+
+const saveToHistory = (item: Omit<ExportHistoryItem, 'id' | 'exportedAt'>) => {
+  const history = getExportHistory();
+  const newItem: ExportHistoryItem = {
+    ...item,
+    id: crypto.randomUUID(),
+    exportedAt: new Date().toISOString(),
+  };
+  const updated = [newItem, ...history].slice(0, MAX_HISTORY_ITEMS);
+  localStorage.setItem(HISTORY_KEY, JSON.stringify(updated));
+  return newItem;
+};
+
+const removeFromHistory = (id: string) => {
+  const history = getExportHistory();
+  const updated = history.filter(item => item.id !== id);
+  localStorage.setItem(HISTORY_KEY, JSON.stringify(updated));
+};
+
 const ContentExporter = ({ content, title, brandName, hashtags, className }: ContentExporterProps) => {
   const [isExporting, setIsExporting] = useState(false);
   const [showPreview, setShowPreview] = useState(false);
+  const [showHistory, setShowHistory] = useState(false);
   const [previewFormat, setPreviewFormat] = useState<ImageFormat>('story');
   const [previewDataUrl, setPreviewDataUrl] = useState<string>('');
+  const [exportHistory, setExportHistory] = useState<ExportHistoryItem[]>([]);
+  const [historyPreviewItem, setHistoryPreviewItem] = useState<ExportHistoryItem | null>(null);
 
-  const generateCanvas = (format: ImageFormat): HTMLCanvasElement => {
+  useEffect(() => {
+    setExportHistory(getExportHistory());
+  }, [showHistory]);
+
+  const generateCanvas = (format: ImageFormat, itemContent?: string, itemTitle?: string, itemBrandName?: string, itemHashtags?: string[]): HTMLCanvasElement => {
     const canvas = document.createElement('canvas');
     const ctx = canvas.getContext('2d');
     if (!ctx) throw new Error('Canvas not supported');
 
-    // Set canvas dimensions based on format
+    const finalContent = itemContent || content;
+    const finalTitle = itemTitle || title;
+    const finalBrandName = itemBrandName || brandName;
+    const finalHashtags = itemHashtags || hashtags;
+
     if (format === 'story') {
       canvas.width = 1080;
       canvas.height = 1920;
@@ -80,13 +135,13 @@ const ContentExporter = ({ content, title, brandName, hashtags, className }: Con
     ctx.fillStyle = '#ffffff';
     ctx.font = `bold ${format === 'story' ? 48 : 36}px Inter, system-ui, sans-serif`;
     ctx.textAlign = 'center';
-    ctx.fillText((brandName || 'B').charAt(0).toUpperCase(), 80 + logoSize / 2, logoY + logoSize * 0.65);
+    ctx.fillText((finalBrandName || 'B').charAt(0).toUpperCase(), 80 + logoSize / 2, logoY + logoSize * 0.65);
 
     // Brand name
     ctx.textAlign = 'left';
     ctx.font = `bold ${format === 'story' ? 36 : 28}px Inter, system-ui, sans-serif`;
     ctx.fillStyle = '#ffffff';
-    ctx.fillText(brandName || 'Brainy', 80 + logoSize + 20, logoY + logoSize * 0.45);
+    ctx.fillText(finalBrandName || 'Brainy', 80 + logoSize + 20, logoY + logoSize * 0.45);
 
     // Subtitle
     ctx.font = `${format === 'story' ? 20 : 16}px Inter, system-ui, sans-serif`;
@@ -111,10 +166,10 @@ const ContentExporter = ({ content, title, brandName, hashtags, className }: Con
 
     // Title if present
     let textY = contentTop + (format === 'story' ? 60 : 50);
-    if (title) {
+    if (finalTitle) {
       ctx.font = `bold ${format === 'story' ? 28 : 22}px Inter, system-ui, sans-serif`;
       ctx.fillStyle = '#00f5ff';
-      ctx.fillText(title.substring(0, 40), contentPadding + 40, textY);
+      ctx.fillText(finalTitle.substring(0, 40), contentPadding + 40, textY);
       textY += format === 'story' ? 50 : 40;
     }
 
@@ -122,7 +177,7 @@ const ContentExporter = ({ content, title, brandName, hashtags, className }: Con
     ctx.font = `${format === 'story' ? 24 : 18}px Inter, system-ui, sans-serif`;
     ctx.fillStyle = '#e5e7eb';
     
-    const words = content.split(' ');
+    const words = finalContent.split(' ');
     let line = '';
     const lineHeight = format === 'story' ? 38 : 28;
     const maxWidth = contentWidth - 80;
@@ -150,12 +205,12 @@ const ContentExporter = ({ content, title, brandName, hashtags, className }: Con
     }
 
     // Hashtags at bottom
-    if (hashtags?.length) {
+    if (finalHashtags?.length) {
       const hashtagY = canvas.height - (format === 'story' ? 180 : 120);
       ctx.font = `${format === 'story' ? 20 : 16}px Inter, system-ui, sans-serif`;
       let hashtagX = contentPadding + 40;
       
-      for (const tag of hashtags.slice(0, format === 'story' ? 5 : 4)) {
+      for (const tag of finalHashtags.slice(0, format === 'story' ? 5 : 4)) {
         const tagWidth = ctx.measureText(tag).width + 30;
         
         if (hashtagX + tagWidth > canvas.width - contentPadding) break;
@@ -202,6 +257,8 @@ const ContentExporter = ({ content, title, brandName, hashtags, className }: Con
     link.download = `${title || 'contenido-brainy'}-${formatLabel}-${Date.now()}.png`;
     link.href = previewDataUrl;
     link.click();
+    
+    saveToHistory({ content, title, brandName, hashtags, format: previewFormat });
     toast.success('Imagen descargada');
     setShowPreview(false);
   };
@@ -322,6 +379,8 @@ const ContentExporter = ({ content, title, brandName, hashtags, className }: Con
       printWindow.document.close();
       printWindow.focus();
       setTimeout(() => printWindow.print(), 500);
+      
+      saveToHistory({ content, title, brandName, hashtags, format: 'pdf' });
       toast.success('PDF listo para descargar');
     } catch (error) {
       console.error('Error exporting to PDF:', error);
@@ -340,6 +399,8 @@ const ContentExporter = ({ content, title, brandName, hashtags, className }: Con
       link.download = `${title || 'contenido-brainy'}-${formatLabel}-${Date.now()}.png`;
       link.href = canvas.toDataURL('image/png');
       link.click();
+      
+      saveToHistory({ content, title, brandName, hashtags, format });
       toast.success('Imagen descargada');
     } catch (error) {
       console.error('Error exporting to image:', error);
@@ -360,6 +421,68 @@ const ContentExporter = ({ content, title, brandName, hashtags, className }: Con
     } catch (error) {
       toast.error('Error al copiar');
     }
+  };
+
+  // Social sharing functions
+  const shareToWhatsApp = () => {
+    const text = hashtags?.length 
+      ? `${content}\n\n${hashtags.join(' ')}`
+      : content;
+    const url = `https://wa.me/?text=${encodeURIComponent(text)}`;
+    window.open(url, '_blank');
+    toast.success('Abriendo WhatsApp...');
+  };
+
+  const shareToTwitter = () => {
+    const text = content.substring(0, 280);
+    const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`;
+    window.open(url, '_blank');
+    toast.success('Abriendo Twitter/X...');
+  };
+
+  const shareToFacebook = () => {
+    const url = `https://www.facebook.com/sharer/sharer.php?quote=${encodeURIComponent(content)}`;
+    window.open(url, '_blank');
+    toast.success('Abriendo Facebook...');
+  };
+
+  // History functions
+  const handleRedownload = (item: ExportHistoryItem) => {
+    try {
+      if (item.format === 'pdf') {
+        toast.info('Los PDFs deben exportarse de nuevo');
+        return;
+      }
+      const format = item.format as ImageFormat;
+      const canvas = generateCanvas(format, item.content, item.title, item.brandName, item.hashtags);
+      const link = document.createElement('a');
+      link.download = `${item.title || 'contenido-brainy'}-${item.format}-${Date.now()}.png`;
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+      toast.success('Imagen descargada');
+    } catch (error) {
+      toast.error('Error al descargar');
+    }
+  };
+
+  const handlePreviewHistoryItem = (item: ExportHistoryItem) => {
+    try {
+      const format = (item.format === 'story' || item.format === 'square') ? item.format : 'story';
+      const canvas = generateCanvas(format as ImageFormat, item.content, item.title, item.brandName, item.hashtags);
+      setPreviewDataUrl(canvas.toDataURL('image/png'));
+      setPreviewFormat(format as ImageFormat);
+      setHistoryPreviewItem(item);
+      setShowHistory(false);
+      setShowPreview(true);
+    } catch (error) {
+      toast.error('Error al generar vista previa');
+    }
+  };
+
+  const handleDeleteHistoryItem = (id: string) => {
+    removeFromHistory(id);
+    setExportHistory(getExportHistory());
+    toast.success('Elemento eliminado del historial');
   };
 
   return (
@@ -407,6 +530,32 @@ const ContentExporter = ({ content, title, brandName, hashtags, className }: Con
             <CopyIcon className="w-4 h-4 mr-2" />
             Copiar texto
           </DropdownMenuItem>
+          <DropdownMenuSeparator />
+          <DropdownMenuSub>
+            <DropdownMenuSubTrigger>
+              <Share2 className="w-4 h-4 mr-2" />
+              Compartir en redes
+            </DropdownMenuSubTrigger>
+            <DropdownMenuSubContent>
+              <DropdownMenuItem onClick={shareToWhatsApp}>
+                <MessageCircle className="w-4 h-4 mr-2 text-green-500" />
+                WhatsApp
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={shareToTwitter}>
+                <Twitter className="w-4 h-4 mr-2 text-blue-400" />
+                Twitter / X
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={shareToFacebook}>
+                <Facebook className="w-4 h-4 mr-2 text-blue-600" />
+                Facebook
+              </DropdownMenuItem>
+            </DropdownMenuSubContent>
+          </DropdownMenuSub>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem onClick={() => setShowHistory(true)}>
+            <History className="w-4 h-4 mr-2" />
+            Historial de exportaciones
+          </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
 
@@ -445,6 +594,89 @@ const ContentExporter = ({ content, title, brandName, hashtags, className }: Con
               </Button>
             </div>
           </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* History Dialog */}
+      <Dialog open={showHistory} onOpenChange={setShowHistory}>
+        <DialogContent className="max-w-2xl bg-card border-border">
+          <DialogHeader>
+            <DialogTitle className="text-foreground flex items-center gap-2">
+              <History className="w-5 h-5 text-electric-cyan" />
+              Historial de Exportaciones
+            </DialogTitle>
+          </DialogHeader>
+          <ScrollArea className="max-h-[500px] pr-4">
+            {exportHistory.length === 0 ? (
+              <div className="text-center py-8 text-muted-foreground">
+                <History className="w-12 h-12 mx-auto mb-4 opacity-50" />
+                <p>No hay exportaciones anteriores</p>
+              </div>
+            ) : (
+              <div className="space-y-3">
+                {exportHistory.map((item) => (
+                  <div 
+                    key={item.id} 
+                    className="p-4 rounded-lg border border-border/50 bg-background/50 hover:bg-background/80 transition-colors"
+                  >
+                    <div className="flex items-start justify-between gap-3">
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2 mb-1">
+                          <span className="text-xs px-2 py-0.5 rounded-full bg-purple-accent/20 text-purple-accent font-medium">
+                            {item.format === 'story' ? 'Story' : item.format === 'square' ? 'Cuadrado' : 'PDF'}
+                          </span>
+                          <span className="text-xs text-muted-foreground">
+                            {new Date(item.exportedAt).toLocaleDateString('es-ES', { 
+                              day: 'numeric', 
+                              month: 'short',
+                              hour: '2-digit',
+                              minute: '2-digit'
+                            })}
+                          </span>
+                        </div>
+                        {item.title && (
+                          <p className="font-medium text-sm text-foreground truncate">{item.title}</p>
+                        )}
+                        <p className="text-sm text-muted-foreground line-clamp-2 mt-1">
+                          {item.content.substring(0, 100)}...
+                        </p>
+                      </div>
+                      <div className="flex items-center gap-1">
+                        {item.format !== 'pdf' && (
+                          <>
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              className="h-8 w-8"
+                              onClick={() => handlePreviewHistoryItem(item)}
+                            >
+                              <Eye className="w-4 h-4" />
+                            </Button>
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              className="h-8 w-8"
+                              onClick={() => handleRedownload(item)}
+                            >
+                              <Download className="w-4 h-4" />
+                            </Button>
+                          </>
+                        )}
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="h-8 w-8 text-destructive hover:text-destructive"
+                          onClick={() => handleDeleteHistoryItem(item.id)}
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </ScrollArea>
         </DialogContent>
       </Dialog>
     </>
