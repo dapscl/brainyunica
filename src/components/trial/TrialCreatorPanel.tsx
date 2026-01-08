@@ -1177,6 +1177,13 @@ const TrialCreatorPanel = ({ brandProfile, onGoToDashboard, onActivityLog, initi
                       <p className="text-xs text-muted-foreground mt-2">
                         Rendimiento esperado: {variant.expectedPerformance}
                       </p>
+                      <div className="mt-3 pt-3 border-t border-purple-accent/20">
+                        <ContentExporter 
+                          content={variant.content}
+                          title={`${variant.name} - Variante`}
+                          brandName={brandProfile.brandName}
+                        />
+                      </div>
                     </div>
                   ))}
                   
@@ -1309,6 +1316,13 @@ const TrialCreatorPanel = ({ brandProfile, onGoToDashboard, onActivityLog, initi
                       <div className="flex gap-4 text-xs text-muted-foreground">
                         <span>📹 {idea.format}</span>
                         <span>🕐 {idea.bestTime}</span>
+                      </div>
+                      <div className="mt-3 pt-3 border-t border-yellow-400/20">
+                        <ContentExporter 
+                          content={`${idea.title}\n\n${idea.description}`}
+                          title={idea.title}
+                          brandName={brandProfile.brandName}
+                        />
                       </div>
                     </div>
                   ))}
