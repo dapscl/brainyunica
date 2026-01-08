@@ -129,8 +129,31 @@ const TrendBrainyPage = () => {
 
       if (response.error) throw response.error;
 
-      toast.success(`Se recolectaron ${response.data.trendsCollected} tendencias`);
-      await loadData();
+      // Use the real-time trends from the API response
+      if (response.data.topTrends && response.data.topTrends.length > 0) {
+        const liveTrends: Trend[] = response.data.topTrends.map((t: any, idx: number) => ({
+          id: `live-${idx}-${Date.now()}`,
+          trend_keyword: t.keyword,
+          trend_score: t.score,
+          category: t.category,
+          source: t.source,
+          tracked_at: new Date().toISOString(),
+          metadata: null
+        }));
+        
+        // Merge with existing trends, prioritizing new ones
+        setTrends(prev => {
+          const newTrends = [...liveTrends];
+          prev.forEach(t => {
+            if (!newTrends.some(nt => nt.trend_keyword === t.trend_keyword)) {
+              newTrends.push(t);
+            }
+          });
+          return newTrends.sort((a, b) => b.trend_score - a.trend_score).slice(0, 50);
+        });
+      }
+
+      toast.success(`Se recolectaron ${response.data.trendsCollected} tendencias en tiempo real`);
     } catch (error) {
       console.error('Error refreshing trends:', error);
       toast.error('Error al actualizar tendencias');
