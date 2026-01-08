@@ -9,6 +9,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { toast } from 'sonner';
+import { supabase } from '@/integrations/supabase/client';
 import {
   FileText,
   Image,
@@ -24,7 +25,10 @@ import {
   CheckCircle2,
   Pencil,
   Trash2,
-  LayoutTemplate
+  LayoutTemplate,
+  Link2,
+  Loader2,
+  ExternalLink
 } from 'lucide-react';
 
 export interface ContentTemplate {
@@ -203,6 +207,12 @@ const ContentTemplatesPanel = ({
   const [generationTopic, setGenerationTopic] = useState('');
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const [activeCategory, setActiveCategory] = useState<string>('all');
+  
+  // URL scanning state
+  const [urlToScan, setUrlToScan] = useState('');
+  const [isScanning, setIsScanning] = useState(false);
+  const [scannedContent, setScannedContent] = useState<string | null>(null);
+  const [scannedTitle, setScannedTitle] = useState<string | null>(null);
 
   const categories = ['all', 'post', 'story', 'reel', 'carousel', 'thread', 'article'];
   
@@ -234,8 +244,60 @@ const ContentTemplatesPanel = ({
       return;
     }
     if (onGenerateFromTemplate) {
-      onGenerateFromTemplate(selectedTemplate, generationTopic);
+      // Include scanned content if available
+      const topicWithContext = scannedContent 
+        ? `${generationTopic}\n\n---INFORMACIÓN ESCANEADA---\n${scannedContent}`
+        : generationTopic;
+      onGenerateFromTemplate(selectedTemplate, topicWithContext);
     }
+  };
+
+  const handleScanUrl = async () => {
+    if (!urlToScan.trim()) {
+      toast.error('Ingresa una URL para escanear');
+      return;
+    }
+
+    // Validate URL format
+    let formattedUrl = urlToScan.trim();
+    if (!formattedUrl.startsWith('http://') && !formattedUrl.startsWith('https://')) {
+      formattedUrl = `https://${formattedUrl}`;
+    }
+
+    setIsScanning(true);
+    setScannedContent(null);
+    setScannedTitle(null);
+
+    try {
+      const { data, error } = await supabase.functions.invoke('scrape-reference', {
+        body: { url: formattedUrl }
+      });
+
+      if (error) throw error;
+
+      if (data?.content) {
+        setScannedContent(data.content);
+        setScannedTitle(data.title || formattedUrl);
+        // Auto-fill the topic with the page title
+        if (data.title && !generationTopic) {
+          setGenerationTopic(data.title);
+        }
+        toast.success('URL escaneada correctamente');
+      } else {
+        throw new Error('No se pudo extraer contenido');
+      }
+    } catch (error) {
+      console.error('Error scanning URL:', error);
+      toast.error('Error al escanear la URL. Verifica que sea accesible.');
+    } finally {
+      setIsScanning(false);
+    }
+  };
+
+  const clearScannedContent = () => {
+    setScannedContent(null);
+    setScannedTitle(null);
+    setUrlToScan('');
   };
 
   return (
@@ -368,22 +430,84 @@ const ContentTemplatesPanel = ({
                           </div>
 
                           {onGenerateFromTemplate && (
-                            <div className="pt-4 border-t border-border/50">
-                              <h4 className="text-sm font-medium mb-2 flex items-center gap-2">
-                                <Sparkles className="w-4 h-4 text-purple-400" />
-                                Generar con IA
-                              </h4>
-                              <div className="flex gap-2">
-                                <Input
-                                  placeholder="Tema o producto (ej: curso de marketing digital)"
-                                  value={generationTopic}
-                                  onChange={(e) => setGenerationTopic(e.target.value)}
-                                  className="flex-1"
-                                />
-                                <Button onClick={handleGenerate} className="gap-2">
-                                  <Sparkles className="w-4 h-4" />
-                                  Generar
-                                </Button>
+                            <div className="pt-4 border-t border-border/50 space-y-4">
+                              {/* URL Scanning Section */}
+                              <div>
+                                <h4 className="text-sm font-medium mb-2 flex items-center gap-2">
+                                  <Link2 className="w-4 h-4 text-blue-400" />
+                                  Escanear URL (opcional)
+                                </h4>
+                                <div className="flex gap-2">
+                                  <Input
+                                    placeholder="https://ejemplo.com/producto"
+                                    value={urlToScan}
+                                    onChange={(e) => setUrlToScan(e.target.value)}
+                                    className="flex-1"
+                                    disabled={isScanning}
+                                  />
+                                  <Button 
+                                    variant="outline" 
+                                    onClick={handleScanUrl}
+                                    disabled={isScanning || !urlToScan.trim()}
+                                    className="gap-2"
+                                  >
+                                    {isScanning ? (
+                                      <Loader2 className="w-4 h-4 animate-spin" />
+                                    ) : (
+                                      <ExternalLink className="w-4 h-4" />
+                                    )}
+                                    {isScanning ? 'Escaneando...' : 'Escanear'}
+                                  </Button>
+                                </div>
+                                
+                                {/* Scanned Content Preview */}
+                                {scannedContent && (
+                                  <div className="mt-3 p-3 bg-blue-500/10 border border-blue-500/20 rounded-lg">
+                                    <div className="flex items-start justify-between gap-2">
+                                      <div className="flex-1 min-w-0">
+                                        <p className="text-sm font-medium text-blue-400 truncate">
+                                          ✓ {scannedTitle}
+                                        </p>
+                                        <p className="text-xs text-muted-foreground mt-1 line-clamp-2">
+                                          {scannedContent.substring(0, 150)}...
+                                        </p>
+                                      </div>
+                                      <Button 
+                                        variant="ghost" 
+                                        size="sm"
+                                        onClick={clearScannedContent}
+                                        className="shrink-0 text-muted-foreground hover:text-destructive"
+                                      >
+                                        <Trash2 className="w-4 h-4" />
+                                      </Button>
+                                    </div>
+                                  </div>
+                                )}
+                              </div>
+
+                              {/* Generate Section */}
+                              <div>
+                                <h4 className="text-sm font-medium mb-2 flex items-center gap-2">
+                                  <Sparkles className="w-4 h-4 text-purple-400" />
+                                  Generar con IA
+                                </h4>
+                                <div className="flex gap-2">
+                                  <Input
+                                    placeholder="Tema o producto (ej: curso de marketing digital)"
+                                    value={generationTopic}
+                                    onChange={(e) => setGenerationTopic(e.target.value)}
+                                    className="flex-1"
+                                  />
+                                  <Button onClick={handleGenerate} className="gap-2">
+                                    <Sparkles className="w-4 h-4" />
+                                    Generar
+                                  </Button>
+                                </div>
+                                {scannedContent && (
+                                  <p className="text-xs text-muted-foreground mt-2">
+                                    💡 La información escaneada se usará como contexto para la generación.
+                                  </p>
+                                )}
                               </div>
                             </div>
                           )}
