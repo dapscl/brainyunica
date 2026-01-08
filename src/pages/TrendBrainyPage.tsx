@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -24,7 +25,8 @@ import {
   Zap,
   FileText,
   Copy,
-  CheckCircle2
+  CheckCircle2,
+  PenTool
 } from 'lucide-react';
 import { formatDistanceToNow } from 'date-fns';
 import { es } from 'date-fns/locale';
@@ -61,12 +63,20 @@ const categoryColors: Record<string, string> = {
 };
 
 const TrendBrainyPage = () => {
+  const navigate = useNavigate();
   const [trends, setTrends] = useState<Trend[]>([]);
   const [suggestions, setSuggestions] = useState<ContentSuggestion[]>([]);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [copiedId, setCopiedId] = useState<string | null>(null);
+
+  const handleCreateFromTrend = (trendKeyword: string) => {
+    // Store the trend in sessionStorage to pass to CreatorBrainy
+    sessionStorage.setItem('trendTopic', trendKeyword);
+    navigate('/trial/creator');
+    toast.success(`Creando contenido sobre: "${trendKeyword}"`);
+  };
 
   useEffect(() => {
     loadData();
@@ -320,13 +330,24 @@ const TrendBrainyPage = () => {
                         {trend.trend_keyword}
                       </p>
                       
-                      <div className="flex items-center justify-between text-xs text-muted-foreground">
+                      <div className="flex items-center justify-between text-xs text-muted-foreground mb-3">
                         <span className="flex items-center gap-1">
                           <Clock className="w-3 h-3" />
                           {formatDistanceToNow(new Date(trend.tracked_at), { addSuffix: true, locale: es })}
                         </span>
                         <span>{trend.source}</span>
                       </div>
+
+                      {/* Generate Content Button */}
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="w-full gap-2 hover:bg-purple-500/10 hover:border-purple-500/30"
+                        onClick={() => handleCreateFromTrend(trend.trend_keyword)}
+                      >
+                        <PenTool className="w-3 h-3" />
+                        Crear contenido
+                      </Button>
                     </CardContent>
                   </Card>
                 </motion.div>
