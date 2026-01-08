@@ -70,13 +70,20 @@ function extractTitlesFromRSS(xmlText: string): string[] {
   return titles.slice(1, 8); // Skip channel title, get up to 7 items
 }
 
-// Calculate trend score based on keywords
-function calculateTrendScore(title: string): number {
-  const highValueKeywords = ['AI', 'artificial intelligence', 'GPT', 'automation', 'viral', 'record', 'breaking', 'first', 'new', 'launch', '2025', '2024'];
+// Calculate trend score based on keywords and brand relevance
+function calculateTrendScore(title: string, brandKeywords: string[] = []): number {
+  const highValueKeywords = ['AI', 'artificial intelligence', 'GPT', 'automation', 'viral', 'record', 'breaking', 'first', 'new', 'launch', '2025', '2026'];
   const mediumValueKeywords = ['growth', 'increase', 'strategy', 'tips', 'how to', 'best', 'top', 'guide', 'trends'];
   
   let score = 50;
   const lowerTitle = title.toLowerCase();
+  
+  // Boost score significantly for brand-related keywords
+  for (const keyword of brandKeywords) {
+    if (keyword && lowerTitle.includes(keyword.toLowerCase())) {
+      score += 25; // High boost for brand relevance
+    }
+  }
   
   for (const keyword of highValueKeywords) {
     if (lowerTitle.includes(keyword.toLowerCase())) score += 15;
@@ -102,11 +109,41 @@ serve(async (req) => {
     const lovableApiKey = Deno.env.get('LOVABLE_API_KEY')!;
     const supabase = createClient(supabaseUrl, supabaseKey);
 
-    const { organizationId, brandId, categories = ['marketing', 'technology'] } = await req.json();
+    const { organizationId, brandId, categories = ['marketing', 'technology'], brandContext } = await req.json();
 
-    console.log('TrendBrainy: Collecting trends for:', { organizationId, brandId, categories });
+    // Extract brand keywords for relevance scoring
+    const brandKeywords: string[] = brandContext?.keywords || [];
+    const brandIndustry = brandContext?.industry || '';
+    const brandName = brandContext?.name || '';
+    
+    // Add industry-related keywords for better matching
+    const industryKeywords: Record<string, string[]> = {
+      'motos': ['motos', 'motorcycles', 'motocicletas', 'scooter', 'naked', 'adventure', 'enduro', 'honda', 'yamaha', 'suzuki', 'kawasaki'],
+      'camping': ['camping', 'outdoor', 'naturaleza', 'aventura', 'viajes', 'trekking', 'senderismo'],
+      'ecommerce': ['ecommerce', 'tienda online', 'ventas', 'shopify', 'woocommerce'],
+      'restaurante': ['gastronomía', 'food', 'restaurante', 'comida', 'delivery'],
+      'fitness': ['fitness', 'gym', 'entrenamiento', 'workout', 'salud'],
+      'tecnología': ['tech', 'software', 'app', 'startup', 'SaaS'],
+      'marketing': ['marketing', 'branding', 'publicidad', 'social media', 'content'],
+    };
+    
+    // Find matching industry keywords
+    const allBrandKeywords = [...brandKeywords];
+    for (const [industry, keywords] of Object.entries(industryKeywords)) {
+      if (brandIndustry.toLowerCase().includes(industry) || brandName.toLowerCase().includes(industry)) {
+        allBrandKeywords.push(...keywords);
+      }
+    }
 
-    const trends: Array<{ keyword: string; source: string; score: number; category: string }> = [];
+    console.log('TrendBrainy: Collecting trends for:', { 
+      organizationId, 
+      brandId, 
+      categories,
+      brandName,
+      brandKeywords: allBrandKeywords.slice(0, 10)
+    });
+
+    const trends: Array<{ keyword: string; source: string; score: number; category: string; isRelevant: boolean }> = [];
     const feedsToCheck: Array<{ url: string; name: string; category: string }> = [];
 
     // Build list of feeds based on requested categories
@@ -141,12 +178,19 @@ serve(async (req) => {
         
         console.log(`TrendBrainy: Got ${titles.length} items from ${feed.name}`);
         
-        return titles.map(title => ({
-          keyword: title,
-          source: feed.name,
-          score: calculateTrendScore(title),
-          category: feed.category,
-        }));
+        return titles.map(title => {
+          const score = calculateTrendScore(title, allBrandKeywords);
+          const isRelevant = allBrandKeywords.some(kw => 
+            kw && title.toLowerCase().includes(kw.toLowerCase())
+          );
+          return {
+            keyword: title,
+            source: feed.name,
+            score,
+            category: feed.category,
+            isRelevant,
+          };
+        });
       } catch (error) {
         console.log(`TrendBrainy: Error fetching ${feed.name}:`, error.message);
         return [];
@@ -159,10 +203,19 @@ serve(async (req) => {
     }
 
     console.log(`TrendBrainy: Collected ${trends.length} total trends`);
+    
+    // Separate relevant and general trends
+    const relevantTrends = trends.filter(t => t.isRelevant);
+    const generalTrends = trends.filter(t => !t.isRelevant);
+    
+    console.log(`TrendBrainy: ${relevantTrends.length} brand-relevant trends found`);
 
-    // Sort by score and get top trends
-    trends.sort((a, b) => b.score - a.score);
-    const topTrends = trends.slice(0, 20);
+    // Sort by score and prioritize relevant trends
+    relevantTrends.sort((a, b) => b.score - a.score);
+    generalTrends.sort((a, b) => b.score - a.score);
+    
+    // Combine: first relevant, then general (up to 20 total)
+    const topTrends = [...relevantTrends.slice(0, 10), ...generalTrends.slice(0, 10)].slice(0, 20);
 
     // Store trends in database
     if (topTrends.length > 0 && organizationId) {
