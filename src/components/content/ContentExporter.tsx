@@ -17,8 +17,9 @@ import {
   DropdownMenuSubContent,
 } from '@/components/ui/dropdown-menu';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { Download, FileText, Image, Loader2, Share2, Eye, Square, RectangleVertical, Copy as CopyIcon, History, Trash2, MessageCircle, Twitter, Facebook } from 'lucide-react';
+import { Download, FileText, Loader2, Share2, Eye, Square, RectangleVertical, Copy as CopyIcon, History, Trash2, MessageCircle, Twitter, Facebook, Linkedin, Instagram, Cloud, CloudOff } from 'lucide-react';
 import { toast } from 'sonner';
+import { supabase } from '@/integrations/supabase/client';
 
 interface ContentExporterProps {
   content: string;
@@ -43,7 +44,8 @@ interface ExportHistoryItem {
 const HISTORY_KEY = 'brainy-export-history';
 const MAX_HISTORY_ITEMS = 20;
 
-const getExportHistory = (): ExportHistoryItem[] => {
+// Local storage fallback functions
+const getLocalHistory = (): ExportHistoryItem[] => {
   try {
     const stored = localStorage.getItem(HISTORY_KEY);
     return stored ? JSON.parse(stored) : [];
@@ -52,8 +54,8 @@ const getExportHistory = (): ExportHistoryItem[] => {
   }
 };
 
-const saveToHistory = (item: Omit<ExportHistoryItem, 'id' | 'exportedAt'>) => {
-  const history = getExportHistory();
+const saveToLocalHistory = (item: Omit<ExportHistoryItem, 'id' | 'exportedAt'>): ExportHistoryItem => {
+  const history = getLocalHistory();
   const newItem: ExportHistoryItem = {
     ...item,
     id: crypto.randomUUID(),
@@ -64,8 +66,8 @@ const saveToHistory = (item: Omit<ExportHistoryItem, 'id' | 'exportedAt'>) => {
   return newItem;
 };
 
-const removeFromHistory = (id: string) => {
-  const history = getExportHistory();
+const removeFromLocalHistory = (id: string) => {
+  const history = getLocalHistory();
   const updated = history.filter(item => item.id !== id);
   localStorage.setItem(HISTORY_KEY, JSON.stringify(updated));
 };
@@ -78,10 +80,87 @@ const ContentExporter = ({ content, title, brandName, hashtags, className }: Con
   const [previewDataUrl, setPreviewDataUrl] = useState<string>('');
   const [exportHistory, setExportHistory] = useState<ExportHistoryItem[]>([]);
   const [historyPreviewItem, setHistoryPreviewItem] = useState<ExportHistoryItem | null>(null);
+  const [isCloudSynced, setIsCloudSynced] = useState(false);
+  const [userId, setUserId] = useState<string | null>(null);
 
+  // Check auth and load history
   useEffect(() => {
-    setExportHistory(getExportHistory());
-  }, [showHistory]);
+    const checkAuth = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      setUserId(user?.id || null);
+      setIsCloudSynced(!!user);
+    };
+    checkAuth();
+  }, []);
+
+  // Load history when dialog opens
+  useEffect(() => {
+    if (showHistory) {
+      loadHistory();
+    }
+  }, [showHistory, userId]);
+
+  const loadHistory = async () => {
+    if (userId) {
+      // Load from Supabase
+      const { data, error } = await supabase
+        .from('export_history')
+        .select('*')
+        .order('exported_at', { ascending: false })
+        .limit(MAX_HISTORY_ITEMS);
+      
+      if (!error && data) {
+        setExportHistory(data.map(item => ({
+          id: item.id,
+          content: item.content,
+          title: item.title || undefined,
+          brandName: item.brand_name || undefined,
+          hashtags: item.hashtags || undefined,
+          exportedAt: item.exported_at,
+          format: item.format,
+        })));
+        return;
+      }
+    }
+    // Fallback to local storage
+    setExportHistory(getLocalHistory());
+  };
+
+  const saveToHistory = async (item: Omit<ExportHistoryItem, 'id' | 'exportedAt'>) => {
+    if (userId) {
+      // Save to Supabase
+      const { error } = await supabase.from('export_history').insert({
+        user_id: userId,
+        content: item.content,
+        title: item.title,
+        brand_name: item.brandName,
+        hashtags: item.hashtags,
+        format: item.format,
+      });
+      
+      if (!error) {
+        return;
+      }
+    }
+    // Fallback to local storage
+    saveToLocalHistory(item);
+  };
+
+  const removeFromHistory = async (id: string) => {
+    if (userId) {
+      const { error } = await supabase
+        .from('export_history')
+        .delete()
+        .eq('id', id);
+      
+      if (!error) {
+        await loadHistory();
+        return;
+      }
+    }
+    removeFromLocalHistory(id);
+    setExportHistory(getLocalHistory());
+  };
 
   const generateCanvas = (format: ImageFormat, itemContent?: string, itemTitle?: string, itemBrandName?: string, itemHashtags?: string[]): HTMLCanvasElement => {
     const canvas = document.createElement('canvas');
@@ -249,7 +328,7 @@ const ContentExporter = ({ content, title, brandName, hashtags, className }: Con
     }
   };
 
-  const handleDownloadFromPreview = () => {
+  const handleDownloadFromPreview = async () => {
     if (!previewDataUrl) return;
     
     const link = document.createElement('a');
@@ -258,7 +337,7 @@ const ContentExporter = ({ content, title, brandName, hashtags, className }: Con
     link.href = previewDataUrl;
     link.click();
     
-    saveToHistory({ content, title, brandName, hashtags, format: previewFormat });
+    await saveToHistory({ content, title, brandName, hashtags, format: previewFormat });
     toast.success('Imagen descargada');
     setShowPreview(false);
   };
@@ -380,7 +459,7 @@ const ContentExporter = ({ content, title, brandName, hashtags, className }: Con
       printWindow.focus();
       setTimeout(() => printWindow.print(), 500);
       
-      saveToHistory({ content, title, brandName, hashtags, format: 'pdf' });
+      await saveToHistory({ content, title, brandName, hashtags, format: 'pdf' });
       toast.success('PDF listo para descargar');
     } catch (error) {
       console.error('Error exporting to PDF:', error);
@@ -400,7 +479,7 @@ const ContentExporter = ({ content, title, brandName, hashtags, className }: Con
       link.href = canvas.toDataURL('image/png');
       link.click();
       
-      saveToHistory({ content, title, brandName, hashtags, format });
+      await saveToHistory({ content, title, brandName, hashtags, format });
       toast.success('Imagen descargada');
     } catch (error) {
       console.error('Error exporting to image:', error);
@@ -446,6 +525,26 @@ const ContentExporter = ({ content, title, brandName, hashtags, className }: Con
     toast.success('Abriendo Facebook...');
   };
 
+  const shareToLinkedIn = () => {
+    const text = content.substring(0, 700);
+    const url = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(window.location.href)}&summary=${encodeURIComponent(text)}`;
+    window.open(url, '_blank');
+    toast.success('Abriendo LinkedIn...');
+  };
+
+  const copyForInstagram = async () => {
+    try {
+      const fullText = hashtags?.length 
+        ? `${content}\n\n${hashtags.join(' ')}`
+        : content;
+      
+      await navigator.clipboard.writeText(fullText);
+      toast.success('Texto copiado. Descarga la imagen y pégalo en Instagram.');
+    } catch (error) {
+      toast.error('Error al copiar');
+    }
+  };
+
   // History functions
   const handleRedownload = (item: ExportHistoryItem) => {
     try {
@@ -479,9 +578,8 @@ const ContentExporter = ({ content, title, brandName, hashtags, className }: Con
     }
   };
 
-  const handleDeleteHistoryItem = (id: string) => {
-    removeFromHistory(id);
-    setExportHistory(getExportHistory());
+  const handleDeleteHistoryItem = async (id: string) => {
+    await removeFromHistory(id);
     toast.success('Elemento eliminado del historial');
   };
 
@@ -549,12 +647,22 @@ const ContentExporter = ({ content, title, brandName, hashtags, className }: Con
                 <Facebook className="w-4 h-4 mr-2 text-blue-600" />
                 Facebook
               </DropdownMenuItem>
+              <DropdownMenuItem onClick={shareToLinkedIn}>
+                <Linkedin className="w-4 h-4 mr-2 text-blue-700" />
+                LinkedIn
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem onClick={copyForInstagram}>
+                <Instagram className="w-4 h-4 mr-2 text-pink-500" />
+                Copiar para Instagram
+              </DropdownMenuItem>
             </DropdownMenuSubContent>
           </DropdownMenuSub>
           <DropdownMenuSeparator />
           <DropdownMenuItem onClick={() => setShowHistory(true)}>
             <History className="w-4 h-4 mr-2" />
             Historial de exportaciones
+            {isCloudSynced && <Cloud className="w-3 h-3 ml-auto text-electric-cyan" />}
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
@@ -604,6 +712,17 @@ const ContentExporter = ({ content, title, brandName, hashtags, className }: Con
             <DialogTitle className="text-foreground flex items-center gap-2">
               <History className="w-5 h-5 text-electric-cyan" />
               Historial de Exportaciones
+              {isCloudSynced ? (
+                <span className="flex items-center gap-1 text-xs text-electric-cyan ml-auto font-normal">
+                  <Cloud className="w-3 h-3" />
+                  Sincronizado
+                </span>
+              ) : (
+                <span className="flex items-center gap-1 text-xs text-muted-foreground ml-auto font-normal">
+                  <CloudOff className="w-3 h-3" />
+                  Local
+                </span>
+              )}
             </DialogTitle>
           </DialogHeader>
           <ScrollArea className="max-h-[500px] pr-4">

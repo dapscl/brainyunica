@@ -525,6 +525,42 @@ export type Database = {
           },
         ]
       }
+      export_history: {
+        Row: {
+          brand_name: string | null
+          content: string
+          created_at: string
+          exported_at: string
+          format: string
+          hashtags: string[] | null
+          id: string
+          title: string | null
+          user_id: string
+        }
+        Insert: {
+          brand_name?: string | null
+          content: string
+          created_at?: string
+          exported_at?: string
+          format: string
+          hashtags?: string[] | null
+          id?: string
+          title?: string | null
+          user_id: string
+        }
+        Update: {
+          brand_name?: string | null
+          content?: string
+          created_at?: string
+          exported_at?: string
+          format?: string
+          hashtags?: string[] | null
+          id?: string
+          title?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
       leads: {
         Row: {
           challenges: string | null
