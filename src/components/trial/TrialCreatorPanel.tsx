@@ -68,6 +68,8 @@ interface TrialCreatorPanelProps {
   brandProfile: BrandProfile;
   onGoToDashboard: () => void;
   onActivityLog?: (activityType: string, contentPreview?: string, metadata?: any) => void;
+  initialTopic?: string;
+  initialTemplate?: string;
 }
 
 interface AcceptedContent {
@@ -76,7 +78,7 @@ interface AcceptedContent {
   acceptedAt: Date;
 }
 
-const TrialCreatorPanel = ({ brandProfile, onGoToDashboard, onActivityLog }: TrialCreatorPanelProps) => {
+const TrialCreatorPanel = ({ brandProfile, onGoToDashboard, onActivityLog, initialTopic, initialTemplate }: TrialCreatorPanelProps) => {
   const { 
     generateCopy, 
     generateVariants, 
@@ -92,9 +94,9 @@ const TrialCreatorPanel = ({ brandProfile, onGoToDashboard, onActivityLog }: Tri
   const [selectedTone, setSelectedTone] = useState(brandProfile.tone || 'profesional');
   const [selectedPlatform, setSelectedPlatform] = useState('instagram');
 
-  // Copy Generator State
-  const [copyTopic, setCopyTopic] = useState('');
-  const [copyBrief, setCopyBrief] = useState('');
+  // Copy Generator State - pre-fill with initialTopic if provided
+  const [copyTopic, setCopyTopic] = useState(initialTopic || '');
+  const [copyBrief, setCopyBrief] = useState(initialTemplate || '');
   const [copyReferenceUrl, setCopyReferenceUrl] = useState('');
   const [copyReferenceFile, setCopyReferenceFile] = useState<File | null>(null);
   const [copyReferenceText, setCopyReferenceText] = useState('');

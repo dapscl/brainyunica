@@ -16,6 +16,8 @@ const TrialCreatorPage = () => {
   const { brandProfile, loading: profileLoading } = useTrialBrandProfile();
   const { logActivity } = useTrialActivityMetrics();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [initialTopic, setInitialTopic] = useState<string | null>(null);
+  const [initialTemplate, setInitialTemplate] = useState<string | null>(null);
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -25,6 +27,20 @@ const TrialCreatorPage = () => {
         return;
       }
       setIsAuthenticated(true);
+
+      // Check for trend topic or template from sessionStorage
+      const trendTopic = sessionStorage.getItem('trendTopic');
+      const templateStructure = sessionStorage.getItem('templateStructure');
+      
+      if (trendTopic) {
+        setInitialTopic(trendTopic);
+        sessionStorage.removeItem('trendTopic');
+      }
+      if (templateStructure) {
+        setInitialTemplate(templateStructure);
+        sessionStorage.removeItem('templateStructure');
+        sessionStorage.removeItem('templateName');
+      }
     };
 
     checkAuth();
@@ -108,6 +124,8 @@ const TrialCreatorPage = () => {
           brandProfile={panelBrandProfile}
           onGoToDashboard={() => navigate('/trial/dashboard')}
           onActivityLog={logActivity}
+          initialTopic={initialTopic || undefined}
+          initialTemplate={initialTemplate || undefined}
         />
       </div>
     </div>

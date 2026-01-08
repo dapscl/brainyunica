@@ -15,6 +15,7 @@ import { useTrialBrandProfile } from '@/hooks/useTrialBrandProfile';
 import { useTrialActivityMetrics } from '@/hooks/useTrialActivityMetrics';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
+import UsageAnalyticsPanel from '@/components/dashboard/UsageAnalyticsPanel';
 import UpgradeModal from '@/components/trial/UpgradeModal';
 import {
   Sparkles,
@@ -373,6 +374,16 @@ const TrialBrandDashboard = () => {
             </Card>
           </motion.div>
         )}
+
+        {/* Analytics Panel */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3 }}
+          className="mb-10"
+        >
+          <UsageAnalyticsPanel />
+        </motion.div>
 
         {/* Brainy Modules Grid */}
         <div className="mb-8">
