@@ -95,6 +95,7 @@ const TrialPage = lazy(() => import("./pages/TrialPage"));
 const TrialBrandDashboard = lazy(() => import("./pages/TrialBrandDashboard"));
 const TrialCreatorPage = lazy(() => import("./pages/TrialCreatorPage"));
 const CalendarBrainyPage = lazy(() => import("./pages/CalendarBrainyPage"));
+const TrendBrainyPage = lazy(() => import("./pages/TrendBrainyPage"));
 
 const LoadingFallback = () => (
   <div className="min-h-screen bg-background p-8">
@@ -129,6 +130,7 @@ const App = () => {
           <Route path="/trial/dashboard" element={<TrialBrandDashboard />} />
           <Route path="/trial/creator" element={<TrialCreatorPage />} />
           <Route path="/trial/calendar" element={<CalendarBrainyPage />} />
+          <Route path="/trial/trends" element={<TrendBrainyPage />} />
           <Route path="/supa-test" element={<SupaTestInline />} />
 
           {/* Rutas protegidas - requieren autenticación */}

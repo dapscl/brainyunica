@@ -131,8 +131,8 @@ const TrialBrandDashboard = () => {
       icon: <TrendingUp className="w-8 h-8" />,
       color: 'text-orange-400',
       gradient: 'from-orange-500 to-red-500',
-      isActive: false,
-      comingSoon: true,
+      isActive: true,
+      route: '/trial/trends',
       features: ['Trending topics', 'Análisis de competencia', 'Sugerencias virales', 'Alertas de tendencias']
     },
     {
