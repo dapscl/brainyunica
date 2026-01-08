@@ -277,11 +277,12 @@ Responde en JSON:
       }
     }
 
+    // Return ALL top trends for real-time display (not just top 5)
     return new Response(JSON.stringify({ 
       success: true, 
       trendsCollected: topTrends.length,
       suggestionsGenerated: suggestions.length,
-      topTrends: topTrends.slice(0, 5),
+      topTrends: topTrends, // Return all 20 top trends
       message: 'TrendBrainy: Trends collected and suggestions generated'
     }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
