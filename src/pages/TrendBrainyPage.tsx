@@ -83,10 +83,12 @@ const TrendBrainyPage = () => {
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
+  const [trendTypeFilter, setTrendTypeFilter] = useState<'all' | 'industry' | 'general'>('all');
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const [brandProfile, setBrandProfile] = useState<BrandProfile | null>(null);
   const [customKeywords, setCustomKeywords] = useState<string[]>([]);
   const [newKeyword, setNewKeyword] = useState('');
+  const [savingKeywords, setSavingKeywords] = useState(false);
 
   const handleCreateFromTrend = (trendKeyword: string) => {
     // Store the trend in sessionStorage to pass to CreatorBrainy
@@ -113,6 +115,15 @@ const TrendBrainyPage = () => {
 
       if (profile) {
         setBrandProfile(profile as BrandProfile);
+        // Load custom keywords from profile (stored in keywords array after brand keywords)
+        const storedKeywords = profile.keywords as string[] | null;
+        if (storedKeywords && storedKeywords.length > 0) {
+          // Custom keywords are stored separately in the analysis.customKeywords field
+          const analysis = profile.analysis as Record<string, any> || {};
+          if (analysis.customKeywords && Array.isArray(analysis.customKeywords)) {
+            setCustomKeywords(analysis.customKeywords);
+          }
+        }
       }
 
       // Load trends from last 7 days
@@ -148,17 +159,52 @@ const TrendBrainyPage = () => {
     }
   };
 
-  const addCustomKeyword = () => {
-    const trimmed = newKeyword.trim().toLowerCase();
-    if (trimmed && !customKeywords.includes(trimmed)) {
-      setCustomKeywords(prev => [...prev, trimmed]);
-      setNewKeyword('');
-      toast.success(`Keyword "${trimmed}" agregada`);
+  const saveCustomKeywords = async (keywords: string[]) => {
+    if (!brandProfile?.id) return;
+    
+    setSavingKeywords(true);
+    try {
+      const currentAnalysis = (brandProfile.analysis as Record<string, any>) || {};
+      const updatedAnalysis = {
+        ...currentAnalysis,
+        customKeywords: keywords
+      };
+
+      const { error } = await supabase
+        .from('trial_brand_profiles')
+        .update({ analysis: updatedAnalysis })
+        .eq('id', brandProfile.id);
+
+      if (error) throw error;
+      
+      // Update local state
+      setBrandProfile(prev => prev ? {
+        ...prev,
+        analysis: updatedAnalysis
+      } : null);
+    } catch (error) {
+      console.error('Error saving keywords:', error);
+      toast.error('Error al guardar keywords');
+    } finally {
+      setSavingKeywords(false);
     }
   };
 
-  const removeCustomKeyword = (keyword: string) => {
-    setCustomKeywords(prev => prev.filter(k => k !== keyword));
+  const addCustomKeyword = async () => {
+    const trimmed = newKeyword.trim().toLowerCase();
+    if (trimmed && !customKeywords.includes(trimmed)) {
+      const newKeywords = [...customKeywords, trimmed];
+      setCustomKeywords(newKeywords);
+      setNewKeyword('');
+      await saveCustomKeywords(newKeywords);
+      toast.success(`Keyword "${trimmed}" guardada`);
+    }
+  };
+
+  const removeCustomKeyword = async (keyword: string) => {
+    const newKeywords = customKeywords.filter(k => k !== keyword);
+    setCustomKeywords(newKeywords);
+    await saveCustomKeywords(newKeywords);
   };
 
   const refreshTrends = async () => {
@@ -239,11 +285,20 @@ const TrendBrainyPage = () => {
 
   const categories = ['all', ...new Set(trends.map(t => t.category).filter(Boolean))] as string[];
   
-  const filteredTrends = selectedCategory === 'all' 
-    ? trends 
-    : trends.filter(t => t.category === selectedCategory);
+  // Apply both category and trend type filters
+  const filteredTrends = trends.filter(t => {
+    const matchesCategory = selectedCategory === 'all' || t.category === selectedCategory;
+    const matchesTrendType = trendTypeFilter === 'all' || 
+      (trendTypeFilter === 'industry' && t.isRelevant) || 
+      (trendTypeFilter === 'general' && !t.isRelevant);
+    return matchesCategory && matchesTrendType;
+  });
 
   const topTrends = trends.slice(0, 5);
+  
+  // Count trends by type
+  const industryTrendsCount = trends.filter(t => t.isRelevant).length;
+  const generalTrendsCount = trends.filter(t => !t.isRelevant).length;
 
   const getScoreColor = (score: number) => {
     if (score >= 8) return 'text-red-400';
@@ -333,9 +388,10 @@ const TrendBrainyPage = () => {
                   onChange={(e) => setNewKeyword(e.target.value)}
                   onKeyDown={(e) => e.key === 'Enter' && addCustomKeyword()}
                   className="flex-1 bg-background/50"
+                  disabled={savingKeywords}
                 />
-                <Button onClick={addCustomKeyword} size="sm" className="gap-1">
-                  <Plus className="w-4 h-4" />
+                <Button onClick={addCustomKeyword} size="sm" className="gap-1" disabled={savingKeywords}>
+                  {savingKeywords ? <RefreshCw className="w-4 h-4 animate-spin" /> : <Plus className="w-4 h-4" />}
                   Agregar
                 </Button>
               </div>
@@ -445,16 +501,50 @@ const TrendBrainyPage = () => {
 
           {/* Trends Tab */}
           <TabsContent value="trends">
+            {/* Quick filter by trend type */}
+            <div className="flex flex-wrap items-center gap-3 mb-4">
+              <span className="text-sm text-muted-foreground">Filtro rápido:</span>
+              <div className="flex gap-2">
+                <Button
+                  variant={trendTypeFilter === 'all' ? 'default' : 'outline'}
+                  size="sm"
+                  onClick={() => setTrendTypeFilter('all')}
+                  className="gap-1"
+                >
+                  Todas ({trends.length})
+                </Button>
+                <Button
+                  variant={trendTypeFilter === 'industry' ? 'default' : 'outline'}
+                  size="sm"
+                  onClick={() => setTrendTypeFilter('industry')}
+                  className={`gap-1 ${trendTypeFilter === 'industry' ? 'bg-green-600 hover:bg-green-700' : 'hover:bg-green-500/10 hover:border-green-500/30'}`}
+                >
+                  <Building2 className="w-3 h-3" />
+                  Tu industria ({industryTrendsCount})
+                </Button>
+                <Button
+                  variant={trendTypeFilter === 'general' ? 'default' : 'outline'}
+                  size="sm"
+                  onClick={() => setTrendTypeFilter('general')}
+                  className="gap-1"
+                >
+                  <Globe className="w-3 h-3" />
+                  General ({generalTrendsCount})
+                </Button>
+              </div>
+            </div>
+
+            {/* Category filter */}
             <div className="flex flex-wrap gap-2 mb-6">
               {categories.map((cat) => (
                 <Button
                   key={cat}
-                  variant={selectedCategory === cat ? 'default' : 'outline'}
+                  variant={selectedCategory === cat ? 'secondary' : 'outline'}
                   size="sm"
                   onClick={() => setSelectedCategory(cat)}
-                  className="capitalize"
+                  className="capitalize text-xs"
                 >
-                  {cat === 'all' ? 'Todas' : cat}
+                  {cat === 'all' ? 'Todas categorías' : cat}
                 </Button>
               ))}
             </div>
