@@ -11,6 +11,7 @@ import { ShowcaseHeader } from '@/components/showcase/ShowcaseHeader';
 import { ShowcaseSEO } from '@/components/showcase/ShowcaseSEO';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
+import { Input } from '@/components/ui/input';
 import {
   TrendingUp,
   Sparkles,
@@ -26,7 +27,11 @@ import {
   FileText,
   Copy,
   CheckCircle2,
-  PenTool
+  PenTool,
+  Building2,
+  Globe,
+  Plus,
+  X
 } from 'lucide-react';
 import { formatDistanceToNow } from 'date-fns';
 import { es } from 'date-fns/locale';
@@ -39,6 +44,7 @@ interface Trend {
   source: string;
   tracked_at: string;
   metadata: unknown;
+  isRelevant?: boolean; // true = industry trend, false = general trend
 }
 
 interface ContentSuggestion {
@@ -79,6 +85,8 @@ const TrendBrainyPage = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const [brandProfile, setBrandProfile] = useState<BrandProfile | null>(null);
+  const [customKeywords, setCustomKeywords] = useState<string[]>([]);
+  const [newKeyword, setNewKeyword] = useState('');
 
   const handleCreateFromTrend = (trendKeyword: string) => {
     // Store the trend in sessionStorage to pass to CreatorBrainy
@@ -140,6 +148,19 @@ const TrendBrainyPage = () => {
     }
   };
 
+  const addCustomKeyword = () => {
+    const trimmed = newKeyword.trim().toLowerCase();
+    if (trimmed && !customKeywords.includes(trimmed)) {
+      setCustomKeywords(prev => [...prev, trimmed]);
+      setNewKeyword('');
+      toast.success(`Keyword "${trimmed}" agregada`);
+    }
+  };
+
+  const removeCustomKeyword = (keyword: string) => {
+    setCustomKeywords(prev => prev.filter(k => k !== keyword));
+  };
+
   const refreshTrends = async () => {
     setRefreshing(true);
     try {
@@ -147,6 +168,9 @@ const TrendBrainyPage = () => {
       const brandKeywords = Array.isArray(brandProfile?.keywords) 
         ? brandProfile.keywords 
         : [];
+      
+      // Combine brand keywords with custom keywords
+      const allKeywords = [...brandKeywords, ...customKeywords];
       
       // Get industry from analysis if available
       const analysis = brandProfile?.analysis as Record<string, any> || {};
@@ -159,7 +183,7 @@ const TrendBrainyPage = () => {
           categories: ['marketing', 'technology', 'social', 'advertising', 'latam'],
           brandContext: {
             name: brandProfile?.brand_name || '',
-            keywords: brandKeywords,
+            keywords: allKeywords,
             industry: brandIndustry,
             type: brandProfile?.brand_type || 'website'
           }
@@ -177,7 +201,8 @@ const TrendBrainyPage = () => {
           category: t.category,
           source: t.source,
           tracked_at: new Date().toISOString(),
-          metadata: null
+          metadata: null,
+          isRelevant: t.isRelevant || false
         }));
         
         // Merge with existing trends, prioritizing new ones
@@ -283,11 +308,80 @@ const TrendBrainyPage = () => {
           </div>
         </motion.div>
 
-        {/* Top Trends Cards */}
+        {/* Custom Keywords Panel */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
+          className="mb-8"
+        >
+          <Card className="bg-card/30 border-border/50">
+            <CardHeader className="pb-3">
+              <CardTitle className="text-lg flex items-center gap-2">
+                <Hash className="w-5 h-5 text-electric-cyan" />
+                Keywords personalizadas
+              </CardTitle>
+              <CardDescription>
+                Agrega palabras clave adicionales para refinar las tendencias de tu industria
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="flex gap-2 mb-3">
+                <Input
+                  placeholder="Ej: motos, aventura, outdoor..."
+                  value={newKeyword}
+                  onChange={(e) => setNewKeyword(e.target.value)}
+                  onKeyDown={(e) => e.key === 'Enter' && addCustomKeyword()}
+                  className="flex-1 bg-background/50"
+                />
+                <Button onClick={addCustomKeyword} size="sm" className="gap-1">
+                  <Plus className="w-4 h-4" />
+                  Agregar
+                </Button>
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {/* Show brand keywords from profile */}
+                {brandProfile?.keywords?.map((kw, idx) => (
+                  <Badge 
+                    key={`brand-${idx}`} 
+                    variant="outline" 
+                    className="bg-purple-500/20 text-purple-400 border-purple-500/30"
+                  >
+                    <Building2 className="w-3 h-3 mr-1" />
+                    {kw}
+                  </Badge>
+                ))}
+                {/* Show custom keywords with remove option */}
+                {customKeywords.map((kw, idx) => (
+                  <Badge 
+                    key={`custom-${idx}`} 
+                    variant="outline" 
+                    className="bg-electric-cyan/20 text-electric-cyan border-electric-cyan/30 pr-1"
+                  >
+                    {kw}
+                    <button
+                      onClick={() => removeCustomKeyword(kw)}
+                      className="ml-1 hover:bg-destructive/20 rounded p-0.5"
+                    >
+                      <X className="w-3 h-3" />
+                    </button>
+                  </Badge>
+                ))}
+                {(!brandProfile?.keywords?.length && !customKeywords.length) && (
+                  <span className="text-sm text-muted-foreground">
+                    No hay keywords configuradas. Agrega keywords para personalizar tus tendencias.
+                  </span>
+                )}
+              </div>
+            </CardContent>
+          </Card>
+        </motion.div>
+
+        {/* Top Trends Cards */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.15 }}
           className="mb-8"
         >
           <h2 className="text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
@@ -298,7 +392,9 @@ const TrendBrainyPage = () => {
             {topTrends.map((trend, idx) => (
               <Card 
                 key={trend.id} 
-                className="bg-card/50 border-border/50 hover:border-orange-500/30 transition-all"
+                className={`bg-card/50 border-border/50 hover:border-orange-500/30 transition-all ${
+                  trend.isRelevant ? 'ring-1 ring-green-500/30' : ''
+                }`}
               >
                 <CardContent className="p-4">
                   <div className="flex items-start justify-between mb-2">
@@ -312,12 +408,23 @@ const TrendBrainyPage = () => {
                   <p className="font-medium text-sm text-foreground line-clamp-2 mb-2">
                     {trend.trend_keyword}
                   </p>
-                  <Badge 
-                    variant="outline" 
-                    className={`text-xs ${categoryColors[trend.category || 'default'] || categoryColors.default}`}
-                  >
-                    {trend.category || 'General'}
-                  </Badge>
+                  <div className="flex flex-wrap gap-1">
+                    {/* Industry vs General badge */}
+                    <Badge 
+                      variant="outline" 
+                      className={`text-xs ${
+                        trend.isRelevant 
+                          ? 'bg-green-500/20 text-green-400 border-green-500/30' 
+                          : 'bg-muted/50 text-muted-foreground border-border/50'
+                      }`}
+                    >
+                      {trend.isRelevant ? (
+                        <><Building2 className="w-3 h-3 mr-1" />Tu industria</>
+                      ) : (
+                        <><Globe className="w-3 h-3 mr-1" />General</>
+                      )}
+                    </Badge>
+                  </div>
                 </CardContent>
               </Card>
             ))}
@@ -360,7 +467,9 @@ const TrendBrainyPage = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: idx * 0.03 }}
                 >
-                  <Card className="bg-card/30 border-border/50 hover:border-electric-cyan/30 transition-all h-full">
+                  <Card className={`bg-card/30 border-border/50 hover:border-electric-cyan/30 transition-all h-full ${
+                    trend.isRelevant ? 'ring-1 ring-green-500/20' : ''
+                  }`}>
                     <CardContent className="p-4">
                       <div className="flex items-start justify-between mb-3">
                         <div className="flex items-center gap-2">
@@ -373,11 +482,20 @@ const TrendBrainyPage = () => {
                               <TrendingUp className="w-4 h-4 text-muted-foreground" />
                             )}
                           </div>
+                          {/* Industry vs General badge */}
                           <Badge 
                             variant="outline" 
-                            className={categoryColors[trend.category || 'default'] || categoryColors.default}
+                            className={`text-xs ${
+                              trend.isRelevant 
+                                ? 'bg-green-500/20 text-green-400 border-green-500/30' 
+                                : 'bg-muted/50 text-muted-foreground border-border/50'
+                            }`}
                           >
-                            {trend.category || 'General'}
+                            {trend.isRelevant ? (
+                              <><Building2 className="w-3 h-3 mr-1" />Tu industria</>
+                            ) : (
+                              <><Globe className="w-3 h-3 mr-1" />General</>
+                            )}
                           </Badge>
                         </div>
                         <div className="flex items-center gap-1">
@@ -391,6 +509,14 @@ const TrendBrainyPage = () => {
                       <p className="font-medium text-foreground mb-2 line-clamp-2">
                         {trend.trend_keyword}
                       </p>
+
+                      {/* Category badge */}
+                      <Badge 
+                        variant="outline" 
+                        className={`text-xs mb-3 ${categoryColors[trend.category || 'default'] || categoryColors.default}`}
+                      >
+                        {trend.category || 'General'}
+                      </Badge>
                       
                       <div className="flex items-center justify-between text-xs text-muted-foreground mb-3">
                         <span className="flex items-center gap-1">
