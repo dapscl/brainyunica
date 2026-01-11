@@ -31,7 +31,9 @@ import {
   Building2,
   Globe,
   Plus,
-  X
+  X,
+  Wand2,
+  Bell
 } from 'lucide-react';
 import { formatDistanceToNow } from 'date-fns';
 import { es } from 'date-fns/locale';
@@ -89,12 +91,52 @@ const TrendBrainyPage = () => {
   const [customKeywords, setCustomKeywords] = useState<string[]>([]);
   const [newKeyword, setNewKeyword] = useState('');
   const [savingKeywords, setSavingKeywords] = useState(false);
+  const [suggestedKeywords, setSuggestedKeywords] = useState<string[]>([]);
+  const [previousIndustryCount, setPreviousIndustryCount] = useState<number>(0);
 
   const handleCreateFromTrend = (trendKeyword: string) => {
     // Store the trend in sessionStorage to pass to CreatorBrainy
     sessionStorage.setItem('trendTopic', trendKeyword);
     navigate('/trial/creator');
     toast.success(`Creando contenido sobre: "${trendKeyword}"`);
+  };
+
+  // Extract keywords from brand analysis
+  const extractKeywordsFromAnalysis = (analysis: Record<string, any>): string[] => {
+    const keywords: Set<string> = new Set();
+    
+    // Extract from brandIdentity
+    if (analysis.brandIdentity) {
+      const bi = analysis.brandIdentity;
+      if (bi.industry) keywords.add(bi.industry.toLowerCase());
+      if (bi.keywords && Array.isArray(bi.keywords)) {
+        bi.keywords.forEach((kw: string) => keywords.add(kw.toLowerCase()));
+      }
+      if (bi.valueProposition) {
+        // Extract key terms from value proposition
+        const terms = bi.valueProposition.split(/\s+/).filter((t: string) => t.length > 5);
+        terms.slice(0, 3).forEach((t: string) => keywords.add(t.toLowerCase().replace(/[.,;:!?]/g, '')));
+      }
+    }
+    
+    // Extract from SEO analysis
+    if (analysis.webAnalysis?.seo?.keywords && Array.isArray(analysis.webAnalysis.seo.keywords)) {
+      analysis.webAnalysis.seo.keywords.slice(0, 5).forEach((kw: string) => keywords.add(kw.toLowerCase()));
+    }
+    
+    // Extract from copywriting analysis
+    if (analysis.webAnalysis?.copyAnalysis?.keyPhrases && Array.isArray(analysis.webAnalysis.copyAnalysis.keyPhrases)) {
+      analysis.webAnalysis.copyAnalysis.keyPhrases.slice(0, 3).forEach((kw: string) => keywords.add(kw.toLowerCase()));
+    }
+    
+    // Extract from Instagram analysis
+    if (analysis.instagramAnalysis?.topHashtags && Array.isArray(analysis.instagramAnalysis.topHashtags)) {
+      analysis.instagramAnalysis.topHashtags.slice(0, 3).forEach((ht: string) => 
+        keywords.add(ht.toLowerCase().replace('#', ''))
+      );
+    }
+    
+    return Array.from(keywords).filter(k => k.length > 2).slice(0, 10);
   };
 
   useEffect(() => {
@@ -116,14 +158,16 @@ const TrendBrainyPage = () => {
       if (profile) {
         setBrandProfile(profile as BrandProfile);
         // Load custom keywords from profile (stored in keywords array after brand keywords)
-        const storedKeywords = profile.keywords as string[] | null;
-        if (storedKeywords && storedKeywords.length > 0) {
-          // Custom keywords are stored separately in the analysis.customKeywords field
-          const analysis = profile.analysis as Record<string, any> || {};
-          if (analysis.customKeywords && Array.isArray(analysis.customKeywords)) {
-            setCustomKeywords(analysis.customKeywords);
-          }
+        const analysis = profile.analysis as Record<string, any> || {};
+        
+        // Load custom keywords
+        if (analysis.customKeywords && Array.isArray(analysis.customKeywords)) {
+          setCustomKeywords(analysis.customKeywords);
         }
+        
+        // Extract suggested keywords from brand analysis
+        const extractedSuggestions = extractKeywordsFromAnalysis(analysis);
+        setSuggestedKeywords(extractedSuggestions);
       }
 
       // Load trends from last 7 days
@@ -261,6 +305,23 @@ const TrendBrainyPage = () => {
           });
           return newTrends.sort((a, b) => b.trend_score - a.trend_score).slice(0, 50);
         });
+        // Check for new industry trends and notify
+        const newIndustryTrends = liveTrends.filter(t => t.isRelevant);
+        if (newIndustryTrends.length > previousIndustryCount && previousIndustryCount > 0) {
+          const newCount = newIndustryTrends.length - previousIndustryCount;
+          toast.success(
+            `🔔 ${newCount} nueva${newCount > 1 ? 's' : ''} tendencia${newCount > 1 ? 's' : ''} relevante${newCount > 1 ? 's' : ''} para tu industria`,
+            {
+              description: newIndustryTrends[0]?.trend_keyword,
+              duration: 8000,
+              action: {
+                label: 'Ver',
+                onClick: () => setTrendTypeFilter('industry')
+              }
+            }
+          );
+        }
+        setPreviousIndustryCount(newIndustryTrends.length);
       }
 
       toast.success(`Se recolectaron ${response.data.trendsCollected} tendencias personalizadas para ${brandProfile?.brand_name || 'tu marca'}`);
@@ -395,6 +456,36 @@ const TrendBrainyPage = () => {
                   Agregar
                 </Button>
               </div>
+              {/* Suggested keywords from analysis */}
+              {suggestedKeywords.length > 0 && (
+                <div className="mb-4">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Wand2 className="w-4 h-4 text-purple-400" />
+                    <span className="text-sm text-muted-foreground">Sugerencias del análisis de tu marca:</span>
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    {suggestedKeywords
+                      .filter(kw => !customKeywords.includes(kw) && !brandProfile?.keywords?.includes(kw))
+                      .map((kw, idx) => (
+                        <Badge 
+                          key={`suggested-${idx}`} 
+                          variant="outline" 
+                          className="bg-yellow-500/10 text-yellow-400 border-yellow-500/30 cursor-pointer hover:bg-yellow-500/20 transition-colors"
+                          onClick={async () => {
+                            const newKeywords = [...customKeywords, kw];
+                            setCustomKeywords(newKeywords);
+                            await saveCustomKeywords(newKeywords);
+                            toast.success(`Keyword "${kw}" agregada`);
+                          }}
+                        >
+                          <Plus className="w-3 h-3 mr-1" />
+                          {kw}
+                        </Badge>
+                      ))}
+                  </div>
+                </div>
+              )}
+
               <div className="flex flex-wrap gap-2">
                 {/* Show brand keywords from profile */}
                 {brandProfile?.keywords?.map((kw, idx) => (
@@ -423,7 +514,7 @@ const TrendBrainyPage = () => {
                     </button>
                   </Badge>
                 ))}
-                {(!brandProfile?.keywords?.length && !customKeywords.length) && (
+                {(!brandProfile?.keywords?.length && !customKeywords.length && !suggestedKeywords.length) && (
                   <span className="text-sm text-muted-foreground">
                     No hay keywords configuradas. Agrega keywords para personalizar tus tendencias.
                   </span>
