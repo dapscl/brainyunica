@@ -15,15 +15,19 @@ export const ShowcaseHeader = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
-    const checkAuth = async () => {
-      const { data: { user } } = await supabase.auth.getUser();
-      setIsLoggedIn(!!user);
-    };
-    checkAuth();
-
+    // Set up auth state listener FIRST
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      console.log('Auth state changed:', event, !!session?.user);
       setIsLoggedIn(!!session?.user);
     });
+
+    // Then check current session
+    const checkAuth = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      console.log('Initial session check:', !!session?.user);
+      setIsLoggedIn(!!session?.user);
+    };
+    checkAuth();
 
     return () => subscription.unsubscribe();
   }, []);
