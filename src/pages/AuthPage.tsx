@@ -66,35 +66,27 @@ const AuthPage: React.FC = () => {
     meta.setAttribute("content", desc);
   }, [isSignup]);
 
-  // Check if user has completed trial (has brands)
-  const checkTrialComplete = async (userId: string) => {
-    const { data: memberships } = await supabase
-      .from('organization_members')
-      .select('organization_id')
+  // Check if user has a brand profile (trial_brand_profiles)
+  const checkBrandProfile = async (userId: string) => {
+    const { data: profile } = await supabase
+      .from('trial_brand_profiles')
+      .select('id, brand_name')
       .eq('user_id', userId)
-      .limit(1);
+      .limit(1)
+      .maybeSingle();
     
-    if (!memberships || memberships.length === 0) {
-      // No organizations = hasn't completed trial
-      return false;
-    }
-
-    const { data: brands } = await supabase
-      .from('brands')
-      .select('id')
-      .eq('organization_id', memberships[0].organization_id)
-      .limit(1);
-    
-    return brands && brands.length > 0;
+    return profile;
   };
 
   useEffect(() => {
     const handleRedirect = async (userId: string) => {
-      const hasCompletedTrial = await checkTrialComplete(userId);
-      if (hasCompletedTrial) {
-        navigate('/brands', { replace: true });
+      const brandProfile = await checkBrandProfile(userId);
+      
+      if (brandProfile) {
+        // User has a brand profile, go to dashboard
+        navigate('/trial/dashboard', { replace: true });
       } else {
-        // Send to trial to complete onboarding
+        // No brand profile, go to trial scan
         navigate('/trial', { replace: true });
       }
     };
