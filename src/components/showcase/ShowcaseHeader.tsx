@@ -1,14 +1,37 @@
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { LanguageSelector } from '@/components/layout/LanguageSelector';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
-import { Menu, X } from 'lucide-react';
-import { useState } from 'react';
+import { Menu, X, LogOut } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { supabase } from '@/integrations/supabase/client';
+import { robustSignOut } from '@/utils/auth';
 
 export const ShowcaseHeader = () => {
   const { t } = useTranslation();
   const location = useLocation();
+  const navigate = useNavigate();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const checkAuth = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      setIsLoggedIn(!!user);
+    };
+    checkAuth();
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      setIsLoggedIn(!!session?.user);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
+
+  const handleLogout = async () => {
+    await robustSignOut();
+    navigate('/auth');
+  };
 
   const isActive = (path: string) => location.pathname === path;
 
@@ -62,32 +85,46 @@ export const ShowcaseHeader = () => {
           {/* Right side - Language Selector + CTAs */}
           <div className="hidden md:flex items-center space-x-3">
             <LanguageSelector />
-            <Link to="/auth">
+            {isLoggedIn ? (
               <Button
                 variant="ghost"
                 size="sm"
-                className="text-white/80 hover:text-electric-cyan hover:bg-electric-cyan/5 transition-all duration-300"
+                onClick={handleLogout}
+                className="text-red-400 hover:text-red-300 hover:bg-red-500/10 transition-all duration-300"
               >
-                {t('showcase.nav.login', 'Acceso')}
+                <LogOut className="w-4 h-4 mr-2" />
+                Cerrar sesión
               </Button>
-            </Link>
-            <Link to="/trial">
-              <Button
-                variant="outline"
-                size="sm"
-                className="border-green-500/50 text-green-400 hover:bg-green-500/10 hover:border-green-500/70 transition-all duration-300"
-              >
-                {t('showcase.nav.freeTrial', 'Prueba Gratis')}
-              </Button>
-            </Link>
-            <Link to="/lead-capture">
-              <Button
-                size="sm"
-                className="bg-gradient-to-r from-electric-cyan to-purple-accent hover:opacity-90 text-background font-semibold shadow-glow-cyan transition-all duration-300"
-              >
-                {t('showcase.nav.requestDemo', 'Solicitar Demo')}
-              </Button>
-            </Link>
+            ) : (
+              <>
+                <Link to="/auth">
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="text-white/80 hover:text-electric-cyan hover:bg-electric-cyan/5 transition-all duration-300"
+                  >
+                    {t('showcase.nav.login', 'Acceso')}
+                  </Button>
+                </Link>
+                <Link to="/trial">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="border-green-500/50 text-green-400 hover:bg-green-500/10 hover:border-green-500/70 transition-all duration-300"
+                  >
+                    {t('showcase.nav.freeTrial', 'Prueba Gratis')}
+                  </Button>
+                </Link>
+                <Link to="/lead-capture">
+                  <Button
+                    size="sm"
+                    className="bg-gradient-to-r from-electric-cyan to-purple-accent hover:opacity-90 text-background font-semibold shadow-glow-cyan transition-all duration-300"
+                  >
+                    {t('showcase.nav.requestDemo', 'Solicitar Demo')}
+                  </Button>
+                </Link>
+              </>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
@@ -119,29 +156,45 @@ export const ShowcaseHeader = () => {
             ))}
             <div className="pt-4 space-y-3">
               <LanguageSelector />
-              <Link to="/auth" onClick={() => setMobileMenuOpen(false)}>
+              {isLoggedIn ? (
                 <Button
                   variant="ghost"
-                  className="w-full text-white/80 hover:text-electric-cyan hover:bg-electric-cyan/5"
+                  onClick={() => {
+                    handleLogout();
+                    setMobileMenuOpen(false);
+                  }}
+                  className="w-full text-red-400 hover:text-red-300 hover:bg-red-500/10"
                 >
-                  {t('showcase.nav.login', 'Acceso')}
+                  <LogOut className="w-4 h-4 mr-2" />
+                  Cerrar sesión
                 </Button>
-              </Link>
-              <Link to="/trial" onClick={() => setMobileMenuOpen(false)}>
-                <Button
-                  variant="outline"
-                  className="w-full border-green-500/50 text-green-400 hover:bg-green-500/10"
-                >
-                  {t('showcase.nav.freeTrial', 'Prueba Gratis')}
-                </Button>
-              </Link>
-              <Link to="/lead-capture" onClick={() => setMobileMenuOpen(false)}>
-                <Button
-                  className="w-full bg-gradient-to-r from-electric-cyan to-purple-accent hover:opacity-90 text-background font-semibold"
-                >
-                  {t('showcase.nav.requestDemo', 'Solicitar Demo')}
-                </Button>
-              </Link>
+              ) : (
+                <>
+                  <Link to="/auth" onClick={() => setMobileMenuOpen(false)}>
+                    <Button
+                      variant="ghost"
+                      className="w-full text-white/80 hover:text-electric-cyan hover:bg-electric-cyan/5"
+                    >
+                      {t('showcase.nav.login', 'Acceso')}
+                    </Button>
+                  </Link>
+                  <Link to="/trial" onClick={() => setMobileMenuOpen(false)}>
+                    <Button
+                      variant="outline"
+                      className="w-full border-green-500/50 text-green-400 hover:bg-green-500/10"
+                    >
+                      {t('showcase.nav.freeTrial', 'Prueba Gratis')}
+                    </Button>
+                  </Link>
+                  <Link to="/lead-capture" onClick={() => setMobileMenuOpen(false)}>
+                    <Button
+                      className="w-full bg-gradient-to-r from-electric-cyan to-purple-accent hover:opacity-90 text-background font-semibold"
+                    >
+                      {t('showcase.nav.requestDemo', 'Solicitar Demo')}
+                    </Button>
+                  </Link>
+                </>
+              )}
             </div>
           </div>
         )}
