@@ -8,7 +8,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { cleanupAuthState } from "@/utils/auth";
 import { toast } from "sonner";
 import { motion } from 'framer-motion';
-import { Lock, Mail, ArrowLeft, Check, X } from 'lucide-react';
+import { Lock, Mail, ArrowLeft, Check, X, Linkedin } from 'lucide-react';
 import { ShowcaseHeader } from '@/components/showcase/ShowcaseHeader';
 import { z } from 'zod';
 
@@ -200,6 +200,41 @@ const AuthPage: React.FC = () => {
               </CardDescription>
             </CardHeader>
             <CardContent>
+
+              {/* LinkedIn OAuth Button */}
+              <Button
+                type="button"
+                variant="outline"
+                onClick={async () => {
+                  setLoading(true);
+                  try {
+                    const { error } = await supabase.auth.signInWithOAuth({
+                      provider: 'linkedin_oidc',
+                      options: {
+                        redirectTo: `${window.location.origin}/brands`,
+                      },
+                    });
+                    if (error) throw error;
+                  } catch (err: any) {
+                    toast.error(err?.message || 'Error al conectar con LinkedIn');
+                    setLoading(false);
+                  }
+                }}
+                disabled={loading}
+                className="w-full py-6 border-[#0A66C2]/50 hover:bg-[#0A66C2]/10 hover:border-[#0A66C2] transition-all duration-300"
+              >
+                <Linkedin className="w-5 h-5 mr-2 text-[#0A66C2]" />
+                <span className="font-medium">Continuar con LinkedIn</span>
+              </Button>
+
+              <div className="relative my-4">
+                <div className="absolute inset-0 flex items-center">
+                  <span className="w-full border-t border-border/50" />
+                </div>
+                <div className="relative flex justify-center text-xs uppercase">
+                  <span className="bg-card px-2 text-muted-foreground">O con email</span>
+                </div>
+              </div>
 
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="space-y-2">
