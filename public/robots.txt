@@ -1,3 +1,6 @@
+# Brainy by Unica - robots.txt
+# https://brainy.unica.la
+
 User-agent: Googlebot
 Allow: /
 
@@ -10,5 +13,26 @@ Allow: /
 User-agent: facebookexternalhit
 Allow: /
 
+User-agent: LinkedInBot
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
 User-agent: *
 Allow: /
+
+# Sitemap location
+Sitemap: https://brainy.unica.la/sitemap.xml

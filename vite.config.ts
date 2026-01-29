@@ -31,7 +31,7 @@ export default defineConfig(({ mode }) => ({
     mode === 'development' && componentTagger(),
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['favicon.ico', 'robots.txt', 'placeholder.svg'],
+      includeAssets: ['favicon.ico', 'robots.txt', 'placeholder.svg', 'sitemap.xml'],
       manifest: {
         name: 'Brainy Command Center',
         short_name: 'Brainy',
@@ -77,7 +77,7 @@ export default defineConfig(({ mode }) => ({
       devOptions: {
         enabled: true
       }
-    })
+    }),
   ].filter(Boolean),
   resolve: {
     alias: {
