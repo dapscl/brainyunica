@@ -97,6 +97,8 @@ const TrialCreatorPage = lazy(() => import("./pages/TrialCreatorPage"));
 const CalendarBrainyPage = lazy(() => import("./pages/CalendarBrainyPage"));
 const TrendBrainyPage = lazy(() => import("./pages/TrendBrainyPage"));
 const TemplatesBrainyPage = lazy(() => import("./pages/TemplatesBrainyPage"));
+const SignupPage = lazy(() => import("./pages/SignupPage"));
+const SelectPlanPage = lazy(() => import("./pages/SelectPlanPage"));
 
 const LoadingFallback = () => (
   <div className="min-h-screen bg-background p-8">
@@ -119,6 +121,8 @@ const App = () => {
           {/* Showcase público */}
           <Route path="/" element={<ShowcasePage />} />
           <Route path="/auth" element={<AuthPage />} />
+          <Route path="/signup" element={<SignupPage />} />
+          <Route path="/select-plan" element={<SelectPlanPage />} />
           <Route path="/features" element={<ShowcaseFeaturesPage />} />
           <Route path="/industries" element={<ShowcaseIndustriesPage />} />
           <Route path="/lead-capture" element={<ShowcaseLeadCapturePage />} />

@@ -143,8 +143,8 @@ const LandingPage = () => {
             <Button variant="ghost" onClick={() => navigate("/auth")}>
               Iniciar sesión
             </Button>
-            <Button onClick={() => navigate("/auth")}>
-              Prueba gratis
+            <Button onClick={() => navigate("/signup")}>
+              Crea tu cuenta gratis
             </Button>
           </div>
         </div>
@@ -167,10 +167,10 @@ const LandingPage = () => {
               🚀 Empieza ahora y transforma creatividad, automatización y resultados en un solo lugar.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" onClick={() => navigate("/auth")} className="text-lg px-8">
-                Empieza hoy
+              <Button size="lg" onClick={() => navigate("/signup")} className="text-lg px-8">
+                Crea tu cuenta gratis
               </Button>
-              <Button size="lg" variant="secondary" className="text-lg px-8 bg-white/90 hover:bg-white text-foreground">
+              <Button size="lg" variant="secondary" className="text-lg px-8 bg-white/90 hover:bg-white text-foreground" onClick={() => window.open("https://calendly.com/brainy-demo", "_blank")}>
                 Agenda tu demo
               </Button>
             </div>
@@ -275,7 +275,7 @@ const LandingPage = () => {
                   <Button 
                     className="w-full" 
                     variant={plan.popular ? "default" : "outline"}
-                    onClick={() => navigate("/auth")}
+                    onClick={() => navigate("/signup")}
                   >
                     {plan.cta}
                   </Button>
@@ -362,7 +362,7 @@ const LandingPage = () => {
             size="lg" 
             variant="secondary" 
             className="text-lg px-8 bg-white hover:bg-white/90 text-foreground"
-            onClick={() => navigate("/auth")}
+            onClick={() => window.open("https://calendly.com/brainy-demo", "_blank")}
           >
             Agenda tu demo
           </Button>
