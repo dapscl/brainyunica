@@ -41,7 +41,7 @@ const DashboardPage = () => {
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <Package className="h-8 w-8 text-primary" />
-            <h1 className="text-2xl font-bold">ÚNICA Command Center</h1>
+            <h1 className="text-2xl font-bold">Brainy — Centro de Dirección</h1>
           </div>
           <div className="flex items-center gap-4">
             <span className="text-sm text-muted-foreground">
@@ -57,20 +57,21 @@ const DashboardPage = () => {
 
       <main className="container mx-auto px-4 py-8">
         <div className="mb-8">
-          <h2 className="text-3xl font-bold mb-2">Brainy</h2>
+          <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground mb-1">Decision Layer™</p>
+          <h2 className="text-3xl font-bold mb-2">Centro de Dirección</h2>
           <p className="text-muted-foreground">
-            Tu centro de gestión integral para marketing, creatividad y análisis
+            Decisiones que Brainy ya tomó y recomendaciones estratégicas en curso
           </p>
         </div>
 
-        {/* Ad Spend Tracker Dashboard */}
+        {/* Strategic Decisions Panel */}
         <div className="mb-8">
           <div className="flex items-center gap-3 mb-6">
             <TrendingUp className="h-6 w-6 text-primary" />
             <div>
-              <h3 className="text-xl font-semibold">Ad Spend Tracking</h3>
+              <h3 className="text-xl font-semibold">Gobierno de Inversión</h3>
               <p className="text-sm text-muted-foreground">
-                Monitoreo en tiempo real de tu inversión publicitaria
+                Decisiones de distribución de presupuesto en tiempo real
               </p>
             </div>
           </div>
@@ -158,58 +159,46 @@ const DashboardPage = () => {
 
         <Card className="mt-8">
           <CardHeader>
-            <CardTitle>Estado del Sistema</CardTitle>
-            <CardDescription>Base de datos configurada y lista para usar</CardDescription>
+            <CardTitle>Decision Layer™ — Estado Operativo</CardTitle>
+            <CardDescription>Sistemas de dirección activos y listos para gobernar</CardDescription>
           </CardHeader>
           <CardContent>
             <ul className="space-y-2 text-sm">
               <li className="flex items-center gap-2">
                 <span className="h-2 w-2 rounded-full bg-green-500"></span>
-                Base de datos core configurada
+                Capa de decisión estratégica activa
               </li>
               <li className="flex items-center gap-2">
                 <span className="h-2 w-2 rounded-full bg-green-500"></span>
-                Sistema de roles implementado
+                Gobierno de roles y permisos operativo
               </li>
               <li className="flex items-center gap-2">
                 <span className="h-2 w-2 rounded-full bg-green-500"></span>
-                Autenticación activa
+                Autenticación y control de acceso
               </li>
               <li className="flex items-center gap-2">
                 <span className="h-2 w-2 rounded-full bg-green-500"></span>
-                Páginas de gestión creadas
+                Dirección de contenido multicanal
               </li>
               <li className="flex items-center gap-2">
                 <span className="h-2 w-2 rounded-full bg-green-500"></span>
-                Sistema de redes sociales activo
+                Gobierno de inversión publicitaria
               </li>
               <li className="flex items-center gap-2">
                 <span className="h-2 w-2 rounded-full bg-green-500"></span>
-                Editor de contenido rico
+                Identidad de marca blindada
               </li>
               <li className="flex items-center gap-2">
                 <span className="h-2 w-2 rounded-full bg-green-500"></span>
-                Brand Kit configurado
+                Trazabilidad y auditoría completa
               </li>
               <li className="flex items-center gap-2">
                 <span className="h-2 w-2 rounded-full bg-green-500"></span>
-                Sistema de auditoría activo
+                Sistema de notificaciones inteligentes
               </li>
               <li className="flex items-center gap-2">
                 <span className="h-2 w-2 rounded-full bg-green-500"></span>
-                Notificaciones implementadas
-              </li>
-              <li className="flex items-center gap-2">
-                <span className="h-2 w-2 rounded-full bg-green-500"></span>
-                Sistema de aprobaciones completo
-              </li>
-              <li className="flex items-center gap-2">
-                <span className="h-2 w-2 rounded-full bg-green-500"></span>
-                Biblioteca de medios activa
-              </li>
-              <li className="flex items-center gap-2">
-                <span className="h-2 w-2 rounded-full bg-green-500"></span>
-                Panel de administración de usuarios
+                Flujo de aprobación sin fricción
               </li>
             </ul>
           </CardContent>
