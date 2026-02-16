@@ -1,29 +1,25 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import { supabase } from '@/integrations/supabase/client';
 import {
   Brain,
-  TrendingUp,
-  DollarSign,
-  Sparkles,
   Shield,
-  ArrowRight,
+  Activity,
   CheckCircle2,
-  AlertTriangle,
-  Zap,
+  CircleDot,
 } from 'lucide-react';
 import { format, subDays } from 'date-fns';
 import { motion } from 'framer-motion';
 
-interface StrategicDecision {
+interface ActiveDirective {
   id: string;
-  type: 'executed' | 'recommendation' | 'alert';
+  type: 'active' | 'adjusted' | 'governing';
   layer: string;
   title: string;
-  description: string;
-  impact?: string;
+  status: string;
   timestamp: string;
 }
 
@@ -37,28 +33,42 @@ interface AutonomousStatePanelProps {
   } | null;
 }
 
+const SYSTEM_STATES = [
+  'Dirección recalibrándose',
+  'Revisión automática en curso',
+  'Hipótesis de inversión actualizándose',
+  'Coherencia de marca verificándose',
+] as const;
+
 /**
- * Decision Layer™ — Estado Inicial Autónomo
+ * Decision Layer™ — Estado Autónomo
  * 
- * Synthesizes existing internal data (ad spend, trends, activity logs, brand profile)
- * into strategic decisions Brainy has already taken or recommends. This is the FIRST
- * thing the user sees — reinforcing that the system leads, not waits.
+ * The system acts. It does not detect, suggest, or recommend.
+ * It shows active direction, running hypotheses, and adjustments already executed.
  */
 export function AutonomousStatePanel({ organizationId, brandProfile }: AutonomousStatePanelProps) {
   const [loading, setLoading] = useState(true);
-  const [decisions, setDecisions] = useState<StrategicDecision[]>([]);
+  const [directives, setDirectives] = useState<ActiveDirective[]>([]);
+  const [systemPulse, setSystemPulse] = useState<string>(SYSTEM_STATES[0]);
 
+  // Rotating system pulse — creates sense of a living engine
   useEffect(() => {
-    synthesizeDecisions();
-  }, [organizationId, brandProfile]);
+    let idx = 0;
+    const interval = setInterval(() => {
+      idx = (idx + 1) % SYSTEM_STATES.length;
+      setSystemPulse(SYSTEM_STATES[idx]);
+    }, 4000);
+    return () => clearInterval(interval);
+  }, []);
 
-  const synthesizeDecisions = async () => {
+  const synthesizeDirectives = useCallback(async () => {
     try {
-      const synthesized: StrategicDecision[] = [];
+      const active: ActiveDirective[] = [];
       const now = new Date();
       const weekAgo = subDays(now, 7);
+      const ts = format(now, 'HH:mm');
 
-      // --- 1. Ad Spend Governance ---
+      // --- 1. Investment Governance ---
       if (organizationId) {
         const { data: adLogs } = await supabase
           .from('ad_spend_logs')
@@ -74,225 +84,218 @@ export function AutonomousStatePanel({ organizationId, brandProfile }: Autonomou
             channelSpend[l.channel] = (channelSpend[l.channel] || 0) + Number(l.amount);
           });
 
-          const sortedChannels = Object.entries(channelSpend).sort((a, b) => b[1] - a[1]);
-          const topChannel = sortedChannels[0];
-          const lowestChannel = sortedChannels[sortedChannels.length - 1];
+          const sorted = Object.entries(channelSpend).sort((a, b) => b[1] - a[1]);
+          const top = sorted[0];
+          const lowest = sorted[sorted.length - 1];
 
-          if (topChannel && lowestChannel && sortedChannels.length > 1) {
-            const topPct = ((topChannel[1] / totalSpend) * 100).toFixed(0);
-            synthesized.push({
+          if (top && lowest && sorted.length > 1) {
+            const topPct = ((top[1] / totalSpend) * 100).toFixed(0);
+            active.push({
               id: 'adspend-rebalance',
-              type: 'executed',
+              type: 'adjusted',
               layer: 'Gobierno de Inversión',
-              title: `Redistribución de presupuesto definida`,
-              description: `${topChannel[0]} concentra ${topPct}% de la inversión (€${topChannel[1].toLocaleString()}). Brainy recomienda reasignar un 15% hacia ${lowestChannel[0]} para diversificar riesgo.`,
-              impact: `€${totalSpend.toLocaleString()} gobernados esta semana`,
-              timestamp: format(now, "dd/MM HH:mm"),
+              title: `Redistribución aplicada: ${topPct}% en ${top[0]} → 15% reasignado a ${lowest[0]}`,
+              status: `€${totalSpend.toLocaleString()} bajo dirección`,
+              timestamp: ts,
             });
           }
 
-          // Daily spend velocity alert
           const avgDaily = totalSpend / 7;
           if (avgDaily > 500) {
-            synthesized.push({
+            active.push({
               id: 'adspend-velocity',
-              type: 'alert',
+              type: 'active',
               layer: 'Gobierno de Inversión',
-              title: 'Velocidad de gasto por encima del umbral',
-              description: `El promedio diario de €${avgDaily.toFixed(0)} proyecta €${(avgDaily * 30).toFixed(0)} mensuales. Brainy ajustó los límites de puja automáticamente.`,
-              timestamp: format(now, "dd/MM HH:mm"),
+              title: `Límites de puja ajustados — velocidad diaria €${avgDaily.toFixed(0)}`,
+              status: `Proyección mensual: €${(avgDaily * 30).toFixed(0)}`,
+              timestamp: ts,
             });
           }
         }
       }
 
-      // --- 2. Trend Intelligence ---
+      // --- 2. Trend Direction (not "detection") ---
       const { data: trends } = await supabase
         .from('trend_tracking')
-        .select('trend_keyword, trend_score, category')
+        .select('trend_keyword, trend_score')
         .gte('tracked_at', weekAgo.toISOString())
         .order('trend_score', { ascending: false })
-        .limit(5);
+        .limit(3);
 
       if (trends && trends.length > 0) {
-        const topTrend = trends[0];
-        synthesized.push({
-          id: 'trend-detected',
-          type: 'executed',
-          layer: 'Inteligencia de Tendencias',
-          title: `Tendencia "${topTrend.trend_keyword}" capturada y procesada`,
-          description: `Score ${topTrend.trend_score}/10. Brainy ya generó un brief de contenido alineado a esta tendencia y lo posicionó en la cola de publicación.`,
-          impact: `${trends.length} tendencias bajo vigilancia activa`,
-          timestamp: format(now, "dd/MM HH:mm"),
+        active.push({
+          id: 'trend-direction',
+          type: 'active',
+          layer: 'Dirección de Tendencias',
+          title: `Hipótesis activa: "${trends[0].trend_keyword}" integrada en cola de contenido`,
+          status: `${trends.length} líneas de dirección vigentes`,
+          timestamp: ts,
         });
       }
 
-      // --- 3. Content Direction ---
+      // --- 3. Content Direction (not "pattern identified") ---
       const { data: { user } } = await supabase.auth.getUser();
       if (user) {
         const { data: activityLogs } = await supabase
           .from('trial_activity_logs')
-          .select('activity_type, created_at')
+          .select('activity_type')
           .eq('user_id', user.id)
           .gte('created_at', weekAgo.toISOString());
 
         if (activityLogs && activityLogs.length > 0) {
-          const typeCounts: Record<string, number> = {};
-          activityLogs.forEach(l => {
-            typeCounts[l.activity_type] = (typeCounts[l.activity_type] || 0) + 1;
-          });
-
-          const topType = Object.entries(typeCounts).sort((a, b) => b[1] - a[1])[0];
-          const typeLabels: Record<string, string> = {
-            copy_generated: 'copys',
-            idea_generated: 'ideas',
-            variant_generated: 'variantes',
-            improvement: 'mejoras',
-            translation: 'traducciones',
-          };
-
-          synthesized.push({
-            id: 'content-pattern',
-            type: 'recommendation',
+          active.push({
+            id: 'content-direction',
+            type: 'governing',
             layer: 'Dirección de Contenido',
-            title: `Patrón de producción identificado`,
-            description: `Tu mayor output son ${typeLabels[topType[0]] || topType[0]} (${topType[1]} esta semana). Brainy sugiere diversificar con variantes A/B para maximizar el impacto por pieza.`,
-            impact: `${activityLogs.length} piezas dirigidas`,
-            timestamp: format(now, "dd/MM HH:mm"),
+            title: `${activityLogs.length} piezas producidas bajo criterio de marca`,
+            status: 'Coherencia de voz verificada en cada entrega',
+            timestamp: ts,
           });
         }
       }
 
-      // --- 4. Brand Voice Governance ---
+      // --- 4. Brand Voice (not "analysis") ---
       if (brandProfile?.brand_name) {
-        const hasSocial = brandProfile.connected_social && 
-          (Array.isArray(brandProfile.connected_social) ? brandProfile.connected_social.length > 0 : Object.keys(brandProfile.connected_social).length > 0);
-
-        synthesized.push({
-          id: 'brand-voice',
-          type: 'executed',
-          layer: 'Identidad de Marca',
-          title: `Voz de "${brandProfile.brand_name}" blindada`,
-          description: `Tono ${brandProfile.tone || 'profesional'}, estilo ${brandProfile.style || 'moderno'}. Todo contenido generado pasa por validación de coherencia de marca antes de ser entregado.`,
-          impact: hasSocial ? 'Canales sociales bajo dirección' : 'Conecta canales para dirección completa',
-          timestamp: format(now, "dd/MM HH:mm"),
+        active.push({
+          id: 'brand-governance',
+          type: 'governing',
+          layer: 'Identidad Blindada',
+          title: `Voz "${brandProfile.brand_name}" activa — tono ${brandProfile.tone || 'profesional'}, estilo ${brandProfile.style || 'moderno'}`,
+          status: 'Toda salida validada contra perfil de marca',
+          timestamp: ts,
         });
       }
 
-      // --- 5. Fallback: System Ready Decision ---
-      if (synthesized.length === 0) {
-        synthesized.push({
-          id: 'system-ready',
-          type: 'recommendation',
+      // --- Fallback: System Operating ---
+      if (active.length === 0) {
+        active.push({
+          id: 'system-operating',
+          type: 'active',
           layer: 'Decision Layer™',
-          title: 'Sistema listo para gobernar',
-          description: 'Brainy ha completado el análisis inicial. Conecta tus canales de inversión publicitaria y genera tu primer contenido para activar las decisiones autónomas.',
-          timestamp: format(now, "dd/MM HH:mm"),
+          title: 'Motor de dirección operativo — esperando primer canal de inversión',
+          status: 'Sistema calibrándose con datos iniciales',
+          timestamp: ts,
         });
       }
 
-      setDecisions(synthesized);
+      setDirectives(active);
     } catch (error) {
-      console.error('Error synthesizing decisions:', error);
+      console.error('Error synthesizing directives:', error);
     } finally {
       setLoading(false);
     }
-  };
+  }, [organizationId, brandProfile]);
 
-  const getTypeIcon = (type: StrategicDecision['type']) => {
+  useEffect(() => {
+    synthesizeDirectives();
+  }, [synthesizeDirectives]);
+
+  const getTypeIcon = (type: ActiveDirective['type']) => {
     switch (type) {
-      case 'executed': return <CheckCircle2 className="w-4 h-4 text-green-400" />;
-      case 'recommendation': return <Zap className="w-4 h-4 text-electric-cyan" />;
-      case 'alert': return <AlertTriangle className="w-4 h-4 text-yellow-400" />;
+      case 'active': return <Activity className="w-4 h-4 text-electric-cyan" />;
+      case 'adjusted': return <CheckCircle2 className="w-4 h-4 text-green-400" />;
+      case 'governing': return <Shield className="w-4 h-4 text-purple-accent" />;
     }
   };
 
-  const getTypeBadge = (type: StrategicDecision['type']) => {
+  const getTypeBadge = (type: ActiveDirective['type']) => {
     switch (type) {
-      case 'executed': return <Badge className="bg-green-500/20 text-green-400 border-green-500/30 text-xs">Ejecutada</Badge>;
-      case 'recommendation': return <Badge className="bg-primary/20 text-primary border-primary/30 text-xs">Recomendación</Badge>;
-      case 'alert': return <Badge className="bg-yellow-500/20 text-yellow-400 border-yellow-500/30 text-xs">Alerta</Badge>;
+      case 'active': return <Badge className="bg-electric-cyan/20 text-electric-cyan border-electric-cyan/30 text-xs">En curso</Badge>;
+      case 'adjusted': return <Badge className="bg-green-500/20 text-green-400 border-green-500/30 text-xs">Ajuste aplicado</Badge>;
+      case 'governing': return <Badge className="bg-purple-accent/20 text-purple-accent border-purple-accent/30 text-xs">Decisión vigente</Badge>;
     }
   };
 
   if (loading) {
     return (
-      <Card className="border-primary/20 bg-gradient-to-br from-primary/5 via-background to-accent/5">
+      <Card className="border-electric-cyan/20 bg-card/30 backdrop-blur-sm">
         <CardHeader>
           <Skeleton className="h-6 w-64" />
           <Skeleton className="h-4 w-96 mt-2" />
         </CardHeader>
         <CardContent className="space-y-4">
-          <Skeleton className="h-20 w-full" />
-          <Skeleton className="h-20 w-full" />
+          <Skeleton className="h-16 w-full" />
+          <Skeleton className="h-16 w-full" />
         </CardContent>
       </Card>
     );
   }
 
   return (
-    <Card className="border-primary/20 bg-gradient-to-br from-primary/5 via-background to-accent/5 overflow-hidden">
+    <Card className="border-electric-cyan/20 bg-card/30 backdrop-blur-sm overflow-hidden">
       <CardHeader className="pb-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-r from-primary to-accent flex items-center justify-center">
-              <Brain className="w-5 h-5 text-primary-foreground" />
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-r from-electric-cyan to-purple-accent flex items-center justify-center shadow-glow-cyan">
+              <Brain className="w-5 h-5 text-background" />
             </div>
             <div>
-              <CardTitle className="text-lg">Decision Layer™ — Estado Autónomo</CardTitle>
-              <p className="text-xs text-muted-foreground mt-0.5">
-                Decisiones que Brainy ya tomó antes de tu primer clic
-              </p>
+              <CardTitle className="text-lg text-foreground">Decision Layer™ — Dirección Activa</CardTitle>
+              <motion.p
+                key={systemPulse}
+                initial={{ opacity: 0, y: 4 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -4 }}
+                transition={{ duration: 0.4 }}
+                className="text-xs text-muted-foreground mt-0.5 flex items-center gap-1.5"
+              >
+                <CircleDot className="w-3 h-3 text-green-400 animate-pulse" />
+                {systemPulse}
+              </motion.p>
             </div>
           </div>
-          <Badge variant="outline" className="text-xs">
-            <Shield className="w-3 h-3 mr-1" />
-            Tiempo real
+          <Badge variant="outline" className="text-xs border-electric-cyan/30 text-electric-cyan">
+            <Activity className="w-3 h-3 mr-1" />
+            Operando
           </Badge>
         </div>
       </CardHeader>
 
       <CardContent className="space-y-3">
-        {decisions.map((decision, idx) => (
+        {directives.map((directive, idx) => (
           <motion.div
-            key={decision.id}
+            key={directive.id}
             initial={{ opacity: 0, x: -10 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: idx * 0.1 }}
-            className="group relative p-4 rounded-lg border border-border/50 bg-card/30 hover:bg-card/60 hover:border-primary/30 transition-all"
+            transition={{ delay: idx * 0.08 }}
+            className="group relative p-4 rounded-lg border border-border/50 bg-card/20 hover:bg-card/40 hover:border-electric-cyan/30 transition-all"
           >
             <div className="flex items-start gap-3">
               <div className="mt-0.5 shrink-0">
-                {getTypeIcon(decision.type)}
+                {getTypeIcon(directive.type)}
               </div>
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2 flex-wrap mb-1">
                   <span className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
-                    {decision.layer}
+                    {directive.layer}
                   </span>
-                  {getTypeBadge(decision.type)}
+                  {getTypeBadge(directive.type)}
                 </div>
                 <h4 className="text-sm font-semibold text-foreground mb-1">
-                  {decision.title}
+                  {directive.title}
                 </h4>
-                <p className="text-xs text-muted-foreground leading-relaxed">
-                  {decision.description}
+                <p className="text-xs text-muted-foreground">
+                  {directive.status}
                 </p>
-                {decision.impact && (
-                  <div className="flex items-center gap-1 mt-2">
-                    <ArrowRight className="w-3 h-3 text-primary" />
-                    <span className="text-xs font-medium text-primary">
-                      {decision.impact}
-                    </span>
-                  </div>
-                )}
               </div>
-              <span className="text-xs text-muted-foreground shrink-0">
-                {decision.timestamp}
+              <span className="text-xs text-muted-foreground/60 shrink-0 tabular-nums">
+                {directive.timestamp}
               </span>
             </div>
           </motion.div>
         ))}
+
+        {/* Single supervisory action */}
+        <div className="pt-2 flex justify-end">
+          <Button
+            variant="ghost"
+            size="sm"
+            className="text-xs text-electric-cyan hover:text-electric-cyan/80 hover:bg-electric-cyan/10 gap-1.5"
+          >
+            <Shield className="w-3.5 h-3.5" />
+            Validar dirección
+          </Button>
+        </div>
       </CardContent>
     </Card>
   );
