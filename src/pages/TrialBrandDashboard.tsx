@@ -16,6 +16,7 @@ import { useTrialActivityMetrics } from '@/hooks/useTrialActivityMetrics';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import UsageAnalyticsPanel from '@/components/dashboard/UsageAnalyticsPanel';
+import { AutonomousStatePanel } from '@/components/dashboard/AutonomousStatePanel';
 import UpgradeModal from '@/components/trial/UpgradeModal';
 import {
   Sparkles,
@@ -322,6 +323,16 @@ const TrialBrandDashboard = () => {
               Configurar marca
             </Button>
           </div>
+        </motion.div>
+
+        {/* Decision Layer™ — Autonomous State */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.15 }}
+          className="mb-10"
+        >
+          <AutonomousStatePanel brandProfile={brandProfile} />
         </motion.div>
 
         {/* Quick Stats */}

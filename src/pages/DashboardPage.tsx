@@ -7,6 +7,8 @@ import { Building2, Package, LogOut, Briefcase, BarChart3, Shield, TrendingUp } 
 import { robustSignOut } from "@/utils/auth";
 import { usePermissions } from "@/hooks/usePermissions";
 import { AdSpendTracker } from "@/components/dashboard/AdSpendTracker";
+import { AutonomousStatePanel } from "@/components/dashboard/AutonomousStatePanel";
+import { useUserOrganizations } from "@/hooks/useUserOrganizations";
 
 interface Profile {
   full_name: string | null;
@@ -17,6 +19,7 @@ const DashboardPage = () => {
   const navigate = useNavigate();
   const [profile, setProfile] = useState<Profile | null>(null);
   const { isGlobalAdmin } = usePermissions();
+  const { organizations } = useUserOrganizations();
 
   useEffect(() => {
     const loadProfile = async () => {
@@ -64,7 +67,12 @@ const DashboardPage = () => {
           </p>
         </div>
 
-        {/* Strategic Decisions Panel */}
+        {/* Decision Layer™ — Autonomous State */}
+        <div className="mb-8">
+          <AutonomousStatePanel organizationId={organizations?.[0]?.id} />
+        </div>
+
+        {/* Investment Governance */}
         <div className="mb-8">
           <div className="flex items-center gap-3 mb-6">
             <TrendingUp className="h-6 w-6 text-primary" />
