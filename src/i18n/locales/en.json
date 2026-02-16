@@ -97,7 +97,7 @@
       "requestDemo": "Request Demo",
       "login": "Login",
       "freeTrial": "Free Trial",
-      "tagline": "Marketing that runs itself"
+      "tagline": "Decision Layer™"
     },
     "breadcrumbs": {
       "home": "Home",
@@ -113,88 +113,88 @@
       "onboarding": "Onboarding"
     },
     "seo": {
-      "defaultTitle": "Brainy - AI-Powered Marketing Platform",
-      "defaultDescription": "See how an agency works when AI runs it. Brainy automates content, ads, and conversations from one place. No stress. No processes. No limits.",
-      "keywords": "AI marketing, marketing automation, social media management, ad optimization, content creation, chat automation, digital marketing platform"
+      "defaultTitle": "Brainy - Decision Layer™ for Marketing",
+      "defaultDescription": "The system that directs your marketing. It doesn't assist — it governs. Brainy replaces human decisions with real-time strategic direction.",
+      "keywords": "decision layer, strategic marketing direction, marketing governance, strategic AI, marketing role replacement, autonomous direction system"
     },
     "hero": {
-      "badge": "The future of marketing running itself",
+      "badge": "Decision Layer™ — Autonomous strategic direction",
       "title": {
-        "line1": "See how an agency works",
-        "line2": "when AI runs it",
-        "line3": ""
+        "line1": "The system that directs",
+        "line2": "your marketing.",
+        "line3": "No intervention."
       },
-      "subtitle": "Brainy automates content, ads, and conversations from one place.",
-      "subtitleBold": "No stress. No processes. No limits.",
-      "ctaPrimary": "See Brainy in action",
-      "ctaSecondary": "Discover the intelligences"
+      "subtitle": "Brainy doesn't assist. It decides, executes, and governs content, investment, and conversations.",
+      "subtitleBold": "Replace uncertainty. Eliminate human dependency.",
+      "ctaPrimary": "See Brainy directing",
+      "ctaSecondary": "Discover the decision layers"
     },
     "animatedHero": {
-      "mrBrainy": "Mr. Brainy",
-      "contentReady": "Content ready for approval ✅",
-      "processingResponse": "Processing response",
-      "postsScheduled": "posts scheduled",
-      "optimizingCampaign": "Optimizing campaign...",
-      "percentComplete": "complete",
-      "leadsCaptured": "leads captured",
-      "responding": "Responding",
-      "variantsCreated": "variants created",
-      "generatingVariant": "Generating variant",
-      "newTrendDetected": "New trend detected",
-      "budgetOptimized": "optimized",
-      "calculatingRoi": "Calculating ROI...",
-      "campaignActive": "Campaign active",
-      "interactions": "interactions",
-      "publishingIn": "Publishing in",
+      "mrBrainy": "Decision Layer™",
+      "contentReady": "Decision made: content approved ✅",
+      "processingResponse": "Evaluating next decision",
+      "postsScheduled": "publications defined",
+      "optimizingCampaign": "Redistributing investment...",
+      "percentComplete": "executed",
+      "leadsCaptured": "qualified leads",
+      "responding": "Directing response",
+      "variantsCreated": "variants decided",
+      "generatingVariant": "Defining variant",
+      "newTrendDetected": "Strategic opportunity detected",
+      "budgetOptimized": "redistributed",
+      "calculatingRoi": "Governing ROI...",
+      "campaignActive": "Direction active",
+      "interactions": "decisions executed",
+      "publishingIn": "Executing in",
       "hours": "h"
     },
     "brains": {
-      "title": "How",
-      "titleHighlight": "Brainy",
-      "subtitle": "Behind Brainy are five intelligences working together:",
+      "title": "Five layers of",
+      "titleHighlight": "direction",
+      "subtitle": "Each layer replaces a human role. Together, they govern your entire marketing:",
       "creator": {
         "title": "CreatorBrainy™",
-        "description": "Creates content and versions automatically. Generates variants, optimizes copy, and adapts creatives to each platform without manual intervention."
+        "description": "Defines what narrative your brand needs now. Doesn't generate pieces — decides creative direction and executes without intervention."
       },
       "calendar": {
         "title": "CalendarBrainy™",
-        "description": "Schedules, coordinates, and publishes without intervention. Selects the best times, distributes content strategically, and executes automatic publications."
+        "description": "Governs when and where your brand appears. Eliminates manual planning with real-time distribution decisions."
       },
       "ad": {
         "title": "AdBrainy™",
-        "description": "Executes and optimizes your campaigns with precision. Adjusts bids in real-time, redistributes budgets, and maximizes ROAS automatically."
+        "description": "Directs every dollar of investment. Redistributes budget, eliminates waste, and maximizes return without waiting for human approval."
       },
       "chat": {
         "title": "ChatBrainy™",
-        "description": "Responds, converses, and converts leads in real-time. Automates responses, qualifies purchase intent, and captures opportunities instantly."
+        "description": "Replaces the community manager. Decides, responds, and qualifies leads in real-time without supervision."
       },
       "trend": {
         "title": "TrendBrainy™",
-        "description": "Detects what's happening and proposes new ideas. Analyzes trends, monitors competition, and suggests relevant content automatically every week."
+        "description": "Detects strategic opportunities before your competition. Defines new content directions based on market signals."
       },
-      "footer": "Everything happens smoothly, as if you had a complete team working non-stop."
+      "footer": "Not a team of assistants. A direction system that eliminates uncertainty."
     },
     "results": {
-      "title": "Results",
-      "titleHighlight": "in action",
-      "subtitle": "Each showcase displays one thing: how intelligent automation transforms a brand's performance.",
-      "subtitleBold": "No comparisons. Just evidence."
+      "title": "Decisions",
+      "titleHighlight": "with evidence",
+      "subtitle": "Each panel shows one thing: how autonomous direction transforms a brand's performance.",
+      "subtitleBold": "No opinions. Just data-driven direction."
     },
     "conversations": {
-      "title": "Conversations that do",
-      "titleHighlight": "more than talk",
-      "description": "Brainy coordinates, approves, and publishes from a conversation. One message is enough to launch a campaign, approve copy, or generate an ad.",
-      "footer": "This is what it feels like to have a creative assistant working for you, all day long."
+      "title": "One message to",
+      "titleHighlight": "direct everything",
+      "description": "Brainy governs, approves, and executes from a conversation. One message launches a campaign, defines copy, or redistributes budget.",
+      "footer": "Not an assistant. A system that directs your entire operation."
     },
     "metrics": {
       "title": "Results that",
-      "titleHighlight": "speak for themselves",
-      "subtitle": "Real metrics from agencies and companies that automated their marketing with Brainy",
-      "leadsGenerated": "Leads Generated",
-      "hoursSaved": "Hours Saved",
-      "automation": "Automation",
-      "avgRoi": "Average ROI",
-      "footer": "These are just some of the metrics. Your agency could be next."
+      "titleHighlight": "prove direction",
+      "subtitle": "Real metrics from brands that replaced human decisions with Brainy's strategic direction",
+      "leadsGenerated": "Qualified Leads",
+      "hoursSaved": "Decision Hours Eliminated",
+      "automation": "Autonomous Direction",
+      "avgRoi": "ROI under Brainy Governance",
+      "footer": "These are just some metrics. Your brand could be directed by Brainy tomorrow."
     },
     "creativePerformance": {
       "title": "Creative Performance Tracker",
@@ -347,18 +347,18 @@
       }
     },
     "connected": {
-      "title": "Everything connected.",
-      "titleHighlight": "Everything synchronized.",
-      "description": "Every action, every publication, every ad. Everything updates in real-time within a single digital brain.",
-      "footer": "No fragmentation. Only fluidity."
+      "title": "Everything directed.",
+      "titleHighlight": "Everything governed.",
+      "description": "Every decision, every publication, every investment. Everything flows under a single strategic criterion in real-time.",
+      "footer": "No fragmentation. No uncertainty. Just direction."
     },
     "finalCta": {
-      "title": "The future of agencies",
-      "titleHighlight": "doesn't use more tools.",
-      "subtitle": "Uses one that does everything.",
-      "product": "Brainy.",
-      "button": "Request early access →",
-      "footer": "Join the agencies and companies that have already automated their future"
+      "title": "The future of brands",
+      "titleHighlight": "doesn't depend on more people.",
+      "subtitle": "It depends on better direction.",
+      "product": "Decision Layer™",
+      "button": "Activate your Decision Layer™ →",
+      "footer": "Join the brands that already replaced uncertainty with strategic direction"
     },
     "platformComparison": {
       "badge": "Comparison",
