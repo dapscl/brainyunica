@@ -437,137 +437,137 @@
       "completedText": "Este es el flujo completo de gestión conversacional con Brainy: desde la aprobación por WhatsApp hasta la publicación automática en redes sociales, todo en tiempo real."
     },
     "pricing": {
-      "title": "Precios",
-      "description": "Pricing transparente que escala con tu inversión publicitaria. Elige el plan correcto para tu agencia.",
-      "badge": "Pricing Escalable",
+      "title": "Inversión en Dirección",
+      "description": "Invierte en dirección estratégica, no en más personas. Pricing que escala con tu crecimiento.",
+      "badge": "Inversión en Dirección",
       "headline": {
-        "line1": "Precio que",
-        "line2": "Crece Contigo"
+        "line1": "Invierte en dirección,",
+        "line2": "no en personas"
       },
-      "subtitle": "Paga solo por lo que inviertes. Nuestro modelo de pricing escala proporcionalmente con tu ad spend, sin sorpresas.",
+      "subtitle": "Tu Decision Layer™ cuesta una fracción de los roles que reemplaza. Pricing que escala con tu inversión, no con tu headcount.",
       "howItWorks": {
-        "title": "¿Cómo Funciona el Pricing?",
+        "title": "¿Cómo Funciona Tu Inversión?",
         "step1": {
-          "title": "Precio Base Mensual",
-          "description": "Pago fijo mensual según el tier que elijas (Starter, Professional, Enterprise)"
+          "title": "Fee Mensual de Dirección",
+          "description": "Inversión fija para tu tier de Decision Layer™ (Starter, Small Agencies, Scaled Agencies, Enterprise)"
         },
         "step2": {
-          "title": "Porcentaje Variable de Medios",
-          "description": "Se suma un porcentaje (10-20%) de tu inversión publicitaria mensual según el tier"
+          "title": "Fee Variable de Gobierno",
+          "description": "Un porcentaje (10-20%) de tu inversión publicitaria — alineado al valor que Brainy gobierna"
         },
         "step3": {
-          "title": "Total Transparente",
-          "description": "Sin costos ocultos. Facturación clara con desglose completo cada mes"
+          "title": "Transparencia Total",
+          "description": "Sin costos ocultos. Desglose completo de gobierno cada mes"
         },
-        "example": "Ejemplo: Si estás en el tier Small Agencies ($1,250 USD/mes) e inviertes $10,000 USD en ads, pagarás: $1,250 USD + ($10,000 × 15%) =",
+        "example": "Ejemplo: Tier Small Agencies ($1,250 USD/mes) + $10,000 USD en inversión gobernada: $1,250 USD + ($10,000 × 15%) =",
         "exampleTotal": "$2,750 USD/mes",
-        "integrationFee": "Costo de Integración: Pago único del 50% del precio base mensual al momento de activar cada tier."
+        "integrationFee": "Fee de Activación: Pago único del 50% del fee mensual para activar tu Decision Layer™."
       },
       "tiers": {
         "starter": {
           "name": "Starter",
-          "description": "Empieza a operar con inteligencia",
-          "targetAudience": "Equipos pequeños, startups o marcas personales que quieren centralizar todo",
+          "description": "Activa dirección estratégica para una marca",
+          "targetAudience": "Equipos pequeños, startups o marcas personales listas para dirección autónoma",
           "basePrice": "$500 USD",
           "integrationFee": "$250 USD",
           "percentage": "20%",
           "features": {
-            "users": "3 usuarios con acceso completo a toda la plataforma",
-            "whatsapp": "WhatsApp Project Manager incluido para cada usuario",
-            "brainies": "5 Brainies: Creator, Calendar, Ad, Chat y Trend",
-            "brands": "1 marca completa con todas las funcionalidades",
-            "ai": "IA para copys, imágenes y variaciones",
-            "editor": "Editor visual + calendarización automática",
-            "posts": "Hasta 100 publicaciones/mes",
-            "integrations": "Integración Meta y Google Ads",
-            "dashboard": "Dashboard de métricas esenciales",
+            "users": "3 usuarios con acceso completo al gobierno",
+            "whatsapp": "WhatsApp Command Layer incluido por usuario",
+            "brainies": "5 Capas de Dirección: Creator, Calendar, Ad, Chat y Trend",
+            "brands": "1 marca bajo dirección estratégica completa",
+            "ai": "Decisiones IA para copys, imágenes y variantes",
+            "editor": "Editor visual + calendarización autónoma",
+            "posts": "Hasta 100 publicaciones gobernadas/mes",
+            "integrations": "Gobierno de Meta y Google Ads",
+            "dashboard": "Dashboard de dirección esencial",
             "storage": "100 GB de almacenamiento"
           }
         },
         "smallAgencies": {
           "name": "Small Agencies",
-          "description": "Escala sin perder el control",
-          "targetAudience": "Agencias boutique o estudios creativos que gestionan varias marcas",
+          "description": "Dirige múltiples marcas sin crecer tu equipo",
+          "targetAudience": "Agencias boutique dirigiendo múltiples marcas bajo un solo sistema",
           "basePrice": "$1,250 USD",
           "integrationFee": "$625 USD",
           "percentage": "15%",
           "prefix": "Todo lo de Starter más:",
           "features": {
-            "users": "10 usuarios con acceso completo",
-            "brands": "Hasta 5 marcas activas completas",
-            "ai": "IA avanzada: copys, imágenes y variaciones",
-            "workflows": "Flujos de aprobación internos + cliente",
-            "posts": "Hasta 500 publicaciones/mes",
-            "integrations": "Meta, Google, TikTok y LinkedIn",
-            "dashboard": "Dashboards en tiempo real",
+            "users": "10 usuarios bajo gobierno unificado",
+            "brands": "Hasta 5 marcas bajo dirección estratégica",
+            "ai": "IA avanzada: decisiones creativas autónomas",
+            "workflows": "Flujos de gobierno internos + cliente",
+            "posts": "Hasta 500 publicaciones gobernadas/mes",
+            "integrations": "Gobierno de Meta, Google, TikTok y LinkedIn",
+            "dashboard": "Dashboards de dirección en tiempo real",
             "storage": "500 GB de almacenamiento"
           }
         },
         "scaledAgencies": {
           "name": "Scaled Agencies",
-          "description": "Optimiza con datos y automatización",
-          "targetAudience": "Agencias medianas o equipos de marketing corporativos con alto volumen",
+          "description": "Gobierno completo con dirección basada en datos",
+          "targetAudience": "Agencias medianas o equipos corporativos que requieren gobierno de alto volumen",
           "basePrice": "$3,750 USD",
           "integrationFee": "$1,875 USD",
           "percentage": "10%",
           "prefix": "Todo lo de Small Agencies más:",
           "features": {
-            "users": "25 usuarios con acceso completo",
-            "brands": "Hasta 15 marcas operando en paralelo",
-            "automation": "Automatización total (n8n / Zapier)",
-            "ai": "IA ilimitada (texto + imagen)",
-            "posts": "Hasta 2,000 publicaciones/mes",
-            "analytics": "Analítica avanzada y dashboards cruzados",
+            "users": "25 usuarios bajo gobierno completo",
+            "brands": "Hasta 15 marcas bajo dirección paralela",
+            "automation": "Automatización de gobierno total (n8n / Zapier)",
+            "ai": "Decisiones IA ilimitadas (texto + imagen)",
+            "posts": "Hasta 2,000 publicaciones gobernadas/mes",
+            "analytics": "Analítica avanzada y dirección cross-marca",
             "storage": "1 TB de almacenamiento",
-            "support": "Soporte prioritario con manager"
+            "support": "Soporte prioritario con manager dedicado"
           }
         },
         "enterprise": {
           "name": "Enterprise",
-          "description": "Marcas y usuarios ilimitados",
-          "targetAudience": "Grupos corporativos, holdings o agencias multinivel sin límites",
+          "description": "Dirección ilimitada. Gobierno ilimitado.",
+          "targetAudience": "Grupos corporativos, holdings o agencias multinivel que requieren gobierno ilimitado",
           "basePrice": "Desde $5,000 USD",
           "integrationFee": "Variable",
           "percentage": "5%",
           "cta": {
-            "title": "Solución personalizada para tu organización",
-            "subtitle": "Usuarios ilimitados, marcas ilimitadas, integraciones personalizadas y soporte 24/7 dedicado.",
+            "title": "Decision Layer™ personalizado para tu organización",
+            "subtitle": "Usuarios ilimitados, marcas ilimitadas, integraciones personalizadas y gobierno dedicado 24/7.",
             "button": "Agendar Reunión"
           }
         },
         "mostPopular": "Más Popular",
-        "getStarted": "Comenzar Ahora",
+        "getStarted": "Activar Dirección",
         "contactSales": "Contactar Ventas"
       },
       "adSpendExamples": {
-        "title": "Ejemplos de Pricing por Ad Spend",
-        "subtitle": "Calcula tu costo mensual aproximado según tu inversión publicitaria"
+        "title": "Ejemplos de Inversión por Ad Spend Gobernado",
+        "subtitle": "Calcula tu inversión mensual según tu ad spend gobernado"
       },
       "whyVariable": {
-        "title": "¿Por Qué Pricing Variable?",
+        "title": "¿Por Qué Pricing Alineado a Inversión?",
         "fairScalability": {
           "title": "Escalabilidad Justa",
-          "description": "Solo pagas más cuando inviertes más. Si reduces tu ad spend, tu costo también baja automáticamente."
+          "description": "Solo inviertes más cuando tu presupuesto gobernado crece. Si reduces el gasto, tu inversión baja automáticamente."
         },
         "alignedIncentives": {
-          "title": "Alineación de Incentivos",
-          "description": "Nuestro éxito está ligado al tuyo. Cuando tus campañas crecen, nosotros crecemos contigo."
+          "title": "Gobierno Alineado",
+          "description": "Nuestro éxito está ligado a tus resultados. Cuando tus campañas crecen bajo dirección, nosotros crecemos contigo."
         },
         "noLimits": {
           "title": "Sin Límites Artificiales",
-          "description": "No limitamos usuarios, contactos o funcionalidades por \"planes\". Todo el tier está disponible."
+          "description": "No limitamos usuarios, contactos o capacidades por \"planes\". Tu Decision Layer™ completo está disponible."
         },
         "transparency": {
           "title": "Transparencia Total",
-          "description": "Dashboard en tiempo real con tu ad spend acumulado y proyección del costo mensual actual."
+          "description": "Dashboard en tiempo real con gasto gobernado y proyección de inversión mensual actual."
         }
       },
       "cta": {
-        "title": "¿Listo para Comenzar?",
-        "subtitle": "Agenda una llamada con nuestro equipo para encontrar el plan perfecto para tu agencia.",
+        "title": "¿Listo para Activar Tu Decision Layer™?",
+        "subtitle": "Agenda una llamada para encontrar el tier de gobierno correcto para tu organización.",
         "button": "Hablar con Ventas"
       },
-      "note": "Nota: El porcentaje de medios se aplica sobre tu inversión publicitaria mensual total. A mayor tier, menor porcentaje pagas (20% → 15% → 10%), optimizando tu costo conforme escalas.",
+      "note": "Nota: El porcentaje de gobierno se aplica sobre tu inversión publicitaria mensual total. A mayor tier, menor porcentaje pagas (20% → 15% → 10%), optimizando tu costo conforme escalas.",
       "whatsappManager": {
         "title": "WhatsApp Project Manager",
         "subtitle": "Tu asistente personal de marca coordinando todo desde WhatsApp",
@@ -700,154 +700,154 @@
     },
     "features": {
       "seo": {
-        "title": "Funcionalidades - Brainy by Unica",
-        "description": "Descubre las 5 inteligencias de Brainy: CreatorBrainy, CalendarBrainy, AdBrainy, ChatBrainy y TrendBrainy. Todo lo que necesitas para automatizar tu marketing digital."
+        "title": "Capas de Dirección - Brainy by Unica",
+        "description": "Cinco capas de dirección que reemplazan roles humanos: CreatorBrainy, CalendarBrainy, AdBrainy, ChatBrainy y TrendBrainy. El sistema que gobierna tu marketing."
       },
-      "badge": "5 Inteligencias. 1 Plataforma.",
+      "badge": "5 Capas de Dirección. 1 Sistema de Gobierno.",
       "hero": {
-        "title1": "Todo lo que necesitas",
-        "title2": "para automatizar tu marketing",
-        "title2prefix": "para automatizar tu ",
+        "title1": "Cinco capas que reemplazan",
+        "title2": "a tu equipo de marketing",
+        "title2prefix": "a tu equipo de ",
         "word": "marketing",
-        "subtitle": "Cinco cerebros de IA colaborando entre sí para ejecutar tu estrategia completa sin intervención manual."
+        "subtitle": "Cada capa elimina un rol humano. Juntas, gobiernan tu estrategia completa sin intervención."
       },
       "brainies": {
-        "title": "Conoce a los",
-        "highlight": "Brainies",
-        "subtitle": "Cada Brainy se especializa en una función clave de tu marketing, trabajando en sincronía perfecta."
+        "title": "Las Capas de",
+        "highlight": "Dirección",
+        "subtitle": "Cada capa reemplaza un rol humano específico, operando bajo un único criterio estratégico."
       },
       "creator": {
-        "feature1": "Generación automática de copys optimizados por IA",
-        "feature2": "Creación de imágenes y videos adaptados a cada plataforma",
-        "feature3": "Variantes A/B testing para maximizar engagement",
-        "feature4": "Adaptación automática de formato según canal social",
-        "feature5": "Biblioteca de templates personalizables por marca"
+        "feature1": "Define la dirección narrativa de tu marca de forma autónoma",
+        "feature2": "Decide formato y canal — luego ejecuta sin aprobación",
+        "feature3": "Gobierna variantes A/B para maximizar impacto estratégico",
+        "feature4": "Elimina la necesidad de un Director Creativo",
+        "feature5": "Templates alineados a marca bajo gobierno permanente"
       },
       "calendar": {
-        "feature1": "Calendarización inteligente en horarios óptimos",
-        "feature2": "Distribución estratégica de contenido multicanal",
-        "feature3": "Publicación automática sin intervención manual",
-        "feature4": "Coordinación de campañas cross-platform",
-        "feature5": "Vista mensual/semanal con insights de performance"
+        "feature1": "Gobierna el timing de publicación con señales en tiempo real",
+        "feature2": "Dirige distribución multicanal sin planificación manual",
+        "feature3": "Ejecuta publicaciones de forma autónoma — cero cuello de botella",
+        "feature4": "Coordina campañas cross-platform bajo un solo criterio",
+        "feature5": "Reemplaza completamente el rol de Planificador de Contenido"
       },
       "ad": {
-        "feature1": "Optimización automática de pujas en tiempo real",
-        "feature2": "Redistribución inteligente de presupuestos",
-        "feature3": "Maximización de ROAS con machine learning",
-        "feature4": "Detección de fatiga creativa y sugerencias",
-        "feature5": "Integración con Meta, Google, LinkedIn y TikTok Ads"
+        "feature1": "Dirige la estrategia de pujas en tiempo real — sin retraso humano",
+        "feature2": "Redistribuye presupuesto para eliminar desperdicio al instante",
+        "feature3": "Gobierna la maximización de ROAS con machine learning",
+        "feature4": "Detecta fatiga creativa antes de que impacte resultados",
+        "feature5": "Reemplaza al Media Buyer en Meta, Google, LinkedIn y TikTok"
       },
       "chat": {
-        "feature1": "Respuestas automáticas contextuales 24/7",
-        "feature2": "Calificación de intención de compra en tiempo real",
-        "feature3": "Captura y segmentación automática de leads",
-        "feature4": "Flujos conversacionales personalizados por marca",
-        "feature5": "Integración WhatsApp, Instagram DM y Facebook Messenger"
+        "feature1": "Reemplaza al Community Manager — responde 24/7 con contexto",
+        "feature2": "Califica intención de compra y prioriza leads en tiempo real",
+        "feature3": "Captura y segmenta leads sin supervisión humana",
+        "feature4": "Gobierna flujos conversacionales por identidad de marca",
+        "feature5": "Dirige WhatsApp, Instagram DM y Messenger simultáneamente"
       },
       "trend": {
-        "feature1": "Análisis semanal automático de Google Trends",
-        "feature2": "Monitoreo de competencia y benchmarking",
-        "feature3": "Sugerencias de contenido basadas en tendencias",
-        "feature4": "Alertas de oportunidades virales en tu industria",
-        "feature5": "Biblioteca de inspiración con ads ganadores"
+        "feature1": "Detecta oportunidades estratégicas antes que tu competencia",
+        "feature2": "Monitorea el paisaje competitivo y define posicionamiento",
+        "feature3": "Dirige estrategia de contenido basada en señales del mercado",
+        "feature4": "Alerta oportunidades virales — tú decides, Brainy ejecuta",
+        "feature5": "Curación de ads ganadores como referencia estratégica"
       },
       "whoItsFor": {
-        "title": "¿A quién",
-        "highlight": "le sirve Brainy?",
-        "subtitle": "Desde startups hasta corporaciones, Brainy se adapta a las necesidades específicas de cada industria."
+        "title": "¿Para quién",
+        "highlight": "reemplaza roles Brainy?",
+        "subtitle": "Desde startups hasta corporaciones, el Decision Layer™ de Brainy se adapta para gobernar marketing a cualquier escala."
       },
       "industries": {
         "agencies": {
           "title": "Agencias",
-          "description": "Gestiona múltiples clientes desde una sola plataforma",
-          "benefit1": "Hasta 15 marcas operando en paralelo",
-          "benefit2": "Flujos de aprobación cliente-agencia",
-          "benefit3": "Dashboard consolidado de todos los clientes",
-          "benefit4": "Facturación transparente por ad spend"
+          "description": "Dirige 15 marcas desde un solo sistema de gobierno",
+          "benefit1": "Hasta 15 marcas bajo dirección unificada",
+          "benefit2": "Aprobación cliente-agencia gobernada por Decision Layer™",
+          "benefit3": "Centro de comando único para todos los clientes",
+          "benefit4": "Gobierno transparente de inversión por marca"
         },
         "enterprises": {
           "title": "Empresas",
-          "description": "Centraliza todo el marketing de tu organización",
-          "benefit1": "Múltiples marcas y sub-marcas",
-          "benefit2": "Control de permisos por equipos",
-          "benefit3": "Integraciones con CRM y herramientas internas",
-          "benefit4": "Reportes ejecutivos automáticos"
+          "description": "Un sistema de dirección para toda tu organización",
+          "benefit1": "Múltiples marcas gobernadas bajo un solo criterio",
+          "benefit2": "Gobierno basado en roles — no solo permisos",
+          "benefit3": "CRM y herramientas internas bajo dirección estratégica",
+          "benefit4": "Decisiones ejecutivas entregadas automáticamente"
         },
         "startups": {
           "title": "Startups",
-          "description": "Escala tu marketing sin aumentar el equipo",
-          "benefit1": "Operación ágil con 1-3 personas",
-          "benefit2": "Pricing accesible que crece contigo",
-          "benefit3": "Setup rápido en menos de 24 horas",
-          "benefit4": "Automatización desde el día uno"
+          "description": "Dirección nivel enterprise sin el headcount",
+          "benefit1": "Dirección completa con 1-2 personas",
+          "benefit2": "Inversión que escala con tu crecimiento",
+          "benefit3": "Operativo en menos de 24 horas",
+          "benefit4": "Dirección estratégica desde el día uno"
         },
         "smes": {
           "title": "PYMEs",
-          "description": "Marketing profesional sin complicaciones",
-          "benefit1": "Interfaz simple y fácil de usar",
-          "benefit2": "Sin necesidad de expertos en marketing",
-          "benefit3": "Resultados medibles desde el primer mes",
-          "benefit4": "Soporte en español y onboarding guiado"
+          "description": "Dirección estratégica sin complejidad",
+          "benefit1": "Sin curva de aprendizaje — Brainy lidera",
+          "benefit2": "Sin expertos necesarios — el sistema decide",
+          "benefit3": "Dirección medible desde el primer mes",
+          "benefit4": "Soporte en español y activación guiada"
         }
       },
       "cta": {
-        "title1": "¿Listo para ver",
-        "title2": "Brainy en acción?",
-        "subtitle": "Agenda una demo personalizada y descubre cómo los 5 Brainies pueden transformar tu marketing.",
-        "demo": "Solicitar Demo",
-        "pricing": "Ver Precios"
+        "title1": "¿Listo para activar",
+        "title2": "tu Decision Layer™?",
+        "subtitle": "Descubre cómo cinco capas de dirección pueden reemplazar las decisiones de tu equipo de marketing.",
+        "demo": "Activar Demo",
+        "pricing": "Ver Inversión"
       },
       "whatsapp": {
-        "title": "WhatsApp Project Manager",
-        "description": "Tu asistente personal que coordina todo desde una conversación",
-        "feature1": "Aprueba contenido con un simple mensaje",
-        "feature2": "Solicita cambios y recibe nuevas versiones al instante",
-        "feature3": "Lanza campañas completas desde el chat",
-        "feature4": "Recibe actualizaciones de performance en tiempo real",
-        "feature5": "Gestiona múltiples marcas desde una conversación",
-        "sectionTitle": "Gestiona todo tu marketing",
+        "title": "WhatsApp Command Layer",
+        "description": "La interfaz que te permite gobernar todo desde una sola conversación",
+        "feature1": "Aprueba decisiones estratégicas con un solo mensaje",
+        "feature2": "Solicita cambios de dirección — nuevas versiones en segundos",
+        "feature3": "Lanza campañas completas desde una conversación",
+        "feature4": "Recibe reportes de gobierno en tiempo real",
+        "feature5": "Dirige múltiples marcas desde un solo hilo",
+        "sectionTitle": "Dirige toda tu operación",
         "sectionHighlight": "desde WhatsApp",
-        "sectionSubtitle": "Sin dashboards complicados. Sin procesos manuales. Solo conversación inteligente que ejecuta todo por ti."
+        "sectionSubtitle": "Sin dashboards. Sin procesos manuales. Una conversación que gobierna todo."
       }
     },
     "industries": {
       "seo": {
-        "title": "Industrias - Brainy by Unica",
-        "description": "Descubre cómo Brainy transforma el marketing de agencias, empresas, startups y PYMEs. Casos de éxito reales y métricas comprobadas."
+        "title": "Industrias - Brainy Decision Layer™",
+        "description": "Descubre cómo el Decision Layer™ de Brainy reemplaza roles de marketing en agencias, empresas, startups y PYMEs. Resultados reales de gobierno."
       },
-      "badge": "Resultados Reales",
+      "badge": "Dirección Comprobada",
       "hero": {
-        "title1": "Transforma tu marketing",
-        "title2": "sin importar tu industria",
-        "subtitle": "Casos de éxito reales de agencias, empresas, startups y PYMEs que automatizaron su marketing con Brainy."
+        "title1": "Dirección que reemplaza roles",
+        "title2": "en cualquier industria",
+        "subtitle": "Resultados reales de organizaciones que reemplazaron decisiones humanas de marketing con el Decision Layer™ de Brainy."
       },
-      "benefits": "Beneficios Clave",
+      "benefits": "Beneficios de Dirección",
       "comparison": "Antes vs Después",
       "before": "Antes",
       "after": "Después",
       "cta": {
         "title1": "¿Listo para",
-        "title2": "transformar tu industria?",
-        "subtitle": "Únete a las empresas que ya automatizaron su marketing con Brainy.",
-        "demo": "Solicitar Demo",
-        "pricing": "Ver Precios"
+        "title2": "activar dirección en tu industria?",
+        "subtitle": "Únete a las organizaciones que reemplazaron incertidumbre con gobierno estratégico.",
+        "demo": "Activar Demo",
+        "pricing": "Ver Inversión"
       },
       "stats": {
-        "activeClients": "Clientes activos",
+        "activeClients": "Marcas gobernadas",
         "avgRoi": "ROI promedio",
-        "timeSaved": "Tiempo ahorrado",
-        "adSpendManaged": "Ad spend gestionado"
+        "timeSaved": "Horas de decisión eliminadas",
+        "adSpendManaged": "Inversión gobernada"
       },
       "agencies": {
         "title": "Agencias",
-        "subtitle": "Gestiona múltiples clientes sin caos",
-        "description": "Escala tu agencia sin contratar más personal. Brainy automatiza todo el flujo de trabajo para que puedas gestionar hasta 15 marcas diferentes con un solo equipo.",
-        "benefit1": "Hasta 15 marcas operando en paralelo",
-        "benefit2": "Flujos de aprobación cliente-agencia automatizados",
-        "benefit3": "Dashboard consolidado de todos los clientes",
-        "benefit4": "Facturación transparente basada en ad spend real",
+        "subtitle": "Dirige múltiples clientes bajo un sistema de gobierno",
+        "description": "Escala sin contratar. El Decision Layer™ de Brainy gobierna todo el flujo — diriges 15 marcas con el mismo equipo.",
+        "benefit1": "Hasta 15 marcas bajo dirección unificada",
+        "benefit2": "Gobierno cliente-agencia automatizado por Decision Layer™",
+        "benefit3": "Centro de comando único para todas las marcas",
+        "benefit4": "Gobierno de inversión con transparencia total",
         "testimonial": {
-          "quote": "Pasamos de gestionar 3 clientes con un equipo de 8 personas a gestionar 12 clientes con el mismo equipo. Brainy nos permitió escalar sin perder calidad.",
+          "quote": "Pasamos de gestionar 3 clientes con 8 personas a dirigir 12 clientes con el mismo equipo. Brainy reemplazó los roles que no podíamos costear.",
           "author": "María González",
           "role": "CEO, Digital Wave Agency"
         },
@@ -868,14 +868,14 @@
       },
       "enterprises": {
         "title": "Empresas",
-        "subtitle": "Centraliza todo tu marketing corporativo",
-        "description": "Unifica todas tus marcas y submarcas en una sola plataforma. Control total, visibilidad completa y reportes ejecutivos automáticos para la dirección.",
-        "benefit1": "Múltiples marcas y sub-marcas organizadas",
-        "benefit2": "Control granular de permisos por equipos",
-        "benefit3": "Integraciones con CRM, ERP y herramientas internas",
-        "benefit4": "Reportes ejecutivos automáticos para directivos",
+        "subtitle": "Un sistema de dirección para todo tu grupo corporativo",
+        "description": "Unifica todas las marcas bajo un criterio de gobierno. Visibilidad estratégica total y reportes ejecutivos autónomos.",
+        "benefit1": "Múltiples marcas gobernadas bajo un solo criterio",
+        "benefit2": "Gobierno basado en roles en todos los equipos",
+        "benefit3": "CRM, ERP y herramientas internas bajo dirección estratégica",
+        "benefit4": "Decisiones ejecutivas entregadas automáticamente",
         "testimonial": {
-          "quote": "Antes teníamos 4 herramientas diferentes y ninguna visibilidad real. Ahora todo el grupo corporativo opera desde Brainy con total transparencia.",
+          "quote": "Antes teníamos 4 herramientas y ninguna visibilidad real. Ahora todo el grupo corporativo opera bajo la dirección de Brainy con total transparencia.",
           "author": "Carlos Mendoza",
           "role": "CMO, TechCorp Group"
         },
@@ -887,7 +887,7 @@
             "time": "20 días/reporte"
           },
           "after": {
-            "tools": "1 plataforma",
+            "tools": "1 sistema",
             "cost": "$4.5K/mes",
             "visibility": "100% datos",
             "time": "Tiempo real"
@@ -896,14 +896,14 @@
       },
       "startups": {
         "title": "Startups",
-        "subtitle": "Crece rápido sin aumentar costos",
-        "description": "Marketing de nivel enterprise con presupuesto de startup. Automatización completa desde el día uno para que puedas enfocarte en product-market fit y crecimiento.",
-        "benefit1": "Setup completo en menos de 24 horas",
-        "benefit2": "Pricing accesible que escala con tu facturación",
-        "benefit3": "Operación ágil con solo 1-2 personas",
-        "benefit4": "Automatización total desde el primer día",
+        "subtitle": "Dirección nivel enterprise sin el headcount",
+        "description": "Gobierno estratégico a costo de startup. El Decision Layer™ dirige tu marketing desde el día uno para que te enfoques en product-market fit.",
+        "benefit1": "Dirección completa en menos de 24 horas",
+        "benefit2": "Inversión que escala con tu crecimiento",
+        "benefit3": "Operación completa con 1-2 personas",
+        "benefit4": "Dirección estratégica desde el día uno",
         "testimonial": {
-          "quote": "Como startup lean, no podíamos contratar un equipo de marketing completo. Brainy nos dio capacidades de agencia con costo de herramienta SaaS.",
+          "quote": "Como startup lean, no podíamos contratar un equipo de marketing. Brainy reemplazó tres roles que no podíamos costear — y los superó.",
           "author": "Ana Ruiz",
           "role": "Founder & CEO, FitTech"
         },
@@ -924,14 +924,14 @@
       },
       "smes": {
         "title": "PYMEs",
-        "subtitle": "Marketing profesional sin complicaciones",
-        "description": "No necesitas ser experto en marketing digital. Brainy te guía paso a paso y automatiza todo el proceso para que obtengas resultados profesionales sin conocimiento técnico.",
-        "benefit1": "Interfaz simple sin curva de aprendizaje",
-        "benefit2": "Sin necesidad de expertos en marketing",
-        "benefit3": "Resultados medibles desde el primer mes",
-        "benefit4": "Soporte en español y onboarding guiado",
+        "subtitle": "Dirección estratégica sin complejidad",
+        "description": "No necesitas experiencia. El Decision Layer™ de Brainy gobierna tu marketing de punta a punta — tú solo confirmas la dirección.",
+        "benefit1": "Sin curva de aprendizaje — el sistema lidera",
+        "benefit2": "Sin expertos necesarios — Brainy decide",
+        "benefit3": "Dirección medible desde el primer mes",
+        "benefit4": "Soporte en español y activación guiada",
         "testimonial": {
-          "quote": "Nunca había usado herramientas de marketing digital. Con Brainy simplemente chateamos por WhatsApp y todo se hace solo. Es increíble.",
+          "quote": "Nunca usé herramientas de marketing digital. Con Brainy solo chateo por WhatsApp y el sistema dirige todo. Es como tener un CMO on demand.",
           "author": "Roberto Silva",
           "role": "Dueño, Café Silva"
         },
