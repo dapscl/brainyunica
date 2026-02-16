@@ -22,33 +22,33 @@ const LandingPage = () => {
   const features = [
     {
       icon: Calendar,
-      title: "Gestión & Calendarización",
-      description: "Todo tu equipo, un solo tablero. Organiza campañas, contenidos y aprobaciones."
+      title: "Dirección de Contenido",
+      description: "Brainy define qué publicar, cuándo y dónde. Tu equipo ejecuta, el sistema dirige."
     },
     {
       icon: Palette,
-      title: "Creatividad & Contenidos",
-      description: "Editor interno + plantillas + IA para generar piezas que convierten."
+      title: "Creación con Criterio Estratégico",
+      description: "No genera piezas: define la narrativa visual y verbal que tu marca necesita ahora."
     },
     {
       icon: Zap,
-      title: "Automatización",
-      description: "Aprobación → publicación → métrica, sin esperas. Flujos que ahorran horas."
+      title: "Ejecución sin Intervención",
+      description: "De la decisión al resultado sin pasos intermedios. El sistema elimina la espera humana."
     },
     {
       icon: DollarSign,
-      title: "Publicidad & Medios",
-      description: "Conexión directa con Meta, TikTok, Google, LinkedIn. Todo desde un solo lugar."
+      title: "Gobierno de Inversión Publicitaria",
+      description: "Decide cómo se distribuye cada dólar en Meta, TikTok, Google y LinkedIn."
     },
     {
       icon: Sparkles,
-      title: "Analítica & IA",
-      description: "Insights que hablan tu idioma y accionan en tu nombre. Datos que generan decisiones."
+      title: "Inteligencia que Decide",
+      description: "No reporta datos: interpreta señales y toma decisiones antes de que tú las pidas."
     },
     {
       icon: Package,
-      title: "Brand Kit & Librerías",
-      description: "Identidad intacta, marca protegida. Colores, fuentes, logos y estilos bloqueados."
+      title: "Identidad Blindada",
+      description: "Protege la coherencia de marca en cada pieza, canal y punto de contacto. Sin excepciones."
     }
   ];
 
@@ -154,17 +154,17 @@ const LandingPage = () => {
       <section className="relative overflow-hidden bg-gradient-hero min-h-[600px] flex items-center">
         <div className="container mx-auto px-4 py-20 md:py-32">
           <div className="max-w-4xl mx-auto text-center">
+            <p className="text-sm md:text-base text-white/60 mb-4 uppercase tracking-[0.3em] font-medium">
+              Decision Layer™ by única.la
+            </p>
             <h1 className="text-5xl md:text-7xl font-bold mb-6 text-white">
               Brainy
             </h1>
-            <p className="text-sm md:text-base text-white/70 mb-2 uppercase tracking-wider">
-              by única.la
-            </p>
             <p className="text-xl md:text-2xl text-white/90 mb-4 max-w-3xl mx-auto">
-              Toda la operación creativa, publicitaria y automatizada de una marca en un solo entorno.
+              El sistema que dirige tu marketing. No lo asiste — lo gobierna.
             </p>
-            <p className="text-lg md:text-xl text-white/80 mb-12 max-w-3xl mx-auto">
-              🚀 Empieza ahora y transforma creatividad, automatización y resultados en un solo lugar.
+            <p className="text-lg md:text-xl text-white/70 mb-12 max-w-3xl mx-auto">
+              Reemplaza la incertidumbre humana con decisiones estratégicas en tiempo real.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button size="lg" onClick={() => navigate("/signup")} className="text-lg px-8">
@@ -178,36 +178,36 @@ const LandingPage = () => {
         </div>
       </section>
 
-      {/* Tu marca lo hace todo Section */}
+      {/* Replacement Declaration Section */}
       <section className="py-20 bg-background">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold mb-6">
-              Tu marca lo hace todo
+              Roles que Brainy reemplaza
             </h2>
             <p className="text-lg text-muted-foreground mb-8">
-              Imagina una sola herramienta donde:
+              Un sistema que piensa, decide y ejecuta lo que antes requería un equipo completo:
             </p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-left">
               <div className="flex items-start gap-3">
                 <CheckCircle2 className="h-6 w-6 text-primary shrink-0 mt-1" />
-                <p className="text-foreground">Calendarizas campañas, contenidos y aprobaciones.</p>
+                <p className="text-foreground"><strong>Director de contenido</strong> — Define qué publicar, en qué tono y cuándo.</p>
               </div>
               <div className="flex items-start gap-3">
                 <CheckCircle2 className="h-6 w-6 text-primary shrink-0 mt-1" />
-                <p className="text-foreground">Generas creativos con IA y plantillas inteligentes.</p>
+                <p className="text-foreground"><strong>Media buyer</strong> — Gobierna la inversión publicitaria en tiempo real.</p>
               </div>
               <div className="flex items-start gap-3">
                 <CheckCircle2 className="h-6 w-6 text-primary shrink-0 mt-1" />
-                <p className="text-foreground">Publicas en Meta, TikTok, Google, LinkedIn sin cambiar de app.</p>
+                <p className="text-foreground"><strong>Community manager</strong> — Responde, escala y decide sin supervisión.</p>
               </div>
               <div className="flex items-start gap-3">
                 <CheckCircle2 className="h-6 w-6 text-primary shrink-0 mt-1" />
-                <p className="text-foreground">Mides impacto con datos reales en tiempo real.</p>
+                <p className="text-foreground"><strong>Analista de datos</strong> — Interpreta señales y actúa antes de que las pidas.</p>
               </div>
             </div>
             <p className="text-xl font-semibold mt-8 text-primary">
-              Con Brainy, tu marca opera sin silos.
+              Brainy no asiste. Brainy dirige.
             </p>
           </div>
         </div>
@@ -217,8 +217,9 @@ const LandingPage = () => {
       <section className="py-20 bg-muted/30">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
+            <p className="text-sm uppercase tracking-[0.2em] text-muted-foreground mb-2">Decision Layer™</p>
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              Verticales de valor
+              Capas de dirección estratégica
             </h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-7xl mx-auto">
@@ -337,13 +338,13 @@ const LandingPage = () => {
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
             <h2 className="text-3xl md:text-4xl font-bold mb-8">
-              Por qué es diferente
+              Esto no es otra herramienta
             </h2>
             <div className="space-y-6 text-lg text-muted-foreground">
-              <p>Porque reúne en una sola plataforma lo que antes requería cuatro herramientas distintas.</p>
-              <p>Porque convierte la creatividad en resultados medibles.</p>
-              <p>Porque elimina fricción: un login, una interfaz, una operación fluida.</p>
-              <p className="text-xl font-semibold text-primary">Porque tu marca no solo publica, gana.</p>
+              <p>Porque no necesitas más dashboards — necesitas un sistema que tome decisiones por ti.</p>
+              <p>Porque elimina la dependencia de criterios humanos variables e inconsistentes.</p>
+              <p>Porque convierte datos en dirección estratégica, no en reportes que nadie lee.</p>
+              <p className="text-xl font-semibold text-primary">Brainy no te da información. Te da dirección.</p>
             </div>
           </div>
         </div>
@@ -353,10 +354,10 @@ const LandingPage = () => {
       <section className="bg-gradient-primary text-white py-20">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-4xl md:text-5xl font-bold mb-6">
-            Empieza hoy
+            Activa tu Decision Layer™
           </h2>
           <p className="text-xl mb-8 text-white/90 max-w-2xl mx-auto">
-            Agenda tu demo privada y descubre cómo Brainy puede transformar tu operación de marketing.
+            Deja de gestionar marketing. Empieza a dirigirlo.
           </p>
           <Button 
             size="lg" 

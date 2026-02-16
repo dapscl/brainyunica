@@ -45,16 +45,16 @@ const BrandInfoStep = ({ data, onUpdate }: BrandInfoStepProps) => {
         <div className="w-16 h-16 rounded-full bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center mx-auto mb-4">
           <Building2 className="w-8 h-8 text-white" />
         </div>
-        <h2 className="text-3xl font-bold mb-2">Información de tu Marca</h2>
+        <h2 className="text-3xl font-bold mb-2">Activar Decision Layer™</h2>
         <p className="text-muted-foreground">
-          Cuéntanos sobre tu negocio para personalizar tu experiencia
+          Brainy necesita entender tu negocio para empezar a dirigir tu marketing
         </p>
       </div>
 
       <Card>
         <CardHeader>
-          <CardTitle>Datos Básicos</CardTitle>
-          <CardDescription>Información esencial de tu marca o empresa</CardDescription>
+          <CardTitle>Identidad del Sistema</CardTitle>
+          <CardDescription>Con estos datos, Brainy define la estrategia inicial de tu marca</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="space-y-2">
@@ -104,7 +104,7 @@ const BrandInfoStep = ({ data, onUpdate }: BrandInfoStepProps) => {
               onChange={(e) => handleChange('description', e.target.value)}
             />
             <p className="text-xs text-muted-foreground">
-              Esto nos ayudará a entrenar la IA para generar contenido relevante
+              Brainy usará esto para definir tu narrativa y tomar decisiones de contenido
             </p>
           </div>
         </CardContent>
@@ -116,7 +116,7 @@ const BrandInfoStep = ({ data, onUpdate }: BrandInfoStepProps) => {
             <Target className="w-5 h-5 text-primary" />
             Objetivos Estratégicos
           </CardTitle>
-          <CardDescription>Selecciona tus principales objetivos de marketing (múltiple selección)</CardDescription>
+          <CardDescription>Define las prioridades que Brainy gobernará por ti</CardDescription>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -148,7 +148,7 @@ const BrandInfoStep = ({ data, onUpdate }: BrandInfoStepProps) => {
             <TrendingUp className="w-5 h-5 text-primary" />
             Inversión Publicitaria Mensual
           </CardTitle>
-          <CardDescription>Esto nos ayuda a recomendarte el plan más adecuado</CardDescription>
+          <CardDescription>Brainy gobernará la distribución de este presupuesto en todos tus canales</CardDescription>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-3">

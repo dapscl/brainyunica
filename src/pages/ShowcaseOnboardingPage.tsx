@@ -42,32 +42,32 @@ const ShowcaseOnboardingPage = () => {
   const steps = [
     {
       id: 'brand-info',
-      title: 'Información de Marca',
-      description: 'Datos básicos y objetivos',
+      title: 'Identidad del Sistema',
+      description: 'Tu marca, las reglas de Brainy',
       component: BrandInfoStep
     },
     {
       id: 'social-channels',
-      title: 'Canales Sociales',
-      description: 'Conecta plataformas',
+      title: 'Canales bajo Dirección',
+      description: 'Brainy asume el control',
       component: SocialChannelsStep
     },
     {
       id: 'payment-setup',
-      title: 'Configuración de Pago',
-      description: 'Método de pago y facturación',
+      title: 'Activación de Servicio',
+      description: 'Confirma tu inversión',
       component: PaymentSetupStep
     },
     {
       id: 'voice-training',
-      title: 'Tono de Voz',
-      description: 'Entrena la IA con tu estilo',
+      title: 'Voz Estratégica',
+      description: 'Brainy habla por tu marca',
       component: VoiceTrainingStep
     },
     {
       id: 'templates-setup',
-      title: 'Templates Iniciales',
-      description: 'Selecciona plantillas',
+      title: 'Dirección Inicial',
+      description: 'Primeras decisiones activas',
       component: TemplatesSetupStep
     }
   ];

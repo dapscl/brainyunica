@@ -43,9 +43,9 @@ const VoiceTrainingStep = ({ data, onUpdate }: VoiceTrainingStepProps) => {
         <div className="w-16 h-16 rounded-full bg-gradient-to-br from-amber-500 to-orange-500 flex items-center justify-center mx-auto mb-4">
           <Volume2 className="w-8 h-8 text-white" />
         </div>
-        <h2 className="text-3xl font-bold mb-2">Tono de Voz de tu Marca</h2>
+        <h2 className="text-3xl font-bold mb-2">Voz Estratégica de tu Marca</h2>
         <p className="text-muted-foreground">
-          Entrena la IA para que responda en el estilo único de tu marca
+          Define cómo Brainy se comunicará en nombre de tu marca — sin supervisión
         </p>
       </div>
 
@@ -54,10 +54,10 @@ const VoiceTrainingStep = ({ data, onUpdate }: VoiceTrainingStepProps) => {
           <div className="flex items-start gap-3">
             <Sparkles className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
             <div>
-              <p className="font-medium mb-1">IA Entrenada con tu Voz de Marca</p>
+              <p className="font-medium mb-1">Brainy reemplaza a tu Community Manager</p>
               <p className="text-sm text-muted-foreground">
-                El sistema aprenderá tu tono, valores y estilo de comunicación para generar respuestas 
-                automáticas coherentes con tu identidad de marca en chat automation, email y redes sociales.
+                El sistema asume la dirección de toda comunicación de marca: chat, email y redes sociales.
+                No asiste — decide y ejecuta con la voz de tu marca.
               </p>
             </div>
           </div>
@@ -67,7 +67,7 @@ const VoiceTrainingStep = ({ data, onUpdate }: VoiceTrainingStepProps) => {
       <Card>
         <CardHeader>
           <CardTitle>Personalidad de Marca</CardTitle>
-          <CardDescription>Define cómo quieres que tu marca se comunique</CardDescription>
+          <CardDescription>Define el criterio que Brainy usará para dirigir cada comunicación</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="space-y-2">
@@ -159,7 +159,7 @@ const VoiceTrainingStep = ({ data, onUpdate }: VoiceTrainingStepProps) => {
               onChange={(e) => handleChange('communicationExamples', e.target.value)}
             />
             <p className="text-xs text-muted-foreground">
-              Cuantos más ejemplos proporciones, mejor entenderá la IA tu estilo único
+              Cuantos más ejemplos, más precisa será la dirección que Brainy ejerza sobre tus comunicaciones
             </p>
           </div>
         </CardContent>
@@ -169,7 +169,7 @@ const VoiceTrainingStep = ({ data, onUpdate }: VoiceTrainingStepProps) => {
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Sparkles className="w-5 h-5 text-primary" />
-            Aplicaciones del Tono de Voz
+            Canales que Brainy dirigirá
           </CardTitle>
         </CardHeader>
         <CardContent>
