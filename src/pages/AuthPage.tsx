@@ -10,6 +10,7 @@ import { toast } from "sonner";
 import { motion } from 'framer-motion';
 import { Lock, Mail, ArrowLeft, Check, X } from 'lucide-react';
 import { GoogleWorkspaceButton } from '@/components/auth/GoogleWorkspaceButton';
+import { rememberNext, consumeNext } from '@/lib/oauth-return-path';
 import { isPersonalEmail } from '@/lib/blockedDomains';
 import { ShowcaseHeader } from '@/components/showcase/ShowcaseHeader';
 import { z } from 'zod';
@@ -81,12 +82,15 @@ const AuthPage: React.FC = () => {
   };
 
   useEffect(() => {
+    rememberNext(new URLSearchParams(window.location.search).get('next'));
     const handleRedirect = async (userId: string, userEmail?: string | null) => {
       if (userEmail && isPersonalEmail(userEmail)) {
         await supabase.auth.signOut();
         toast.error("Brainy solo acepta correos corporativos. Usa tu cuenta de empresa.");
         return;
       }
+      const next = consumeNext();
+      if (next) { navigate(next, { replace: true }); return; }
       const brandProfile = await checkBrandProfile(userId);
       
       if (brandProfile) {
@@ -137,7 +141,7 @@ const AuthPage: React.FC = () => {
       } catch {}
 
       if (isSignup) {
-        const redirectUrl = `${window.location.origin}/brands`;
+        const redirectUrl = `${window.location.origin}/auth`;
         const { error } = await supabase.auth.signUp({
           email,
           password,
