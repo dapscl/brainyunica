@@ -67,7 +67,7 @@ const TrialPage = () => {
 
     try {
       const response = await fetch(
-        `https://fynwkhlwdvezajlkodrs.supabase.co/functions/v1/brand-scanner`,
+        `https://${import.meta.env.VITE_SUPABASE_PROJECT_ID}.supabase.co/functions/v1/brand-scanner`,
         {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -178,7 +178,7 @@ const TrialPage = () => {
 
         // Send notification to admin
         await fetch(
-          `https://fynwkhlwdvezajlkodrs.supabase.co/functions/v1/trial-signup-notification`,
+          `https://${import.meta.env.VITE_SUPABASE_PROJECT_ID}.supabase.co/functions/v1/trial-signup-notification`,
           {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
