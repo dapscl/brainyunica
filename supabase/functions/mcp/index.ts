@@ -82,7 +82,7 @@ var list_brands_default = defineTool({
 
 // src/lib/mcp/tools/list-content.ts
 import { defineTool as defineTool2 } from "npm:@lovable.dev/mcp-js@3.1.1";
-import { z } from "npm:zod@^4.6.7";
+import { z } from "npm:zod@^3.25.76";
 var list_content_default = defineTool2({
   name: "list_content",
   title: "Listar contenido",
