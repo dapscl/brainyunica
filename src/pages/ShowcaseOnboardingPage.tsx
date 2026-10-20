@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { ArrowLeft, ArrowRight, Check, Sparkles } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import BrandInfoStep from '@/components/showcase/onboarding/BrandInfoStep';
 import SocialChannelsStep from '@/components/showcase/onboarding/SocialChannelsStep';
 import PaymentSetupStep from '@/components/showcase/onboarding/PaymentSetupStep';
@@ -14,7 +15,23 @@ import { useToast } from '@/hooks/use-toast';
 const ShowcaseOnboardingPage = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
+  const [searchParams] = useSearchParams();
   const [currentStep, setCurrentStep] = useState(0);
+  const [paid, setPaid] = useState<boolean | null>(null);
+
+  useEffect(() => {
+    const verify = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) { setPaid(false); return; }
+      const { data, error } = await supabase.functions.invoke('check-subscription');
+      const ok = !error && !!data?.subscribed;
+      setPaid(ok);
+      if (ok && searchParams.get('session_id')) {
+        toast({ title: 'Pago confirmado', description: 'Tu suscripción está activa.' });
+      }
+    };
+    verify();
+  }, []);
   const [formData, setFormData] = useState<any>({
     brandName: '',
     website: '',
@@ -39,7 +56,7 @@ const ShowcaseOnboardingPage = () => {
     contentTemplates: []
   });
 
-  const steps = [
+  const allSteps = [
     {
       id: 'brand-info',
       title: 'Identidad del Sistema',
@@ -72,12 +89,15 @@ const ShowcaseOnboardingPage = () => {
     }
   ];
 
+  const steps = paid ? allSteps.filter(s => s.id !== 'payment-setup') : allSteps;
+
   const updateFormData = (data: any) => {
     setFormData({ ...formData, ...data });
   };
 
   const validateStep = (step: number): boolean => {
-    switch (step) {
+    const ids = ['brand-info','social-channels','payment-setup','voice-training'];
+    switch (ids.indexOf(steps[step]?.id)) {
       case 0: // Brand Info
         if (!formData.brandName || !formData.industry || !formData.description || !formData.adSpendTier) {
           toast({
