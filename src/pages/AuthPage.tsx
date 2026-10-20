@@ -81,7 +81,12 @@ const AuthPage: React.FC = () => {
   };
 
   useEffect(() => {
-    const handleRedirect = async (userId: string) => {
+    const handleRedirect = async (userId: string, userEmail?: string | null) => {
+      if (userEmail && isPersonalEmail(userEmail)) {
+        await supabase.auth.signOut();
+        toast.error("Brainy solo acepta correos corporativos. Usa tu cuenta de empresa.");
+        return;
+      }
       const brandProfile = await checkBrandProfile(userId);
       
       if (brandProfile) {
