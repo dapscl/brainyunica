@@ -12,6 +12,7 @@ import { ShowcaseHeader } from "@/components/showcase/ShowcaseHeader";
 import { z } from "zod";
 import { isPersonalEmail, getEmailDomain } from "@/lib/blockedDomains";
 import { GoogleWorkspaceButton } from "@/components/auth/GoogleWorkspaceButton";
+import { rememberNext, consumeNext } from "@/lib/oauth-return-path";
 
 // Email schema with corporate validation
 const emailSchema = z
@@ -41,9 +42,10 @@ const SignupPage: React.FC = () => {
 
   // Check if already logged in
   useEffect(() => {
+    rememberNext(new URLSearchParams(window.location.search).get("next"));
     supabase.auth.getSession().then(({ data }) => {
       if (data.session?.user) {
-        navigate("/select-plan", { replace: true });
+        navigate(consumeNext() ?? "/select-plan", { replace: true });
       }
     });
   }, [navigate]);
@@ -111,7 +113,7 @@ const SignupPage: React.FC = () => {
 
       if (data.session) {
         toast.success("¡Cuenta verificada!");
-        navigate("/select-plan", { replace: true });
+        navigate(consumeNext() ?? "/select-plan", { replace: true });
       }
     } catch (err: any) {
       toast.error(err?.message || "Código incorrecto o expirado");

@@ -12,6 +12,8 @@ import { ShowcaseHeader } from '@/components/showcase/ShowcaseHeader';
 import { ShowcaseSEO } from '@/components/showcase/ShowcaseSEO';
 import { BrandConfigPanel } from '@/components/trial/BrandConfigPanel';
 import { useTrialBrandProfile } from '@/hooks/useTrialBrandProfile';
+import { useWebMCP } from 'use-webmcp-tool';
+import { runWebMCPTool } from '@/lib/webmcp-telemetry';
 import { useTrialActivityMetrics } from '@/hooks/useTrialActivityMetrics';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
@@ -59,6 +61,18 @@ const TrialBrandDashboard = () => {
   const navigate = useNavigate();
   const { brandProfile, loading: profileLoading, saveProfile, loadProfile } = useTrialBrandProfile();
   const { metrics, loading: metricsLoading } = useTrialActivityMetrics();
+
+  useWebMCP({
+    name: 'get_brand_summary',
+    description: 'Read the brand profile shown on this dashboard: name, tone, style, personality and keywords.',
+    annotations: { readOnlyHint: true, untrustedContentHint: true },
+    execute: () => runWebMCPTool('get_brand_summary', () => {
+      if (profileLoading) return 'Brand profile is still loading.';
+      if (!brandProfile) return 'No brand profile on this screen.';
+      const p = brandProfile;
+      return `${p.brand_name} — tone: ${p.tone || '-'}; style: ${p.style || '-'}; personality: ${p.personality || '-'}; keywords: ${(p.keywords || []).join(', ') || '-'}`;
+    }),
+  });
   const [daysRemaining, setDaysRemaining] = useState(45);
   const [showUpgradeModal, setShowUpgradeModal] = useState(false);
   const [showConfigModal, setShowConfigModal] = useState(false);

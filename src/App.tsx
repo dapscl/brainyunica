@@ -86,6 +86,7 @@ const ShowcaseThankYouPage = lazy(() => import("./pages/ShowcaseThankYouPage"));
 const ShowcaseVideoGeneratorPage = lazy(() => import("./pages/ShowcaseVideoGeneratorPage"));
 const ShowcaseInspirationLibraryPage = lazy(() => import("./pages/ShowcaseInspirationLibraryPage"));
 const ShowcasePricingPage = lazy(() => import("./pages/ShowcasePricingPage"));
+const OAuthConsent = lazy(() => import("./pages/OAuthConsent"));
 const ShowcaseOnboardingPage = lazy(() => import("./pages/ShowcaseOnboardingPage"));
 const ShowcaseDemoMenuPage = lazy(() => import("./pages/ShowcaseDemoMenuPage"));
 const ShowcaseFeaturesPage = lazy(() => import("./pages/ShowcaseFeaturesPage"));
@@ -121,6 +122,7 @@ const App = () => {
           {/* Showcase público */}
           <Route path="/" element={<ShowcasePage />} />
           <Route path="/auth" element={<AuthPage />} />
+          <Route path="/.lovable/oauth/consent" element={<OAuthConsent />} />
           <Route path="/signup" element={<SignupPage />} />
           <Route path="/select-plan" element={<SelectPlanPage />} />
           <Route path="/features" element={<ShowcaseFeaturesPage />} />
