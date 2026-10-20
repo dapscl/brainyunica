@@ -477,6 +477,42 @@ export type Database = {
           },
         ]
       }
+      export_history: {
+        Row: {
+          brand_name: string | null
+          content: string
+          created_at: string
+          exported_at: string
+          format: string
+          hashtags: string[] | null
+          id: string
+          title: string | null
+          user_id: string
+        }
+        Insert: {
+          brand_name?: string | null
+          content: string
+          created_at?: string
+          exported_at?: string
+          format: string
+          hashtags?: string[] | null
+          id?: string
+          title?: string | null
+          user_id: string
+        }
+        Update: {
+          brand_name?: string | null
+          content?: string
+          created_at?: string
+          exported_at?: string
+          format?: string
+          hashtags?: string[] | null
+          id?: string
+          title?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
       leads: {
         Row: {
           challenges: string | null
@@ -904,6 +940,93 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      trial_activity_logs: {
+        Row: {
+          activity_type: string
+          content_preview: string | null
+          created_at: string | null
+          id: string
+          metadata: Json | null
+          user_id: string
+        }
+        Insert: {
+          activity_type: string
+          content_preview?: string | null
+          created_at?: string | null
+          id?: string
+          metadata?: Json | null
+          user_id: string
+        }
+        Update: {
+          activity_type?: string
+          content_preview?: string | null
+          created_at?: string | null
+          id?: string
+          metadata?: Json | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      trial_brand_profiles: {
+        Row: {
+          analysis: Json | null
+          brand_handle: string | null
+          brand_name: string
+          brand_type: string | null
+          colors: Json | null
+          connected_ads: Json | null
+          connected_social: Json | null
+          created_at: string | null
+          description: string | null
+          id: string
+          keywords: Json | null
+          logo_url: string | null
+          personality: string | null
+          style: string | null
+          tone: string | null
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          analysis?: Json | null
+          brand_handle?: string | null
+          brand_name: string
+          brand_type?: string | null
+          colors?: Json | null
+          connected_ads?: Json | null
+          connected_social?: Json | null
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          keywords?: Json | null
+          logo_url?: string | null
+          personality?: string | null
+          style?: string | null
+          tone?: string | null
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          analysis?: Json | null
+          brand_handle?: string | null
+          brand_name?: string
+          brand_type?: string | null
+          colors?: Json | null
+          connected_ads?: Json | null
+          connected_social?: Json | null
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          keywords?: Json | null
+          logo_url?: string | null
+          personality?: string | null
+          style?: string | null
+          tone?: string | null
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: []
       }
       user_roles: {
         Row: {
