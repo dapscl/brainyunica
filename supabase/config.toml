@@ -1,1 +1,14 @@
 project_id = "rwphqyzpxhrfdvwjtgsb"
+
+[functions]
+  [functions.auth-email-hook]
+    verify_jwt = false
+
+[functions.preview-transactional-email]
+verify_jwt = false
+
+[functions.send-lead-notification]
+verify_jwt = false
+
+[functions.trial-signup-notification]
+verify_jwt = false
