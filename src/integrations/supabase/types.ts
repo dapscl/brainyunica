@@ -100,12 +100,17 @@ export type Database = {
           brand_guidelines: string | null
           brand_id: string
           color_palette: Json | null
+          content_themes: string[] | null
           created_at: string | null
           dos_and_donts: Json | null
           font_source: string | null
           id: string
+          instagram_data: Json | null
+          instagram_handle: string | null
+          learned_keywords: string[] | null
           logo_url: string | null
           logo_variations: Json | null
+          posting_patterns: Json | null
           primary_color: string | null
           primary_font_name: string | null
           secondary_color: string | null
@@ -114,18 +119,24 @@ export type Database = {
           style_restrictions: Json | null
           typography: Json | null
           updated_at: string | null
+          voice_profile: Json | null
         }
         Insert: {
           accent_color?: string | null
           brand_guidelines?: string | null
           brand_id: string
           color_palette?: Json | null
+          content_themes?: string[] | null
           created_at?: string | null
           dos_and_donts?: Json | null
           font_source?: string | null
           id?: string
+          instagram_data?: Json | null
+          instagram_handle?: string | null
+          learned_keywords?: string[] | null
           logo_url?: string | null
           logo_variations?: Json | null
+          posting_patterns?: Json | null
           primary_color?: string | null
           primary_font_name?: string | null
           secondary_color?: string | null
@@ -134,18 +145,24 @@ export type Database = {
           style_restrictions?: Json | null
           typography?: Json | null
           updated_at?: string | null
+          voice_profile?: Json | null
         }
         Update: {
           accent_color?: string | null
           brand_guidelines?: string | null
           brand_id?: string
           color_palette?: Json | null
+          content_themes?: string[] | null
           created_at?: string | null
           dos_and_donts?: Json | null
           font_source?: string | null
           id?: string
+          instagram_data?: Json | null
+          instagram_handle?: string | null
+          learned_keywords?: string[] | null
           logo_url?: string | null
           logo_variations?: Json | null
+          posting_patterns?: Json | null
           primary_color?: string | null
           primary_font_name?: string | null
           secondary_color?: string | null
@@ -154,6 +171,7 @@ export type Database = {
           style_restrictions?: Json | null
           typography?: Json | null
           updated_at?: string | null
+          voice_profile?: Json | null
         }
         Relationships: [
           {
@@ -347,6 +365,59 @@ export type Database = {
           },
         ]
       }
+      content_suggestions: {
+        Row: {
+          brand_id: string
+          content_draft: string | null
+          created_at: string
+          description: string | null
+          id: string
+          metadata: Json | null
+          source: string | null
+          status: string
+          suggestion_type: string
+          title: string
+          trend_score: number | null
+          updated_at: string
+        }
+        Insert: {
+          brand_id: string
+          content_draft?: string | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          metadata?: Json | null
+          source?: string | null
+          status?: string
+          suggestion_type?: string
+          title: string
+          trend_score?: number | null
+          updated_at?: string
+        }
+        Update: {
+          brand_id?: string
+          content_draft?: string | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          metadata?: Json | null
+          source?: string | null
+          status?: string
+          suggestion_type?: string
+          title?: string
+          trend_score?: number | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "content_suggestions_brand_id_fkey"
+            columns: ["brand_id"]
+            isOneToOne: false
+            referencedRelation: "brands"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       content_templates: {
         Row: {
           category: string
@@ -405,6 +476,51 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      leads: {
+        Row: {
+          challenges: string | null
+          clients_count: string
+          company: string
+          created_at: string
+          current_tools: string | null
+          email: string
+          full_name: string
+          id: string
+          monthly_revenue: string
+          phone: string
+          suggested_plan: string
+          updated_at: string
+        }
+        Insert: {
+          challenges?: string | null
+          clients_count: string
+          company: string
+          created_at?: string
+          current_tools?: string | null
+          email: string
+          full_name: string
+          id?: string
+          monthly_revenue: string
+          phone: string
+          suggested_plan: string
+          updated_at?: string
+        }
+        Update: {
+          challenges?: string | null
+          clients_count?: string
+          company?: string
+          created_at?: string
+          current_tools?: string | null
+          email?: string
+          full_name?: string
+          id?: string
+          monthly_revenue?: string
+          phone?: string
+          suggested_plan?: string
+          updated_at?: string
+        }
+        Relationships: []
       }
       media_library: {
         Row: {
@@ -548,6 +664,8 @@ export type Database = {
           owner_id: string
           settings: Json | null
           slug: string
+          subscription_status: string | null
+          trial_ends_at: string | null
           updated_at: string | null
         }
         Insert: {
@@ -558,6 +676,8 @@ export type Database = {
           owner_id: string
           settings?: Json | null
           slug: string
+          subscription_status?: string | null
+          trial_ends_at?: string | null
           updated_at?: string | null
         }
         Update: {
@@ -568,6 +688,8 @@ export type Database = {
           owner_id?: string
           settings?: Json | null
           slug?: string
+          subscription_status?: string | null
+          trial_ends_at?: string | null
           updated_at?: string | null
         }
         Relationships: []
@@ -739,6 +861,50 @@ export type Database = {
           },
         ]
       }
+      trend_tracking: {
+        Row: {
+          category: string | null
+          created_at: string
+          id: string
+          metadata: Json | null
+          organization_id: string
+          source: string
+          tracked_at: string
+          trend_keyword: string
+          trend_score: number
+        }
+        Insert: {
+          category?: string | null
+          created_at?: string
+          id?: string
+          metadata?: Json | null
+          organization_id: string
+          source: string
+          tracked_at?: string
+          trend_keyword: string
+          trend_score: number
+        }
+        Update: {
+          category?: string | null
+          created_at?: string
+          id?: string
+          metadata?: Json | null
+          organization_id?: string
+          source?: string
+          tracked_at?: string
+          trend_keyword?: string
+          trend_score?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "trend_tracking_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       user_roles: {
         Row: {
           created_at: string | null
@@ -759,6 +925,94 @@ export type Database = {
           user_id?: string
         }
         Relationships: []
+      }
+      whatsapp_conversations: {
+        Row: {
+          brand_id: string
+          conversation_state: string
+          created_at: string
+          id: string
+          last_message_at: string | null
+          metadata: Json | null
+          phone_number: string
+          updated_at: string
+        }
+        Insert: {
+          brand_id: string
+          conversation_state?: string
+          created_at?: string
+          id?: string
+          last_message_at?: string | null
+          metadata?: Json | null
+          phone_number: string
+          updated_at?: string
+        }
+        Update: {
+          brand_id?: string
+          conversation_state?: string
+          created_at?: string
+          id?: string
+          last_message_at?: string | null
+          metadata?: Json | null
+          phone_number?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "whatsapp_conversations_brand_id_fkey"
+            columns: ["brand_id"]
+            isOneToOne: false
+            referencedRelation: "brands"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      whatsapp_messages: {
+        Row: {
+          content: string
+          conversation_id: string
+          created_at: string
+          direction: string
+          id: string
+          media_url: string | null
+          message_id: string | null
+          message_type: string
+          metadata: Json | null
+          status: string | null
+        }
+        Insert: {
+          content: string
+          conversation_id: string
+          created_at?: string
+          direction: string
+          id?: string
+          media_url?: string | null
+          message_id?: string | null
+          message_type?: string
+          metadata?: Json | null
+          status?: string | null
+        }
+        Update: {
+          content?: string
+          conversation_id?: string
+          created_at?: string
+          direction?: string
+          id?: string
+          media_url?: string | null
+          message_id?: string | null
+          message_type?: string
+          metadata?: Json | null
+          status?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "whatsapp_messages_conversation_id_fkey"
+            columns: ["conversation_id"]
+            isOneToOne: false
+            referencedRelation: "whatsapp_conversations"
+            referencedColumns: ["id"]
+          },
+        ]
       }
     }
     Views: {
