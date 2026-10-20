@@ -11,6 +11,7 @@ import { Mail, ArrowLeft, Building2, AlertCircle, Sparkles } from "lucide-react"
 import { ShowcaseHeader } from "@/components/showcase/ShowcaseHeader";
 import { z } from "zod";
 import { isPersonalEmail, getEmailDomain } from "@/lib/blockedDomains";
+import { GoogleWorkspaceButton } from "@/components/auth/GoogleWorkspaceButton";
 
 // Email schema with corporate validation
 const emailSchema = z
@@ -183,6 +184,10 @@ const SignupPage: React.FC = () => {
             <CardContent>
               {!otpSent ? (
                 <form onSubmit={handleSendOTP} className="space-y-6">
+                  <GoogleWorkspaceButton disabled={loading} label="Crear cuenta con Google Workspace" />
+                  <div className="flex items-center gap-3 text-xs text-muted-foreground uppercase">
+                    <span className="flex-1 border-t border-border/50" />o con código por correo<span className="flex-1 border-t border-border/50" />
+                  </div>
                   <div className="space-y-2">
                     <Label htmlFor="email" className="text-foreground font-medium">
                       <Mail className="w-4 h-4 inline mr-2" />

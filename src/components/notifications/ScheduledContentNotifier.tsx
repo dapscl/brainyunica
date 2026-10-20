@@ -12,7 +12,7 @@ interface ScheduledContent {
 
 export const useScheduledContentNotifier = () => {
   const notifiedIds = useRef<Set<string>>(new Set());
-  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   useEffect(() => {
     const checkScheduledContent = async () => {
