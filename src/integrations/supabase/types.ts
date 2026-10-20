@@ -164,28 +164,34 @@ export type Database = {
       }
       content_approvals: {
         Row: {
+          assigned_by: string | null
           comments: string | null
           content_id: string
           created_at: string
           id: string
+          reviewed_at: string | null
           reviewer_id: string
           status: string
           updated_at: string
         }
         Insert: {
+          assigned_by?: string | null
           comments?: string | null
           content_id: string
           created_at?: string
           id?: string
+          reviewed_at?: string | null
           reviewer_id: string
           status?: string
           updated_at?: string
         }
         Update: {
+          assigned_by?: string | null
           comments?: string | null
           content_id?: string
           created_at?: string
           id?: string
+          reviewed_at?: string | null
           reviewer_id?: string
           status?: string
           updated_at?: string
@@ -290,6 +296,71 @@ export type Database = {
             columns: ["project_id"]
             isOneToOne: false
             referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      media_library: {
+        Row: {
+          category: string | null
+          created_at: string
+          description: string | null
+          duration: number | null
+          file_name: string
+          file_size: number | null
+          file_type: string
+          file_url: string
+          height: number | null
+          id: string
+          mime_type: string | null
+          organization_id: string
+          tags: string[] | null
+          updated_at: string
+          uploaded_by: string
+          width: number | null
+        }
+        Insert: {
+          category?: string | null
+          created_at?: string
+          description?: string | null
+          duration?: number | null
+          file_name: string
+          file_size?: number | null
+          file_type: string
+          file_url: string
+          height?: number | null
+          id?: string
+          mime_type?: string | null
+          organization_id: string
+          tags?: string[] | null
+          updated_at?: string
+          uploaded_by: string
+          width?: number | null
+        }
+        Update: {
+          category?: string | null
+          created_at?: string
+          description?: string | null
+          duration?: number | null
+          file_name?: string
+          file_size?: number | null
+          file_type?: string
+          file_url?: string
+          height?: number | null
+          id?: string
+          mime_type?: string | null
+          organization_id?: string
+          tags?: string[] | null
+          updated_at?: string
+          uploaded_by?: string
+          width?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "media_library_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
             referencedColumns: ["id"]
           },
         ]
