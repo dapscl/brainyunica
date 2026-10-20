@@ -58,8 +58,8 @@ export const ApprovalWorkflow = ({ contentId, organizationId }: ApprovalWorkflow
 
   const loadApprovals = async () => {
     try {
-      const { data, error } = await supabase
-        .from("content_approvals_legacy")
+      const { data, error } = await (supabase as any)
+        .from("content_approvals_legacy" as any)
         .select(`
           *,
           profiles:reviewer_id (
@@ -81,7 +81,7 @@ export const ApprovalWorkflow = ({ contentId, organizationId }: ApprovalWorkflow
 
   const loadOrgMembers = async () => {
     try {
-      const { data, error } = await supabase
+      const { data, error } = await (supabase as any)
         .from("organization_members")
         .select(`
           user_id,
@@ -109,8 +109,8 @@ export const ApprovalWorkflow = ({ contentId, organizationId }: ApprovalWorkflow
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) throw new Error("Not authenticated");
 
-      const { error } = await supabase
-        .from("content_approvals_legacy")
+      const { error } = await (supabase as any)
+        .from("content_approvals_legacy" as any)
         .insert({
           content_id: contentId,
           reviewer_id: selectedReviewer,
@@ -142,8 +142,8 @@ export const ApprovalWorkflow = ({ contentId, organizationId }: ApprovalWorkflow
 
   const updateApprovalStatus = async (approvalId: string, newStatus: string) => {
     try {
-      const { error } = await supabase
-        .from("content_approvals_legacy")
+      const { error } = await (supabase as any)
+        .from("content_approvals_legacy" as any)
         .update({
           status: newStatus,
           comments: reviewComment,
